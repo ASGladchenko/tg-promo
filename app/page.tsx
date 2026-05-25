@@ -12,6 +12,7 @@ type HelloResponse = {
 type TelegramUser = {
   id?: number;
   first_name?: string;
+  last_name?: string;
   username?: string;
   phone_number?: string;
 };
@@ -107,6 +108,17 @@ export default function Home() {
     return `user:${user.id ?? "unknown"}`;
   }, [telegramApp]);
 
+  const telegramFullName = useMemo(() => {
+    const user = telegramApp?.initDataUnsafe?.user;
+    if (!user) return "Неизвестно";
+
+    const firstName = user.first_name?.trim() ?? "";
+    const lastName = user.last_name?.trim() ?? "";
+    const fullName = `${firstName} ${lastName}`.trim();
+
+    return fullName || "Неизвестно";
+  }, [telegramApp]);
+
   async function askBackend() {
     setIsLoading(true);
 
@@ -174,6 +186,7 @@ export default function Home() {
           Режим: {isTelegram ? `Telegram (${telegramApp?.platform ?? "unknown"})` : "Обычный сайт"}
           {isTelegram ? ` · Пользователь: ${telegramUserLabel}` : ""}
         </p>
+        {isTelegram ? <p className={styles.meta}>Имя и фамилия: {telegramFullName}</p> : null}
 
         <div className={styles.panel}>
           <div className={styles.actions}>
