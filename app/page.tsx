@@ -13,12 +13,16 @@ type TelegramUser = {
   id?: number;
   first_name?: string;
   username?: string;
+  phone_number?: string;
 };
 
 type TelegramWebApp = {
   ready: () => void;
   expand: () => void;
   sendData: (data: string) => void;
+  requestContact: (callback?: (shared: boolean) => void) => void;
+  onEvent: (eventType: string, callback: (payload: unknown) => void) => void;
+  offEvent: (eventType: string, callback: (payload: unknown) => void) => void;
   platform?: string;
   themeParams?: {
     bg_color?: string;
@@ -42,6 +46,8 @@ export default function Home() {
   const [response, setResponse] = useState("Ответ backend появится здесь.");
   const [isLoading, setIsLoading] = useState(false);
   const [telegramApp, setTelegramApp] = useState<TelegramWebApp | null>(null);
+  const [contactStatus, setContactStatus] = useState("Контакт еще не запрошен.");
+  const [sharedPhone, setSharedPhone] = useState<string | null>(null);
 
   useEffect(() => {
     const webApp = window.Telegram?.WebApp;
@@ -61,6 +67,34 @@ export default function Home() {
     if (theme?.button_color) {
       document.documentElement.style.setProperty("--accent", theme.button_color);
     }
+
+    const onContactRequested = (payload: unknown) => {
+      const data = payload as {
+        status?: "sent" | "cancelled";
+        responseUnsafe?: {
+          contact?: {
+            phone_number?: string;
+          };
+        };
+      };
+
+      if (data.status === "sent") {
+        setContactStatus("Пользователь подтвердил отправку контакта.");
+      } else if (data.status === "cancelled") {
+        setContactStatus("Пользователь отклонил отправку контакта.");
+      }
+
+      const phone = data.responseUnsafe?.contact?.phone_number;
+      if (phone) {
+        setSharedPhone(phone);
+      }
+    };
+
+    webApp.onEvent("contactRequested", onContactRequested);
+
+    return () => {
+      webApp.offEvent("contactRequested", onContactRequested);
+    };
   }, []);
 
   const isTelegram = telegramApp !== null;
@@ -107,6 +141,28 @@ export default function Home() {
     setResponse("Данные отправлены в Telegram-бот.");
   }
 
+  function requestUserContact() {
+    if (!telegramApp) {
+      setContactStatus("Запрос контакта доступен только в Telegram.");
+      return;
+    }
+
+    setContactStatus("Ожидаем подтверждение пользователя...");
+    telegramApp.requestContact((shared) => {
+      if (!shared) {
+        setContactStatus("Пользователь отклонил отправку контакта.");
+        return;
+      }
+
+      setContactStatus("Контакт отправлен боту.");
+
+      const phoneFromInitData = telegramApp.initDataUnsafe?.user?.phone_number;
+      if (phoneFromInitData) {
+        setSharedPhone(phoneFromInitData);
+      }
+    });
+  }
+
   return (
     <main className={styles.page}>
       <section className={styles.shell}>
@@ -129,8 +185,20 @@ export default function Home() {
                 Отправить ответ в Telegram
               </button>
             ) : null}
+            {isTelegram ? (
+              <button className={styles.secondaryButton} onClick={requestUserContact}>
+                Запросить контакт
+              </button>
+            ) : null}
           </div>
           <p className={styles.response}>{response}</p>
+          <p className={styles.response}>
+            {sharedPhone
+              ? `Контакт пользователя: ${sharedPhone}`
+              : `${contactStatus} ${
+                  isTelegram ? "Номер обычно приходит на стороне бота, не во фронт Mini App." : ""
+                }`}
+          </p>
         </div>
       </section>
     </main>
