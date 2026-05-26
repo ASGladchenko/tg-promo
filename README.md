@@ -15,6 +15,12 @@ npm install
 npm run dev
 ```
 
+Для перевірки Telegram `initData` у `app/api/hello/route.ts` додайте змінну оточення:
+
+```bash
+TELEGRAM_BOT_TOKEN=123456:ABCDEF
+```
+
 Відкрити у браузері:
 
 ```txt

@@ -11,6 +11,8 @@
   "dependencies": {
     "@nestjs/common": "^11.1.21",
     "@nestjs/core": "^11.1.21",
+    "@tma.js/init-data-node": "^2.0.7",
+    "@tma.js/sdk-react": "^3.0.19",
     "next": "^16.2.6",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",

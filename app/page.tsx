@@ -1,5 +1,15 @@
 "use client";
 
+import {
+  init,
+  isTMA,
+  miniApp,
+  requestContact,
+  retrieveRawInitData,
+  retrieveLaunchParams,
+  sendData,
+  viewport
+} from "@tma.js/sdk-react";
 import { useEffect, useMemo, useState } from "react";
 import styles from "./page.module.css";
 
@@ -7,6 +17,7 @@ type HelloResponse = {
   message: string;
   path: string;
   time: string;
+  telegramVerified: boolean;
 };
 
 type TelegramUser = {
@@ -17,119 +28,128 @@ type TelegramUser = {
   phone_number?: string;
 };
 
-type TelegramWebApp = {
-  ready: () => void;
-  expand: () => void;
-  sendData: (data: string) => void;
-  requestContact: (callback?: (shared: boolean) => void) => void;
-  onEvent: (eventType: string, callback: (payload: unknown) => void) => void;
-  offEvent: (eventType: string, callback: (payload: unknown) => void) => void;
-  platform?: string;
-  themeParams?: {
-    bg_color?: string;
-    text_color?: string;
-    button_color?: string;
-  };
-  initDataUnsafe?: {
-    user?: TelegramUser;
-  };
-};
+let sdkInitState: "idle" | "ready" | "failed" = "idle";
 
-declare global {
-  interface Window {
-    Telegram?: {
-      WebApp?: TelegramWebApp;
-    };
+function ensureSdkInitialized(): boolean {
+  if (sdkInitState === "ready") {
+    return true;
+  }
+  if (sdkInitState === "failed") {
+    return false;
+  }
+
+  try {
+    init();
+    sdkInitState = "ready";
+    return true;
+  } catch {
+    sdkInitState = "failed";
+    return false;
   }
 }
 
 export default function Home() {
   const [response, setResponse] = useState("Ответ backend появится здесь.");
   const [isLoading, setIsLoading] = useState(false);
-  const [telegramApp, setTelegramApp] = useState<TelegramWebApp | null>(null);
+  const [isTelegram, setIsTelegram] = useState(false);
+  const [rawInitData, setRawInitData] = useState<string | undefined>(undefined);
+  const [telegramPlatform, setTelegramPlatform] = useState("unknown");
+  const [telegramUser, setTelegramUser] = useState<TelegramUser | null>(null);
   const [contactStatus, setContactStatus] = useState("Контакт еще не запрошен.");
   const [sharedPhone, setSharedPhone] = useState<string | null>(null);
 
   useEffect(() => {
-    const webApp = window.Telegram?.WebApp;
-    if (!webApp) return;
-
-    webApp.ready();
-    webApp.expand();
-    setTelegramApp(webApp);
-
-    const theme = webApp.themeParams;
-    if (theme?.bg_color) {
-      document.documentElement.style.setProperty("--background", theme.bg_color);
-    }
-    if (theme?.text_color) {
-      document.documentElement.style.setProperty("--foreground", theme.text_color);
-    }
-    if (theme?.button_color) {
-      document.documentElement.style.setProperty("--accent", theme.button_color);
+    if (!ensureSdkInitialized()) {
+      return;
     }
 
-    const onContactRequested = (payload: unknown) => {
-      const data = payload as {
-        status?: "sent" | "cancelled";
-        responseUnsafe?: {
-          contact?: {
-            phone_number?: string;
-          };
-        };
-      };
+    if (!isTMA()) {
+      return;
+    }
 
-      if (data.status === "sent") {
-        setContactStatus("Пользователь подтвердил отправку контакта.");
-      } else if (data.status === "cancelled") {
-        setContactStatus("Пользователь отклонил отправку контакта.");
+    setIsTelegram(true);
+
+    try {
+      const launchParams = retrieveLaunchParams();
+      setTelegramPlatform(launchParams.tgWebAppPlatform ?? "unknown");
+      setRawInitData(retrieveRawInitData());
+
+      const user = launchParams.tgWebAppData?.user;
+      if (user) {
+        setTelegramUser(user as TelegramUser);
       }
 
-      const phone = data.responseUnsafe?.contact?.phone_number;
-      if (phone) {
-        setSharedPhone(phone);
+      const theme = launchParams.tgWebAppThemeParams;
+      if (theme?.bg_color) {
+        document.documentElement.style.setProperty("--background", theme.bg_color);
       }
-    };
+      if (theme?.text_color) {
+        document.documentElement.style.setProperty("--foreground", theme.text_color);
+      }
+      if (theme?.button_color) {
+        document.documentElement.style.setProperty("--accent", theme.button_color);
+      }
+    } catch {
+      setTelegramPlatform("unknown");
+    }
 
-    webApp.onEvent("contactRequested", onContactRequested);
+    if (miniApp.mount.isAvailable()) {
+      miniApp.mount();
+    }
 
-    return () => {
-      webApp.offEvent("contactRequested", onContactRequested);
-    };
+    if (miniApp.ready.isAvailable()) {
+      miniApp.ready();
+    }
+
+    if (viewport.mount.isAvailable()) {
+      void viewport.mount().catch(() => undefined);
+    }
+
+    if (viewport.expand.isAvailable()) {
+      viewport.expand();
+    }
   }, []);
 
-  const isTelegram = telegramApp !== null;
   const telegramUserLabel = useMemo(() => {
-    const user = telegramApp?.initDataUnsafe?.user;
-    if (!user) return "Гость";
+    if (!telegramUser) return "Гость";
 
-    if (user.username) return `@${user.username}`;
-    if (user.first_name) return user.first_name;
-    return `user:${user.id ?? "unknown"}`;
-  }, [telegramApp]);
+    if (telegramUser.username) return `@${telegramUser.username}`;
+    if (telegramUser.first_name) return telegramUser.first_name;
+    return `user:${telegramUser.id ?? "unknown"}`;
+  }, [telegramUser]);
 
   const telegramFullName = useMemo(() => {
-    const user = telegramApp?.initDataUnsafe?.user;
-    if (!user) return "Неизвестно";
+    if (!telegramUser) return "Неизвестно";
 
-    const firstName = user.first_name?.trim() ?? "";
-    const lastName = user.last_name?.trim() ?? "";
+    const firstName = telegramUser.first_name?.trim() ?? "";
+    const lastName = telegramUser.last_name?.trim() ?? "";
     const fullName = `${firstName} ${lastName}`.trim();
 
     return fullName || "Неизвестно";
-  }, [telegramApp]);
+  }, [telegramUser]);
 
   async function askBackend() {
     setIsLoading(true);
 
     try {
-      const res = await fetch("/api/hello", { cache: "no-store" });
+      const headers = rawInitData
+        ? {
+            "x-telegram-init-data": rawInitData
+          }
+        : undefined;
+
+      const res = await fetch("/api/hello", {
+        cache: "no-store",
+        headers
+      });
+
       if (!res.ok) {
         throw new Error("Backend request failed");
       }
 
       const data = (await res.json()) as HelloResponse;
-      setResponse(`${data.message} Путь: ${data.path}. Время: ${data.time}`);
+      const validationStatus = data.telegramVerified ? "Проверка Telegram: пройдена." : "Проверка Telegram: нет (обычный веб-режим).";
+      setResponse(`${data.message} Путь: ${data.path}. Время: ${data.time}. ${validationStatus}`);
     } catch {
       setResponse("Не получилось получить ответ от backend.");
     } finally {
@@ -138,7 +158,7 @@ export default function Home() {
   }
 
   function sendResponseToTelegram() {
-    if (!telegramApp) {
+    if (!isTelegram || !sendData.isAvailable()) {
       setResponse("Telegram WebApp недоступен в обычном браузере.");
       return;
     }
@@ -149,30 +169,35 @@ export default function Home() {
       sentAt: new Date().toISOString()
     };
 
-    telegramApp.sendData(JSON.stringify(payload));
-    setResponse("Данные отправлены в Telegram-бот.");
+    try {
+      sendData(JSON.stringify(payload));
+      setResponse("Данные отправлены в Telegram-бот.");
+    } catch {
+      setResponse("Не удалось отправить данные в Telegram-бот.");
+    }
   }
 
-  function requestUserContact() {
-    if (!telegramApp) {
+  async function requestUserContact() {
+    if (!isTelegram || !requestContact.isAvailable()) {
       setContactStatus("Запрос контакта доступен только в Telegram.");
       return;
     }
 
     setContactStatus("Ожидаем подтверждение пользователя...");
-    telegramApp.requestContact((shared) => {
-      if (!shared) {
-        setContactStatus("Пользователь отклонил отправку контакта.");
+
+    try {
+      const contact = await requestContact();
+
+      if (!contact?.contact?.phone_number) {
+        setContactStatus("Контакт не был предоставлен пользователем.");
         return;
       }
 
+      setSharedPhone(contact.contact.phone_number);
       setContactStatus("Контакт отправлен боту.");
-
-      const phoneFromInitData = telegramApp.initDataUnsafe?.user?.phone_number;
-      if (phoneFromInitData) {
-        setSharedPhone(phoneFromInitData);
-      }
-    });
+    } catch {
+      setContactStatus("Пользователь отклонил отправку контакта или произошла ошибка.");
+    }
   }
 
   return (
@@ -183,7 +208,7 @@ export default function Home() {
           Один и тот же экран работает и как обычный сайт, и как Telegram WebApp.
         </p>
         <p className={styles.meta}>
-          Режим: {isTelegram ? `Telegram (${telegramApp?.platform ?? "unknown"})` : "Обычный сайт"}
+          Режим: {isTelegram ? `Telegram (${telegramPlatform})` : "Обычный сайт"}
           {isTelegram ? ` · Пользователь: ${telegramUserLabel}` : ""}
         </p>
         {isTelegram ? <p className={styles.meta}>Имя и фамилия: {telegramFullName}</p> : null}
