@@ -20,6 +20,10 @@ type HelloResponse = {
   telegramVerified: boolean;
 };
 
+type ApiErrorResponse = {
+  error?: string;
+};
+
 type TelegramUser = {
   id?: number;
   first_name?: string;
@@ -144,14 +148,19 @@ export default function Home() {
       });
 
       if (!res.ok) {
-        throw new Error("Backend request failed");
+        const errorBody = (await res.json().catch(() => null)) as ApiErrorResponse | null;
+        throw new Error(errorBody?.error ?? "Backend request failed");
       }
 
       const data = (await res.json()) as HelloResponse;
       const validationStatus = data.telegramVerified ? "Проверка Telegram: пройдена." : "Проверка Telegram: нет (обычный веб-режим).";
       setResponse(`${data.message} Путь: ${data.path}. Время: ${data.time}. ${validationStatus}`);
-    } catch {
-      setResponse("Не получилось получить ответ от backend.");
+    } catch (error) {
+      if (error instanceof Error) {
+        setResponse(`Не получилось получить ответ от backend. ${error.message}`);
+      } else {
+        setResponse("Не получилось получить ответ от backend.");
+      }
     } finally {
       setIsLoading(false);
     }

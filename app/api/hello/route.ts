@@ -22,7 +22,10 @@ function getAppContext() {
 function validateTelegramInitData(rawInitData: string): boolean {
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   if (!botToken) {
-    throw new Error("TELEGRAM_BOT_TOKEN is not configured");
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("TELEGRAM_BOT_TOKEN is not configured");
+    }
+    return false;
   }
 
   validate(rawInitData, botToken, {
