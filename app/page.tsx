@@ -223,7 +223,7 @@ export default function Home() {
   }
 
   function shareInviteInTelegram() {
-    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(SHARE_TEXT)}`;
+    const shareUrl = `https://t.me/share/url?text=${encodeURIComponent(SHARE_TEXT)}`;
 
     try {
       if (isTelegram && window.Telegram?.WebApp?.openTelegramLink) {
