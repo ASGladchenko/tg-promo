@@ -35,6 +35,7 @@ type TelegramUser = {
 let sdkInitState: "idle" | "ready" | "failed" = "idle";
 const SHARE_TEXT = "Привет! заходи к нам я начал бой.";
 const SHARE_GAME_URL = process.env.NEXT_PUBLIC_TELEGRAM_SHARE_URL?.trim();
+const CHANNEL_URL = process.env.NEXT_PUBLIC_TELEGRAM_CHANNEL_URL?.trim();
 
 type TelegramWebAppGlobal = {
   WebApp?: {
@@ -245,6 +246,24 @@ export default function Home() {
     }
   }
 
+  function openChannelForSubscribe() {
+    if (!CHANNEL_URL) {
+      setResponse("Не настроена ссылка на канал. Добавь NEXT_PUBLIC_TELEGRAM_CHANNEL_URL в .env.local.");
+      return;
+    }
+
+    try {
+      if (isTelegram && window.Telegram?.WebApp?.openTelegramLink) {
+        window.Telegram.WebApp.openTelegramLink(CHANNEL_URL);
+        return;
+      }
+
+      window.open(CHANNEL_URL, "_blank", "noopener,noreferrer");
+    } catch {
+      setResponse("Не удалось открыть ссылку на канал.");
+    }
+  }
+
   return (
     <main className={styles.page}>
       <section className={styles.shell}>
@@ -275,6 +294,9 @@ export default function Home() {
             ) : null}
             <button className={styles.secondaryButton} onClick={shareInviteInTelegram}>
               Поделиться в Telegram
+            </button>
+            <button className={styles.secondaryButton} onClick={openChannelForSubscribe}>
+              Подписаться на канал
             </button>
           </div>
           <p className={styles.response}>{response}</p>

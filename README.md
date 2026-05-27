@@ -27,6 +27,12 @@ TELEGRAM_BOT_TOKEN=123456:ABCDEF
 NEXT_PUBLIC_TELEGRAM_SHARE_URL=https://t.me/your_bot?startapp=play
 ```
 
+Для кнопки підписки на канал:
+
+```bash
+NEXT_PUBLIC_TELEGRAM_CHANNEL_URL=https://t.me/your_channel
+```
+
 Варіанти короткої Telegram-ссылки на гру:
 
 - Main Mini App: `https://t.me/<bot_username>?startapp=<param>`
