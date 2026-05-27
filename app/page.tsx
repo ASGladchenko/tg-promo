@@ -10,7 +10,7 @@ import {
   sendData,
   viewport
 } from "@tma.js/sdk-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./page.module.css";
 
 type HelloResponse = {
@@ -29,6 +29,30 @@ type ChannelMembershipResponse = {
   status: string;
 };
 
+type SessionUser = {
+  id: number;
+  firstName: string;
+  lastName?: string;
+  username?: string;
+  photoUrl?: string;
+};
+
+type AuthSessionResponse = {
+  authenticated: boolean;
+  user?: SessionUser;
+  source?: "miniapp" | "widget";
+};
+
+type TelegramWidgetUser = {
+  id: number;
+  first_name: string;
+  last_name?: string;
+  username?: string;
+  photo_url?: string;
+  auth_date: number;
+  hash: string;
+};
+
 type TelegramUser = {
   id?: number;
   first_name?: string;
@@ -41,6 +65,7 @@ let sdkInitState: "idle" | "ready" | "failed" = "idle";
 const SHARE_TEXT = "Привет! заходи к нам я начал бой.";
 const SHARE_GAME_URL = process.env.NEXT_PUBLIC_TELEGRAM_SHARE_URL?.trim();
 const CHANNEL_URL = process.env.NEXT_PUBLIC_TELEGRAM_CHANNEL_URL?.trim();
+const TELEGRAM_BOT_USERNAME = process.env.NEXT_PUBLIC_TELEGRAM_BOT_USERNAME?.trim();
 
 type TelegramWebAppGlobal = {
   WebApp?: {
@@ -51,6 +76,7 @@ type TelegramWebAppGlobal = {
 declare global {
   interface Window {
     Telegram?: TelegramWebAppGlobal;
+    onTelegramAuth?: (user: TelegramWidgetUser) => void;
   }
 }
 
@@ -82,6 +108,11 @@ export default function Home() {
   const [contactStatus, setContactStatus] = useState("Контакт еще не запрошен.");
   const [sharedPhone, setSharedPhone] = useState<string | null>(null);
   const [isCheckingMembership, setIsCheckingMembership] = useState(false);
+  const [authUser, setAuthUser] = useState<SessionUser | null>(null);
+  const [authSource, setAuthSource] = useState<"miniapp" | "widget" | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
+  const [isAuthInProgress, setIsAuthInProgress] = useState(false);
+  const miniAppAuthAttemptedRef = useRef(false);
 
   useEffect(() => {
     if (!ensureSdkInitialized()) {
@@ -135,6 +166,60 @@ export default function Home() {
     }
   }, []);
 
+  useEffect(() => {
+    void restoreSession().finally(() => {
+      setIsAuthLoading(false);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!isTelegram || !rawInitData || authUser || miniAppAuthAttemptedRef.current) {
+      return;
+    }
+
+    miniAppAuthAttemptedRef.current = true;
+    void authenticateMiniApp(rawInitData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isTelegram, rawInitData, authUser]);
+
+  useEffect(() => {
+    window.onTelegramAuth = (user: TelegramWidgetUser) => {
+      void authenticateTelegramWidget(user);
+    };
+
+    return () => {
+      delete window.onTelegramAuth;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (isTelegram || authUser || !TELEGRAM_BOT_USERNAME) {
+      return;
+    }
+
+    const container = document.getElementById("telegram-login-widget");
+    if (!container) {
+      return;
+    }
+
+    container.innerHTML = "";
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = "https://telegram.org/js/telegram-widget.js?22";
+    script.setAttribute("data-telegram-login", TELEGRAM_BOT_USERNAME);
+    script.setAttribute("data-size", "large");
+    script.setAttribute("data-radius", "10");
+    script.setAttribute("data-request-access", "write");
+    script.setAttribute("data-onauth", "onTelegramAuth(user)");
+    container.appendChild(script);
+
+    return () => {
+      container.innerHTML = "";
+    };
+  }, [authUser, isTelegram]);
+
   const telegramUserLabel = useMemo(() => {
     if (!telegramUser) return "Гость";
 
@@ -152,6 +237,126 @@ export default function Home() {
 
     return fullName || "Неизвестно";
   }, [telegramUser]);
+
+  const authUserLabel = useMemo(() => {
+    if (!authUser) return "Не авторизован";
+    return authUser.username ? `@${authUser.username}` : `${authUser.firstName}${authUser.lastName ? ` ${authUser.lastName}` : ""}`;
+  }, [authUser]);
+
+  async function restoreSession() {
+    try {
+      const res = await fetch("/api/auth/session", {
+        cache: "no-store"
+      });
+      if (!res.ok) {
+        return;
+      }
+
+      const data = (await res.json()) as AuthSessionResponse;
+      if (!data.authenticated || !data.user) {
+        return;
+      }
+
+      setAuthUser(data.user);
+      setAuthSource(data.source ?? null);
+    } catch {
+      // No-op: app can still work without a restored session.
+    }
+  }
+
+  async function authenticateMiniApp(rawInit: string) {
+    setIsAuthInProgress(true);
+
+    try {
+      const res = await fetch("/api/auth/miniapp", {
+        method: "POST",
+        cache: "no-store",
+        headers: {
+          "x-telegram-init-data": rawInit
+        }
+      });
+
+      if (!res.ok) {
+        const errorBody = (await res.json().catch(() => null)) as ApiErrorResponse | null;
+        throw new Error(errorBody?.error ?? "Mini App auth failed.");
+      }
+
+      const data = (await res.json()) as {
+        ok: boolean;
+        user: SessionUser;
+        source: "miniapp";
+      };
+
+      if (data.ok) {
+        setAuthUser(data.user);
+        setAuthSource(data.source);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setResponse(`Не удалось авторизоваться в Mini App. ${error.message}`);
+      } else {
+        setResponse("Не удалось авторизоваться в Mini App.");
+      }
+    } finally {
+      setIsAuthInProgress(false);
+    }
+  }
+
+  async function authenticateTelegramWidget(user: TelegramWidgetUser) {
+    setIsAuthInProgress(true);
+
+    try {
+      const res = await fetch("/api/auth/telegram-widget", {
+        method: "POST",
+        cache: "no-store",
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify(user)
+      });
+
+      if (!res.ok) {
+        const errorBody = (await res.json().catch(() => null)) as ApiErrorResponse | null;
+        throw new Error(errorBody?.error ?? "Telegram Login auth failed.");
+      }
+
+      const data = (await res.json()) as {
+        ok: boolean;
+        user: SessionUser;
+        source: "widget";
+      };
+
+      if (data.ok) {
+        setAuthUser(data.user);
+        setAuthSource(data.source);
+        setResponse("Вы успешно вошли через Telegram.");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setResponse(`Ошибка Telegram входа. ${error.message}`);
+      } else {
+        setResponse("Ошибка Telegram входа.");
+      }
+    } finally {
+      setIsAuthInProgress(false);
+    }
+  }
+
+  async function logoutSession() {
+    setIsAuthInProgress(true);
+
+    try {
+      await fetch("/api/auth/session", {
+        method: "DELETE",
+        cache: "no-store"
+      });
+      setAuthUser(null);
+      setAuthSource(null);
+      setResponse("Сессия очищена.");
+    } finally {
+      setIsAuthInProgress(false);
+    }
+  }
 
   async function askBackend() {
     setIsLoading(true);
@@ -271,8 +476,8 @@ export default function Home() {
   }
 
   async function checkChannelMembership() {
-    if (!isTelegram || !rawInitData) {
-      setResponse("Проверка подписки доступна только внутри Telegram Mini App.");
+    if (!authUser && !rawInitData) {
+      setResponse("Сначала войдите через Telegram, потом проверьте подписку.");
       return;
     }
 
@@ -281,9 +486,11 @@ export default function Home() {
     try {
       const res = await fetch("/api/channel-membership", {
         cache: "no-store",
-        headers: {
-          "x-telegram-init-data": rawInitData
-        }
+        headers: rawInitData
+          ? {
+              "x-telegram-init-data": rawInitData
+            }
+          : undefined
       });
 
       if (!res.ok) {
@@ -321,6 +528,18 @@ export default function Home() {
           {isTelegram ? ` · Пользователь: ${telegramUserLabel}` : ""}
         </p>
         {isTelegram ? <p className={styles.meta}>Имя и фамилия: {telegramFullName}</p> : null}
+        <p className={styles.meta}>
+          Авторизация: {isAuthLoading ? "Проверяем сессию..." : authUser ? `${authUserLabel} (${authSource})` : "Не выполнена"}
+        </p>
+        {!isTelegram && !authUser && !isAuthLoading ? (
+          TELEGRAM_BOT_USERNAME ? (
+            <div id="telegram-login-widget" />
+          ) : (
+            <p className={styles.meta}>
+              Для входа на сайте укажи `NEXT_PUBLIC_TELEGRAM_BOT_USERNAME` в `.env.local`.
+            </p>
+          )
+        ) : null}
 
         <div className={styles.panel}>
           <div className={styles.actions}>
@@ -346,6 +565,11 @@ export default function Home() {
             <button className={styles.secondaryButton} disabled={isCheckingMembership} onClick={checkChannelMembership}>
               {isCheckingMembership ? "Проверяю подписку..." : "Проверить подписку"}
             </button>
+            {authUser ? (
+              <button className={styles.secondaryButton} disabled={isAuthInProgress} onClick={logoutSession}>
+                Выйти
+              </button>
+            ) : null}
           </div>
           <p className={styles.response}>{response}</p>
           <p className={styles.response}>

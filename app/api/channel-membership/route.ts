@@ -1,5 +1,6 @@
 import { parse, validate } from "@tma.js/init-data-node";
 import { NextResponse } from "next/server";
+import { readSessionFromRequest } from "@/src/backend/auth/session";
 
 export const runtime = "nodejs";
 
@@ -16,9 +17,6 @@ type TelegramChatMemberResponse = {
 
 export async function GET(request: Request) {
   const rawInitData = request.headers.get(TELEGRAM_INIT_DATA_HEADER);
-  if (!rawInitData) {
-    return NextResponse.json({ error: "Missing Telegram init data." }, { status: 400 });
-  }
 
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHANNEL_ID;
@@ -30,16 +28,23 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Server is missing TELEGRAM_CHANNEL_ID." }, { status: 500 });
   }
 
-  try {
-    validate(rawInitData, botToken, { expiresIn: 3600 });
-  } catch {
-    return NextResponse.json({ error: "Invalid Telegram init data." }, { status: 401 });
+  let userId: number | undefined;
+
+  if (rawInitData) {
+    try {
+      validate(rawInitData, botToken, { expiresIn: 3600 });
+      const initData = parse(rawInitData);
+      userId = initData.user?.id;
+    } catch {
+      return NextResponse.json({ error: "Invalid Telegram init data." }, { status: 401 });
+    }
+  } else {
+    const session = readSessionFromRequest(request);
+    userId = session?.user.id;
   }
 
-  const initData = parse(rawInitData);
-  const userId = initData.user?.id;
   if (!userId) {
-    return NextResponse.json({ error: "Telegram user is missing in init data." }, { status: 400 });
+    return NextResponse.json({ error: "Missing authorized Telegram user." }, { status: 401 });
   }
 
   const telegramApiUrl = `https://api.telegram.org/bot${botToken}/getChatMember?chat_id=${encodeURIComponent(chatId)}&user_id=${userId}`;
