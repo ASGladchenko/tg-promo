@@ -4,12 +4,26 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import safeImage from "@/src/shared/images/safe.webp";
 import safeDoorImage from "@/src/shared/images/safe_door.webp";
+import MuteIcon from "@/src/shared/svg/mute.svg";
+import VolumeIcon from "@/src/shared/svg/volume.svg";
 
-const LOOP_AUDIO_SRC = "/audio/moroccan_arab_afro_lounge_loop_5s.wav";
+const LOOP_AUDIO_SRC = "/audio/16s.ogg";
+const AUDIO_START_EVENTS = ["pointerdown", "click", "touchstart", "keydown"] as const;
 
 export default function LotteryScene() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+
+  async function playAudio(audio: HTMLAudioElement) {
+    try {
+      await audio.play();
+      setIsPlaying(true);
+      return true;
+    } catch {
+      setIsPlaying(false);
+      return false;
+    }
+  }
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -17,17 +31,36 @@ export default function LotteryScene() {
       return;
     }
 
-    void audio
-      .play()
-      .then(() => {
-        setIsPlaying(true);
-      })
-      .catch(() => {
-        setIsPlaying(false);
+    const audioElement = audio;
+    audioElement.volume = 0.05;
+
+    function removeStartListeners() {
+      AUDIO_START_EVENTS.forEach((eventName) => {
+        document.removeEventListener(eventName, startAudioAfterInteraction);
       });
+    }
+
+    function startAudioAfterInteraction(event: Event) {
+      const target = event.target;
+
+      if (target instanceof Element && target.closest(".lottery-scene__audio-toggle")) {
+        return;
+      }
+
+      void playAudio(audioElement).then((started) => {
+        if (started) {
+          removeStartListeners();
+        }
+      });
+    }
+
+    AUDIO_START_EVENTS.forEach((eventName) => {
+      document.addEventListener(eventName, startAudioAfterInteraction);
+    });
 
     return () => {
-      audio.pause();
+      removeStartListeners();
+      audioElement.pause();
     };
   }, []);
 
@@ -38,7 +71,7 @@ export default function LotteryScene() {
     }
 
     if (audio.paused) {
-      await audio.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+      await playAudio(audio);
       return;
     }
 
@@ -48,16 +81,30 @@ export default function LotteryScene() {
 
   return (
     <section className="lottery-scene" aria-label="Lottery scene">
-      <audio ref={audioRef} src={LOOP_AUDIO_SRC} loop preload="auto" />
-      <button className="lottery-scene__audio-toggle" type="button" onClick={() => void toggleAudio()}>
-        {isPlaying ? "Звук: ВКЛ" : "Звук: ВЫКЛ"}
-      </button>
+      <audio ref={audioRef} src={LOOP_AUDIO_SRC} loop preload="none" />
       <div className="lottery-scene__stage">
         <Image className="lottery-scene__safe" src={safeImage} alt="Safe" priority />
 
-
-        <Image className="lottery-scene__door" src={safeDoorImage} alt="Safe door" priority />
+        <div className='lottery-scene__door-wrapper'>
+          <Image className="lottery-scene__door" src={safeDoorImage} alt="Safe door" priority />
+        </div>
+        
+      
       </div>
+
+        <button
+          className="lottery-scene__audio-toggle"
+          type="button"
+          onClick={() => void toggleAudio()}
+          aria-label={isPlaying ? "Выключить звук" : "Включить звук"}
+          title={isPlaying ? "Выключить звук" : "Включить звук"}
+        >
+          {isPlaying ? (
+            <VolumeIcon className="lottery-scene__audio-icon" aria-hidden="true" focusable="false" />
+          ) : (
+            <MuteIcon className="lottery-scene__audio-icon" aria-hidden="true" focusable="false" />
+          )}
+        </button>
     </section>
   );
 }

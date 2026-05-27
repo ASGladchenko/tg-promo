@@ -8,12 +8,10 @@
 }
 
 .page__body {
-  width: min(780px, 100%);
+  width: min(968px, 100%);
   margin: s.$space-2 auto 0;
   display: grid;
   gap: s.$space-2;
-  background: s.$color-warm-overlay;
-  border-radius: s.$radius-lg;
   padding: s.$space-2;
 }
 

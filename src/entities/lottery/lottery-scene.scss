@@ -1,24 +1,32 @@
 @use "../../shared/styles/index" as s;
 
 .lottery-scene {
-  background: s.$color-warm-overlay;
-  border-radius: 14px;
   padding: s.$space-3;
   display: grid;
   gap: s.$space-2;
 }
 
 .lottery-scene__audio-toggle {
-  justify-self: end;
-  min-height: 36px;
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
   border-radius: s.$radius-sm;
   border: 1px solid s.$color-border-soft;
   background: s.$color-black;
   color: s.$color-warm-strong;
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 0 12px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
   cursor: pointer;
+}
+
+.lottery-scene__audio-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
 }
 
 .lottery-scene__stage {
@@ -26,12 +34,8 @@
   margin-inline: auto;
   aspect-ratio: 1 / 1;
   position: relative;
-  border-radius: s.$radius-md;
   overflow: hidden;
-  background: s.$color-black;
-  border: 1px solid s.$color-border-soft;
-
-  mix-blend-mode: lighten;
+pointer-events: none;
 }
 
 .lottery-scene__stage > * {
@@ -45,14 +49,53 @@
   object-fit: cover;
   display: block;
 }
-
-.lottery-scene__door {
+.lottery-scene__door-wrapper {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 67%;
+
+  &::before{
+    content: "";
+    display: block;
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    background:
+      conic-gradient(
+        from 22deg,
+        transparent 0deg,
+        rgba(255, 193, 64, 0.08) 42deg,
+        rgba(255, 229, 139, 0.72) 86deg,
+        rgba(255, 164, 28, 0.36) 122deg,
+        transparent 168deg,
+        transparent 215deg,
+        rgba(255, 216, 102, 0.62) 272deg,
+        transparent 330deg,
+        transparent 360deg
+      );
+    filter: blur(8px);
+
+
+    opacity: 0.9;
+    animation: lottery-scene-gold-glow-spin 7s linear infinite;
+  }
+}
+
+
+.lottery-scene__door {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: 100%;
   height: auto;
   object-fit: contain;
   pointer-events: none;
+}
+
+@keyframes lottery-scene-gold-glow-spin {
+  to {
+    transform: rotate(1turn);
+  }
 }
