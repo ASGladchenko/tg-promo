@@ -4,11 +4,11 @@ import {
   init,
   isTMA,
   miniApp,
+  viewport,
+  sendData,
   requestContact,
   retrieveRawInitData,
   retrieveLaunchParams,
-  sendData,
-  viewport
 } from "@tma.js/sdk-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./page.module.css";
