@@ -33,6 +33,19 @@ type TelegramUser = {
 };
 
 let sdkInitState: "idle" | "ready" | "failed" = "idle";
+const SHARE_TEXT = "Привет! заходи к нам я начал бой.";
+
+type TelegramWebAppGlobal = {
+  WebApp?: {
+    openTelegramLink?: (url: string) => void;
+  };
+};
+
+declare global {
+  interface Window {
+    Telegram?: TelegramWebAppGlobal;
+  }
+}
 
 function ensureSdkInitialized(): boolean {
   if (sdkInitState === "ready") {
@@ -209,6 +222,21 @@ export default function Home() {
     }
   }
 
+  function shareInviteInTelegram() {
+    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(SHARE_TEXT)}`;
+
+    try {
+      if (isTelegram && window.Telegram?.WebApp?.openTelegramLink) {
+        window.Telegram.WebApp.openTelegramLink(shareUrl);
+        return;
+      }
+
+      window.open(shareUrl, "_blank", "noopener,noreferrer");
+    } catch {
+      setResponse("Не удалось открыть окно шаринга в Telegram.");
+    }
+  }
+
   return (
     <main className={styles.page}>
       <section className={styles.shell}>
@@ -237,6 +265,9 @@ export default function Home() {
                 Запросить контакт
               </button>
             ) : null}
+            <button className={styles.secondaryButton} onClick={shareInviteInTelegram}>
+              Поделиться в Telegram
+            </button>
           </div>
           <p className={styles.response}>{response}</p>
           <p className={styles.response}>
