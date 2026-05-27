@@ -24,6 +24,11 @@ type ApiErrorResponse = {
   error?: string;
 };
 
+type ChannelMembershipResponse = {
+  subscribed: boolean;
+  status: string;
+};
+
 type TelegramUser = {
   id?: number;
   first_name?: string;
@@ -76,6 +81,7 @@ export default function Home() {
   const [telegramUser, setTelegramUser] = useState<TelegramUser | null>(null);
   const [contactStatus, setContactStatus] = useState("Контакт еще не запрошен.");
   const [sharedPhone, setSharedPhone] = useState<string | null>(null);
+  const [isCheckingMembership, setIsCheckingMembership] = useState(false);
 
   useEffect(() => {
     if (!ensureSdkInitialized()) {
@@ -264,6 +270,45 @@ export default function Home() {
     }
   }
 
+  async function checkChannelMembership() {
+    if (!isTelegram || !rawInitData) {
+      setResponse("Проверка подписки доступна только внутри Telegram Mini App.");
+      return;
+    }
+
+    setIsCheckingMembership(true);
+
+    try {
+      const res = await fetch("/api/channel-membership", {
+        cache: "no-store",
+        headers: {
+          "x-telegram-init-data": rawInitData
+        }
+      });
+
+      if (!res.ok) {
+        const errorBody = (await res.json().catch(() => null)) as ApiErrorResponse | null;
+        throw new Error(errorBody?.error ?? "Не удалось проверить подписку.");
+      }
+
+      const data = (await res.json()) as ChannelMembershipResponse;
+      if (data.subscribed) {
+        setResponse("Подписка подтверждена ✅");
+        return;
+      }
+
+      setResponse(`Подписка не найдена. Текущий статус: ${data.status}.`);
+    } catch (error) {
+      if (error instanceof Error) {
+        setResponse(`Ошибка проверки подписки. ${error.message}`);
+      } else {
+        setResponse("Ошибка проверки подписки.");
+      }
+    } finally {
+      setIsCheckingMembership(false);
+    }
+  }
+
   return (
     <main className={styles.page}>
       <section className={styles.shell}>
@@ -297,6 +342,9 @@ export default function Home() {
             </button>
             <button className={styles.secondaryButton} onClick={openChannelForSubscribe}>
               Подписаться на канал
+            </button>
+            <button className={styles.secondaryButton} disabled={isCheckingMembership} onClick={checkChannelMembership}>
+              {isCheckingMembership ? "Проверяю подписку..." : "Проверить подписку"}
             </button>
           </div>
           <p className={styles.response}>{response}</p>

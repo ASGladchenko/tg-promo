@@ -33,6 +33,20 @@ NEXT_PUBLIC_TELEGRAM_SHARE_URL=https://t.me/your_bot?startapp=play
 NEXT_PUBLIC_TELEGRAM_CHANNEL_URL=https://t.me/your_channel
 ```
 
+Для перевірки, підписаний користувач чи ні (кнопка `Проверить подписку`):
+
+```bash
+TELEGRAM_CHANNEL_ID=@your_channel
+```
+
+або
+
+```bash
+TELEGRAM_CHANNEL_ID=-1001234567890
+```
+
+Важливо: бот має бути доданий у канал (бажано адміном), інакше `getChatMember` може повертати помилку.
+
 Варіанти короткої Telegram-ссылки на гру:
 
 - Main Mini App: `https://t.me/<bot_username>?startapp=<param>`
