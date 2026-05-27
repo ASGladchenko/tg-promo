@@ -195,7 +195,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (isTelegram || authUser || !TELEGRAM_BOT_USERNAME) {
+    if (isAuthLoading || isTelegram || authUser || !TELEGRAM_BOT_USERNAME) {
       return;
     }
 
@@ -218,7 +218,7 @@ export default function Home() {
     return () => {
       container.innerHTML = "";
     };
-  }, [authUser, isTelegram]);
+  }, [authUser, isTelegram, isAuthLoading]);
 
   const telegramUserLabel = useMemo(() => {
     if (!telegramUser) return "Гость";
