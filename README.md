@@ -27,19 +27,7 @@ TELEGRAM_BOT_TOKEN=123456:ABCDEF
 APP_SESSION_SECRET=replace_with_long_random_secret
 ```
 
-Для входу з звичайного сайту через Telegram Login Widget:
-
-```bash
-NEXT_PUBLIC_TELEGRAM_BOT_USERNAME=YourBotUsername
-```
-
-Также в `@BotFather` для этого бота нужно настроить домен сайта (`/setdomain`), иначе Telegram Login Widget не будет авторизовывать пользователей на веб-странице.
-
-Опційно можна змінити TTL для даних від widget (у секундах):
-
-```bash
-TELEGRAM_WIDGET_MAX_AGE_SECONDS=300
-```
+Для входу з звичайного сайту використовуйте deeplink-кнопку `Открыть в Telegram` (без widget).
 
 Для кнопки шарингу Mini App (щоб у повідомленні була коротка ссылка на гру) додайте:
 
@@ -66,7 +54,7 @@ TELEGRAM_CHANNEL_ID=-1001234567890
 ```
 
 Важливо: бот має бути доданий у канал (бажано адміном), інакше `getChatMember` може повертати помилку.
-Проверка подписки теперь работает в двух сценариях: через `initData` в Mini App или через cookie-сессию после входа через Telegram Login Widget.
+Проверка подписки работает после входа в Mini App (по `initData`) и через активную cookie-сессию.
 
 Варіанти короткої Telegram-ссылки на гру:
 
