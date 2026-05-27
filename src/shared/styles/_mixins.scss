@@ -1,0 +1,9 @@
+@mixin center-grid {
+  display: grid;
+  place-items: center;
+}
+
+@mixin reset-button {
+  border: 0;
+  font: inherit;
+}

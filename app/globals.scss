@@ -1,0 +1,36 @@
+@use "../src/shared/styles/index" as s;
+@use "./page";
+@use "../src/shared/ui/logo/logo";
+@use "../src/features/widget-header/widget-header";
+@use "../src/entities/lottery/lottery-scene";
+
+:root {
+  @include s.export-root-vars;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: s.$font-family-base;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
