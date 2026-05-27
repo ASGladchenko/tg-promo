@@ -34,6 +34,7 @@ type TelegramUser = {
 
 let sdkInitState: "idle" | "ready" | "failed" = "idle";
 const SHARE_TEXT = "Привет! заходи к нам я начал бой.";
+const SHARE_GAME_URL = process.env.NEXT_PUBLIC_TELEGRAM_SHARE_URL?.trim();
 
 type TelegramWebAppGlobal = {
   WebApp?: {
@@ -223,7 +224,14 @@ export default function Home() {
   }
 
   function shareInviteInTelegram() {
-    const shareUrl = `https://t.me/share/url?text=${encodeURIComponent(SHARE_TEXT)}`;
+    if (!SHARE_GAME_URL) {
+      setResponse(
+        "Не настроена ссылка на игру. Добавь NEXT_PUBLIC_TELEGRAM_SHARE_URL в .env.local и перезапусти приложение."
+      );
+      return;
+    }
+
+    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(SHARE_GAME_URL)}&text=${encodeURIComponent(SHARE_TEXT)}`;
 
     try {
       if (isTelegram && window.Telegram?.WebApp?.openTelegramLink) {

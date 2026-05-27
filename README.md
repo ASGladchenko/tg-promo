@@ -21,6 +21,17 @@ npm run dev
 TELEGRAM_BOT_TOKEN=123456:ABCDEF
 ```
 
+Для кнопки шарингу Mini App (щоб у повідомленні була коротка ссылка на гру) додайте:
+
+```bash
+NEXT_PUBLIC_TELEGRAM_SHARE_URL=https://t.me/your_bot?startapp=play
+```
+
+Варіанти короткої Telegram-ссылки на гру:
+
+- Main Mini App: `https://t.me/<bot_username>?startapp=<param>`
+- Direct Mini App: `https://t.me/<bot_username>/<app_short_name>?startapp=<param>`
+
 Відкрити у браузері:
 
 ```txt
