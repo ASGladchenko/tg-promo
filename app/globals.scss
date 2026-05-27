@@ -2,7 +2,8 @@
 @use "./page";
 @use "../src/shared/ui/logo/logo";
 @use "../src/features/widget-header/widget-header";
-@use "../src/entities/lottery/lottery-scene";
+@use "../src/entities/lottery/lottery-scene/lottery-scene";
+@use "../src/entities/lottery/lottery-code-panel/lottery-code-panel";
 
 :root {
   @include s.export-root-vars;

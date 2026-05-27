@@ -1,4 +1,9 @@
 type TelegramWebAppApi = {
+  initDataUnsafe?: {
+    user?: {
+      language_code?: string;
+    };
+  };
   openLink?: (url: string, options?: { try_browser?: string }) => void;
   openTelegramLink?: (url: string) => void;
 };

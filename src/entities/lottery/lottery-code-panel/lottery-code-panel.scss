@@ -1,0 +1,84 @@
+@use "../../../shared/styles/index" as s;
+
+.lottery-code-panel {
+  width: min(520px, 100%);
+  margin-inline: auto;
+  display: grid;
+  justify-items: center;
+}
+
+.lottery-code-panel__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.lottery-code-panel__slots {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: clamp(8px, 2.6vw, 14px);
+  direction: inherit;
+}
+
+.lottery-code-panel__slot {
+  width: clamp(58px, 18vw, 84px);
+  aspect-ratio: 388 / 377;
+  border: 0;
+  background-color: transparent;
+  background-image: url("../../../shared/images/numbers.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  color: s.$color-warm-strong;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  cursor: pointer;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+  transition:
+    filter 180ms ease,
+    transform 180ms ease;
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.lottery-code-panel__slot--active {
+  filter:
+    brightness(1.18)
+    drop-shadow(0 0 14px rgba(255, 216, 102, 0.35))
+    drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+  transform: translateY(-2px);
+}
+
+.lottery-code-panel__slot--filled {
+  filter:
+    brightness(1.08)
+    drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+}
+
+.lottery-code-panel__digit {
+  color: #fff1c6;
+  font-size: clamp(1.6rem, 7vw, 2.55rem);
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.45),
+    0 0 14px rgba(255, 200, 74, 0.38);
+}
+
+.lottery-code-panel__placeholder {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(246, 238, 227, 0.46);
+  box-shadow: 0 0 12px rgba(255, 216, 102, 0.2);
+}

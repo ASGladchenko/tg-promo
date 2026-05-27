@@ -6,12 +6,14 @@ import safeImage from "@/src/shared/images/safe.webp";
 import safeDoorImage from "@/src/shared/images/safe_door.webp";
 import MuteIcon from "@/src/shared/svg/mute.svg";
 import VolumeIcon from "@/src/shared/svg/volume.svg";
+import LotteryCodePanel from "../lottery-code-panel/lottery-code-panel";
 
 const LOOP_AUDIO_SRC = "/audio/16s.ogg";
 const AUDIO_START_EVENTS = ["pointerdown", "click", "touchstart", "keydown"] as const;
 
 export default function LotteryScene() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const shouldResumeAudioRef = useRef(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
   async function playAudio(audio: HTMLAudioElement) {
@@ -58,8 +60,50 @@ export default function LotteryScene() {
       document.addEventListener(eventName, startAudioAfterInteraction);
     });
 
+    function pauseAudioForBackground() {
+      if (audioElement.paused) {
+        return;
+      }
+
+      shouldResumeAudioRef.current = true;
+      audioElement.pause();
+      setIsPlaying(false);
+    }
+
+    function resumeAudioAfterBackground() {
+      if (!shouldResumeAudioRef.current || document.visibilityState === "hidden") {
+        return;
+      }
+
+      void playAudio(audioElement).then((started) => {
+        if (started) {
+          shouldResumeAudioRef.current = false;
+        }
+      });
+    }
+
+    function handleVisibilityChange() {
+      if (document.visibilityState === "hidden") {
+        pauseAudioForBackground();
+        return;
+      }
+
+      resumeAudioAfterBackground();
+    }
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("pagehide", pauseAudioForBackground);
+    window.addEventListener("blur", pauseAudioForBackground);
+    window.addEventListener("pageshow", resumeAudioAfterBackground);
+    window.addEventListener("focus", resumeAudioAfterBackground);
+
     return () => {
       removeStartListeners();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("pagehide", pauseAudioForBackground);
+      window.removeEventListener("blur", pauseAudioForBackground);
+      window.removeEventListener("pageshow", resumeAudioAfterBackground);
+      window.removeEventListener("focus", resumeAudioAfterBackground);
       audioElement.pause();
     };
   }, []);
@@ -76,6 +120,7 @@ export default function LotteryScene() {
     }
 
     audio.pause();
+    shouldResumeAudioRef.current = false;
     setIsPlaying(false);
   }
 
@@ -85,14 +130,16 @@ export default function LotteryScene() {
       <div className="lottery-scene__stage">
         <Image className="lottery-scene__safe" src={safeImage} alt="Safe" priority />
 
-        <div className='lottery-scene__door-wrapper'>
+        <div className="lottery-scene__door-wrapper">
           <Image className="lottery-scene__door" src={safeDoorImage} alt="Safe door" priority />
         </div>
-        
-      
+
+
       </div>
 
-        <button
+      <LotteryCodePanel />
+
+              <button
           className="lottery-scene__audio-toggle"
           type="button"
           onClick={() => void toggleAudio()}

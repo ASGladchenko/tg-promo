@@ -1,4 +1,4 @@
-@use "../../shared/styles/index" as s;
+@use "../../../shared/styles/index" as s;
 
 .lottery-scene {
   padding: s.$space-3;
@@ -35,7 +35,6 @@
   aspect-ratio: 1 / 1;
   position: relative;
   overflow: hidden;
-pointer-events: none;
 }
 
 .lottery-scene__stage > * {
@@ -48,15 +47,18 @@ pointer-events: none;
   height: 100%;
   object-fit: cover;
   display: block;
+  pointer-events: none;
 }
+
 .lottery-scene__door-wrapper {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 67%;
+  pointer-events: none;
 
-  &::before{
+  &::before {
     content: "";
     display: block;
     position: absolute;
@@ -76,13 +78,10 @@ pointer-events: none;
         transparent 360deg
       );
     filter: blur(8px);
-
-
     opacity: 0.9;
     animation: lottery-scene-gold-glow-spin 7s linear infinite;
   }
 }
-
 
 .lottery-scene__door {
   position: relative;
@@ -92,10 +91,23 @@ pointer-events: none;
   height: auto;
   object-fit: contain;
   pointer-events: none;
+
+  animation: lottery-scene-safe-pulse 3.8s ease-in-out infinite;
 }
 
 @keyframes lottery-scene-gold-glow-spin {
   to {
     transform: rotate(1turn);
+  }
+}
+
+@keyframes lottery-scene-safe-pulse {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.15);
   }
 }

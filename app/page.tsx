@@ -2,7 +2,7 @@
 
 import { init, isTMA, miniApp, retrieveLaunchParams, viewport } from "@tma.js/sdk-react";
 import { useEffect, useState } from "react";
-import LotteryScene from "@/src/entities/lottery/lottery-scene";
+import { LotteryScene } from "@/src/entities/lottery";
 import WidgetHeader from "@/src/features/widget-header/widget-header";
 
 type TelegramUser = {
