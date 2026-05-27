@@ -3,8 +3,8 @@
 import {
   init,
   isTMA,
-  miniApp,
   viewport,
+  miniApp,
   sendData,
   requestContact,
   retrieveRawInitData,
