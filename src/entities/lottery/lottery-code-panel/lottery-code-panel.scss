@@ -55,6 +55,7 @@
 
   &:disabled {
     cursor: default;
+    pointer-events: none;
   }
 }
 
@@ -70,8 +71,10 @@
 
 .lottery-code-panel__slot--locked {
   opacity: 0.86;
+  cursor: default;
   filter: saturate(0.84) brightness(0.98) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
-  transform: scale(0.96);
+  pointer-events: none;
+  transform: none;
 }
 
 .lottery-code-panel__slot--invalid {
@@ -138,6 +141,7 @@
     cursor: default;
     filter: saturate(0.84) brightness(0.98) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
     opacity: 0.86;
+    pointer-events: none;
   }
 }
 
