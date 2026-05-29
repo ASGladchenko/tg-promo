@@ -39,8 +39,17 @@ function triggerLockHapticFeedback() {
 }
 
 function triggerErrorHapticFeedback() {
-  window.Telegram?.WebApp?.HapticFeedback?.notificationOccurred?.("error");
-  window.Telegram?.WebApp?.HapticFeedback?.impactOccurred?.("heavy");
+  const hapticFeedback = window.Telegram?.WebApp?.HapticFeedback;
+
+  if (!hapticFeedback) {
+    navigator.vibrate?.([40, 30, 40]);
+    return;
+  }
+
+  hapticFeedback.impactOccurred?.("heavy");
+  window.setTimeout(() => {
+    hapticFeedback.notificationOccurred?.("error");
+  }, 60);
 }
 
 export default function LotteryCodePanel() {
@@ -91,6 +100,8 @@ export default function LotteryCodePanel() {
     }
 
     setIsCodeLocked(true);
+    setIsFocused(false);
+    inputRef.current?.blur();
     triggerLockHapticFeedback();
   }
 
@@ -118,7 +129,7 @@ export default function LotteryCodePanel() {
 
       <div className="lottery-code-panel__slots">
         {digits.map((digit, index) => {
-          const isActive = isFocused && activeIndex === index;
+          const isActive = !isCodeLocked && isFocused && activeIndex === index;
           const isInvalid = hasSubmitAttempt && !digit;
           const slotClassName = [
             "lottery-code-panel__slot",
