@@ -2,6 +2,8 @@
 
 import { useMemo, useRef, useState } from "react";
 import type { ChangeEvent } from "react";
+import LockIcon from "@/shared/svg/lock.svg?react";
+import UnlockIcon from "@/shared/svg/un-lock.svg?react";
 import { spinWheelOnCodeInput } from "../model/wheel-spin-bridge";
 
 const CODE_LENGTH = 4;
@@ -32,28 +34,64 @@ function triggerCodeHapticFeedback() {
   window.Telegram?.WebApp?.HapticFeedback?.impactOccurred?.("soft");
 }
 
+function triggerLockHapticFeedback() {
+  window.Telegram?.WebApp?.HapticFeedback?.impactOccurred?.("rigid");
+}
+
+function triggerErrorHapticFeedback() {
+  window.Telegram?.WebApp?.HapticFeedback?.notificationOccurred?.("error");
+  window.Telegram?.WebApp?.HapticFeedback?.impactOccurred?.("heavy");
+}
+
 export default function LotteryCodePanel() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [code, setCode] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const [hasSubmitAttempt, setHasSubmitAttempt] = useState(false);
+  const [isCodeLocked, setIsCodeLocked] = useState(false);
   const activeIndex = code.length < CODE_LENGTH ? code.length : null;
   const digits = useMemo(() => Array.from({ length: CODE_LENGTH }, (_, index) => code[index] ?? ""), [code]);
+  const hasMissingDigits = code.length < CODE_LENGTH;
 
   function focusInput() {
+    if (isCodeLocked) {
+      return;
+    }
+
     inputRef.current?.focus();
   }
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+    if (isCodeLocked) {
+      return;
+    }
+
     const nextCode = normalizeCodeInput(event.currentTarget.value);
 
     setCode((previousCode) => {
       if (nextCode !== previousCode) {
+        setHasSubmitAttempt(false);
         spinWheelOnCodeInput();
         triggerCodeHapticFeedback();
       }
 
       return nextCode;
     });
+  }
+
+  function lockCode() {
+    if (isCodeLocked) {
+      return;
+    }
+
+    if (hasMissingDigits) {
+      setHasSubmitAttempt(true);
+      triggerErrorHapticFeedback();
+      return;
+    }
+
+    setIsCodeLocked(true);
+    triggerLockHapticFeedback();
   }
 
   return (
@@ -72,6 +110,7 @@ export default function LotteryCodePanel() {
         autoComplete="one-time-code"
         enterKeyHint="done"
         aria-label="Код из 4 цифр"
+        disabled={isCodeLocked}
         onBlur={() => setIsFocused(false)}
         onChange={handleInputChange}
         onFocus={() => setIsFocused(true)}
@@ -80,10 +119,13 @@ export default function LotteryCodePanel() {
       <div className="lottery-code-panel__slots">
         {digits.map((digit, index) => {
           const isActive = isFocused && activeIndex === index;
+          const isInvalid = hasSubmitAttempt && !digit;
           const slotClassName = [
             "lottery-code-panel__slot",
             digit ? "lottery-code-panel__slot--filled" : "",
-            isActive ? "lottery-code-panel__slot--active" : ""
+            isActive ? "lottery-code-panel__slot--active" : "",
+            isCodeLocked ? "lottery-code-panel__slot--locked" : "",
+            isInvalid ? "lottery-code-panel__slot--invalid" : ""
           ]
             .filter(Boolean)
             .join(" ");
@@ -93,7 +135,8 @@ export default function LotteryCodePanel() {
               className={slotClassName}
               key={index}
               type="button"
-              aria-label={`Цифра ${index + 1}`}
+              aria-label={`Цифра ${index + 1}${isCodeLocked ? ", зафиксирована" : ""}`}
+              disabled={isCodeLocked}
               onClick={focusInput}
             >
               {digit ? (
@@ -104,6 +147,25 @@ export default function LotteryCodePanel() {
             </button>
           );
         })}
+
+        <button
+          className={[
+            "lottery-code-panel__lock-button",
+            isCodeLocked ? "lottery-code-panel__lock-button--locked" : "",
+            hasSubmitAttempt && hasMissingDigits ? "lottery-code-panel__lock-button--invalid" : ""
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          type="button"
+          disabled={isCodeLocked}
+          aria-label={isCodeLocked ? `Код ${code} зафиксирован` : "Зафиксировать код"}
+          onClick={(event) => {
+            event.stopPropagation();
+            lockCode();
+          }}
+        >
+          {isCodeLocked ? <LockIcon aria-hidden="true" /> : <UnlockIcon aria-hidden="true" />}
+        </button>
       </div>
     </div>
   );
