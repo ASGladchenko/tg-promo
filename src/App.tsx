@@ -1,7 +1,7 @@
 import { init, isTMA, miniApp, retrieveLaunchParams, viewport } from "@tma.js/sdk-react";
 import { useEffect, useState } from "react";
-import { LotteryScene } from "@/entities/lottery";
 import { PUBLIC_ENV } from "@/shared/config/public-env";
+import LotteryWidget from "@/widgets/lottery-widget";
 import WidgetHeader from "@/widgets/widget-header";
 
 type TelegramUser = {
@@ -95,7 +95,7 @@ export default function App() {
     <main className="page">
       <WidgetHeader siteUrl={BRAND_SITE_URL} />
       <section className="page__body">
-        <LotteryScene />
+        <LotteryWidget />
         <p className="page__meta">
           mode: {isTelegram ? `telegram (${telegramUserLabel})` : "dev browser preview"}
         </p>

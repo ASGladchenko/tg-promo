@@ -11,9 +11,37 @@ import SafeWheel from "./safe-wheel";
 const LOOP_AUDIO_SRC = "/audio/16s.ogg";
 const AUDIO_START_EVENTS = ["pointerdown", "click", "touchstart", "keydown"] as const;
 
-export default function LotteryScene() {
+type LotterySceneProps = {
+  onAssetsReady?: () => void;
+};
+
+function waitForImageReady(image: HTMLImageElement) {
+  const decodeImage = () =>
+    typeof image.decode === "function" ? image.decode().catch(() => undefined) : Promise.resolve();
+
+  if (image.complete && image.naturalWidth > 0) {
+    return decodeImage();
+  }
+
+  return new Promise<void>((resolve) => {
+    const handleLoad = () => {
+      void decodeImage().finally(resolve);
+    };
+
+    const handleError = () => {
+      resolve();
+    };
+
+    image.addEventListener("load", handleLoad, { once: true });
+    image.addEventListener("error", handleError, { once: true });
+  });
+}
+
+export default function LotteryScene({ onAssetsReady }: LotterySceneProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const sceneRef = useRef<HTMLElement | null>(null);
   const shouldResumeAudioRef = useRef(false);
+  const hasReportedReadyRef = useRef(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
   async function playAudio(audio: HTMLAudioElement) {
@@ -108,6 +136,35 @@ export default function LotteryScene() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!onAssetsReady || hasReportedReadyRef.current) {
+      return;
+    }
+
+    const sceneNode = sceneRef.current;
+    if (!sceneNode) {
+      onAssetsReady();
+      hasReportedReadyRef.current = true;
+      return;
+    }
+
+    let isCancelled = false;
+    const images = Array.from(sceneNode.querySelectorAll("img"));
+
+    Promise.all(images.map((image) => waitForImageReady(image))).finally(() => {
+      if (isCancelled || hasReportedReadyRef.current) {
+        return;
+      }
+
+      hasReportedReadyRef.current = true;
+      onAssetsReady();
+    });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [onAssetsReady]);
+
   async function toggleAudio() {
     const audio = audioRef.current;
     if (!audio) {
@@ -125,13 +182,20 @@ export default function LotteryScene() {
   }
 
   return (
-    <section className="lottery-scene" aria-label="Lottery scene">
+    <section ref={sceneRef} className="lottery-scene" aria-label="Lottery scene">
       <audio ref={audioRef} src={LOOP_AUDIO_SRC} loop preload="none" />
       <div className="lottery-scene__stage">
-        <img className="lottery-scene__safe" src={safeImage} alt="Safe" loading="eager" />
+        <img className="lottery-scene__safe" src={safeImage} alt="Safe" loading="eager" decoding="sync" />
 
         <div className="lottery-scene__door-wrapper">
-          <img className="lottery-scene__door" src={safeDoorImage} alt="Safe door" loading="eager" />
+          <img
+            className="lottery-scene__door"
+            src={safeDoorImage}
+            alt="Safe door"
+            loading="eager"
+            decoding="sync"
+          />
+
           <SafeWheel />
         </div>
       </div>

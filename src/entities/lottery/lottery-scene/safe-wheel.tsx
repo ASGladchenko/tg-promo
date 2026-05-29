@@ -20,6 +20,7 @@ export default function SafeWheel() {
       src={safeWheelImage}
       alt="Safe wheel"
       loading="eager"
+      decoding="sync"
     />
   );
 }
