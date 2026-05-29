@@ -31,7 +31,7 @@
   aspect-ratio: 388 / 377;
   border: 0;
   background-color: transparent;
-  background-image: url("../../../shared/images/numbers.webp");
+  background-image: url("/src/shared/images/numbers.webp");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
@@ -51,17 +51,13 @@
 }
 
 .lottery-code-panel__slot--active {
-  filter:
-    brightness(1.18)
-    drop-shadow(0 0 14px rgba(255, 216, 102, 0.35))
+  filter: brightness(1.18) drop-shadow(0 0 14px rgba(255, 216, 102, 0.35))
     drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
   transform: translateY(-2px);
 }
 
 .lottery-code-panel__slot--filled {
-  filter:
-    brightness(1.08)
-    drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+  filter: brightness(1.08) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
 }
 
 .lottery-code-panel__digit {

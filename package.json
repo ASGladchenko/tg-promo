@@ -3,30 +3,48 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "analyze": "ANALYZE=true next build --webpack",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "concurrently \"npm:dev:web\" \"npm:dev:api\"",
+    "dev:web": "vite",
+    "dev:api": "tsx watch src/server/main.ts",
+    "build": "npm run build:web && npm run build:api",
+    "build:web": "vite build",
+    "build:api": "tsc -p tsconfig.server.json --noEmit",
+    "preview": "vite preview",
+    "start": "tsx src/server/main.ts",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.21",
     "@nestjs/core": "^11.1.21",
+    "@nestjs/platform-express": "^11.1.21",
     "@tma.js/init-data-node": "^2.0.7",
     "@tma.js/sdk-react": "^3.0.19",
-    "next": "^16.2.6",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^16.2.6",
-    "@svgr/webpack": "^8.1.0",
+    "@vitejs/plugin-react": "^4.3.4",
     "@types/node": "^25.9.1",
+    "@types/express": "^5.0.5",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.60.0",
+    "@typescript-eslint/parser": "^8.60.0",
+    "concurrently": "^9.2.1",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.11",
+    "prettier": "^3.6.2",
     "sass": "^1.100.0",
-    "typescript": "^6.0.3"
+    "tsx": "^4.20.6",
+    "typescript": "^6.0.3",
+    "vite": "^5.4.11",
+    "vite-plugin-svgr": "^4.5.0"
   }
 }

@@ -64,19 +64,18 @@
     position: absolute;
     inset: -10px;
     border-radius: 50%;
-    background:
-      conic-gradient(
-        from 22deg,
-        transparent 0deg,
-        rgba(255, 193, 64, 0.08) 42deg,
-        rgba(255, 229, 139, 0.72) 86deg,
-        rgba(255, 164, 28, 0.36) 122deg,
-        transparent 168deg,
-        transparent 215deg,
-        rgba(255, 216, 102, 0.62) 272deg,
-        transparent 330deg,
-        transparent 360deg
-      );
+    background: conic-gradient(
+      from 22deg,
+      transparent 0deg,
+      rgba(255, 193, 64, 0.08) 42deg,
+      rgba(255, 229, 139, 0.72) 86deg,
+      rgba(255, 164, 28, 0.36) 122deg,
+      transparent 168deg,
+      transparent 215deg,
+      rgba(255, 216, 102, 0.62) 272deg,
+      transparent 330deg,
+      transparent 360deg
+    );
     filter: blur(8px);
     opacity: 0.9;
     animation: lottery-scene-gold-glow-spin 7s linear infinite;

@@ -67,7 +67,12 @@ export default function LotteryCodePanel() {
   }
 
   return (
-    <div className="lottery-code-panel" dir={direction} aria-label="Введите 4 цифры кода" onClick={focusInput}>
+    <div
+      className="lottery-code-panel"
+      dir={direction}
+      aria-label="Введите 4 цифры кода"
+      onClick={focusInput}
+    >
       <input
         ref={inputRef}
         className="lottery-code-panel__input"
@@ -88,7 +93,7 @@ export default function LotteryCodePanel() {
           const slotClassName = [
             "lottery-code-panel__slot",
             digit ? "lottery-code-panel__slot--filled" : "",
-            isActive ? "lottery-code-panel__slot--active" : "",
+            isActive ? "lottery-code-panel__slot--active" : ""
           ]
             .filter(Boolean)
             .join(" ");

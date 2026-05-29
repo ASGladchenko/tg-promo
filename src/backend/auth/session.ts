@@ -1,5 +1,4 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
-import type { NextResponse } from "next/server";
 
 export const SESSION_COOKIE_NAME = "tg_session";
 const SESSION_VERSION = 1;
@@ -23,12 +22,26 @@ type SessionPayload = {
   exp: number;
 };
 
+type SameSiteValue = "lax" | "strict" | "none";
+
 function getSessionSecret(): string {
   const secret = process.env.APP_SESSION_SECRET ?? process.env.TELEGRAM_BOT_TOKEN;
   if (!secret) {
     throw new Error("Missing APP_SESSION_SECRET or TELEGRAM_BOT_TOKEN.");
   }
   return secret;
+}
+
+function getCookieSameSite(): SameSiteValue {
+  const configured = (process.env.APP_SESSION_COOKIE_SAME_SITE ?? "lax").trim().toLowerCase();
+  if (configured === "none" || configured === "strict" || configured === "lax") {
+    return configured;
+  }
+  return "lax";
+}
+
+function isSecureCookie(sameSite: SameSiteValue): boolean {
+  return process.env.NODE_ENV === "production" || sameSite === "none";
 }
 
 function sign(payloadBase64: string): string {
@@ -102,11 +115,11 @@ export function verifySessionToken(token: string): SessionPayload | null {
   return payload;
 }
 
-export function readSessionFromRequest(request: Request): {
+export function readSessionFromRequest(request: Request | { headers?: unknown }): {
   user: SessionUser;
   source: SessionAuthSource;
 } | null {
-  const cookieHeader = request.headers.get("cookie");
+  const cookieHeader = getCookieHeader(request);
   if (!cookieHeader) {
     return null;
   }
@@ -132,30 +145,108 @@ export function readSessionFromRequest(request: Request): {
   };
 }
 
+type CookieResponse = {
+  cookie?: (name: string, value: string, options: Record<string, unknown>) => void;
+  getHeader?: (name: string) => number | string | string[] | undefined;
+  setHeader?: (name: string, value: number | string | readonly string[]) => void;
+};
+
+function getCookieHeader(request: Request | { headers?: unknown }): string | null {
+  const headers = (request as { headers?: unknown }).headers;
+  if (!headers) {
+    return null;
+  }
+
+  if (
+    typeof headers === "object" &&
+    headers !== null &&
+    "get" in headers &&
+    typeof (headers as Headers).get === "function"
+  ) {
+    return (headers as Headers).get("cookie");
+  }
+
+  if (typeof headers === "object" && headers !== null && "cookie" in headers) {
+    const cookieValue = (headers as { cookie?: string | string[] }).cookie;
+    if (Array.isArray(cookieValue)) {
+      return cookieValue.join("; ");
+    }
+    return cookieValue ?? null;
+  }
+
+  return null;
+}
+
+function serializeCookie(name: string, value: string, maxAgeSeconds: number): string {
+  const sameSite = getCookieSameSite();
+  const attributes = [
+    `${name}=${encodeURIComponent(value)}`,
+    "Path=/",
+    "HttpOnly",
+    `SameSite=${sameSite.charAt(0).toUpperCase()}${sameSite.slice(1)}`,
+    `Max-Age=${maxAgeSeconds}`
+  ];
+
+  if (isSecureCookie(sameSite)) {
+    attributes.push("Secure");
+  }
+
+  return attributes.join("; ");
+}
+
+function appendSetCookieHeader(response: CookieResponse, cookieValue: string) {
+  if (!response.setHeader || !response.getHeader) {
+    return;
+  }
+
+  const current = response.getHeader("Set-Cookie");
+  if (!current) {
+    response.setHeader("Set-Cookie", cookieValue);
+    return;
+  }
+
+  if (Array.isArray(current)) {
+    response.setHeader("Set-Cookie", [...current, cookieValue]);
+    return;
+  }
+
+  response.setHeader("Set-Cookie", [String(current), cookieValue]);
+}
+
 export function setSessionCookie(
-  response: NextResponse,
+  response: CookieResponse,
   token: string,
   maxAgeSeconds: number = SESSION_TTL_SECONDS
 ) {
-  response.cookies.set({
-    name: SESSION_COOKIE_NAME,
-    value: token,
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: maxAgeSeconds
-  });
+  const sameSite = getCookieSameSite();
+
+  if (response.cookie) {
+    response.cookie(SESSION_COOKIE_NAME, token, {
+      httpOnly: true,
+      sameSite,
+      secure: isSecureCookie(sameSite),
+      path: "/",
+      maxAge: maxAgeSeconds * 1000
+    });
+    return;
+  }
+
+  appendSetCookieHeader(response, serializeCookie(SESSION_COOKIE_NAME, token, maxAgeSeconds));
 }
 
-export function clearSessionCookie(response: NextResponse) {
-  response.cookies.set({
-    name: SESSION_COOKIE_NAME,
-    value: "",
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: 0
-  });
+export function clearSessionCookie(response: CookieResponse) {
+  const sameSite = getCookieSameSite();
+
+  if (response.cookie) {
+    response.cookie(SESSION_COOKIE_NAME, "", {
+      httpOnly: true,
+      sameSite,
+      secure: isSecureCookie(sameSite),
+      path: "/",
+      maxAge: 0
+    });
+    return;
+  }
+
+  appendSetCookieHeader(response, serializeCookie(SESSION_COOKIE_NAME, "", 0));
 }

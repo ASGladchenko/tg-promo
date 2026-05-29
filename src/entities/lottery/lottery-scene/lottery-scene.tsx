@@ -1,11 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import safeImage from "@/src/shared/images/safe.webp";
-import safeDoorImage from "@/src/shared/images/safe_door.webp";
-import MuteIcon from "@/src/shared/svg/mute.svg";
-import VolumeIcon from "@/src/shared/svg/volume.svg";
+import safeImage from "@/shared/images/safe.webp";
+import safeDoorImage from "@/shared/images/safe_door.webp";
+import MuteIcon from "@/shared/svg/mute.svg?react";
+import VolumeIcon from "@/shared/svg/volume.svg?react";
 import LotteryCodePanel from "../lottery-code-panel/lottery-code-panel";
 
 const LOOP_AUDIO_SRC = "/audio/16s.ogg";
@@ -128,30 +127,28 @@ export default function LotteryScene() {
     <section className="lottery-scene" aria-label="Lottery scene">
       <audio ref={audioRef} src={LOOP_AUDIO_SRC} loop preload="none" />
       <div className="lottery-scene__stage">
-        <Image className="lottery-scene__safe" src={safeImage} alt="Safe" priority />
+        <img className="lottery-scene__safe" src={safeImage} alt="Safe" loading="eager" />
 
         <div className="lottery-scene__door-wrapper">
-          <Image className="lottery-scene__door" src={safeDoorImage} alt="Safe door" priority />
+          <img className="lottery-scene__door" src={safeDoorImage} alt="Safe door" loading="eager" />
         </div>
-
-
       </div>
 
       <LotteryCodePanel />
 
-              <button
-          className="lottery-scene__audio-toggle"
-          type="button"
-          onClick={() => void toggleAudio()}
-          aria-label={isPlaying ? "Выключить звук" : "Включить звук"}
-          title={isPlaying ? "Выключить звук" : "Включить звук"}
-        >
-          {isPlaying ? (
-            <VolumeIcon className="lottery-scene__audio-icon" aria-hidden="true" focusable="false" />
-          ) : (
-            <MuteIcon className="lottery-scene__audio-icon" aria-hidden="true" focusable="false" />
-          )}
-        </button>
+      <button
+        className="lottery-scene__audio-toggle"
+        type="button"
+        onClick={() => void toggleAudio()}
+        aria-label={isPlaying ? "Выключить звук" : "Включить звук"}
+        title={isPlaying ? "Выключить звук" : "Включить звук"}
+      >
+        {isPlaying ? (
+          <VolumeIcon className="lottery-scene__audio-icon" aria-hidden="true" focusable="false" />
+        ) : (
+          <MuteIcon className="lottery-scene__audio-icon" aria-hidden="true" focusable="false" />
+        )}
+      </button>
     </section>
   );
 }

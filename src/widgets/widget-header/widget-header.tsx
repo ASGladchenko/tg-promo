@@ -1,6 +1,6 @@
 "use client";
 
-import Logo from "@/src/shared/ui/logo/logo";
+import Logo from "@/shared/ui/logo/logo";
 
 type WidgetHeaderProps = {
   siteUrl: string;

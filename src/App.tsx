@@ -1,9 +1,8 @@
-"use client";
-
 import { init, isTMA, miniApp, retrieveLaunchParams, viewport } from "@tma.js/sdk-react";
 import { useEffect, useState } from "react";
-import { LotteryScene } from "@/src/entities/lottery";
-import WidgetHeader from "@/src/features/widget-header/widget-header";
+import { LotteryScene } from "@/entities/lottery";
+import { PUBLIC_ENV } from "@/shared/config/public-env";
+import WidgetHeader from "@/widgets/widget-header";
 
 type TelegramUser = {
   first_name?: string;
@@ -11,8 +10,8 @@ type TelegramUser = {
 };
 
 let sdkInitState: "idle" | "ready" | "failed" = "idle";
-const MINI_APP_URL = process.env.NEXT_PUBLIC_TELEGRAM_SHARE_URL?.trim() ?? "https://t.me/TgAsPromo1Bot?startapp=play";
-const BRAND_SITE_URL = "https://1mlnbet.com/";
+const MINI_APP_URL = PUBLIC_ENV.TELEGRAM_SHARE_URL;
+const BRAND_SITE_URL = PUBLIC_ENV.BRAND_SITE_URL;
 
 function ensureSdkInitialized(): boolean {
   if (sdkInitState === "ready") {
@@ -32,7 +31,7 @@ function ensureSdkInitialized(): boolean {
   }
 }
 
-export default function Home() {
+export default function App() {
   const [isTelegram, setIsTelegram] = useState(false);
   const [telegramUserLabel, setTelegramUserLabel] = useState("guest");
 
@@ -77,14 +76,10 @@ export default function Home() {
   }, []);
 
   function openMiniAppFromSite() {
-    if (typeof window === "undefined") {
-      return;
-    }
-
     window.open(MINI_APP_URL, "_blank", "noopener,noreferrer");
   }
 
-  const isDevBrowserPreview = process.env.NODE_ENV === "development" && !isTelegram;
+  const isDevBrowserPreview = import.meta.env.DEV && !isTelegram;
 
   if (!isTelegram && !isDevBrowserPreview) {
     return (
@@ -101,7 +96,9 @@ export default function Home() {
       <WidgetHeader siteUrl={BRAND_SITE_URL} />
       <section className="page__body">
         <LotteryScene />
-        <p className="page__meta">mode: {isTelegram ? `telegram (${telegramUserLabel})` : "dev browser preview"}</p>
+        <p className="page__meta">
+          mode: {isTelegram ? `telegram (${telegramUserLabel})` : "dev browser preview"}
+        </p>
       </section>
     </main>
   );

@@ -2,6 +2,7 @@ node_modules
 .next
 out
 dist
+dist-server
 .env
 .env*.local
 npm-debug.log*
@@ -12,3 +13,4 @@ pnpm-debug.log*
 .agents
 
 .git-local
+*.tsbuildinfo

@@ -1,6 +1,6 @@
 "use client";
 
-import LogoMark from "@/src/shared/svg/logo.svg";
+import LogoMark from "@/shared/svg/logo.svg?react";
 
 type BaseLogoProps = {
   className?: string;
@@ -28,14 +28,25 @@ export default function Logo(props: LogoProps) {
 
   if (props.as === "link") {
     return (
-      <a className={joinClassName(props.className)} href={props.href} target="_blank" rel="noreferrer noopener" aria-label={ariaLabel}>
+      <a
+        className={joinClassName(props.className)}
+        href={props.href}
+        target="_blank"
+        rel="noreferrer noopener"
+        aria-label={ariaLabel}
+      >
         <LogoMark className="logo__mark" />
       </a>
     );
   }
 
   return (
-    <button className={joinClassName(props.className)} type="button" onClick={props.onClick} aria-label={ariaLabel}>
+    <button
+      className={joinClassName(props.className)}
+      type="button"
+      onClick={props.onClick}
+      aria-label={ariaLabel}
+    >
       <LogoMark className="logo__mark" />
     </button>
   );
