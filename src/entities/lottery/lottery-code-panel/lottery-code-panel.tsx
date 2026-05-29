@@ -29,7 +29,7 @@ function normalizeCodeInput(value: string) {
 }
 
 function triggerCodeHapticFeedback() {
-  window.Telegram?.WebApp?.HapticFeedback?.selectionChanged?.();
+  window.Telegram?.WebApp?.HapticFeedback?.impactOccurred?.("soft");
 }
 
 export default function LotteryCodePanel() {
