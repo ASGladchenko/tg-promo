@@ -1,13 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { ChangeEvent } from "react";
 import { spinWheelOnCodeInput } from "../model/wheel-spin-bridge";
 
 const CODE_LENGTH = 4;
-const RTL_LANGUAGE_PREFIXES = ["ar", "fa", "he", "ur"];
-
-type TextDirection = "ltr" | "rtl";
 
 function normalizeDigit(char: string) {
   const charCode = char.charCodeAt(0);
@@ -31,33 +28,16 @@ function normalizeCodeInput(value: string) {
   return Array.from(value).map(normalizeDigit).join("").slice(0, CODE_LENGTH);
 }
 
-function detectTextDirection(language: string): TextDirection {
-  const normalizedLanguage = language.toLowerCase();
-  const isRtl = RTL_LANGUAGE_PREFIXES.some((prefix) => normalizedLanguage.startsWith(prefix));
-
-  return isRtl ? "rtl" : "ltr";
-}
-
-function getPreferredLanguage() {
-  return (
-    window.Telegram?.WebApp?.initDataUnsafe?.user?.language_code ||
-    document.documentElement.lang ||
-    navigator.language ||
-    "en"
-  );
+function triggerCodeHapticFeedback() {
+  window.Telegram?.WebApp?.HapticFeedback?.selectionChanged?.();
 }
 
 export default function LotteryCodePanel() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [code, setCode] = useState("");
-  const [direction, setDirection] = useState<TextDirection>("ltr");
   const [isFocused, setIsFocused] = useState(false);
   const activeIndex = code.length < CODE_LENGTH ? code.length : null;
   const digits = useMemo(() => Array.from({ length: CODE_LENGTH }, (_, index) => code[index] ?? ""), [code]);
-
-  useEffect(() => {
-    setDirection(detectTextDirection(getPreferredLanguage()));
-  }, []);
 
   function focusInput() {
     inputRef.current?.focus();
@@ -69,6 +49,7 @@ export default function LotteryCodePanel() {
     setCode((previousCode) => {
       if (nextCode !== previousCode) {
         spinWheelOnCodeInput();
+        triggerCodeHapticFeedback();
       }
 
       return nextCode;
@@ -78,7 +59,7 @@ export default function LotteryCodePanel() {
   return (
     <div
       className="lottery-code-panel"
-      dir={direction}
+      dir="ltr"
       aria-label="Введите 4 цифры кода"
       onClick={focusInput}
     >
