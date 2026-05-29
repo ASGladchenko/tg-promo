@@ -6,6 +6,7 @@ import safeDoorImage from "@/shared/images/safe_door.webp";
 import MuteIcon from "@/shared/svg/mute.svg?react";
 import VolumeIcon from "@/shared/svg/volume.svg?react";
 import LotteryCodePanel from "../lottery-code-panel/lottery-code-panel";
+import SafeWheel from "./safe-wheel";
 
 const LOOP_AUDIO_SRC = "/audio/16s.ogg";
 const AUDIO_START_EVENTS = ["pointerdown", "click", "touchstart", "keydown"] as const;
@@ -131,6 +132,7 @@ export default function LotteryScene() {
 
         <div className="lottery-scene__door-wrapper">
           <img className="lottery-scene__door" src={safeDoorImage} alt="Safe door" loading="eager" />
+          <SafeWheel />
         </div>
       </div>
 

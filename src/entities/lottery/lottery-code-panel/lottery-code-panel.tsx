@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ChangeEvent } from "react";
+import { spinWheelOnCodeInput } from "../model/wheel-spin-bridge";
 
 const CODE_LENGTH = 4;
 const RTL_LANGUAGE_PREFIXES = ["ar", "fa", "he", "ur"];
@@ -63,7 +64,15 @@ export default function LotteryCodePanel() {
   }
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-    setCode(normalizeCodeInput(event.currentTarget.value));
+    const nextCode = normalizeCodeInput(event.currentTarget.value);
+
+    setCode((previousCode) => {
+      if (nextCode !== previousCode) {
+        spinWheelOnCodeInput();
+      }
+
+      return nextCode;
+    });
   }
 
   return (
