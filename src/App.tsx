@@ -11,7 +11,6 @@ type TelegramUser = {
 
 let sdkInitState: "idle" | "ready" | "failed" = "idle";
 const MINI_APP_URL = PUBLIC_ENV.TELEGRAM_SHARE_URL;
-const BRAND_SITE_URL = PUBLIC_ENV.BRAND_SITE_URL;
 
 function ensureSdkInitialized(): boolean {
   if (sdkInitState === "ready") {
@@ -93,7 +92,7 @@ export default function App() {
 
   return (
     <main className="page">
-      <WidgetHeader siteUrl={BRAND_SITE_URL} />
+      <WidgetHeader siteUrl={'google.com'} />
       <section className="page__body">
         <LotteryWidget />
         <p className="page__meta">

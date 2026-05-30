@@ -22,7 +22,7 @@ export default function WidgetHeader({ siteUrl }: WidgetHeaderProps) {
 
   return (
     <header className="widget-header">
-      <Logo as="button" onClick={openSiteInBrowser} ariaLabel="Open 1mlnbet.com" />
+      <Logo as="button" onClick={openSiteInBrowser} ariaLabel="Abdyla" />
     </header>
   );
 }

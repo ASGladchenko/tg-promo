@@ -1,7 +1,3 @@
-"use client";
-
-import LogoMark from "@/shared/svg/logo.svg?react";
-
 type BaseLogoProps = {
   className?: string;
   ariaLabel?: string;
@@ -35,7 +31,7 @@ export default function Logo(props: LogoProps) {
         rel="noreferrer noopener"
         aria-label={ariaLabel}
       >
-        <LogoMark className="logo__mark" />
+        Abidas
       </a>
     );
   }
@@ -47,7 +43,7 @@ export default function Logo(props: LogoProps) {
       onClick={props.onClick}
       aria-label={ariaLabel}
     >
-      <LogoMark className="logo__mark" />
+      Abidas
     </button>
   );
 }
