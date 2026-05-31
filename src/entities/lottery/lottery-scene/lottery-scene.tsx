@@ -62,7 +62,7 @@ export default function LotteryScene({ onAssetsReady }: LotterySceneProps) {
     }
 
     const audioElement = audio;
-    audioElement.volume = 0.05;
+    audioElement.volume = 0.01;
 
     function removeStartListeners() {
       AUDIO_START_EVENTS.forEach((eventName) => {
