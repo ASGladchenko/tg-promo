@@ -1,7 +1,20 @@
 export default function LotteryWidgetLoader() {
   return (
     <div className="lottery-widget-loader" role="status" aria-label="Загрузка сцены">
-      <span className="lottery-widget-loader__spinner" />
+      <div className="lottery-widget-loader__stage" aria-hidden="true">
+        <div className="lottery-widget-loader__safe">
+          <span className="lottery-widget-loader__door" />
+          <span className="lottery-widget-loader__wheel" />
+        </div>
+      </div>
+
+      <div className="lottery-widget-loader__code-panel" aria-hidden="true">
+        {Array.from({ length: 4 }, (_, index) => (
+          <span className="lottery-widget-loader__code-slot" key={index} />
+        ))}
+      </div>
+
+      <span className="lottery-widget-loader__audio-toggle" aria-hidden="true" />
     </div>
   );
 }

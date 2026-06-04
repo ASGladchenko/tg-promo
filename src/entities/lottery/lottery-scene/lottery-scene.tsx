@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { type KeyboardEvent, useEffect, useRef, useState } from "react";
 import safeImage from "@/shared/images/safe.webp";
 import safeDoorImage from "@/shared/images/safe_door.webp";
 import MuteIcon from "@/shared/svg/mute.svg?react";
 import VolumeIcon from "@/shared/svg/volume.svg?react";
 import LotteryCodePanel from "../lottery-code-panel/lottery-code-panel";
+import { useLotteryStore } from "../model/lottery-store";
 import SafeWheel from "./safe-wheel";
 
 const LOOP_AUDIO_SRC = "/audio/16s.ogg";
@@ -43,6 +44,8 @@ export default function LotteryScene({ onAssetsReady }: LotterySceneProps) {
   const shouldResumeAudioRef = useRef(false);
   const hasReportedReadyRef = useRef(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const isCodeLocked = useLotteryStore((state) => state.isCodeLocked);
+  const openCodePicker = useLotteryStore((state) => state.openCodePicker);
 
   async function playAudio(audio: HTMLAudioElement) {
     try {
@@ -181,26 +184,68 @@ export default function LotteryScene({ onAssetsReady }: LotterySceneProps) {
     setIsPlaying(false);
   }
 
+  function triggerDoorHapticFeedback() {
+    window.Telegram?.WebApp?.HapticFeedback?.impactOccurred?.("soft");
+  }
+
+  function openCodePickerFromDoor() {
+    const didOpen = openCodePicker(0);
+
+    if (didOpen) {
+      triggerDoorHapticFeedback();
+    }
+  }
+
+  function handleDoorKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+
+    event.preventDefault();
+    openCodePickerFromDoor();
+  }
+
   return (
     <section ref={sceneRef} className="lottery-scene" aria-label="Lottery scene">
       <audio ref={audioRef} src={LOOP_AUDIO_SRC} loop preload="none" />
       <div className="lottery-scene__stage">
-        <img className="lottery-scene__safe" src={safeImage} alt="Safe" loading="eager" decoding="sync" />
+        <img
+          className="lottery-scene__safe"
+          src={safeImage}
+          alt="Safe"
+          loading="eager"
+          decoding="sync"
+          draggable={false}
+        />
 
-        <div className="lottery-scene__door-wrapper">
+        <div
+          className={[
+            "lottery-scene__door-wrapper",
+            isCodeLocked ? "lottery-scene__door-wrapper--locked" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          role="button"
+          tabIndex={isCodeLocked ? -1 : 0}
+          aria-label={isCodeLocked ? "Код зафиксирован" : "Открыть выбор кода"}
+          aria-disabled={isCodeLocked}
+          onClick={openCodePickerFromDoor}
+          onKeyDown={handleDoorKeyDown}
+        >
           <img
             className="lottery-scene__door"
             src={safeDoorImage}
             alt="Safe door"
             loading="eager"
             decoding="sync"
+            draggable={false}
           />
 
           <SafeWheel />
         </div>
       </div>
 
-      <LotteryCodePanel />
+      <LotteryCodePanel hideSelectedDigitsFromOtherColumns />
 
       <button
         className="lottery-scene__audio-toggle"

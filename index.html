@@ -3,11 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#12100d" />
+    <meta name="color-scheme" content="dark" />
     <title>TMA Promo</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+      html,
+      body,
+      #root {
+        margin: 0;
+        min-height: 100%;
+        background: #12100d;
+      }
+
+      .app-boot-loader {
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        background: #12100d;
+      }
+
+      .app-boot-loader__spinner {
+        width: 38px;
+        height: 38px;
+        border: 3px solid rgba(255, 255, 255, 0.18);
+        border-top-color: #2aabee;
+        border-radius: 50%;
+        animation: app-boot-spin 800ms linear infinite;
+      }
+
+      @keyframes app-boot-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    <script
+      defer
+      src="https://telegram.org/js/telegram-web-app.js"
+      onload="window.Telegram?.WebApp?.setBackgroundColor?.('#12100d'); window.Telegram?.WebApp?.setHeaderColor?.('#161616');"
+    ></script>
   </head>
-  <body>
-    <div id="root"></div>
+  <body style="background: #12100d">
+    <div id="root">
+      <div class="app-boot-loader" role="status" aria-label="Загрузка приложения">
+        <span class="app-boot-loader__spinner"></span>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

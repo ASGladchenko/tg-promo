@@ -1,4 +1,4 @@
-import { PUBLIC_ENV } from "@/shared/config/public-env";
+import { PUBLIC_ENV } from "@/shared/config";
 
 function trimTrailingSlash(value: string) {
   return value.endsWith("/") ? value.slice(0, -1) : value;

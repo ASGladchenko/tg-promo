@@ -22,30 +22,3 @@
   font-size: 0.8rem;
   letter-spacing: 0.03em;
 }
-
-.page--only-button {
-  min-height: 100vh;
-  @include s.center-grid;
-  padding: s.$space-4;
-}
-
-.page__cta-button {
-  min-height: 44px;
-  min-width: 210px;
-  border-radius: s.$radius-sm;
-  border: 1px solid s.$color-border-soft;
-  background: s.$color-warm-overlay;
-  color: s.$color-ink;
-  font-weight: 700;
-  padding: 0 18px;
-  cursor: pointer;
-
-  &:active {
-    transform: translateY(1px);
-  }
-
-  &:focus-visible {
-    outline: 2px solid s.$focus-ring;
-    outline-offset: 3px;
-  }
-}

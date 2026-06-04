@@ -12,9 +12,11 @@
     "format:check": "prettier . --check"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.101.0",
     "@tma.js/sdk-react": "^3.0.19",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dom": "^19.2.6",
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",

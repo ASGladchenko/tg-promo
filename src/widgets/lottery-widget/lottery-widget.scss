@@ -4,6 +4,7 @@
   position: relative;
   display: grid;
   width: min(968px, 100%);
+  min-height: 0;
 }
 
 .lottery-widget__scene,
@@ -13,16 +14,22 @@
 
 .lottery-widget__scene {
   opacity: 0;
-  transition: opacity 180ms ease;
+  transform: translateY(10px) scale(0.985);
+  transform-origin: center top;
+  transition:
+    opacity 180ms ease,
+    transform 220ms ease;
+  min-height: 0;
 }
 
 .lottery-widget__scene--visible {
   opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: lottery-widget-scene-appear 520ms cubic-bezier(0.18, 0.95, 0.22, 1) both;
 }
 
 .lottery-widget__loader-overlay {
-  display: grid;
-  place-items: center;
+  display: block;
   pointer-events: none;
   z-index: 5;
   opacity: 1;
@@ -35,24 +42,141 @@
 }
 
 .lottery-widget-loader {
+  width: 100%;
+  padding: s.$space-3;
+  display: grid;
+  gap: s.$space-2;
+  position: relative;
+}
+
+.lottery-widget-loader__stage {
   width: min(520px, 100%);
+  margin-inline: auto;
   aspect-ratio: 1 / 1;
+  position: relative;
+  overflow: hidden;
+  border-radius: s.$radius-lg;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.08), transparent 34%),
+    linear-gradient(135deg, rgba(s.$color-object-dark, 0.8), rgba(s.$color-object-dark, 0.38));
+}
+
+.lottery-widget-loader__stage::after,
+.lottery-widget-loader__code-slot::after,
+.lottery-widget-loader__audio-toggle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-110%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  animation: lottery-widget-skeleton-shimmer 1.25s ease-in-out infinite;
+}
+
+.lottery-widget-loader__safe {
+  position: absolute;
+  inset: 12%;
+  border-radius: s.$radius-lg;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.07), transparent 34%),
+    s.$color-object-dark;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 18px 34px rgba(0, 0, 0, 0.22);
+  animation: lottery-widget-skeleton-pulse 1.6s ease-in-out infinite;
+}
+
+.lottery-widget-loader__door {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 58%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.06) 0 26%, transparent 27%),
+    s.$color-object-dark;
+  box-shadow:
+    inset 0 0 0 10px rgba(0, 0, 0, 0.16),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.lottery-widget-loader__wheel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 28%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.18);
+  box-shadow: inset 0 0 0 8px rgba(255, 255, 255, 0.035);
+}
+
+.lottery-widget-loader__code-panel {
+  width: min(520px, 100%);
   margin-inline: auto;
   display: grid;
-  place-items: center;
+  grid-template-columns: repeat(4, clamp(58px, 18vw, 84px));
+  justify-content: center;
+  gap: clamp(8px, 2.6vw, 14px);
 }
 
-.lottery-widget-loader__spinner {
-  width: clamp(42px, 10vw, 62px);
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  border: 4px solid rgba(246, 238, 227, 0.28);
-  border-right-color: transparent;
-  animation: lottery-widget-spin 0.85s linear infinite;
+.lottery-widget-loader__code-slot {
+  width: clamp(58px, 18vw, 84px);
+  aspect-ratio: 388 / 377;
+  position: relative;
+  overflow: hidden;
+  border-radius: s.$radius-sm;
+  background: s.$color-object-dark;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.22));
 }
 
-@keyframes lottery-widget-spin {
+.lottery-widget-loader__audio-toggle {
+  position: absolute;
+  right: s.$space-3;
+  bottom: s.$space-3;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: s.$radius-sm;
+  background: s.$color-object-dark;
+  opacity: 0.82;
+}
+
+@keyframes lottery-widget-skeleton-shimmer {
   to {
-    transform: rotate(1turn);
+    transform: translateX(110%);
+  }
+}
+
+@keyframes lottery-widget-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.74;
+  }
+
+  50% {
+    opacity: 0.96;
+  }
+}
+
+@keyframes lottery-widget-scene-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.975);
+    filter: brightness(0.84);
+  }
+
+  58% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.006);
+    filter: brightness(1.08);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: brightness(1);
   }
 }
