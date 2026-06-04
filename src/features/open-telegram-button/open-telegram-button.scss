@@ -7,13 +7,15 @@
 }
 
 .open-telegram-button__control {
+  position: relative;
+  isolation: isolate;
   min-height: 48px;
   min-width: 228px;
   border: 0;
   border-radius: 10px;
-  background: #2aabee;
-  color: #ffffff;
-  box-shadow: 0 10px 24px rgba(42, 171, 238, 0.28);
+  background: #238bc7;
+  color: #e9f6fb;
+  box-shadow: 0 10px 22px rgba(35, 139, 199, 0.2);
   cursor: pointer;
   font: inherit;
   font-size: 16px;
@@ -25,18 +27,52 @@
     box-shadow 160ms ease,
     transform 120ms ease;
 
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    z-index: -1;
+    border-radius: 14px;
+    background: rgba(35, 139, 199, 0.14);
+    opacity: 0;
+    pointer-events: none;
+    animation: open-telegram-button-pulse 2s ease-out infinite;
+  }
+
   &:hover {
-    background: #229ed9;
-    box-shadow: 0 12px 28px rgba(34, 158, 217, 0.32);
+    background: #1f82ba;
+    box-shadow: 0 12px 26px rgba(31, 130, 186, 0.24);
   }
 
   &:active {
     transform: translateY(1px);
-    box-shadow: 0 6px 16px rgba(34, 158, 217, 0.26);
+    box-shadow: 0 6px 16px rgba(31, 130, 186, 0.2);
   }
 
   &:focus-visible {
-    outline: 3px solid rgba(42, 171, 238, 0.32);
+    outline: 3px solid rgba(35, 139, 199, 0.24);
     outline-offset: 4px;
+  }
+}
+
+@keyframes open-telegram-button-pulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  45% {
+    opacity: 0.6;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .open-telegram-button__control::before {
+    animation: none;
   }
 }
