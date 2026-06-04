@@ -11,16 +11,16 @@ export default defineConfig({
       "@/shared": path.resolve(__dirname, "src/shared"),
       "@/entities": path.resolve(__dirname, "src/entities"),
       "@/features": path.resolve(__dirname, "src/features"),
-      "@/widgets": path.resolve(__dirname, "src/widgets"),
-      "@/backend": path.resolve(__dirname, "src/backend"),
-      "@/server": path.resolve(__dirname, "src/server")
+      "@/widgets": path.resolve(__dirname, "src/widgets")
     }
   },
   server: {
+    allowedHosts: ["well-werewolf-hardly.ngrok-free.app"],
     proxy: {
       "/api": {
-        target: "http://localhost:4000",
-        changeOrigin: true
+        target: "http://localhost:4358",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, "") || "/"
       }
     }
   }

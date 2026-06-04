@@ -21,9 +21,7 @@
       "@/shared/*": ["./src/shared/*"],
       "@/entities/*": ["./src/entities/*"],
       "@/features/*": ["./src/features/*"],
-      "@/widgets/*": ["./src/widgets/*"],
-      "@/backend/*": ["./src/backend/*"],
-      "@/server/*": ["./src/server/*"]
+      "@/widgets/*": ["./src/widgets/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", "svgr.d.ts", "vite.config.ts"],

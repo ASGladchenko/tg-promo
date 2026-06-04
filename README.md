@@ -1,17 +1,12 @@
 # tg-promo
 
-Telegram Mini App на `React + Vite` (frontend) и `NestJS` (backend API).
+Telegram Mini App на `React + Vite`.
 
 ## Что внутри
 
 - `Vite + React` frontend
-- `NestJS` backend с роутами:
-  - `GET /api/hello`
-  - `POST /api/auth/miniapp`
-  - `POST /api/auth/telegram-widget`
-  - `GET /api/auth/session`
-  - `DELETE /api/auth/session`
-  - `GET /api/channel-membership`
+- локальный dev proxy `/api/*` на внешний backend `1MLMBET`
+- production-подключение к backend через `VITE_API_BASE_URL`
 
 ## Локальный запуск
 
@@ -20,12 +15,13 @@ npm install
 npm run dev
 ```
 
-По умолчанию:
+По умолчанию frontend доступен на:
 
-- frontend: `http://localhost:5173`
-- backend: `http://localhost:4000`
+```bash
+http://localhost:5173
+```
 
-Vite dev-server проксирует `/api/*` на backend.
+Локально `VITE_API_BASE_URL` можно оставить пустым. Тогда запросы вида `/api/*` будут проксироваться Vite dev-server на backend `1MLMBET`.
 
 ## Переменные окружения
 
@@ -35,7 +31,7 @@ Vite dev-server проксирует `/api/*` на backend.
 cp .env.example .env
 ```
 
-Frontend (`Vite`, публичные переменные только с префиксом `VITE_`):
+Публичные переменные Vite:
 
 ```bash
 VITE_TELEGRAM_BOT_USERNAME=your_bot_username
@@ -45,52 +41,11 @@ VITE_API_BASE_URL=
 VITE_BRAND_SITE_URL=https://1mlnbet.com/
 ```
 
-Backend (`Nest`, секретные переменные):
+Для production задайте:
 
 ```bash
-TELEGRAM_BOT_TOKEN=123456:ABCDEF
-APP_SESSION_SECRET=replace_with_long_random_secret
-APP_SESSION_COOKIE_SAME_SITE=lax
-TELEGRAM_CHANNEL_ID=@your_channel
-TELEGRAM_WIDGET_MAX_AGE_SECONDS=300
-FRONTEND_ORIGIN=http://localhost:5173
-PORT=4000
+VITE_API_BASE_URL=https://<your-backend-domain>
 ```
-
-Для `TELEGRAM_CHANNEL_ID` также можно использовать numeric chat id (`-100...`).
-
-### Миграция имен из Next.js
-
-Старые имена (Vercel) -> новые имена (этот проект):
-
-- `NEXT_PUBLIC_TELEGRAM_BOT_USERNAME` -> `VITE_TELEGRAM_BOT_USERNAME`
-- `NEXT_PUBLIC_TELEGRAM_CHANNEL_URL` -> `VITE_TELEGRAM_CHANNEL_URL`
-- `NEXT_PUBLIC_TELEGRAM_SHARE_URL` -> `VITE_TELEGRAM_SHARE_URL`
-
-Без изменений:
-
-- `APP_SESSION_SECRET`
-- `TELEGRAM_CHANNEL_ID`
-- `TELEGRAM_BOT_TOKEN`
-
-## Vercel + отдельный backend
-
-Если frontend остается на Vercel, а backend вынесен отдельно:
-
-1. На backend-хостинге задайте:
-   - `TELEGRAM_BOT_TOKEN`
-   - `APP_SESSION_SECRET`
-   - `APP_SESSION_COOKIE_SAME_SITE=none`
-   - `TELEGRAM_CHANNEL_ID`
-   - `TELEGRAM_WIDGET_MAX_AGE_SECONDS=300`
-   - `FRONTEND_ORIGIN=https://<your-vercel-domain>`
-2. На Vercel (frontend) задайте:
-   - `VITE_TELEGRAM_BOT_USERNAME`
-   - `VITE_TELEGRAM_CHANNEL_URL`
-   - `VITE_TELEGRAM_SHARE_URL`
-   - `VITE_API_BASE_URL=https://<your-backend-domain>`
-   - `VITE_BRAND_SITE_URL`
-3. После изменения `VITE_*` переменных сделайте redeploy frontend на Vercel.
 
 ## Сборка
 
@@ -98,11 +53,4 @@ PORT=4000
 npm run build
 ```
 
-- frontend артефакты: `dist/`
-- backend артефакты: `dist-server/`
-
-Прод-запуск backend:
-
-```bash
-npm run start
-```
+Frontend-артефакты собираются в `dist/`.

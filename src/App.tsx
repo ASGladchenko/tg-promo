@@ -1,5 +1,6 @@
 import { init, isTMA, miniApp, retrieveLaunchParams, viewport } from "@tma.js/sdk-react";
 import { useEffect, useState } from "react";
+import { getApiUrl } from "@/shared/api/http";
 import { PUBLIC_ENV } from "@/shared/config/public-env";
 import LotteryWidget from "@/widgets/lottery-widget";
 import WidgetHeader from "@/widgets/widget-header";
@@ -33,6 +34,8 @@ function ensureSdkInitialized(): boolean {
 export default function App() {
   const [isTelegram, setIsTelegram] = useState(false);
   const [telegramUserLabel, setTelegramUserLabel] = useState("guest");
+  const [user, setUser] = useState<TelegramUser | undefined>(undefined);
+  const [apiData, setApiData] = useState("loading...");
 
   useEffect(() => {
     if (!ensureSdkInitialized()) {
@@ -48,6 +51,7 @@ export default function App() {
     try {
       const launchParams = retrieveLaunchParams();
       const user = launchParams.tgWebAppData?.user as TelegramUser | undefined;
+      setUser(user);
       if (user?.username) {
         setTelegramUserLabel(`@${user.username}`);
       } else if (user?.first_name) {
@@ -68,10 +72,34 @@ export default function App() {
     if (viewport.mount.isAvailable()) {
       void viewport.mount().catch(() => undefined);
     }
-
     if (viewport.expand.isAvailable()) {
       viewport.expand();
     }
+  }, []);
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function loadApiData() {
+      try {
+        const response = await fetch(getApiUrl("health/db"));
+        const data = await response.text();
+
+        if (!ignore) {
+          setApiData(data);
+        }
+      } catch {
+        if (!ignore) {
+          setApiData("backend error");
+        }
+      }
+    }
+
+    void loadApiData();
+
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   function openMiniAppFromSite() {
@@ -94,6 +122,8 @@ export default function App() {
     <main className="page">
       <WidgetHeader siteUrl={'google.com'} />
       <section className="page__body">
+        <span style={{ color: "red", display: "block", fontSize: 32 }}>{user?.first_name}</span>
+        <span style={{ color: "red", display: "block", fontSize: 32 }}>{apiData}</span>
         <LotteryWidget />
         <p className="page__meta">
           mode: {isTelegram ? `telegram (${telegramUserLabel})` : "dev browser preview"}

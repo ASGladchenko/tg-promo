@@ -8,7 +8,7 @@ export function getApiUrl(path: string): string {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
 
   if (!PUBLIC_ENV.API_BASE_URL) {
-    return normalizedPath;
+    return `/api${normalizedPath}`;
   }
 
   return `${trimTrailingSlash(PUBLIC_ENV.API_BASE_URL)}${normalizedPath}`;
