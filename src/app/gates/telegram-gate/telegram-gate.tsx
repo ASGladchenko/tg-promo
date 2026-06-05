@@ -20,7 +20,7 @@ export default function TelegramGate({ children }: TelegramGateProps) {
   const [initData, setInitData] = useState<string | undefined>();
   const [isTelegram, setIsTelegram] = useState(false);
   const [isTelegramReady, setIsTelegramReady] = useState(false);
-  const isDevBrowserPreview = false;
+  const isDevBrowserPreview = import.meta.env.DEV;
 
   useEffect(() => {
     if (!ensureTelegramSdkInitialized()) {

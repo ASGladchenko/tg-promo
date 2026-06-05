@@ -14,7 +14,6 @@ export default function LotteryWidgetLoader() {
         ))}
       </div>
 
-      <span className="lottery-widget-loader__audio-toggle" aria-hidden="true" />
     </div>
   );
 }

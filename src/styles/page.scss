@@ -13,6 +13,7 @@
   display: grid;
   gap: s.$space-2;
   padding: s.$space-2;
+  flex-grow: 1;
 }
 
 .page__meta {
