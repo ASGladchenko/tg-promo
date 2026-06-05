@@ -15,7 +15,7 @@ export default defineConfig({
     }
   },
   server: {
-    allowedHosts: ["well-werewolf-hardly.ngrok-free.app"],
+    allowedHosts: ["well-werewolf-hardly.ngrok-free.app", "semisweet-buffoon-factsheet.ngrok-free.dev"],
     proxy: {
       "/api": {
         target: "http://localhost:4358",

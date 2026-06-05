@@ -10,10 +10,6 @@ export const PUBLIC_ENV = {
   API_BASE_URL: readString(import.meta.env.VITE_API_BASE_URL),
   TELEGRAM_BOT_USERNAME: telegramBotUsername,
   TELEGRAM_CHANNEL_URL: readString(import.meta.env.VITE_TELEGRAM_CHANNEL_URL),
-  TELEGRAM_SHARE_URL:
-    telegramShareUrl ??
-    (telegramBotUsername
-      ? `https://t.me/${telegramBotUsername}?startapp=play`
-      : "https://t.me/TgAsPromo1Bot?startapp=play"),
-  BRAND_SITE_URL: readString(import.meta.env.VITE_BRAND_SITE_URL) ?? "https://1mlnbet.com/"
+  TELEGRAM_SHARE_URL: telegramShareUrl ?? "",
+  BRAND_SITE_URL: readString(import.meta.env.VITE_BRAND_SITE_URL) ?? ""
 } as const;
