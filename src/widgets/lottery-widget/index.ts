@@ -1,1 +1,1 @@
-export { default } from "./lottery-widget";
+export { LotteryWidget } from "./ui";

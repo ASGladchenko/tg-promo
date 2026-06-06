@@ -1,1 +1,1 @@
-export { default } from "./widget-header";
+export { WidgetHeader } from "./ui";

@@ -1,1 +1,1 @@
-export { default } from "./lottery-page";
+export { LotteryPage } from "./ui";

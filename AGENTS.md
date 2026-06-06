@@ -1,0 +1,137 @@
+# AGENTS.md
+
+Обязательные инструкции для AI-агентов и разработчиков проекта `tg-promo`.
+
+Этот файл нужно читать перед любой задачей. Подробные правила разделены по тематическим документам.
+Перед изменениями обязательно прочитай все документы, соответствующие затронутым областям.
+
+## Стек
+
+- React 19
+- TypeScript strict
+- Vite
+- SCSS
+- Zustand
+- TanStack Query
+- `@tma.js/sdk-react`
+- `clsx`
+
+## Маршрутизация инструкций
+
+| Если задача затрагивает                                            | Обязательно прочитать                                              |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| слои, перенос файлов, новые slices, зависимости, публичные exports | [`docs/architecture/fsd.md`](docs/architecture/fsd.md)             |
+| API, DTO, domain types, mapper, TanStack Query, env                | [`docs/architecture/data-flow.md`](docs/architecture/data-flow.md) |
+| React-компоненты, структура `ui`, SCSS, accessibility              | [`docs/architecture/ui.md`](docs/architecture/ui.md)               |
+| Telegram SDK, runtime, membership, haptic, Telegram URL            | [`docs/architecture/telegram.md`](docs/architecture/telegram.md)   |
+
+Если задача затрагивает несколько областей, прочитай все соответствующие документы.
+
+## Обязательные правила
+
+1. Сначала изучи целевые файлы, соседние `index.ts` и существующие patterns.
+2. Соблюдай направление зависимостей:
+
+   ```text
+   app -> pages -> widgets -> features -> entities -> shared
+   ```
+
+3. Не создавай feature-to-feature импорты. Соседние features связываются в widget или page.
+4. Между slices импортируй только через публичный корневой `index.ts`.
+5. Внутри одного slice используй относительные импорты.
+6. Все React-компоненты размещай в сегменте `ui`.
+7. Компоненты экспортируй именованно. Не используй default export для компонентов.
+8. Не добавляй `"use client"`: это Vite-приложение, а не Next.js.
+9. Условные CSS-классы формируй через `clsx`.
+10. Не создавай пустые папки и не оставляй устаревшие файлы после переноса.
+11. Не выполняй несвязанный рефакторинг.
+12. Не откатывай незакоммиченные изменения пользователя.
+
+## Публичные API
+
+Правильный межслойный импорт:
+
+```ts
+import { LotteryCodePanel, LotteryScene } from "@/entities/lottery";
+import { useLotteryCodeCheckFlow } from "@/features/check-lottery-combination";
+```
+
+Неправильный импорт внутреннего файла чужого slice:
+
+```ts
+import { checkLotteryCombination } from "@/entities/lottery/api/check-lottery-combination";
+```
+
+Приватные модули не экспортируй из корневого `index.ts`, если они не являются внешним контрактом
+slice.
+
+## Работа с состоянием
+
+- TanStack Query используй для server state.
+- Zustand используй для разделяемого client/runtime state.
+- Локальное UI-состояние оставляй в компоненте.
+- Не создавай store только ради устранения одного уровня props.
+- Не дублируй одно состояние одновременно в props, Context и Zustand.
+
+## Environment variables
+
+- Публичные env нормализуются в `src/shared/config/public-env.ts`.
+- В коде используй `PUBLIC_ENV`, а не `import.meta.env` напрямую.
+- Исключение: встроенные `import.meta.env.DEV` и `import.meta.env.PROD`.
+- Новую переменную добавляй также в `.env.example` и `src/vite-env.d.ts`.
+- Не размещай секреты в `VITE_*`.
+
+## Форматирование
+
+- Двойные кавычки.
+- Точки с запятой.
+- Prettier `printWidth`: 110.
+- Файлы и папки: `kebab-case`.
+- Компоненты и типы: `PascalCase`.
+- Hooks: `useSomething`.
+- Zustand hooks: `useSomethingStore`.
+- Boolean: `is`, `has`, `can`, `should`.
+- Стили компонента находятся рядом с компонентом.
+
+## Порядок работы
+
+Перед изменением:
+
+1. Найди все использования изменяемого API через `rg`.
+2. Определи владельца логики и подходящий слой.
+3. Проверь направление зависимостей.
+4. Прочитай тематические документы из таблицы выше.
+
+Во время изменения:
+
+1. Делай минимально достаточный scope.
+2. Обновляй exports и импорты атомарно.
+3. Работай с существующими изменениями, не перезаписывая их.
+4. Удаляй только файлы, ставшие устаревшими из-за текущего изменения.
+
+После изменения:
+
+```bash
+git diff --check
+npx tsc --noEmit
+npm run lint
+npm run build
+```
+
+`npm run format:check` запускай при изменении Markdown, JSON или форматирования проекта.
+
+В финальном сообщении укажи выполненные проверки и оставшиеся предупреждения. Не исправляй
+существующие предупреждения Vite CJS или Sass legacy API в рамках несвязанной задачи.
+
+## Зафиксированные решения
+
+- `check-lottery-combination` не проверяет Telegram membership.
+- `require-channel-subscription` не выполняет lottery API.
+- Эти features связываются в `LotteryWidgetScene`.
+- `checkChannelMembership` принадлежит `entities/tg`.
+- `checkLotteryCombination` принадлежит `entities/lottery`.
+- Telegram runtime store принадлежит `shared/lib/telegram`.
+- URL канала берётся из `PUBLIC_ENV.TELEGRAM_CHANNEL_URL`.
+- Query cache по умолчанию хранит raw DTO; публичный entity hook возвращает domain model через
+  чистый `select`.
+- Компоненты одного slice по умолчанию плоско располагаются внутри единственного `ui`-сегмента.

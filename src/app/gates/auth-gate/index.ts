@@ -1,1 +1,2 @@
-export { default, useAuth } from "./auth-gate";
+export { useAuth } from "./auth-context";
+export { AuthGate } from "./ui";
