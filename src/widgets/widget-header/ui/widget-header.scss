@@ -1,0 +1,11 @@
+@use "../../../shared/styles/index" as s;
+
+.widget-header {
+  width: 100%;
+  background: s.$color-warm-overlay;
+  border-radius: 0;
+  padding: s.$space-1 s.$space-2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

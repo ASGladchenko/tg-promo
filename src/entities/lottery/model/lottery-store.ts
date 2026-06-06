@@ -19,6 +19,7 @@ type LotteryState = {
   openCodePicker: (index?: number) => boolean;
   closeCodePicker: () => void;
   setCodeDigit: (index: number, digit: string, options?: SetCodeDigitOptions) => boolean;
+  submitCode: () => boolean;
   lockCode: () => boolean;
   resetCode: () => void;
   spinWheel: () => void;
@@ -82,6 +83,21 @@ export const useLotteryStore = create<LotteryState>((set, get) => ({
       codeDigits: nextCodeDigits,
       hasSubmitAttempt: false,
       wheelRotation: state.wheelRotation + randomWheelDelta(),
+    });
+
+    return true;
+  },
+  submitCode: () => {
+    const state = get();
+
+    if (state.codeDigits.some((digit) => !digit)) {
+      set({ hasSubmitAttempt: true });
+      return false;
+    }
+
+    set({
+      activeCodeIndex: null,
+      isCodePickerOpen: false,
     });
 
     return true;

@@ -1,3 +1,5 @@
+import "./logo.scss";
+
 type BaseLogoProps = {
   className?: string;
   ariaLabel?: string;
@@ -19,7 +21,7 @@ function joinClassName(className?: string) {
   return className ? `logo ${className}` : "logo";
 }
 
-export default function Logo(props: LogoProps) {
+export function Logo(props: LogoProps) {
   const ariaLabel = props.ariaLabel ?? "Logo label";
 
   if (props.as === "link") {

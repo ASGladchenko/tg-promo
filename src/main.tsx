@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import QueryProvider from "@/app/providers/query-provider";
-import App from "./App";
+import { App } from "@/app";
+import { QueryProvider } from "@/app/providers/query-provider";
 import "./styles/globals.scss";
 
 createRoot(document.getElementById("root")!).render(
