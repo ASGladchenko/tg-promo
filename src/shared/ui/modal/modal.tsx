@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { type ReactNode, useEffect } from "react";
 import { createPortal } from "react-dom";
 import "./modal.scss";
@@ -10,7 +11,7 @@ type ModalProps = {
   className?: string;
 };
 
-export default function Modal({ isOpen, onClose, children, ariaLabel, className }: ModalProps) {
+export function Modal({ isOpen, onClose, children, ariaLabel, className }: ModalProps) {
   useEffect(() => {
     if (!isOpen || typeof document === "undefined") {
       return;
@@ -41,12 +42,10 @@ export default function Modal({ isOpen, onClose, children, ariaLabel, className 
     return null;
   }
 
-  const contentClassName = ["modal__content", className].filter(Boolean).join(" ");
-
   return createPortal(
     <div className="modal" onClick={onClose}>
       <div
-        className={contentClassName}
+        className={clsx("modal__content", className)}
         role="dialog"
         aria-modal="true"
         aria-label={ariaLabel}

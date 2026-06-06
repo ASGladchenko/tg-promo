@@ -1,10 +1,4 @@
 @use "../shared/styles/index" as s;
-@use "./page";
-@use "../shared/ui/logo/logo";
-@use "../widgets/widget-header/widget-header";
-@use "../widgets/lottery-widget/lottery-widget";
-@use "../entities/lottery/lottery-scene/lottery-scene";
-@use "../entities/lottery/lottery-code-panel/lottery-code-panel";
 
 :root {
   @include s.export-root-vars;

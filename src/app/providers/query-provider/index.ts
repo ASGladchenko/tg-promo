@@ -1,1 +1,1 @@
-export { default } from "./query-provider";
+export { QueryProvider } from "./ui";

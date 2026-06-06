@@ -1,1 +1,1 @@
-export { default } from "./open-telegram-button";
+export { OpenTelegramButton } from "./ui";

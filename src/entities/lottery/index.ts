@@ -1,3 +1,3 @@
-export { default as LotteryCodePanel } from "./lottery-code-panel/lottery-code-panel";
-export { default as LotteryScene } from "./lottery-scene/lottery-scene";
+export { checkLotteryCombination } from "./api/check-lottery-combination";
+export { LotteryCodePanel, LotteryScene } from "./ui";
 export { useLotteryStore } from "./model/lottery-store";

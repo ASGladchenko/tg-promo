@@ -1,1 +1,1 @@
-export { default } from "./telegram-gate";
+export { TelegramGate } from "./ui";
