@@ -1,6 +1,5 @@
 node_modules
 .next
-.vscode
 out
 dist
 dist-server

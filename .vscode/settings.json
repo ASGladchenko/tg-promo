@@ -1,0 +1,6 @@
+{
+  "sortImports.sortMode": "alphabetical",
+  "editor.formatOnSave": true,
+  "sortImports.sortOnSave": true,
+  "sortImports.enableStyleSorting": true
+}
