@@ -20,7 +20,7 @@ function readMeResponse(payload: unknown): Me {
 }
 
 export async function authMe({ initData, signal }: AuthMeParams = {}): Promise<Me> {
-  const response = await fetch(getApiUrl("auth"), {
+  const response = await fetch(getApiUrl("auth/telegram"), {
     method: "POST",
     credentials: "include",
     headers: {
