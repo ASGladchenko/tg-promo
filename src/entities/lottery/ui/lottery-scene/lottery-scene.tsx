@@ -1,21 +1,26 @@
-import clsx from "clsx";
 import { type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
+
+import clsx from "clsx";
 import { useTranslation } from "react-i18next";
-import safeImage from "@/shared/images/safe.webp";
+
 import safeDoorImage from "@/shared/images/safe_door.webp";
+import safeImage from "@/shared/images/safe.webp";
 import MuteIcon from "@/shared/svg/mute.svg?react";
 import VolumeIcon from "@/shared/svg/volume.svg?react";
+
 import { useLotteryStore } from "../../model/lottery-store";
 import { SafeWheel } from "../safe-wheel";
-import "./lottery-scene.scss";
 
-const LOOP_AUDIO_SRC = "/audio/16s.ogg";
-const AUDIO_START_EVENTS = ["pointerdown", "click", "touchstart", "keydown"] as const;
+import "./lottery-scene.scss";
 
 type LotterySceneProps = {
   codePanel: ReactNode;
   onAssetsReady?: () => void;
 };
+
+const LOOP_AUDIO_SRC = "/audio/16s.ogg";
+
+const AUDIO_START_EVENTS = ["pointerdown", "click", "touchstart", "keydown"] as const;
 
 function waitForImageReady(image: HTMLImageElement) {
   const decodeImage = () =>

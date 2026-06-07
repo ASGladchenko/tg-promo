@@ -1,5 +1,7 @@
 import { useCallback, useRef, useState } from "react";
+
 import { useTranslation } from "react-i18next";
+
 import { checkLotteryCombination } from "@/entities/lottery";
 import { triggerErrorHapticFeedback, triggerRigidHapticFeedback } from "@/shared/lib/telegram";
 

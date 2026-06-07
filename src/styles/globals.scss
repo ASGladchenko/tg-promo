@@ -10,21 +10,26 @@
 
 html,
 body {
-  margin: 0;
   min-height: 100dvh;
+
+  margin: 0;
+
   background: #12100d;
+
   color-scheme: dark;
 }
 
 #root {
   min-height: 100dvh;
+
   background: #12100d;
 }
 
 body {
-  background: #12100d;
-  color: var(--foreground);
   font-family: s.$font-family-base;
+
+  color: var(--foreground);
+  background: #12100d;
 }
 
 button,

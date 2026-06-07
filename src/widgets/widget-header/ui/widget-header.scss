@@ -2,14 +2,18 @@
 
 .widget-header {
   width: 100%;
-  direction: ltr;
-  background: s.$color-warm-overlay;
-  border-radius: 0;
+
   padding: s.$space-1 s.$space-2;
+
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   gap: s.$space-2;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+
+  background: s.$color-warm-overlay;
+  border-radius: 0;
+
+  direction: ltr;
 }
 
 .widget-header__balance {

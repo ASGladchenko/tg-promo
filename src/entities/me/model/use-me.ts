@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+
 import { authMe } from "../api/me-api";
 
 type UseMeOptions = {
@@ -11,6 +12,6 @@ export function useMe(initData?: string, options: UseMeOptions = {}) {
   return useQuery({
     queryKey: ["me"],
     queryFn: ({ signal }) => authMe({ initData, signal }),
-    enabled,
+    enabled
   });
 }

@@ -1,6 +1,8 @@
-import clsx from "clsx";
 import { type KeyboardEvent, useEffect, useId, useRef, useState } from "react";
+
+import clsx from "clsx";
 import { useTranslation } from "react-i18next";
+
 import { ArabicFlag, EnglishFlag, FrenchFlag } from "@/shared/images/flag";
 import {
   applyLocale,
@@ -9,6 +11,7 @@ import {
   storeLocale,
   type SupportedLocale
 } from "@/shared/lib/i18n";
+
 import "./language-switcher.scss";
 
 type LanguageMetadata = {

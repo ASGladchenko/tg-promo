@@ -22,8 +22,8 @@ $font-family-base: "Trebuchet MS", "Segoe UI", sans-serif;
 
 @mixin export-root-vars {
   --background: #{$color-black};
-  --foreground: #{$color-warm-overlay};
-  --widget-bg: #{$color-warm-overlay};
   --control-primary: #{$color-control-primary};
   --control-primary-hover: #{$color-control-primary-hover};
+  --foreground: #{$color-warm-overlay};
+  --widget-bg: #{$color-warm-overlay};
 }

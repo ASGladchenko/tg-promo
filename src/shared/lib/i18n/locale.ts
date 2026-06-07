@@ -1,9 +1,11 @@
 import { PUBLIC_ENV } from "@/shared/config";
+
 import { type SupportedLocale, translationResources } from "./resources";
 
 export { SUPPORTED_LOCALES, type SupportedLocale } from "./resources";
 
 const SAFE_FALLBACK_LOCALE: SupportedLocale = "ar";
+
 const LOCALE_STORAGE_KEY = "tg-promo.locale";
 
 export function getSupportedLocale(value: string | undefined): SupportedLocale | undefined {

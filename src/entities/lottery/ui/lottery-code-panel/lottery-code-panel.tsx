@@ -1,11 +1,14 @@
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
-import { Modal } from "@/shared/ui/modal";
+
 import { triggerErrorHapticFeedback, triggerSoftHapticFeedback } from "@/shared/lib/telegram";
 import LockIcon from "@/shared/svg/lock.svg?react";
 import UnlockIcon from "@/shared/svg/un-lock.svg?react";
+import { Modal } from "@/shared/ui/modal";
+
 import { useLotteryStore } from "../../model/lottery-store";
 import { LotteryCodePicker } from "../lottery-code-picker";
+
 import "./lottery-code-panel.scss";
 
 type LotteryCodePanelProps = {

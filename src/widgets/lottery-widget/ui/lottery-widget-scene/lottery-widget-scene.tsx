@@ -1,10 +1,12 @@
 import { useCallback } from "react";
+
 import { LotteryCodePanel, LotteryScene } from "@/entities/lottery";
 import { useLotteryCodeCheckFlow } from "@/features/check-lottery-combination";
 import {
   ChannelSubscriptionModal,
   useChannelSubscriptionRequirement
 } from "@/features/require-channel-subscription";
+
 import "./lottery-widget-scene.scss";
 
 type LotteryWidgetSceneProps = {

@@ -1,8 +1,12 @@
 import { type ReactNode } from "react";
+
 import { useTranslation } from "react-i18next";
+
 import { useMe } from "@/entities/me";
 import { useTelegramRuntimeStore } from "@/shared/lib/telegram";
+
 import { AuthContext } from "../auth-context";
+
 import "./auth-gate.scss";
 
 type AuthGateProps = {

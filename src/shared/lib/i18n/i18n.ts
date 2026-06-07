@@ -1,10 +1,13 @@
 import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
+
 import { getDefaultLocale, getStoredLocale, type SupportedLocale } from "./locale";
 import { translationResources } from "./resources";
 
 export const i18n = i18next.createInstance();
+
 const fallbackLocale = getDefaultLocale();
+
 const initialLocale = getStoredLocale() ?? fallbackLocale;
 
 void i18n.use(initReactI18next).init({

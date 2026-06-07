@@ -1,10 +1,9 @@
 export { ensureTelegramSdkInitialized } from "./initialize-sdk";
+
 export {
   triggerErrorHapticFeedback,
   triggerRigidHapticFeedback,
-  triggerSoftHapticFeedback,
+  triggerSoftHapticFeedback
 } from "./haptic-feedback";
-export {
-  useTelegramRuntimeStore,
-  type TelegramRuntimeStatus,
-} from "./telegram-runtime-store";
+
+export { useTelegramRuntimeStore, type TelegramRuntimeStatus } from "./telegram-runtime-store";

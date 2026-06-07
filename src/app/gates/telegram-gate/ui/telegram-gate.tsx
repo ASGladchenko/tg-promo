@@ -1,5 +1,7 @@
-import { miniApp, retrieveLaunchParams, retrieveRawInitData, viewport } from "@tma.js/sdk-react";
 import { type ReactNode, useEffect } from "react";
+
+import { miniApp, retrieveLaunchParams, retrieveRawInitData, viewport } from "@tma.js/sdk-react";
+
 import { OpenTelegramButton } from "@/features/open-telegram-button";
 import { PUBLIC_ENV } from "@/shared/config";
 import {

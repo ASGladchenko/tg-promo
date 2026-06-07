@@ -2,41 +2,52 @@
 
 .lottery-code-panel {
   width: min(520px, 100%);
+
   margin-inline: auto;
+
   display: grid;
-  justify-items: center;
+
   direction: ltr;
+  justify-items: center;
 }
 
 .lottery-code-panel__slots {
   width: 100%;
+
   display: grid;
-  grid-template-columns: repeat(4, clamp(58px, 18vw, 84px));
   justify-content: center;
   gap: clamp(8px, 2.6vw, 14px);
+  grid-template-columns: repeat(4, clamp(58px, 18vw, 84px));
 }
 
 .lottery-code-panel__slot {
   width: clamp(58px, 18vw, 84px);
-  aspect-ratio: 388 / 377;
-  border: 0;
-  background-color: transparent;
-  background-image: url("/src/shared/images/numbers.webp");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100% 100%;
-  color: s.$color-warm-strong;
+
+  padding: 0;
+
   display: grid;
   place-items: center;
-  padding: 0;
-  cursor: pointer;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+
   overflow: hidden;
-  user-select: none;
+
+  color: s.$color-warm-strong;
+  background-color: transparent;
+  background-image: url("/src/shared/images/numbers.webp");
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border: 0;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+
   transition:
     opacity 180ms ease,
     filter 180ms ease,
     transform 180ms ease;
+
+  cursor: pointer;
+  user-select: none;
+
+  aspect-ratio: 388 / 377;
 
   &:active {
     transform: translateY(1px);
@@ -55,15 +66,18 @@
 .lottery-code-panel__slot--active {
   filter: brightness(1.18) drop-shadow(0 0 14px rgba(255, 216, 102, 0.35))
     drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+
   transform: translateY(-2px);
 }
 
 .lottery-code-panel__slot--locked {
   opacity: 0.86;
-  cursor: default;
   filter: saturate(0.84) brightness(0.98) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
-  pointer-events: none;
+
   transform: none;
+
+  cursor: default;
+  pointer-events: none;
 }
 
 .lottery-code-panel__slot--invalid {
@@ -72,22 +86,25 @@
 }
 
 .lottery-code-panel__digit {
-  color: #fff1c6;
   font-size: clamp(1.6rem, 7vw, 2.55rem);
   font-weight: 800;
   line-height: 1;
   font-variant-numeric: tabular-nums;
-  animation: lottery-code-digit-spin 220ms ease;
   text-shadow:
     0 2px 0 rgba(0, 0, 0, 0.45),
     0 0 14px rgba(255, 200, 74, 0.38);
+
+  color: #fff1c6;
+
+  animation: lottery-code-digit-spin 220ms ease;
 }
 
 .lottery-code-panel__placeholder {
   width: 8px;
   height: 8px;
-  border-radius: 50%;
+
   background: rgba(246, 238, 227, 0.46);
+  border-radius: 50%;
   box-shadow: 0 0 12px rgba(255, 216, 102, 0.2);
 }
 
@@ -98,24 +115,31 @@
 
 .lottery-code-panel__lock-button {
   position: relative;
+
   width: clamp(58px, 18vw, 84px);
-  aspect-ratio: 388 / 377;
-  border: 0;
-  background-color: transparent;
-  background-image: url("/src/shared/images/numbers.webp");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100% 100%;
-  color: #fff1c6;
-  cursor: pointer;
+
+  padding: clamp(16px, 5vw, 24px);
+
   display: grid;
   place-items: center;
-  padding: clamp(16px, 5vw, 24px);
+
+  color: #fff1c6;
+  background-color: transparent;
+  background-image: url("/src/shared/images/numbers.webp");
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border: 0;
   filter: brightness(1.08) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+
   transition:
     filter 180ms ease,
     opacity 180ms ease,
     transform 180ms ease;
+
+  cursor: pointer;
+
+  aspect-ratio: 388 / 377;
 
   svg {
     width: 100%;
@@ -127,10 +151,11 @@
   }
 
   &:disabled {
-    color: rgba(255, 241, 198, 0.58);
-    cursor: default;
-    filter: saturate(0.84) brightness(0.98) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
     opacity: 0.86;
+    color: rgba(255, 241, 198, 0.58);
+    filter: saturate(0.84) brightness(0.98) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+
+    cursor: default;
     pointer-events: none;
   }
 }
@@ -143,16 +168,20 @@
   color: rgba(255, 241, 198, 0.36);
 
   &::after {
-    content: "";
-    width: clamp(20px, 6vw, 30px);
-    aspect-ratio: 1;
-    border: 2px solid rgba(255, 241, 198, 0.28);
-    border-top-color: #fff1c6;
-    border-radius: 50%;
     position: absolute;
     inset: 50% auto auto 50%;
-    transform: translate(-50%, -50%);
+
+    width: clamp(20px, 6vw, 30px);
+
+    border: 2px solid rgba(255, 241, 198, 0.28);
+    border-radius: 50%;
+    border-top-color: #fff1c6;
+
     animation: lottery-code-check-spin 780ms linear infinite;
+    transform: translate(-50%, -50%);
+
+    aspect-ratio: 1;
+    content: "";
   }
 
   svg {
@@ -173,11 +202,13 @@
 @keyframes lottery-code-digit-spin {
   0% {
     opacity: 0;
+
     transform: translateY(-42%) rotateX(68deg);
   }
 
   100% {
     opacity: 1;
+
     transform: translateY(0) rotateX(0deg);
   }
 }

@@ -1,19 +1,23 @@
-import clsx from "clsx";
 import { useCallback, useLayoutEffect, useRef } from "react";
+
+import clsx from "clsx";
 import { useTranslation } from "react-i18next";
+
 import "./lottery-code-picker.scss";
 
-const DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-const EMPTY_DIGIT = "";
-const PICKER_OPTIONS = [EMPTY_DIGIT, ...DIGITS];
-
 type LotteryCodePickerProps = {
-  digits: string[];
   activeIndex: number | null;
+  digits: string[];
   hideSelectedDigitsFromOtherColumns?: boolean;
   onAccept: () => void;
   onDigitChange: (index: number, digit: string) => void;
 };
+
+const DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+const EMPTY_DIGIT = "";
+
+const PICKER_OPTIONS = [EMPTY_DIGIT, ...DIGITS];
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);

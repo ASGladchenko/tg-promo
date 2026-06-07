@@ -1,7 +1,11 @@
 import { useEffect, useRef } from "react";
+
 import { useTranslation } from "react-i18next";
+
 import safeWheelImage from "@/shared/images/safe-wheel.webp";
+
 import { useLotteryStore } from "../../model/lottery-store";
+
 import "./safe-wheel.scss";
 
 export function SafeWheel() {

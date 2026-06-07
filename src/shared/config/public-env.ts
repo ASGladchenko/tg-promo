@@ -4,6 +4,7 @@ function readString(value: string | undefined): string | undefined {
 }
 
 const telegramBotUsername = readString(import.meta.env.VITE_TELEGRAM_BOT_USERNAME);
+
 const telegramShareUrl = readString(import.meta.env.VITE_TELEGRAM_SHARE_URL);
 
 export const PUBLIC_ENV = {

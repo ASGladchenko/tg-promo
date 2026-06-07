@@ -1,8 +1,11 @@
 import { useCallback, useRef, useState } from "react";
+
 import { useTranslation } from "react-i18next";
+
 import { checkChannelMembership } from "@/entities/tg";
 import { PUBLIC_ENV } from "@/shared/config";
 import { triggerErrorHapticFeedback } from "@/shared/lib/telegram";
+
 import { useRetryOnAppReturn } from "./use-retry-on-app-return";
 
 type PendingAction = () => Promise<void>;

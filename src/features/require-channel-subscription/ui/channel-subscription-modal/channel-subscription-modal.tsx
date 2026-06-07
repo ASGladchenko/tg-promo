@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
+
 import { Modal } from "@/shared/ui/modal";
+
 import "./channel-subscription-modal.scss";
 
 type ChannelSubscriptionModalProps = {

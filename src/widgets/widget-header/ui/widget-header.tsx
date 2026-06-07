@@ -1,6 +1,8 @@
 import { useTranslation } from "react-i18next";
+
 import { LanguageSwitcher } from "@/shared/ui/language-switcher";
 import { Logo } from "@/shared/ui/logo";
+
 import "./widget-header.scss";
 
 type WidgetHeaderProps = {

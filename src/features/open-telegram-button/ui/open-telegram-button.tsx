@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+
 import "./open-telegram-button.scss";
 
 type OpenTelegramButtonProps = {

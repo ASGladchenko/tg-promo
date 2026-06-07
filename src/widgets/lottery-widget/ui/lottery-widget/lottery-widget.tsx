@@ -1,6 +1,9 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from "react";
+
 import { useTranslation } from "react-i18next";
+
 import { LotteryWidgetLoader } from "../lottery-widget-loader";
+
 import "./lottery-widget.scss";
 
 const LazyLotteryWidgetScene = lazy(() =>

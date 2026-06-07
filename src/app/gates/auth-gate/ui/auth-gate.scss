@@ -1,42 +1,54 @@
 .auth-gate {
-  flex: 1;
   min-height: 0;
-  display: grid;
-  place-items: center;
+
   padding: 32px 16px;
+
+  display: grid;
+  flex: 1;
+  place-items: center;
 }
 
 .auth-gate__panel {
   display: grid;
-  justify-items: center;
   gap: 14px;
-  color: rgba(246, 238, 227, 0.82);
+
   text-align: center;
+
+  color: rgba(246, 238, 227, 0.82);
+
+  justify-items: center;
 }
 
 .auth-gate__spinner {
   width: 38px;
   height: 38px;
+
   border: 3px solid rgba(246, 238, 227, 0.2);
-  border-top-color: #2aabee;
   border-radius: 50%;
+  border-top-color: #2aabee;
+
   animation: auth-gate-spin 800ms linear infinite;
 }
 
 .auth-gate__message {
   margin: 0;
+
   font-size: 0.95rem;
 }
 
 .auth-gate__retry {
   min-height: 42px;
-  border-radius: 10px;
-  background: #2aabee;
-  color: #ffffff;
-  cursor: pointer;
+
+  padding: 0 18px;
+
   font: inherit;
   font-weight: 800;
-  padding: 0 18px;
+
+  color: #ffffff;
+  background: #2aabee;
+  border-radius: 10px;
+
+  cursor: pointer;
 }
 
 @keyframes auth-gate-spin {

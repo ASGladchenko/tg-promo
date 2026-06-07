@@ -1,21 +1,19 @@
 import { useTranslation } from "react-i18next";
+
 import "./logo.scss";
 
 type BaseLogoProps = {
-  className?: string;
   ariaLabel?: string;
+  className?: string;
 };
-
 type LogoAsLinkProps = BaseLogoProps & {
   as: "link";
   href: string;
 };
-
 type LogoAsButtonProps = BaseLogoProps & {
   as: "button";
   onClick: () => void;
 };
-
 type LogoProps = LogoAsLinkProps | LogoAsButtonProps;
 
 function joinClassName(className?: string) {
