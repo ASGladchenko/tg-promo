@@ -65,7 +65,7 @@ export function LotteryCodePanel({
   }
 
   return (
-    <div className="lottery-code-panel" dir="ltr" aria-label="Введите 3 цифры кода">
+    <div className="lottery-code-panel" aria-label="Введите 3 цифры кода">
       <div className="lottery-code-panel__slots">
         {digits.map((digit, index) => {
           const isActive = !isCodeLocked && isPickerOpen && activeIndex === index;

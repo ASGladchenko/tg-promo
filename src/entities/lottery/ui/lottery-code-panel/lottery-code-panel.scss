@@ -13,7 +13,6 @@
   grid-template-columns: repeat(4, clamp(58px, 18vw, 84px));
   justify-content: center;
   gap: clamp(8px, 2.6vw, 14px);
-  direction: inherit;
 }
 
 .lottery-code-panel__slot {
