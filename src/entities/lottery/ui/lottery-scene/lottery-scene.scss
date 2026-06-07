@@ -1,8 +1,6 @@
 @use "../../../../shared/styles/index" as s;
 
 .lottery-scene {
-  padding: s.$space-3;
-
   display: grid;
   gap: s.$space-2;
 }

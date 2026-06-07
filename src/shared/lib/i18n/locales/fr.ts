@@ -1,4 +1,43 @@
 export const frTranslation = {
+  attempts: {
+    close: "Fermer le portefeuille de tentatives",
+    comingSoonMessage: "Cette action sera bientôt disponible.",
+    dailyExpires: "Expire aujourd’hui à {{time}}",
+    dailyTitle: "Tentatives quotidiennes gratuites",
+    dialogLabel: "Détails du portefeuille de tentatives",
+    dialogTitle: "Vos tentatives",
+    expiring: "Expirent aujourd’hui",
+    openDetails: "Touchez pour voir les détails et en gagner plus",
+    permanent: "N’expirent pas",
+    rewards: {
+      addPhone: {
+        description: "Ajoutez et confirmez votre numéro de téléphone.",
+        title: "Ajouter un téléphone"
+      },
+      confirmEmail: {
+        description: "Confirmez votre adresse e-mail.",
+        title: "Confirmer l’e-mail"
+      },
+      inviteFriend: {
+        description: "Invitez un ami qui rejoint la promotion.",
+        title: "Inviter un ami"
+      },
+      subscribeChannel: {
+        description: "Restez abonné à la chaîne Telegram.",
+        title: "S’abonner à la chaîne"
+      }
+    },
+    rewardsText: "Effectuez des tâches simples pour recevoir plus de tentatives.",
+    rewardsTitle: "Obtenir plus de tentatives",
+    shortUnit: "essais",
+    status: {
+      comingSoon: "Bientôt",
+      completed: "Fait",
+      get: "Obtenir"
+    },
+    title: "Portefeuille de tentatives",
+    walletLabel: "Portefeuille de tentatives"
+  },
   auth: {
     errorLabel: "Erreur d'authentification",
     errorMessage: "Impossible de vous connecter. Veuillez réessayer.",
