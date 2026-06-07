@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 import { Modal } from "@/shared/ui/modal";
 import { triggerErrorHapticFeedback, triggerSoftHapticFeedback } from "@/shared/lib/telegram";
 import LockIcon from "@/shared/svg/lock.svg?react";
@@ -20,6 +21,7 @@ export function LotteryCodePanel({
   onCheck,
   onCodeChange
 }: LotteryCodePanelProps) {
+  const { t } = useTranslation();
   const digits = useLotteryStore((state) => state.codeDigits);
   const isPickerOpen = useLotteryStore((state) => state.isCodePickerOpen);
   const activeIndex = useLotteryStore((state) => state.activeCodeIndex);
@@ -65,7 +67,7 @@ export function LotteryCodePanel({
   }
 
   return (
-    <div className="lottery-code-panel" aria-label="Введите 3 цифры кода">
+    <div className="lottery-code-panel" aria-label={t("lottery.enterCode")}>
       <div className="lottery-code-panel__slots">
         {digits.map((digit, index) => {
           const isActive = !isCodeLocked && isPickerOpen && activeIndex === index;
@@ -81,7 +83,11 @@ export function LotteryCodePanel({
               })}
               key={index}
               type="button"
-              aria-label={`Выбрать цифру ${index + 1}${isCodeLocked || isChecking ? ", код недоступен" : ""}`}
+              aria-label={
+                isCodeLocked || isChecking
+                  ? t("lottery.slotUnavailable", { position: index + 1 })
+                  : t("lottery.chooseDigitPosition", { position: index + 1 })
+              }
               disabled={isCodeLocked || isChecking}
               onClick={() => openPicker(index)}
             >
@@ -102,7 +108,7 @@ export function LotteryCodePanel({
           })}
           type="button"
           disabled={isCodeLocked || isChecking}
-          aria-label={isChecking ? `Проверяется код ${code}` : "Проверить код"}
+          aria-label={isChecking ? t("lottery.checkingCode", { code }) : t("lottery.checkCode")}
           onClick={(event) => {
             event.stopPropagation();
             checkCode();
@@ -115,7 +121,7 @@ export function LotteryCodePanel({
       <Modal
         isOpen={isPickerOpen}
         onClose={closeCodePicker}
-        ariaLabel="Выбор трех цифр кода"
+        ariaLabel={t("lottery.pickerDialog")}
         className="lottery-code-panel__picker-modal"
       >
         <LotteryCodePicker

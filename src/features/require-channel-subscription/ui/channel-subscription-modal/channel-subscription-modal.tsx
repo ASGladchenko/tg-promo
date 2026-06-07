@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Modal } from "@/shared/ui/modal";
 import "./channel-subscription-modal.scss";
 
@@ -16,20 +17,20 @@ export function ChannelSubscriptionModal({
   isLoading,
   isOpen,
   onClose,
-  onOpenChannel,
+  onOpenChannel
 }: ChannelSubscriptionModalProps) {
+  const { t } = useTranslation();
+
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      ariaLabel="Подписка на Telegram канал"
+      ariaLabel={t("subscription.dialogLabel")}
       className="channel-subscription-modal"
     >
       <div className="channel-subscription-modal__content">
-        <h2 className="channel-subscription-modal__title">Подпишитесь на канал</h2>
-        <p className="channel-subscription-modal__text">
-          Чтобы продолжить, необходимо подписаться на Telegram-канал.
-        </p>
+        <h2 className="channel-subscription-modal__title">{t("subscription.title")}</h2>
+        <p className="channel-subscription-modal__text">{t("subscription.text")}</p>
 
         {error ? <p className="channel-subscription-modal__error">{error}</p> : null}
 
@@ -40,12 +41,10 @@ export function ChannelSubscriptionModal({
             disabled={isLoading}
             onClick={onOpenChannel}
           >
-            Открыть канал
+            {t("subscription.openChannel")}
           </button>
         ) : (
-          <p className="channel-subscription-modal__error">
-            Ссылка на канал не настроена. Попробуйте позже.
-          </p>
+          <p className="channel-subscription-modal__error">{t("subscription.noChannelUrl")}</p>
         )}
       </div>
     </Modal>

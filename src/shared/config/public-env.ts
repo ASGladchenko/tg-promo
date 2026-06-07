@@ -8,6 +8,7 @@ const telegramShareUrl = readString(import.meta.env.VITE_TELEGRAM_SHARE_URL);
 
 export const PUBLIC_ENV = {
   API_BASE_URL: readString(import.meta.env.VITE_API_BASE_URL),
+  DEFAULT_LOCALE: readString(import.meta.env.VITE_DEFAULT_LOCALE),
   TELEGRAM_BOT_USERNAME: telegramBotUsername,
   TELEGRAM_CHANNEL_URL: readString(import.meta.env.VITE_TELEGRAM_CHANNEL_URL),
   TELEGRAM_SHARE_URL: telegramShareUrl ?? "",

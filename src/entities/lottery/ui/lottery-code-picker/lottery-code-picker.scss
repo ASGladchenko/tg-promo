@@ -19,6 +19,7 @@
 
 .lottery-code-picker__viewport {
   display: grid;
+  direction: ltr;
   grid-template-columns: repeat(3, minmax(56px, 1fr));
   gap: clamp(10px, 3vw, 16px);
   position: relative;

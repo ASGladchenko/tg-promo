@@ -1,4 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { LotteryWidgetLoader } from "../lottery-widget-loader";
 import "./lottery-widget.scss";
 
@@ -9,6 +10,7 @@ const LazyLotteryWidgetScene = lazy(() =>
 );
 
 export function LotteryWidget() {
+  const { t } = useTranslation();
   const [isSceneReady, setIsSceneReady] = useState(false);
   const [isSceneVisible, setIsSceneVisible] = useState(false);
 
@@ -37,7 +39,7 @@ export function LotteryWidget() {
   }, [isSceneReady]);
 
   return (
-    <section className="lottery-widget" aria-label="Lottery widget">
+    <section className="lottery-widget" aria-label={t("lottery.widgetLabel")}>
       <div
         className={
           isSceneVisible ? "lottery-widget__scene lottery-widget__scene--visible" : "lottery-widget__scene"

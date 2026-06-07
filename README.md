@@ -38,6 +38,7 @@ VITE_TELEGRAM_BOT_USERNAME=your_bot_username
 VITE_TELEGRAM_CHANNEL_URL=https://t.me/your_channel
 VITE_TELEGRAM_SHARE_URL=https://t.me/your_bot_username?startapp=play
 VITE_API_BASE_URL=
+VITE_DEFAULT_LOCALE=ar
 VITE_BRAND_SITE_URL=https://1mlnbet.com/
 ```
 

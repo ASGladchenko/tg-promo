@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import "./logo.scss";
 
 type BaseLogoProps = {
@@ -22,7 +23,8 @@ function joinClassName(className?: string) {
 }
 
 export function Logo(props: LogoProps) {
-  const ariaLabel = props.ariaLabel ?? "Logo label";
+  const { t } = useTranslation();
+  const ariaLabel = props.ariaLabel ?? t("brand.logoLabel");
 
   if (props.as === "link") {
     return (

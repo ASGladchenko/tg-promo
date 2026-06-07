@@ -1,11 +1,14 @@
-import { miniApp, retrieveRawInitData, viewport } from "@tma.js/sdk-react";
+import { miniApp, retrieveLaunchParams, retrieveRawInitData, viewport } from "@tma.js/sdk-react";
 import { type ReactNode, useEffect } from "react";
 import { OpenTelegramButton } from "@/features/open-telegram-button";
 import { PUBLIC_ENV } from "@/shared/config";
 import {
-  ensureTelegramSdkInitialized,
-  useTelegramRuntimeStore,
-} from "@/shared/lib/telegram";
+  applyLocale,
+  getBrowserLanguages,
+  resolveBrowserLocale,
+  resolveTelegramLocale
+} from "@/shared/lib/i18n";
+import { ensureTelegramSdkInitialized, useTelegramRuntimeStore } from "@/shared/lib/telegram";
 
 type TelegramGateProps = {
   children: ReactNode;
@@ -20,39 +23,86 @@ export function TelegramGate({ children }: TelegramGateProps) {
   const isDevBrowserPreview = import.meta.env.DEV;
 
   useEffect(() => {
-    if (!ensureTelegramSdkInitialized()) {
-      setBrowserRuntime();
-      return;
+    let isCancelled = false;
+
+    async function setBrowserRuntimeWithLocale() {
+      await applyLocale(resolveBrowserLocale(getBrowserLanguages()));
+
+      if (!isCancelled) {
+        setBrowserRuntime();
+      }
     }
 
-    try {
-      const rawInitData = retrieveRawInitData();
+    async function initializeRuntime() {
+      if (!ensureTelegramSdkInitialized()) {
+        await setBrowserRuntimeWithLocale();
+        return;
+      }
+
+      let rawInitData: string | undefined;
+
+      try {
+        rawInitData = retrieveRawInitData();
+      } catch {
+        await setBrowserRuntimeWithLocale();
+        return;
+      }
 
       if (!rawInitData) {
-        setBrowserRuntime();
+        await setBrowserRuntimeWithLocale();
+        return;
+      }
+
+      let languageCode: string | undefined;
+
+      try {
+        languageCode = retrieveLaunchParams().tgWebAppData?.user?.language_code;
+      } catch {
+        languageCode = undefined;
+      }
+
+      await applyLocale(resolveTelegramLocale(languageCode));
+
+      if (isCancelled) {
         return;
       }
 
       setTelegramRuntime(rawInitData);
 
-      if (miniApp.mount.isAvailable()) {
-        miniApp.mount();
+      try {
+        if (miniApp.mount.isAvailable()) {
+          miniApp.mount();
+        }
+      } catch {
+        // Optional SDK mounting must not change the detected runtime.
       }
 
-      if (miniApp.ready.isAvailable()) {
-        miniApp.ready();
+      try {
+        if (miniApp.ready.isAvailable()) {
+          miniApp.ready();
+        }
+      } catch {
+        // Telegram runtime has already been established.
       }
 
       if (viewport.mount.isAvailable()) {
         void viewport.mount().catch(() => undefined);
       }
 
-      if (viewport.expand.isAvailable()) {
-        viewport.expand();
+      try {
+        if (viewport.expand.isAvailable()) {
+          viewport.expand();
+        }
+      } catch {
+        // Expansion is optional and must not change the detected runtime.
       }
-    } catch {
-      setBrowserRuntime();
     }
+
+    void initializeRuntime();
+
+    return () => {
+      isCancelled = true;
+    };
   }, [setBrowserRuntime, setTelegramRuntime]);
 
   function openMiniAppFromSite() {

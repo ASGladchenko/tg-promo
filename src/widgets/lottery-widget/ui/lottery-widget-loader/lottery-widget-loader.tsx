@@ -1,8 +1,11 @@
+import { useTranslation } from "react-i18next";
 import "./lottery-widget-loader.scss";
 
 export function LotteryWidgetLoader() {
+  const { t } = useTranslation();
+
   return (
-    <div className="lottery-widget-loader" role="status" aria-label="Загрузка сцены">
+    <div className="lottery-widget-loader" role="status" aria-label={t("lottery.loadingScene")}>
       <div className="lottery-widget-loader__stage" aria-hidden="true">
         <div className="lottery-widget-loader__safe">
           <span className="lottery-widget-loader__door" />

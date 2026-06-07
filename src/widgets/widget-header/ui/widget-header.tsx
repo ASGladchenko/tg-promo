@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Logo } from "@/shared/ui/logo";
 import "./widget-header.scss";
 
@@ -6,6 +7,8 @@ type WidgetHeaderProps = {
 };
 
 export function WidgetHeader({ siteUrl }: WidgetHeaderProps) {
+  const { t } = useTranslation();
+
   function openSiteInBrowser() {
     if (typeof window === "undefined") {
       return;
@@ -21,7 +24,7 @@ export function WidgetHeader({ siteUrl }: WidgetHeaderProps) {
 
   return (
     <header className="widget-header">
-      <Logo as="button" onClick={openSiteInBrowser} ariaLabel="Abdyla" />
+      <Logo as="button" onClick={openSiteInBrowser} ariaLabel={t("brand.logoLabel")} />
     </header>
   );
 }

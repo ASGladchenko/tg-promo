@@ -5,6 +5,13 @@ import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
   plugins: [react(), svgr()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: "modern-compiler"
+      }
+    }
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
