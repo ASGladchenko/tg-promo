@@ -1,20 +1,26 @@
-import clsx from "clsx";
 import { type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
-import safeImage from "@/shared/images/safe.webp";
+
+import clsx from "clsx";
+import { useTranslation } from "react-i18next";
+
 import safeDoorImage from "@/shared/images/safe_door.webp";
+import safeImage from "@/shared/images/safe.webp";
 import MuteIcon from "@/shared/svg/mute.svg?react";
 import VolumeIcon from "@/shared/svg/volume.svg?react";
+
 import { useLotteryStore } from "../../model/lottery-store";
 import { SafeWheel } from "../safe-wheel";
-import "./lottery-scene.scss";
 
-const LOOP_AUDIO_SRC = "/audio/16s.ogg";
-const AUDIO_START_EVENTS = ["pointerdown", "click", "touchstart", "keydown"] as const;
+import "./lottery-scene.scss";
 
 type LotterySceneProps = {
   codePanel: ReactNode;
   onAssetsReady?: () => void;
 };
+
+const LOOP_AUDIO_SRC = "/audio/16s.ogg";
+
+const AUDIO_START_EVENTS = ["pointerdown", "click", "touchstart", "keydown"] as const;
 
 function waitForImageReady(image: HTMLImageElement) {
   const decodeImage = () =>
@@ -39,6 +45,7 @@ function waitForImageReady(image: HTMLImageElement) {
 }
 
 export function LotteryScene({ codePanel, onAssetsReady }: LotterySceneProps) {
+  const { t } = useTranslation();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const sceneRef = useRef<HTMLElement | null>(null);
   const shouldResumeAudioRef = useRef(false);
@@ -206,13 +213,13 @@ export function LotteryScene({ codePanel, onAssetsReady }: LotterySceneProps) {
   }
 
   return (
-    <section ref={sceneRef} className="lottery-scene" aria-label="Lottery scene">
+    <section ref={sceneRef} className="lottery-scene" aria-label={t("lottery.sceneLabel")}>
       <audio ref={audioRef} src={LOOP_AUDIO_SRC} loop preload="none" />
       <div className="lottery-scene__stage">
         <img
           className="lottery-scene__safe"
           src={safeImage}
-          alt="Safe"
+          alt={t("lottery.safeAlt")}
           loading="eager"
           decoding="sync"
           draggable={false}
@@ -224,7 +231,7 @@ export function LotteryScene({ codePanel, onAssetsReady }: LotterySceneProps) {
           })}
           role="button"
           tabIndex={isCodeLocked ? -1 : 0}
-          aria-label={isCodeLocked ? "Код зафиксирован" : "Открыть выбор кода"}
+          aria-label={isCodeLocked ? t("lottery.codeLocked") : t("lottery.openCodePicker")}
           aria-disabled={isCodeLocked}
           onClick={openCodePickerFromDoor}
           onKeyDown={handleDoorKeyDown}
@@ -232,7 +239,7 @@ export function LotteryScene({ codePanel, onAssetsReady }: LotterySceneProps) {
           <img
             className="lottery-scene__door"
             src={safeDoorImage}
-            alt="Safe door"
+            alt={t("lottery.safeDoorAlt")}
             loading="eager"
             decoding="sync"
             draggable={false}
@@ -248,8 +255,8 @@ export function LotteryScene({ codePanel, onAssetsReady }: LotterySceneProps) {
         className="lottery-scene__audio-toggle"
         type="button"
         onClick={() => void toggleAudio()}
-        aria-label={isPlaying ? "Выключить звук" : "Включить звук"}
-        title={isPlaying ? "Выключить звук" : "Включить звук"}
+        aria-label={isPlaying ? t("lottery.soundOff") : t("lottery.soundOn")}
+        title={isPlaying ? t("lottery.soundOff") : t("lottery.soundOn")}
       >
         {isPlaying ? (
           <VolumeIcon className="lottery-scene__audio-icon" aria-hidden="true" focusable="false" />

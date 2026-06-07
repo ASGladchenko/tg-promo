@@ -3,6 +3,8 @@ $color-warm-overlay: #161616;
 $color-warm-strong: #f6eee3cc;
 $color-object-dark: #2a2a2a;
 $color-border-soft: #f6eee355;
+$color-control-primary: #f7562a;
+$color-control-primary-hover: #f86f49;
 $color-error: #ff4242;
 $color-ink: #000;
 $focus-ring: #f6eee399;
@@ -20,6 +22,8 @@ $font-family-base: "Trebuchet MS", "Segoe UI", sans-serif;
 
 @mixin export-root-vars {
   --background: #{$color-black};
+  --control-primary: #{$color-control-primary};
+  --control-primary-hover: #{$color-control-primary-hover};
   --foreground: #{$color-warm-overlay};
   --widget-bg: #{$color-warm-overlay};
 }

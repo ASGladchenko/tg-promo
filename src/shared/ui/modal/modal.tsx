@@ -1,14 +1,16 @@
-import clsx from "clsx";
 import { type ReactNode, useEffect } from "react";
+
+import clsx from "clsx";
 import { createPortal } from "react-dom";
+
 import "./modal.scss";
 
 type ModalProps = {
+  ariaLabel: string;
+  children: ReactNode;
+  className?: string;
   isOpen: boolean;
   onClose: () => void;
-  children: ReactNode;
-  ariaLabel: string;
-  className?: string;
 };
 
 export function Modal({ isOpen, onClose, children, ariaLabel, className }: ModalProps) {
@@ -54,6 +56,6 @@ export function Modal({ isOpen, onClose, children, ariaLabel, className }: Modal
         {children}
       </div>
     </div>,
-    document.body,
+    document.body
   );
 }

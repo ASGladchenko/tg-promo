@@ -1,14 +1,17 @@
 import { useCallback, useRef, useState } from "react";
+
+import { useTranslation } from "react-i18next";
+
 import { checkChannelMembership } from "@/entities/tg";
 import { PUBLIC_ENV } from "@/shared/config";
 import { triggerErrorHapticFeedback } from "@/shared/lib/telegram";
-import { useRetryOnAppReturn } from "./use-retry-on-app-return";
 
-const MEMBERSHIP_ERROR_MESSAGE = "Не удалось проверить подписку. Попробуйте еще раз.";
+import { useRetryOnAppReturn } from "./use-retry-on-app-return";
 
 type PendingAction = () => Promise<void>;
 
 export function useChannelSubscriptionRequirement() {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAwaitingAppReturn, setIsAwaitingAppReturn] = useState(false);
@@ -36,7 +39,7 @@ export function useChannelSubscriptionRequirement() {
       try {
         isMember = await checkChannelMembership();
       } catch (error) {
-        setSubscriptionError(MEMBERSHIP_ERROR_MESSAGE);
+        setSubscriptionError(t("subscription.errors.checkMembership"));
         triggerErrorHapticFeedback();
         setLoadingState(false);
         throw error;
@@ -59,7 +62,7 @@ export function useChannelSubscriptionRequirement() {
         setLoadingState(false);
       }
     },
-    [setLoadingState],
+    [setLoadingState, t]
   );
 
   const retryPendingAction = useCallback(() => {
@@ -74,7 +77,7 @@ export function useChannelSubscriptionRequirement() {
 
   useRetryOnAppReturn({
     enabled: isModalOpen && isAwaitingAppReturn,
-    onReturn: retryPendingAction,
+    onReturn: retryPendingAction
   });
 
   const closeModal = useCallback(() => {
@@ -111,6 +114,6 @@ export function useChannelSubscriptionRequirement() {
     isModalOpen,
     openChannel,
     runWhenSubscribed,
-    subscriptionError,
+    subscriptionError
   };
 }

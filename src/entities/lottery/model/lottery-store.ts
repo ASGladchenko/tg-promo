@@ -1,29 +1,31 @@
 import { create } from "zustand";
 
-const CODE_LENGTH = 3;
-const FULL_TURN_DEGREES = 360;
-const MIN_STEP_PERCENT = 0.06;
-const MAX_STEP_PERCENT = 0.2;
-
 type SetCodeDigitOptions = {
   hideSelectedDigitsFromOtherColumns?: boolean;
 };
-
 type LotteryState = {
-  codeDigits: string[];
   activeCodeIndex: number | null;
-  isCodePickerOpen: boolean;
+  closeCodePicker: () => void;
+  codeDigits: string[];
   hasSubmitAttempt: boolean;
   isCodeLocked: boolean;
-  wheelRotation: number;
-  openCodePicker: (index?: number) => boolean;
-  closeCodePicker: () => void;
-  setCodeDigit: (index: number, digit: string, options?: SetCodeDigitOptions) => boolean;
-  submitCode: () => boolean;
+  isCodePickerOpen: boolean;
   lockCode: () => boolean;
+  openCodePicker: (index?: number) => boolean;
   resetCode: () => void;
+  setCodeDigit: (index: number, digit: string, options?: SetCodeDigitOptions) => boolean;
   spinWheel: () => void;
+  submitCode: () => boolean;
+  wheelRotation: number;
 };
+
+const CODE_LENGTH = 3;
+
+const FULL_TURN_DEGREES = 360;
+
+const MIN_STEP_PERCENT = 0.06;
+
+const MAX_STEP_PERCENT = 0.2;
 
 function createEmptyCodeDigits() {
   return Array.from({ length: CODE_LENGTH }, () => "");
@@ -49,7 +51,7 @@ export const useLotteryStore = create<LotteryState>((set, get) => ({
 
     set({
       activeCodeIndex: Math.min(Math.max(index, 0), CODE_LENGTH - 1),
-      isCodePickerOpen: true,
+      isCodePickerOpen: true
     });
 
     return true;
@@ -57,7 +59,7 @@ export const useLotteryStore = create<LotteryState>((set, get) => ({
   closeCodePicker: () => {
     set({
       activeCodeIndex: null,
-      isCodePickerOpen: false,
+      isCodePickerOpen: false
     });
   },
   setCodeDigit: (index, digit, options = {}) => {
@@ -68,7 +70,7 @@ export const useLotteryStore = create<LotteryState>((set, get) => ({
     }
 
     const hasDigitInOtherColumn = state.codeDigits.some(
-      (currentDigit, currentIndex) => currentIndex !== index && currentDigit === digit,
+      (currentDigit, currentIndex) => currentIndex !== index && currentDigit === digit
     );
 
     if (options.hideSelectedDigitsFromOtherColumns && digit && hasDigitInOtherColumn) {
@@ -82,7 +84,7 @@ export const useLotteryStore = create<LotteryState>((set, get) => ({
       activeCodeIndex: index,
       codeDigits: nextCodeDigits,
       hasSubmitAttempt: false,
-      wheelRotation: state.wheelRotation + randomWheelDelta(),
+      wheelRotation: state.wheelRotation + randomWheelDelta()
     });
 
     return true;
@@ -97,7 +99,7 @@ export const useLotteryStore = create<LotteryState>((set, get) => ({
 
     set({
       activeCodeIndex: null,
-      isCodePickerOpen: false,
+      isCodePickerOpen: false
     });
 
     return true;
@@ -117,7 +119,7 @@ export const useLotteryStore = create<LotteryState>((set, get) => ({
     set({
       activeCodeIndex: null,
       isCodeLocked: true,
-      isCodePickerOpen: false,
+      isCodePickerOpen: false
     });
 
     return true;
@@ -129,12 +131,12 @@ export const useLotteryStore = create<LotteryState>((set, get) => ({
       hasSubmitAttempt: false,
       isCodeLocked: false,
       isCodePickerOpen: false,
-      wheelRotation: 0,
+      wheelRotation: 0
     });
   },
   spinWheel: () => {
     set((state) => ({
-      wheelRotation: state.wheelRotation + randomWheelDelta(),
+      wheelRotation: state.wheelRotation + randomWheelDelta()
     }));
-  },
+  }
 }));

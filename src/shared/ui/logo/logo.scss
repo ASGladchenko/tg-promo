@@ -1,26 +1,32 @@
 @use "../../styles/index" as s;
 
 .logo {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 0;
-  background: transparent;
   padding: 0;
-  cursor: pointer;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
   text-decoration: none;
 
+  background: transparent;
+  border: 0;
+
+  cursor: pointer;
+
   &:focus-visible {
+    border-radius: 999px;
     outline: 2px solid s.$focus-ring;
     outline-offset: 4px;
-    border-radius: 999px;
   }
 }
 
 .logo__mark {
-  display: block;
   width: min(172px, 56vw);
-  aspect-ratio: auto;
   height: auto;
+
+  display: block;
   flex-shrink: 0;
+
+  aspect-ratio: auto;
 }

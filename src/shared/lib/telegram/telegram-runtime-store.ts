@@ -1,12 +1,11 @@
 import { create } from "zustand";
 
 export type TelegramRuntimeStatus = "initializing" | "telegram" | "browser";
-
 type TelegramRuntimeState = {
   initData?: string;
-  status: TelegramRuntimeStatus;
   setBrowserRuntime: () => void;
   setTelegramRuntime: (initData: string) => void;
+  status: TelegramRuntimeStatus;
 };
 
 export const useTelegramRuntimeStore = create<TelegramRuntimeState>((set) => ({
@@ -15,13 +14,13 @@ export const useTelegramRuntimeStore = create<TelegramRuntimeState>((set) => ({
   setBrowserRuntime: () => {
     set({
       initData: undefined,
-      status: "browser",
+      status: "browser"
     });
   },
   setTelegramRuntime: (initData) => {
     set({
       initData,
-      status: "telegram",
+      status: "telegram"
     });
-  },
+  }
 }));

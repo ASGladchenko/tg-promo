@@ -1,4 +1,8 @@
+import { useTranslation } from "react-i18next";
+
+import { LanguageSwitcher } from "@/shared/ui/language-switcher";
 import { Logo } from "@/shared/ui/logo";
+
 import "./widget-header.scss";
 
 type WidgetHeaderProps = {
@@ -6,6 +10,8 @@ type WidgetHeaderProps = {
 };
 
 export function WidgetHeader({ siteUrl }: WidgetHeaderProps) {
+  const { t } = useTranslation();
+
   function openSiteInBrowser() {
     if (typeof window === "undefined") {
       return;
@@ -21,7 +27,14 @@ export function WidgetHeader({ siteUrl }: WidgetHeaderProps) {
 
   return (
     <header className="widget-header">
-      <Logo as="button" onClick={openSiteInBrowser} ariaLabel="Abdyla" />
+      <span className="widget-header__balance" aria-hidden="true" />
+      <Logo
+        className="widget-header__logo"
+        as="button"
+        onClick={openSiteInBrowser}
+        ariaLabel={t("brand.logoLabel")}
+      />
+      <LanguageSwitcher />
     </header>
   );
 }

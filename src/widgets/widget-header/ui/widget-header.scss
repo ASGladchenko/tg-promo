@@ -2,10 +2,24 @@
 
 .widget-header {
   width: 100%;
+
+  padding: s.$space-1 s.$space-2;
+
+  display: grid;
+  align-items: center;
+  gap: s.$space-2;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+
   background: s.$color-warm-overlay;
   border-radius: 0;
-  padding: s.$space-1 s.$space-2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+  direction: ltr;
+}
+
+.widget-header__balance {
+  min-width: 0;
+}
+
+.widget-header__logo {
+  grid-column: 2;
 }

@@ -1,20 +1,19 @@
+import { useTranslation } from "react-i18next";
+
 import "./logo.scss";
 
 type BaseLogoProps = {
-  className?: string;
   ariaLabel?: string;
+  className?: string;
 };
-
 type LogoAsLinkProps = BaseLogoProps & {
   as: "link";
   href: string;
 };
-
 type LogoAsButtonProps = BaseLogoProps & {
   as: "button";
   onClick: () => void;
 };
-
 type LogoProps = LogoAsLinkProps | LogoAsButtonProps;
 
 function joinClassName(className?: string) {
@@ -22,7 +21,8 @@ function joinClassName(className?: string) {
 }
 
 export function Logo(props: LogoProps) {
-  const ariaLabel = props.ariaLabel ?? "Logo label";
+  const { t } = useTranslation();
+  const ariaLabel = props.ariaLabel ?? t("brand.logoLabel");
 
   if (props.as === "link") {
     return (

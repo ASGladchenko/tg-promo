@@ -1,18 +1,23 @@
-import clsx from "clsx";
 import { useCallback, useLayoutEffect, useRef } from "react";
+
+import clsx from "clsx";
+import { useTranslation } from "react-i18next";
+
 import "./lottery-code-picker.scss";
 
-const DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-const EMPTY_DIGIT = "";
-const PICKER_OPTIONS = [EMPTY_DIGIT, ...DIGITS];
-
 type LotteryCodePickerProps = {
-  digits: string[];
   activeIndex: number | null;
+  digits: string[];
   hideSelectedDigitsFromOtherColumns?: boolean;
   onAccept: () => void;
   onDigitChange: (index: number, digit: string) => void;
 };
+
+const DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+const EMPTY_DIGIT = "";
+
+const PICKER_OPTIONS = [EMPTY_DIGIT, ...DIGITS];
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
@@ -40,6 +45,7 @@ export function LotteryCodePicker({
   onAccept,
   onDigitChange
 }: LotteryCodePickerProps) {
+  const { t } = useTranslation();
   const columnRefs = useRef<Array<HTMLDivElement | null>>([]);
   const initialDigitsRef = useRef(digits);
   const isSyncingScrollRef = useRef(false);
@@ -150,7 +156,7 @@ export function LotteryCodePicker({
 
   return (
     <div className="lottery-code-picker">
-      <div className="lottery-code-picker__viewport" aria-label="Выберите три цифры кода">
+      <div className="lottery-code-picker__viewport" aria-label={t("lottery.chooseCodeDigits")}>
         {Array.from({ length: 3 }, (_, columnIndex) => {
           const visibleDigits = getAvailableDigits(columnIndex, digits, hideSelectedDigitsFromOtherColumns);
           const selectedDigit = visibleDigits.includes(digits[columnIndex])
@@ -166,7 +172,7 @@ export function LotteryCodePicker({
               ref={(node) => {
                 columnRefs.current[columnIndex] = node;
               }}
-              aria-label={`Цифра ${columnIndex + 1}`}
+              aria-label={t("lottery.digitPosition", { position: columnIndex + 1 })}
               onScroll={() => handleScroll(columnIndex)}
             >
               <span className="lottery-code-picker__spacer" aria-hidden="true" />
@@ -179,8 +185,8 @@ export function LotteryCodePicker({
                   type="button"
                   aria-label={
                     digit
-                      ? `Выбрать ${digit} для позиции ${columnIndex + 1}`
-                      : `Очистить позицию ${columnIndex + 1}`
+                      ? t("lottery.chooseDigit", { digit, position: columnIndex + 1 })
+                      : t("lottery.clearPosition", { position: columnIndex + 1 })
                   }
                   aria-pressed={selectedDigit === digit}
                   onClick={() => handleDigitClick(columnIndex, digitIndex)}
@@ -195,7 +201,7 @@ export function LotteryCodePicker({
       </div>
       <div className="lottery-code-picker__selection-frame" aria-hidden="true" />
       <button className="lottery-code-picker__accept-button" type="button" onClick={onAccept}>
-        Принять
+        {t("lottery.accept")}
       </button>
     </div>
   );

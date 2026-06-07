@@ -1,4 +1,5 @@
 import { getApiUrl } from "@/shared/api";
+
 import { type Me } from "../model/types";
 
 type AuthMeParams = {
@@ -23,10 +24,10 @@ export async function authMe({ initData, signal }: AuthMeParams = {}): Promise<M
     method: "POST",
     credentials: "include",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({ initData }),
-    signal,
+    signal
   });
 
   if (!response.ok) {

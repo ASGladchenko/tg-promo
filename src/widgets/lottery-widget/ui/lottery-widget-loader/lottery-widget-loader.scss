@@ -1,106 +1,132 @@
 @use "../../../../shared/styles/index" as s;
 
 .lottery-widget-loader {
+  position: relative;
+
   width: 100%;
+
   padding: s.$space-3;
+
   display: grid;
   gap: s.$space-2;
-  position: relative;
 }
 
 .lottery-widget-loader__stage {
-  width: min(520px, 100%);
-  margin-inline: auto;
-  aspect-ratio: 1 / 1;
   position: relative;
+
+  width: min(520px, 100%);
+
+  margin-inline: auto;
+
   overflow: hidden;
-  border-radius: s.$radius-lg;
+
   background:
     radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.08), transparent 34%),
     linear-gradient(135deg, rgba(s.$color-object-dark, 0.8), rgba(s.$color-object-dark, 0.38));
+  border-radius: s.$radius-lg;
+
+  aspect-ratio: 1 / 1;
 }
 
 .lottery-widget-loader__stage::after,
 .lottery-widget-loader__code-slot::after,
 .lottery-widget-loader__audio-toggle::after {
-  content: "";
   position: absolute;
   inset: 0;
-  transform: translateX(-110%);
+
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+
   animation: lottery-widget-skeleton-shimmer 1.25s ease-in-out infinite;
+  transform: translateX(-110%);
+
+  content: "";
 }
 
 .lottery-widget-loader__safe {
   position: absolute;
   inset: 12%;
+
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), transparent 34%), s.$color-object-dark;
   border-radius: s.$radius-lg;
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.07), transparent 34%),
-    s.$color-object-dark;
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.05),
     0 18px 34px rgba(0, 0, 0, 0.22);
+
   animation: lottery-widget-skeleton-pulse 1.6s ease-in-out infinite;
 }
 
 .lottery-widget-loader__door {
   position: absolute;
-  left: 50%;
   top: 50%;
+  left: 50%;
+
   width: 58%;
-  aspect-ratio: 1 / 1;
-  transform: translate(-50%, -50%);
+
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0 26%, transparent 27%), s.$color-object-dark;
   border-radius: 50%;
-  background:
-    radial-gradient(circle, rgba(255, 255, 255, 0.06) 0 26%, transparent 27%),
-    s.$color-object-dark;
   box-shadow:
     inset 0 0 0 10px rgba(0, 0, 0, 0.16),
     inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+
+  transform: translate(-50%, -50%);
+
+  aspect-ratio: 1 / 1;
 }
 
 .lottery-widget-loader__wheel {
   position: absolute;
-  left: 50%;
   top: 50%;
+  left: 50%;
+
   width: 28%;
-  aspect-ratio: 1 / 1;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
+
   background: rgba(0, 0, 0, 0.18);
+  border-radius: 50%;
   box-shadow: inset 0 0 0 8px rgba(255, 255, 255, 0.035);
+
+  transform: translate(-50%, -50%);
+
+  aspect-ratio: 1 / 1;
 }
 
 .lottery-widget-loader__code-panel {
   width: min(520px, 100%);
+
   margin-inline: auto;
+
   display: grid;
-  grid-template-columns: repeat(4, clamp(58px, 18vw, 84px));
   justify-content: center;
   gap: clamp(8px, 2.6vw, 14px);
+  grid-template-columns: repeat(4, clamp(58px, 18vw, 84px));
 }
 
 .lottery-widget-loader__code-slot {
-  width: clamp(58px, 18vw, 84px);
-  aspect-ratio: 388 / 377;
   position: relative;
+
+  width: clamp(58px, 18vw, 84px);
+
   overflow: hidden;
-  border-radius: s.$radius-sm;
+
   background: s.$color-object-dark;
+  border-radius: s.$radius-sm;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.22));
+
+  aspect-ratio: 388 / 377;
 }
 
 .lottery-widget-loader__audio-toggle {
   position: absolute;
   right: s.$space-3;
   bottom: s.$space-3;
+
   width: 40px;
   height: 40px;
+
   overflow: hidden;
-  border-radius: s.$radius-sm;
-  background: s.$color-object-dark;
+
   opacity: 0.82;
+  background: s.$color-object-dark;
+  border-radius: s.$radius-sm;
 }
 
 @keyframes lottery-widget-skeleton-shimmer {

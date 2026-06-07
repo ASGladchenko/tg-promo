@@ -1,7 +1,12 @@
 import { type ReactNode } from "react";
+
+import { useTranslation } from "react-i18next";
+
 import { useMe } from "@/entities/me";
 import { useTelegramRuntimeStore } from "@/shared/lib/telegram";
+
 import { AuthContext } from "../auth-context";
+
 import "./auth-gate.scss";
 
 type AuthGateProps = {
@@ -9,19 +14,19 @@ type AuthGateProps = {
 };
 
 export function AuthGate({ children }: AuthGateProps) {
+  const { t } = useTranslation();
   const initData = useTelegramRuntimeStore((state) => state.initData);
   const telegramStatus = useTelegramRuntimeStore((state) => state.status);
   const shouldBypassAuth = telegramStatus === "browser";
   const shouldAuthenticate = telegramStatus === "telegram" && Boolean(initData);
   const {
     data: me,
-    error,
     isError,
     isLoading,
     isFetching,
-    refetch,
+    refetch
   } = useMe(initData, {
-    enabled: shouldAuthenticate,
+    enabled: shouldAuthenticate
   });
 
   if (shouldBypassAuth) {
@@ -29,7 +34,7 @@ export function AuthGate({ children }: AuthGateProps) {
       <AuthContext.Provider
         value={{
           isAuthenticated: false,
-          isAuthLoading: false,
+          isAuthLoading: false
         }}
       >
         {children}
@@ -39,7 +44,7 @@ export function AuthGate({ children }: AuthGateProps) {
 
   if (telegramStatus === "initializing" || (telegramStatus === "telegram" && !initData)) {
     return (
-      <section className="auth-gate" aria-label="Авторизация">
+      <section className="auth-gate" aria-label={t("auth.loadingLabel")}>
         <div className="auth-gate__panel" role="status">
           <span className="auth-gate__spinner" aria-hidden="true" />
         </div>
@@ -49,11 +54,11 @@ export function AuthGate({ children }: AuthGateProps) {
 
   if (isError) {
     return (
-      <section className="auth-gate" aria-label="Ошибка авторизации">
+      <section className="auth-gate" aria-label={t("auth.errorLabel")}>
         <div className="auth-gate__panel">
-          <p className="auth-gate__message">{error?.message ?? "Не удалось авторизоваться"}</p>
+          <p className="auth-gate__message">{t("auth.errorMessage")}</p>
           <button className="auth-gate__retry" type="button" onClick={() => void refetch()}>
-            Повторить
+            {t("auth.retry")}
           </button>
         </div>
       </section>
@@ -62,7 +67,7 @@ export function AuthGate({ children }: AuthGateProps) {
 
   if (isLoading || isFetching || !me) {
     return (
-      <section className="auth-gate" aria-label="Авторизация">
+      <section className="auth-gate" aria-label={t("auth.loadingLabel")}>
         <div className="auth-gate__panel" role="status">
           <span className="auth-gate__spinner" aria-hidden="true" />
         </div>
@@ -75,7 +80,7 @@ export function AuthGate({ children }: AuthGateProps) {
       value={{
         isAuthenticated: true,
         isAuthLoading: false,
-        me,
+        me
       }}
     >
       {children}
