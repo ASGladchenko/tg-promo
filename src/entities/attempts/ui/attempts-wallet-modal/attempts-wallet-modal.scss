@@ -1,0 +1,232 @@
+@use "../../../../shared/styles/index" as s;
+
+.attempts-wallet-modal {
+  width: min(430px, 100%);
+  max-height: min(660px, 100%);
+
+  padding: 0;
+
+  overflow-y: auto;
+
+  color: s.$color-warm-strong;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(s.$color-accent-gold, 0.12), transparent 34%),
+    rgba(s.$color-surface-deep, 0.96);
+  border: 1px solid rgba(s.$color-accent-gold, 0.24);
+  border-radius: s.$radius-lg;
+  box-shadow:
+    0 28px 70px rgba(s.$color-black, 0.54),
+    inset 0 0 0 1px rgba(s.$color-accent-gold-soft, 0.035);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(s.$color-accent-gold, 0.32) transparent;
+  backdrop-filter: blur(14px);
+}
+
+.attempts-wallet-modal__sticky {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+
+  padding: 16px 16px 12px;
+
+  background:
+    radial-gradient(circle at 85% 0%, rgba(s.$color-accent-gold, 0.11), transparent 42%),
+    rgba(s.$color-surface-deep, 0.98);
+  border-bottom: 1px solid rgba(s.$color-warm-strong, 0.07);
+}
+
+.attempts-wallet-modal__header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.attempts-wallet-modal__eyebrow {
+  margin: 0 0 3px;
+
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  color: rgba(s.$color-accent-gold, 0.66);
+}
+
+.attempts-wallet-modal__title {
+  margin: 0;
+
+  font-size: clamp(1.15rem, 5vw, 1.45rem);
+  line-height: 1.12;
+
+  color: s.$color-accent-gold-soft;
+}
+
+.attempts-wallet-modal__close {
+  width: 32px;
+  height: 32px;
+
+  padding: 0;
+
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+
+  font-size: 1.35rem;
+  line-height: 1;
+
+  color: rgba(s.$color-warm-strong, 0.72);
+  background: rgba(s.$color-accent-gold-soft, 0.045);
+  border: 1px solid rgba(s.$color-warm-strong, 0.12);
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid s.$focus-ring;
+    outline-offset: 2px;
+  }
+}
+
+.attempts-wallet-modal__balance {
+  margin-top: 12px;
+  padding: 10px 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: linear-gradient(110deg, rgba(s.$color-accent-gold, 0.1), rgba(s.$color-accent-gold-soft, 0.02));
+  border: 1px solid rgba(s.$color-accent-gold, 0.18);
+  border-radius: s.$radius-sm;
+}
+
+.attempts-wallet-modal__balance-part {
+  min-width: 0;
+
+  display: flex;
+  flex: 1;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.attempts-wallet-modal__balance-value {
+  font-size: clamp(1.75rem, 8vw, 2.25rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+
+  color: s.$color-accent-gold-soft;
+}
+
+.attempts-wallet-modal__balance-value--daily {
+  color: s.$color-accent-warm;
+}
+
+.attempts-wallet-modal__balance-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.15;
+
+  color: rgba(s.$color-warm-strong, 0.56);
+}
+
+.attempts-wallet-modal__balance-plus {
+  font-size: 1.1rem;
+
+  color: rgba(s.$color-warm-strong, 0.34);
+}
+
+.attempts-wallet-modal__body {
+  padding: 12px 16px 16px;
+}
+
+.attempts-wallet-modal__daily {
+  min-height: 52px;
+
+  padding: 9px 11px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  background: rgba(s.$color-accent-warm, 0.055);
+  border: 1px solid rgba(s.$color-accent-warm, 0.15);
+  border-radius: s.$radius-sm;
+}
+
+.attempts-wallet-modal__daily-copy {
+  min-width: 0;
+
+  display: grid;
+  gap: 2px;
+}
+
+.attempts-wallet-modal__daily-title {
+  font-size: 0.82rem;
+  line-height: 1.25;
+}
+
+.attempts-wallet-modal__daily-note {
+  font-size: 0.68rem;
+  line-height: 1.25;
+
+  color: s.$color-accent-warm;
+}
+
+.attempts-wallet-modal__daily-value {
+  flex: 0 0 auto;
+
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+
+  color: s.$color-accent-gold-soft;
+}
+
+.attempts-wallet-modal__section {
+  margin-top: 16px;
+}
+
+.attempts-wallet-modal__section-heading {
+  display: grid;
+  gap: 4px;
+}
+
+.attempts-wallet-modal__section-title {
+  margin: 0;
+
+  font-size: 0.92rem;
+  line-height: 1.2;
+
+  color: s.$color-accent-gold-soft;
+}
+
+.attempts-wallet-modal__section-text {
+  margin: 0;
+
+  font-size: 0.72rem;
+  line-height: 1.35;
+
+  color: rgba(s.$color-warm-strong, 0.56);
+}
+
+.attempts-wallet-modal__rewards {
+  margin: 9px 0 0;
+  padding: 0;
+
+  display: grid;
+  gap: 6px;
+
+  list-style: none;
+}
+
+.attempts-wallet-modal__feedback {
+  min-height: 1.15em;
+
+  margin: 7px 2px 0;
+
+  font-size: 0.7rem;
+  line-height: 1.35;
+
+  color: s.$color-accent-warm;
+}

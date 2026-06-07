@@ -1,4 +1,43 @@
 export const enTranslation = {
+  attempts: {
+    close: "Close attempts wallet",
+    comingSoonMessage: "This action will be available soon.",
+    dailyExpires: "Expires today at {{time}}",
+    dailyTitle: "Daily free attempts",
+    dialogLabel: "Attempts wallet details",
+    dialogTitle: "Your attempts",
+    expiring: "Expire today",
+    openDetails: "Tap to see details and earn more",
+    permanent: "Do not expire",
+    rewards: {
+      addPhone: {
+        description: "Add and confirm your phone number.",
+        title: "Add phone number"
+      },
+      confirmEmail: {
+        description: "Confirm your email address.",
+        title: "Confirm email"
+      },
+      inviteFriend: {
+        description: "Invite a friend who joins the promotion.",
+        title: "Invite a friend"
+      },
+      subscribeChannel: {
+        description: "Stay subscribed to the Telegram channel.",
+        title: "Subscribe to the channel"
+      }
+    },
+    rewardsText: "Complete simple tasks to receive more attempts.",
+    rewardsTitle: "Get more attempts",
+    shortUnit: "tries",
+    status: {
+      comingSoon: "Soon",
+      completed: "Done",
+      get: "Get"
+    },
+    title: "Attempts wallet",
+    walletLabel: "Attempts wallet"
+  },
   auth: {
     errorLabel: "Authentication error",
     errorMessage: "Could not sign in. Please try again.",

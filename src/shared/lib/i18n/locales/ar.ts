@@ -1,4 +1,43 @@
 export const arTranslation = {
+  attempts: {
+    close: "إغلاق محفظة المحاولات",
+    comingSoonMessage: "سيتوفر هذا الإجراء قريبًا.",
+    dailyExpires: "تنتهي اليوم الساعة {{time}}",
+    dailyTitle: "محاولات يومية مجانية",
+    dialogLabel: "تفاصيل محفظة المحاولات",
+    dialogTitle: "محاولاتك",
+    expiring: "تنتهي اليوم",
+    openDetails: "اضغط لرؤية التفاصيل وكسب المزيد",
+    permanent: "لا تنتهي",
+    rewards: {
+      addPhone: {
+        description: "أضف رقم هاتفك وأكده.",
+        title: "إضافة رقم الهاتف"
+      },
+      confirmEmail: {
+        description: "أكد عنوان بريدك الإلكتروني.",
+        title: "تأكيد البريد الإلكتروني"
+      },
+      inviteFriend: {
+        description: "ادعُ صديقًا للانضمام إلى العرض.",
+        title: "دعوة صديق"
+      },
+      subscribeChannel: {
+        description: "حافظ على اشتراكك في قناة Telegram.",
+        title: "الاشتراك في القناة"
+      }
+    },
+    rewardsText: "أكمل مهام بسيطة للحصول على محاولات إضافية.",
+    rewardsTitle: "احصل على محاولات إضافية",
+    shortUnit: "محاولة",
+    status: {
+      comingSoon: "قريبًا",
+      completed: "تم",
+      get: "احصل"
+    },
+    title: "محفظة المحاولات",
+    walletLabel: "محفظة المحاولات"
+  },
   auth: {
     errorLabel: "خطأ في تسجيل الدخول",
     errorMessage: "تعذر تسجيل الدخول. حاول مرة أخرى.",
