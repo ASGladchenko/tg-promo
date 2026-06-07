@@ -2,10 +2,20 @@
 
 .widget-header {
   width: 100%;
+  direction: ltr;
   background: s.$color-warm-overlay;
   border-radius: 0;
   padding: s.$space-1 s.$space-2;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: center;
+  gap: s.$space-2;
+}
+
+.widget-header__balance {
+  min-width: 0;
+}
+
+.widget-header__logo {
+  grid-column: 2;
 }

@@ -8,6 +8,10 @@ export const frTranslation = {
   brand: {
     logoLabel: "Ouvrir le site de la marque"
   },
+  languageSwitcher: {
+    changeLanguage: "Changer de langue",
+    menuLabel: "Choisir une langue"
+  },
   lottery: {
     accept: "Valider",
     checkCode: "Vérifier le code",

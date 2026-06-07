@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { LanguageSwitcher } from "@/shared/ui/language-switcher";
 import { Logo } from "@/shared/ui/logo";
 import "./widget-header.scss";
 
@@ -24,7 +25,14 @@ export function WidgetHeader({ siteUrl }: WidgetHeaderProps) {
 
   return (
     <header className="widget-header">
-      <Logo as="button" onClick={openSiteInBrowser} ariaLabel={t("brand.logoLabel")} />
+      <span className="widget-header__balance" aria-hidden="true" />
+      <Logo
+        className="widget-header__logo"
+        as="button"
+        onClick={openSiteInBrowser}
+        ariaLabel={t("brand.logoLabel")}
+      />
+      <LanguageSwitcher />
     </header>
   );
 }

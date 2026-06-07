@@ -8,6 +8,10 @@ export const enTranslation = {
   brand: {
     logoLabel: "Open brand website"
   },
+  languageSwitcher: {
+    changeLanguage: "Change language",
+    menuLabel: "Choose a language"
+  },
   lottery: {
     accept: "Accept",
     checkCode: "Check code",

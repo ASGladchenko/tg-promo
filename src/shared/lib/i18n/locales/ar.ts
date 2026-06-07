@@ -8,6 +8,10 @@ export const arTranslation = {
   brand: {
     logoLabel: "فتح موقع العلامة التجارية"
   },
+  languageSwitcher: {
+    changeLanguage: "تغيير اللغة",
+    menuLabel: "اختر اللغة"
+  },
   lottery: {
     accept: "تأكيد",
     checkCode: "تحقق من الرمز",
