@@ -2,6 +2,12 @@ export const enTranslation = {
   attempts: {
     close: "Close attempts wallet",
     comingSoonMessage: "This action will be available soon.",
+    contact: {
+      cancelled: "Phone number was not shared.",
+      error: "Could not request your phone number. Please try again.",
+      sent: "Phone number sent to the bot.",
+      unsupported: "Update Telegram to share your phone number."
+    },
     dailyExpires: "Expires today at {{time}}",
     dailyTitle: "Daily free attempts",
     dialogLabel: "Attempts wallet details",
@@ -33,7 +39,8 @@ export const enTranslation = {
     status: {
       comingSoon: "Soon",
       completed: "Done",
-      get: "Get"
+      get: "Get",
+      requesting: "Requesting..."
     },
     title: "Attempts wallet",
     walletLabel: "Attempts wallet"

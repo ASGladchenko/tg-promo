@@ -1,9 +1,10 @@
-import { type AttemptsWalletData } from "../model/types";
+import { type AttemptReward } from "../model/types";
 
-export const DEMO_ATTEMPTS_WALLET_DATA: AttemptsWalletData = {
-  permanentAttempts: 12,
-  dailyAttempts: 3,
-  dailyExpiresAt: "23:59",
+type MOCK_REWARD_TYPE = {
+  rewards: AttemptReward[];
+};
+
+export const MOCK_REWARDS: MOCK_REWARD_TYPE = {
   rewards: [
     {
       id: "invite-friend",
@@ -21,7 +22,7 @@ export const DEMO_ATTEMPTS_WALLET_DATA: AttemptsWalletData = {
       id: "add-phone",
       kind: "add-phone",
       attempts: 1,
-      status: "coming-soon"
+      status: "available"
     },
     {
       id: "subscribe-channel",

@@ -1,3 +1,12 @@
+export type { AttemptsWalletDto } from "./api/types";
+export type {
+  AttemptReward,
+  AttemptRewardKind,
+  AttemptRewardStatus,
+  AttemptsWallet,
+  AttemptsWalletData
+} from "./model/types";
+
 export {
   AttemptRewardActionButton,
   AttemptRewardCard,
@@ -5,13 +14,12 @@ export {
   AttemptsWalletTrigger
 } from "./ui";
 
-export { DEMO_ATTEMPTS_WALLET_DATA } from "./lib/demo-attempts-wallet-data";
+export { MOCK_REWARDS } from "./lib/demo-attempts-wallet-data";
+
+export { getAttemptsWalletDto } from "./api/get-attempts-wallet";
+
+export { attemptsWalletQueryKey, setAttemptsWalletQueryData } from "./model/attempts-wallet-query";
+
+export { useAttemptsWallet } from "./model/use-attempts-wallet";
 
 export { useAttemptsWalletStore } from "./model/attempts-wallet-store";
-
-export type {
-  AttemptReward,
-  AttemptRewardKind,
-  AttemptRewardStatus,
-  AttemptsWalletData
-} from "./model/types";

@@ -10,7 +10,7 @@ import "./attempts-wallet-modal.scss";
 
 type AttemptsWalletModalProps = {
   children: ReactNode;
-  data: AttemptsWalletData;
+  data: AttemptsWalletData | null;
   isOpen: boolean;
   onClose: () => void;
   statusMessage?: string;
@@ -26,6 +26,10 @@ export function AttemptsWalletModal({
   const { t } = useTranslation();
   const dailyTitleId = useId();
   const rewardsTitleId = useId();
+
+  if (!data) {
+    return null;
+  }
 
   return (
     <Modal
@@ -52,7 +56,7 @@ export function AttemptsWalletModal({
           </button>
         </div>
 
-        <div className="attempts-wallet-modal__balance">
+        <div dir="ltr" className="attempts-wallet-modal__balance">
           <div className="attempts-wallet-modal__balance-part">
             <strong className="attempts-wallet-modal__balance-value">{data.permanentAttempts}</strong>
             <span className="attempts-wallet-modal__balance-label">{t("attempts.permanent")}</span>
@@ -76,10 +80,12 @@ export function AttemptsWalletModal({
               {t("attempts.dailyTitle")}
             </strong>
             <span className="attempts-wallet-modal__daily-note">
-              {t("attempts.dailyExpires", { time: data.dailyExpiresAt })}
+              {t("attempts.dailyExpires", { time: "UNKNOWN" })}
             </span>
           </span>
-          <strong className="attempts-wallet-modal__daily-value">+{data.dailyAttempts}</strong>
+          <strong dir="ltr" className="attempts-wallet-modal__daily-value">
+            +{data.dailyAttempts}
+          </strong>
         </section>
 
         <section className="attempts-wallet-modal__section" aria-labelledby={rewardsTitleId}>
