@@ -1,4 +1,4 @@
-export type Me = {
+export type MeDto = {
   email: string | null;
   id: string;
   imgUrl: string | null;

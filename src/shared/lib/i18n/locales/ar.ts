@@ -2,6 +2,12 @@ export const arTranslation = {
   attempts: {
     close: "إغلاق محفظة المحاولات",
     comingSoonMessage: "سيتوفر هذا الإجراء قريبًا.",
+    contact: {
+      cancelled: "لم تتم مشاركة رقم الهاتف.",
+      error: "تعذر طلب رقم هاتفك. حاول مرة أخرى.",
+      sent: "تم إرسال رقم الهاتف إلى البوت.",
+      unsupported: "حدّث Telegram لمشاركة رقم هاتفك."
+    },
     dailyExpires: "تنتهي اليوم الساعة {{time}}",
     dailyTitle: "محاولات يومية مجانية",
     dialogLabel: "تفاصيل محفظة المحاولات",
@@ -33,7 +39,8 @@ export const arTranslation = {
     status: {
       comingSoon: "قريبًا",
       completed: "تم",
-      get: "احصل"
+      get: "احصل",
+      requesting: "جارٍ الطلب..."
     },
     title: "محفظة المحاولات",
     walletLabel: "محفظة المحاولات"

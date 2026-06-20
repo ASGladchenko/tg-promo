@@ -7,7 +7,7 @@ import "./attempts-wallet-trigger.scss";
 type AttemptsWalletTriggerProps = {
   isExpanded: boolean;
   onClick: () => void;
-  totalAttempts: number;
+  totalAttempts: number | string;
 };
 
 export const AttemptsWalletTrigger = forwardRef<HTMLButtonElement, AttemptsWalletTriggerProps>(

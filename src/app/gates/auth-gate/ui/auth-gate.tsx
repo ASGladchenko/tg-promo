@@ -2,10 +2,8 @@ import { type ReactNode } from "react";
 
 import { useTranslation } from "react-i18next";
 
-import { useMe } from "@/entities/me";
+import { useAuthenticateDevViewer, useAuthenticateViewer } from "@/features/authenticate-viewer";
 import { useTelegramRuntimeStore } from "@/shared/lib/telegram";
-
-import { AuthContext } from "../auth-context";
 
 import "./auth-gate.scss";
 
@@ -17,30 +15,23 @@ export function AuthGate({ children }: AuthGateProps) {
   const { t } = useTranslation();
   const initData = useTelegramRuntimeStore((state) => state.initData);
   const telegramStatus = useTelegramRuntimeStore((state) => state.status);
-  const shouldBypassAuth = telegramStatus === "browser";
-  const shouldAuthenticate = telegramStatus === "telegram" && Boolean(initData);
+  const shouldAuthenticateWithTelegram = telegramStatus === "telegram" && Boolean(initData);
+  const shouldAuthenticateWithDevLogin = telegramStatus === "browser" && import.meta.env.DEV;
+  const telegramAuthentication = useAuthenticateViewer(initData, {
+    enabled: shouldAuthenticateWithTelegram
+  });
+
+  const devAuthentication = useAuthenticateDevViewer({
+    enabled: shouldAuthenticateWithDevLogin
+  });
   const {
     data: me,
     isError,
     isLoading,
     isFetching,
+    error,
     refetch
-  } = useMe(initData, {
-    enabled: shouldAuthenticate
-  });
-
-  if (shouldBypassAuth) {
-    return (
-      <AuthContext.Provider
-        value={{
-          isAuthenticated: false,
-          isAuthLoading: false
-        }}
-      >
-        {children}
-      </AuthContext.Provider>
-    );
-  }
+  } = shouldAuthenticateWithDevLogin ? devAuthentication : telegramAuthentication;
 
   if (telegramStatus === "initializing" || (telegramStatus === "telegram" && !initData)) {
     return (
@@ -55,8 +46,9 @@ export function AuthGate({ children }: AuthGateProps) {
   if (isError) {
     return (
       <section className="auth-gate" aria-label={t("auth.errorLabel")}>
-        <div className="auth-gate__panel">
+        <div className="auth-gate__panel" role="alert">
           <p className="auth-gate__message">{t("auth.errorMessage")}</p>
+          <p className="auth-gate__message">{error.message}</p>
           <button className="auth-gate__retry" type="button" onClick={() => void refetch()}>
             {t("auth.retry")}
           </button>
@@ -75,15 +67,5 @@ export function AuthGate({ children }: AuthGateProps) {
     );
   }
 
-  return (
-    <AuthContext.Provider
-      value={{
-        isAuthenticated: true,
-        isAuthLoading: false,
-        me
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  return <>{children}</>;
 }

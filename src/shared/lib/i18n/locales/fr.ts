@@ -2,6 +2,12 @@ export const frTranslation = {
   attempts: {
     close: "Fermer le portefeuille de tentatives",
     comingSoonMessage: "Cette action sera bientôt disponible.",
+    contact: {
+      cancelled: "Le numéro de téléphone n’a pas été partagé.",
+      error: "Impossible de demander votre numéro de téléphone. Veuillez réessayer.",
+      sent: "Numéro de téléphone envoyé au bot.",
+      unsupported: "Mettez Telegram à jour pour partager votre numéro de téléphone."
+    },
     dailyExpires: "Expire aujourd’hui à {{time}}",
     dailyTitle: "Tentatives quotidiennes gratuites",
     dialogLabel: "Détails du portefeuille de tentatives",
@@ -33,7 +39,8 @@ export const frTranslation = {
     status: {
       comingSoon: "Bientôt",
       completed: "Fait",
-      get: "Obtenir"
+      get: "Obtenir",
+      requesting: "Demande..."
     },
     title: "Portefeuille de tentatives",
     walletLabel: "Portefeuille de tentatives"

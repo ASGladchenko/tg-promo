@@ -1,0 +1,37 @@
+@use "../../../../shared/styles/index" as s;
+
+.request-telegram-contact-button {
+  min-width: 64px;
+  min-height: 30px;
+
+  padding: 0 8px;
+
+  font-size: 0.68rem;
+  font-weight: 800;
+
+  color: s.$color-accent-gold-soft;
+  background: rgba(s.$color-accent-gold, 0.12);
+  border: 1px solid rgba(s.$color-accent-gold, 0.28);
+  border-radius: s.$radius-sm;
+
+  cursor: pointer;
+
+  &:disabled {
+    color: rgba(s.$color-warm-strong, 0.48);
+    background: rgba(s.$color-accent-gold-soft, 0.035);
+    border-color: rgba(s.$color-warm-strong, 0.09);
+
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: 2px solid s.$focus-ring;
+    outline-offset: 2px;
+  }
+}
+
+@media (max-width: 420px) {
+  .request-telegram-contact-button {
+    width: 100%;
+  }
+}

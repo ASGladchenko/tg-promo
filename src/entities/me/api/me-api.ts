@@ -1,39 +1,27 @@
 import { getApiUrl } from "@/shared/api";
 
-import { type Me } from "../model/types";
+import { normalizeMeDto } from "../lib/normalize-me-dto";
+import { type MeDto } from "./types";
 
-type AuthMeParams = {
-  initData?: string;
-  signal?: AbortSignal;
+type AuthMeResponseDto = MeDto & {
+  wallet?: unknown;
 };
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
+function pickMeDto(dto: AuthMeResponseDto): MeDto {
+  return normalizeMeDto(dto);
 }
 
-function readMeResponse(payload: unknown): Me {
-  if (isRecord(payload) && isRecord(payload.user)) {
-    return payload.user as Me;
-  }
-
-  return payload as Me;
-}
-
-export async function authMe({ initData, signal }: AuthMeParams = {}): Promise<Me> {
-  const response = await fetch(getApiUrl("auth/telegram"), {
-    method: "POST",
+export async function getMeDto(signal?: AbortSignal): Promise<MeDto> {
+  const response = await fetch(getApiUrl("auth/me"), {
+    method: "GET",
     credentials: "include",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ initData }),
     signal
   });
 
   if (!response.ok) {
-    throw new Error(`Auth request failed with status ${response.status}`);
+    throw new Error(`Me request failed with status ${response.status}`);
   }
 
-  const payload = await response.json();
-  return readMeResponse(payload);
+  const payload = (await response.json()) as AuthMeResponseDto;
+  return pickMeDto(payload);
 }
