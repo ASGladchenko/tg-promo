@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
@@ -19,10 +19,12 @@ export function RequestTelegramContactButton({
 }: RequestTelegramContactButtonProps) {
   const { t } = useTranslation();
   const { isRequesting, requestContact, statusMessage } = useRequestTelegramContact();
-  const isDisabled = hasPhone || isRequesting;
+  const [isSent, setIsSent] = useState<boolean>(false);
+
+  const isDisabled = hasPhone || isRequesting || isSent;
   const label = hasPhone
     ? t("attempts.status.completed")
-    : isRequesting
+    : isRequesting || isSent
       ? t("attempts.status.requesting")
       : t("attempts.status.get");
 
@@ -35,7 +37,10 @@ export function RequestTelegramContactButton({
 
     if (result === "sent") {
       onContactSent?.();
+      setIsSent(true);
+      return;
     }
+    setIsSent(false);
   }
 
   return (

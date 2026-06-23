@@ -14,3 +14,20 @@ export function setMeQueryData(queryClient: QueryClient, dto: MeDto): Me {
 
   return mapMeDtoToMe(meDto);
 }
+
+export function patchMeQueryData(queryClient: QueryClient, patch: Pick<MeDto, "phone">): Me | null {
+  const currentDto = queryClient.getQueryData<MeDto>(meQueryKey);
+
+  if (!currentDto) {
+    return null;
+  }
+
+  const meDto = normalizeMeDto({
+    ...currentDto,
+    ...patch
+  });
+
+  queryClient.setQueryData(meQueryKey, meDto);
+
+  return mapMeDtoToMe(meDto);
+}

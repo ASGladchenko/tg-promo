@@ -1,4 +1,4 @@
-import { AuthGate, TelegramGate } from "@/app/gates";
+import { AuthGate, RealtimeGate, TelegramGate } from "@/app/gates";
 import { LotteryPage } from "@/pages/lottery-page";
 import { AttemptsWalletWidget } from "@/widgets/attempts-wallet-widget";
 import { WidgetHeader } from "@/widgets/widget-header";
@@ -10,6 +10,7 @@ export function App() {
     <main className="page">
       <TelegramGate>
         <AuthGate>
+          <RealtimeGate />
           <WidgetHeader siteUrl={"/google.com"} />
           <AttemptsWalletWidget />
 

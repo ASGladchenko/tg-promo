@@ -22,4 +22,6 @@ export { attemptsWalletQueryKey, setAttemptsWalletQueryData } from "./model/atte
 
 export { useAttemptsWallet } from "./model/use-attempts-wallet";
 
+export { useAttemptsWalletRealtimeSync } from "./model/use-attempts-wallet-realtime-sync";
+
 export { useAttemptsWalletStore } from "./model/attempts-wallet-store";
