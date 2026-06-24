@@ -31,6 +31,8 @@ export function AttemptsWalletModal({
     return null;
   }
 
+  const isDailyAttempts = data.dailyAttempts > 0;
+
   return (
     <Modal
       isOpen={isOpen}
@@ -61,32 +63,38 @@ export function AttemptsWalletModal({
             <strong className="attempts-wallet-modal__balance-value">{data.permanentAttempts}</strong>
             <span className="attempts-wallet-modal__balance-label">{t("attempts.permanent")}</span>
           </div>
-          <span className="attempts-wallet-modal__balance-plus" aria-hidden="true">
-            +
-          </span>
-          <div className="attempts-wallet-modal__balance-part">
-            <strong className="attempts-wallet-modal__balance-value attempts-wallet-modal__balance-value--daily">
-              {data.dailyAttempts}
-            </strong>
-            <span className="attempts-wallet-modal__balance-label">{t("attempts.expiring")}</span>
-          </div>
+          {isDailyAttempts && (
+            <>
+              <span className="attempts-wallet-modal__balance-plus" aria-hidden="true">
+                +
+              </span>
+              <div className="attempts-wallet-modal__balance-part">
+                <strong className="attempts-wallet-modal__balance-value attempts-wallet-modal__balance-value--daily">
+                  {data.dailyAttempts}
+                </strong>
+                <span className="attempts-wallet-modal__balance-label">{t("attempts.expiring")}</span>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
       <div className="attempts-wallet-modal__body">
-        <section className="attempts-wallet-modal__daily" aria-labelledby={dailyTitleId}>
-          <span className="attempts-wallet-modal__daily-copy">
-            <strong id={dailyTitleId} className="attempts-wallet-modal__daily-title">
-              {t("attempts.dailyTitle")}
-            </strong>
-            <span className="attempts-wallet-modal__daily-note">
-              {t("attempts.dailyExpires", { time: "UNKNOWN" })}
+        {isDailyAttempts && (
+          <section className="attempts-wallet-modal__daily" aria-labelledby={dailyTitleId}>
+            <span className="attempts-wallet-modal__daily-copy">
+              <strong id={dailyTitleId} className="attempts-wallet-modal__daily-title">
+                {t("attempts.dailyTitle")}
+              </strong>
+              <span className="attempts-wallet-modal__daily-note">
+                {t("attempts.dailyExpires", { time: "UNKNOWN" })}
+              </span>
             </span>
-          </span>
-          <strong dir="ltr" className="attempts-wallet-modal__daily-value">
-            +{data.dailyAttempts}
-          </strong>
-        </section>
+            <strong dir="ltr" className="attempts-wallet-modal__daily-value">
+              +{data.dailyAttempts}
+            </strong>
+          </section>
+        )}
 
         <section className="attempts-wallet-modal__section" aria-labelledby={rewardsTitleId}>
           <div className="attempts-wallet-modal__section-heading">

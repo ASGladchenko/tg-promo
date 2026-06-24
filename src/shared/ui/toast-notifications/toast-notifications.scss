@@ -1,0 +1,29 @@
+@use "../../styles/index" as s;
+
+.Toastify__toast-container {
+  z-index: 1500;
+
+  width: min(360px, calc(100vw - 24px));
+
+  --toastify-font-family: #{s.$font-family-base};
+  --toastify-color-dark: #{s.$color-warm-overlay};
+  --toastify-text-color-dark: #{s.$color-warm-strong};
+  --toastify-color-progress-dark: #{s.$color-control-primary};
+}
+
+.Toastify__toast {
+  border: 1px solid s.$color-border-soft;
+  border-radius: s.$radius-sm;
+
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.32);
+}
+
+.Toastify__toast-body {
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.Toastify__close-button {
+  color: s.$color-warm-strong;
+  opacity: 0.78;
+}
