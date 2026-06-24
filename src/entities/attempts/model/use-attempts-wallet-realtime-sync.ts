@@ -36,11 +36,8 @@ export function useAttemptsWalletRealtimeSync(): void {
       const result = applyAttemptsWalletQueryData(queryClient, message.data);
 
       if (!result.isApplied) {
-        console.log("Ignored stale attempts wallet realtime message", message);
         return;
       }
-
-      console.log("Attempts wallet realtime message", message);
     });
   }, [queryClient]);
 }
