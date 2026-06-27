@@ -64,8 +64,8 @@ Widget может:
 - передавать callbacks между entity UI и feature hooks;
 - оркестрировать конкретный экран.
 
-Пример: `LotteryWidgetScene` связывает `check-lottery-combination` и
-`require-channel-subscription`.
+Пример: `AttemptsWalletWidget` связывает rewards с `request-telegram-contact` и
+`check-channel-subscription`.
 
 ### `features`
 
@@ -95,7 +95,7 @@ Feature не должна:
 
 - `entities/lottery` — lottery API, store и UI;
 - `entities/me` — пользователь и auth API;
-- `entities/tg` — backend-проверка membership.
+- `entities/tg` — backend-проверка подписки на Telegram-канал.
 
 ### `shared`
 
@@ -152,7 +152,7 @@ Feature не должна:
 Между slices:
 
 ```ts
-import { checkChannelMembership } from "@/entities/tg";
+import { checkChannelSubscription } from "@/entities/tg";
 ```
 
 Внутри slice:

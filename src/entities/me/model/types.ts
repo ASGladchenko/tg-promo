@@ -1,6 +1,7 @@
 export type Me = {
   email: string | null;
   id: string;
+  isChannelSubscribed: boolean | null;
   imgUrl: string | null;
   login: string | null;
   name: string | null;

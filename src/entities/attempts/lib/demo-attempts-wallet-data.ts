@@ -27,8 +27,8 @@ export const MOCK_REWARDS: MOCK_REWARD_TYPE = {
     {
       id: "subscribe-channel",
       kind: "subscribe-channel",
-      attempts: 2,
-      status: "completed"
+      attempts: 1,
+      status: "available"
     }
   ]
 };

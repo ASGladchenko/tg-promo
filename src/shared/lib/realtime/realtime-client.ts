@@ -1,14 +1,24 @@
+export const CLIENT_EVENT_TYPES = {
+  clientEventsPing: "client-events.ping",
+  userUpdated: "user.updated",
+  walletUpdated: "wallet.updated"
+} as const;
+
+export type ClientEventType = (typeof CLIENT_EVENT_TYPES)[keyof typeof CLIENT_EVENT_TYPES];
+
 export type RealtimeMessage<TData = unknown> = {
-  type: string;
+  type: ClientEventType;
   data: TData;
   message?: string;
 };
 
 type RealtimeMessageHandler<TData = unknown> = (message: RealtimeMessage<TData>) => void;
 
+const clientEventTypes: readonly ClientEventType[] = Object.values(CLIENT_EVENT_TYPES);
+
 class RealtimeClient {
   private eventSource: EventSource | null = null;
-  private readonly listeners = new Map<string, Set<RealtimeMessageHandler>>();
+  private readonly listeners = new Map<ClientEventType, Set<RealtimeMessageHandler>>();
 
   connect(url: string): void {
     if (this.eventSource) {
@@ -29,7 +39,7 @@ class RealtimeClient {
     this.eventSource = null;
   }
 
-  subscribe<TData>(type: string, handler: RealtimeMessageHandler<TData>): () => void {
+  subscribe<TData>(type: ClientEventType, handler: RealtimeMessageHandler<TData>): () => void {
     const listeners = this.listeners.get(type) ?? new Set<RealtimeMessageHandler>();
     const typedHandler = handler as RealtimeMessageHandler;
 
@@ -80,8 +90,16 @@ class RealtimeClient {
 
     const message = value as Partial<RealtimeMessage>;
 
-    return typeof message.type === "string" && "data" in message;
+    return (
+      isClientEventType(message.type) &&
+      "data" in message &&
+      (!("message" in message) || typeof message.message === "string")
+    );
   }
+}
+
+function isClientEventType(value: unknown): value is ClientEventType {
+  return typeof value === "string" && clientEventTypes.includes(value as ClientEventType);
 }
 
 export const realtimeClient = new RealtimeClient();

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
@@ -12,6 +12,7 @@ import {
   useAttemptsWalletStore
 } from "@/entities/attempts";
 import { useMe } from "@/entities/me";
+import { CheckChannelSubscriptionButton } from "@/features/check-channel-subscription";
 import { RequestTelegramContactButton } from "@/features/request-telegram-contact";
 
 import "./attempts-wallet-widget.scss";
@@ -21,6 +22,7 @@ export function AttemptsWalletWidget() {
   const triggerRef = useRef<HTMLButtonElement | null>(null);
 
   const [statusMessage, setStatusMessage] = useState("");
+  const [channelSubscriptionStatusMessage, setChannelSubscriptionStatusMessage] = useState("");
   const [contactStatusMessage, setContactStatusMessage] = useState("");
   const isWalletOpen = useAttemptsWalletStore((state) => state.isWalletOpen);
   const openWallet = useAttemptsWalletStore((state) => state.openWallet);
@@ -29,9 +31,11 @@ export function AttemptsWalletWidget() {
   const { data: wallet } = useAttemptsWallet({ enabled: false });
 
   const hasPhone = Boolean(me?.phone);
+  const isChannelBonusGranted = wallet?.isChannelBonusGranted === true;
 
   function handleOpenWallet() {
     setStatusMessage("");
+    setChannelSubscriptionStatusMessage("");
     setContactStatusMessage("");
     openWallet();
   }
@@ -39,14 +43,28 @@ export function AttemptsWalletWidget() {
   function handleCloseWallet() {
     closeWallet();
     setStatusMessage("");
+    setChannelSubscriptionStatusMessage("");
     setContactStatusMessage("");
     window.requestAnimationFrame(() => triggerRef.current?.focus());
   }
 
   function handleRewardAction() {
+    setChannelSubscriptionStatusMessage("");
     setContactStatusMessage("");
     setStatusMessage(t("attempts.comingSoonMessage"));
   }
+
+  const handleContactStatusMessageChange = useCallback((message: string) => {
+    setStatusMessage("");
+    setChannelSubscriptionStatusMessage("");
+    setContactStatusMessage(message);
+  }, []);
+
+  const handleChannelSubscriptionStatusMessageChange = useCallback((message: string) => {
+    setStatusMessage("");
+    setContactStatusMessage("");
+    setChannelSubscriptionStatusMessage(message);
+  }, []);
 
   const walletData = wallet ? { ...wallet, ...MOCK_REWARDS } : null;
 
@@ -65,12 +83,16 @@ export function AttemptsWalletWidget() {
         data={walletData}
         isOpen={isWalletOpen}
         onClose={handleCloseWallet}
-        statusMessage={contactStatusMessage || statusMessage}
+        statusMessage={contactStatusMessage || channelSubscriptionStatusMessage || statusMessage}
       >
         {walletData?.rewards.map((reward) => {
           const rewardCard = {
             ...reward,
-            status: reward.kind === "add-phone" && hasPhone ? "completed" : reward.status
+            status:
+              (reward.kind === "add-phone" && hasPhone) ||
+              (reward.kind === "subscribe-channel" && isChannelBonusGranted)
+                ? "completed"
+                : reward.status
           };
 
           return (
@@ -78,7 +100,12 @@ export function AttemptsWalletWidget() {
               {reward.kind === "add-phone" ? (
                 <RequestTelegramContactButton
                   hasPhone={hasPhone}
-                  onStatusMessageChange={setContactStatusMessage}
+                  onStatusMessageChange={handleContactStatusMessageChange}
+                />
+              ) : reward.kind === "subscribe-channel" ? (
+                <CheckChannelSubscriptionButton
+                  isCompleted={isChannelBonusGranted}
+                  onStatusMessageChange={handleChannelSubscriptionStatusMessageChange}
                 />
               ) : (
                 <AttemptRewardActionButton status={reward.status} onClick={handleRewardAction} />

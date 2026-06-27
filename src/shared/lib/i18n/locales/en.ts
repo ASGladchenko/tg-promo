@@ -8,6 +8,11 @@ export const enTranslation = {
       sent: "Phone number sent to the bot.",
       unsupported: "Update Telegram to share your phone number."
     },
+    channelSubscription: {
+      bonusGranted: "Channel subscription confirmed. Daily attempt added.",
+      confirmed: "Channel subscription confirmed.",
+      opened: "Channel opened. Return here after subscribing."
+    },
     dailyExpires: "Expires today at {{time}}",
     dailyTitle: "Daily free attempts",
     dialogLabel: "Attempts wallet details",
@@ -85,14 +90,10 @@ export const enTranslation = {
     widgetLabel: "Lottery widget"
   },
   subscription: {
-    dialogLabel: "Telegram channel subscription",
     errors: {
       checkMembership: "Could not check the subscription. Please try again."
     },
-    noChannelUrl: "The channel link is not configured. Please try again later.",
-    openChannel: "Open channel",
-    text: "To continue, subscribe to the Telegram channel.",
-    title: "Subscribe to the channel"
+    noChannelUrl: "The channel link is not configured. Please try again later."
   },
   telegram: {
     open: "Open in Telegram"

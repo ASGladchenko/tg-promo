@@ -7,6 +7,13 @@ import { type Me } from "./types";
 
 export const meQueryKey = ["me"] as const;
 
+export type MeQueryPatch = Partial<
+  Pick<
+    MeDto,
+    "email" | "imgUrl" | "isChannelSubscribed" | "login" | "name" | "phone" | "provider" | "roles" | "surname"
+  >
+>;
+
 export function setMeQueryData(queryClient: QueryClient, dto: MeDto): Me {
   const meDto = normalizeMeDto(dto);
 
@@ -15,7 +22,7 @@ export function setMeQueryData(queryClient: QueryClient, dto: MeDto): Me {
   return mapMeDtoToMe(meDto);
 }
 
-export function patchMeQueryData(queryClient: QueryClient, patch: Pick<MeDto, "phone">): Me | null {
+export function patchMeQueryData(queryClient: QueryClient, patch: MeQueryPatch): Me | null {
   const currentDto = queryClient.getQueryData<MeDto>(meQueryKey);
 
   if (!currentDto) {

@@ -4,6 +4,7 @@ export function normalizeMeDto(dto: MeDto): MeDto {
   const meDto: MeDto = {
     email: dto.email,
     id: dto.id,
+    isChannelSubscribed: dto.isChannelSubscribed,
     imgUrl: dto.imgUrl,
     login: dto.login,
     name: dto.name,
