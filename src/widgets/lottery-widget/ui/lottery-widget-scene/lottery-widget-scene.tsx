@@ -2,10 +2,6 @@ import { useCallback } from "react";
 
 import { LotteryCodePanel, LotteryScene } from "@/entities/lottery";
 import { useLotteryCodeCheckFlow } from "@/features/check-lottery-combination";
-import {
-  ChannelSubscriptionModal,
-  useChannelSubscriptionRequirement
-} from "@/features/require-channel-subscription";
 
 import "./lottery-widget-scene.scss";
 
@@ -15,56 +11,32 @@ type LotteryWidgetSceneProps = {
 
 export function LotteryWidgetScene({ onAssetsReady }: LotteryWidgetSceneProps) {
   const { checkCombination, checkError, clearCheckError, isChecking } = useLotteryCodeCheckFlow();
-  const {
-    canOpenChannel,
-    clearSubscriptionError,
-    closeModal,
-    isLoading: isCheckingSubscription,
-    isModalOpen,
-    openChannel,
-    runWhenSubscribed,
-    subscriptionError
-  } = useChannelSubscriptionRequirement();
-  const isLoading = isChecking || isCheckingSubscription;
-  const visibleError = subscriptionError ?? checkError;
 
   const handleCheck = useCallback(
     (digits: string[]) => {
-      const digitsToCheck = [...digits];
-
-      void runWhenSubscribed(() => checkCombination(digitsToCheck)).catch(() => undefined);
+      void checkCombination([...digits]);
     },
-    [checkCombination, runWhenSubscribed]
+    [checkCombination]
   );
 
   const handleCodeChange = useCallback(() => {
     clearCheckError();
-    clearSubscriptionError();
-  }, [clearCheckError, clearSubscriptionError]);
+  }, [clearCheckError]);
 
   const codePanel = (
     <>
       <LotteryCodePanel
         hideSelectedDigitsFromOtherColumns
-        isChecking={isLoading}
+        isChecking={isChecking}
         onCheck={handleCheck}
         onCodeChange={handleCodeChange}
       />
 
-      {visibleError && !isModalOpen ? (
+      {checkError ? (
         <p className="lottery-widget-scene__check-error" role="status">
-          {visibleError}
+          {checkError}
         </p>
       ) : null}
-
-      <ChannelSubscriptionModal
-        canOpenChannel={canOpenChannel}
-        error={subscriptionError}
-        isLoading={isCheckingSubscription}
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        onOpenChannel={openChannel}
-      />
     </>
   );
 

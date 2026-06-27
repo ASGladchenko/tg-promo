@@ -1,7 +1,7 @@
 # Telegram integration
 
-Этот документ обязателен при изменении Telegram SDK, runtime, membership, haptic feedback и Telegram
-URL.
+Этот документ обязателен при изменении Telegram SDK, runtime, проверки подписки, haptic feedback и
+Telegram URL.
 
 ## Границы ответственности
 
@@ -21,14 +21,14 @@ Runtime store находится здесь, потому что его чита
 
 Backend-контракты Telegram-сущности:
 
-- membership API;
+- channel subscription API;
 - Telegram-related entity DTO и domain logic.
 
-Backend membership API не переносится в `shared/lib/telegram`.
+Backend channel subscription API не переносится в `shared/lib/telegram`.
 
 ### `features`
 
-- `require-channel-subscription` управляет сценарием обязательной подписки;
+- `check-channel-subscription` управляет сценарием reward-проверки подписки;
 - `open-telegram-button` управляет пользовательским действием открытия Mini App.
 
 Feature не импортирует другую feature.
@@ -55,14 +55,13 @@ const isTelegram = useTelegramRuntimeStore((state) => state.status === "telegram
 
 Не заменяй status двумя независимыми boolean-флагами.
 
-## Membership
+## Channel Subscription
 
-- Membership проверяется backend-ом.
+- Подписка проверяется backend-ом.
 - Bot token никогда не попадает во frontend.
-- `checkChannelMembership` принадлежит `entities/tg`.
-- Dev bypass остаётся внутри `entities/tg`.
-- Feature управляет modal, pending action и retry после возврата.
-- Lottery feature не проверяет membership самостоятельно.
+- `checkChannelSubscription` принадлежит `entities/tg`.
+- Feature управляет открытием канала, статусом действия и retry после возврата.
+- Lottery feature не проверяет подписку и не блокируется обязательной подпиской.
 
 ## URL
 
@@ -79,12 +78,11 @@ Haptic вызывается через helpers из `shared/lib/telegram`. Не 
 ## Зафиксированный сценарий
 
 ```text
-LotteryCodePanel
-  -> widget composition
-  -> require-channel-subscription
-  -> check-lottery-combination
-  -> entities/lottery API
+AttemptsWalletWidget
+  -> check-channel-subscription
+  -> entities/tg API
+  -> entities/me and entities/attempts query cache updates
 ```
 
-`LotteryWidgetScene` связывает subscription и lottery features, объединяет loading/error состояния
-и передаёт callbacks в entity UI.
+Подписка на канал является reward-сценарием Attempts Wallet. Если пользователь подписан, backend
+может выдать ежедневную попытку; lottery-флоу остаётся независимым.

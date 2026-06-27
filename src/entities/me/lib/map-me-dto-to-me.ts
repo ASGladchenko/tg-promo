@@ -5,6 +5,7 @@ export function mapMeDtoToMe(dto: MeDto): Me {
   const me: Me = {
     email: dto.email,
     id: dto.id,
+    isChannelSubscribed: dto.isChannelSubscribed,
     imgUrl: dto.imgUrl,
     login: dto.login,
     name: dto.name,

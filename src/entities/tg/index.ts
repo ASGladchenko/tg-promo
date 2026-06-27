@@ -1,1 +1,4 @@
-export { checkChannelMembership } from "./api/check-channel-membership";
+export {
+  checkChannelSubscription,
+  type ChannelSubscriptionCheckResponseDto
+} from "./api/check-channel-subscription";

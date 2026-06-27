@@ -8,6 +8,11 @@ export const frTranslation = {
       sent: "Numéro de téléphone envoyé au bot.",
       unsupported: "Mettez Telegram à jour pour partager votre numéro de téléphone."
     },
+    channelSubscription: {
+      bonusGranted: "Abonnement à la chaîne confirmé. Tentative quotidienne ajoutée.",
+      confirmed: "Abonnement à la chaîne confirmé.",
+      opened: "Chaîne ouverte. Revenez ici après vous être abonné."
+    },
     dailyExpires: "Expire aujourd’hui à {{time}}",
     dailyTitle: "Tentatives quotidiennes gratuites",
     dialogLabel: "Détails du portefeuille de tentatives",
@@ -85,14 +90,10 @@ export const frTranslation = {
     widgetLabel: "Widget de loterie"
   },
   subscription: {
-    dialogLabel: "Abonnement à la chaîne Telegram",
     errors: {
       checkMembership: "Impossible de vérifier l'abonnement. Veuillez réessayer."
     },
-    noChannelUrl: "Le lien de la chaîne n'est pas configuré. Veuillez réessayer plus tard.",
-    openChannel: "Ouvrir la chaîne",
-    text: "Pour continuer, abonnez-vous à la chaîne Telegram.",
-    title: "Abonnez-vous à la chaîne"
+    noChannelUrl: "Le lien de la chaîne n'est pas configuré. Veuillez réessayer plus tard."
   },
   telegram: {
     open: "Ouvrir dans Telegram"

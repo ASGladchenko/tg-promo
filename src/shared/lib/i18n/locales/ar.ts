@@ -8,6 +8,11 @@ export const arTranslation = {
       sent: "تم إرسال رقم الهاتف إلى البوت.",
       unsupported: "حدّث Telegram لمشاركة رقم هاتفك."
     },
+    channelSubscription: {
+      bonusGranted: "تم تأكيد الاشتراك في القناة. تمت إضافة محاولة يومية.",
+      confirmed: "تم تأكيد الاشتراك في القناة.",
+      opened: "تم فتح القناة. عُد إلى هنا بعد الاشتراك."
+    },
     dailyExpires: "تنتهي اليوم الساعة {{time}}",
     dailyTitle: "محاولات يومية مجانية",
     dialogLabel: "تفاصيل محفظة المحاولات",
@@ -85,14 +90,10 @@ export const arTranslation = {
     widgetLabel: "أداة اليانصيب"
   },
   subscription: {
-    dialogLabel: "الاشتراك في قناة Telegram",
     errors: {
       checkMembership: "تعذر التحقق من الاشتراك. حاول مرة أخرى."
     },
-    noChannelUrl: "رابط القناة غير مهيأ. حاول لاحقًا.",
-    openChannel: "فتح القناة",
-    text: "للمتابعة، يجب الاشتراك في قناة Telegram.",
-    title: "اشترك في القناة"
+    noChannelUrl: "رابط القناة غير مهيأ. حاول لاحقًا."
   },
   telegram: {
     open: "فتح في Telegram"

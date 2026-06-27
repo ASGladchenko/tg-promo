@@ -23,7 +23,7 @@
 | слои, перенос файлов, новые slices, зависимости, публичные exports | [`docs/architecture/fsd.md`](docs/architecture/fsd.md)             |
 | API, DTO, domain types, mapper, TanStack Query, env                | [`docs/architecture/data-flow.md`](docs/architecture/data-flow.md) |
 | React-компоненты, структура `ui`, SCSS, accessibility              | [`docs/architecture/ui.md`](docs/architecture/ui.md)               |
-| Telegram SDK, runtime, membership, haptic, Telegram URL            | [`docs/architecture/telegram.md`](docs/architecture/telegram.md)   |
+| Telegram SDK, runtime, проверка подписки, haptic, Telegram URL     | [`docs/architecture/telegram.md`](docs/architecture/telegram.md)   |
 
 Если задача затрагивает несколько областей, прочитай все соответствующие документы.
 
@@ -125,10 +125,10 @@ npm run build
 
 ## Зафиксированные решения
 
-- `check-lottery-combination` не проверяет Telegram membership.
-- `require-channel-subscription` не выполняет lottery API.
-- Эти features связываются в `LotteryWidgetScene`.
-- `checkChannelMembership` принадлежит `entities/tg`.
+- `check-lottery-combination` не проверяет подписку на Telegram-канал.
+- `LotteryWidgetScene` не блокирует проверку комбинации обязательной подпиской.
+- `check-channel-subscription` — reward-сценарий Attempts Wallet.
+- `checkChannelSubscription` принадлежит `entities/tg`.
 - `checkLotteryCombination` принадлежит `entities/lottery`.
 - Telegram runtime store принадлежит `shared/lib/telegram`.
 - URL канала берётся из `PUBLIC_ENV.TELEGRAM_CHANNEL_URL`.

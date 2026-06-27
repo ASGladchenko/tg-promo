@@ -8,6 +8,7 @@ export type AttemptReward = {
 };
 export type AttemptsWallet = {
   dailyAttempts: number;
+  isChannelBonusGranted: boolean;
   permanentAttempts: number;
   totalAttempts: number;
 };
