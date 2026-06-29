@@ -1,6 +1,14 @@
-@use "../../../shared/styles/index" as s;
+@use "@/shared/styles" as s;
 
-.page__body {
+.lottery-page {
+  min-height: 100dvh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.lottery-page__body {
   width: min(968px, 100%);
 
   margin: 0 auto;

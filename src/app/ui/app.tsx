@@ -1,22 +1,21 @@
-import { AuthGate, RealtimeGate, TelegramGate } from "@/app/gates";
-import { LotteryPage } from "@/pages/lottery-page";
-import { AttemptsWalletWidget } from "@/widgets/attempts-wallet-widget";
-import { WidgetHeader } from "@/widgets/widget-header";
+import { ProviderRoutes } from "../providers/routes-provider";
 
 import "./app.scss";
 
 export function App() {
-  return (
-    <main className="page">
-      <TelegramGate>
-        <AuthGate>
-          <RealtimeGate />
-          <WidgetHeader siteUrl={"/google.com"} />
-          <AttemptsWalletWidget />
-
-          <LotteryPage />
-        </AuthGate>
-      </TelegramGate>
-    </main>
-  );
+  return <ProviderRoutes />;
 }
+// export function App() {
+//   return (
+//     <main className="page">
+//       <TelegramGate>
+//         <AuthGate>
+//           <RealtimeGate />
+//           <WidgetHeader siteUrl={"/google.com"} />
+//           <AttemptsWalletWidget />
+//           <LotteryPage />
+//         </AuthGate>
+//       </TelegramGate>
+//     </main>
+//   );
+// }

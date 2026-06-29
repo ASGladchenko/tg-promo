@@ -1,0 +1,64 @@
+// =========================
+// APP BACKGROUNDS
+// =========================
+
+$admin-bg: #3d4854;
+$admin-bg-soft: #35414c;
+$admin-bg-deep: #252d36;
+
+// =========================
+// SURFACES / PANELS
+// =========================
+
+$admin-surface-sidebar: rgba(31, 39, 48, 0.88);
+$admin-surface-topbar: rgba(38, 47, 57, 0.82);
+
+$admin-surface-card: rgba(34, 43, 53, 0.72);
+$admin-surface-card-hover: rgba(39, 50, 61, 0.82);
+$admin-surface-panel: rgba(35, 44, 54, 0.76);
+
+$admin-surface-input: rgba(28, 36, 44, 0.72);
+$admin-surface-icon: rgba(255, 255, 255, 0.16);
+
+// =========================
+// BORDERS / DIVIDERS
+// =========================
+
+$admin-border-soft: rgba(255, 255, 255, 0.07);
+$admin-border-medium: rgba(255, 255, 255, 0.11);
+$admin-border-strong: rgba(255, 255, 255, 0.16);
+
+$admin-divider: rgba(255, 255, 255, 0.08);
+
+// =========================
+// TEXT
+// =========================
+
+$admin-text-main: #f4f6f8;
+$admin-text-secondary: rgba(244, 246, 248, 0.76);
+$admin-text-muted: rgba(244, 246, 248, 0.52);
+$admin-text-disabled: rgba(244, 246, 248, 0.34);
+
+// =========================
+// ACCENTS
+// =========================
+
+$admin-accent: #8b5cf6;
+$admin-accent-hover: #a78bfa;
+$admin-accent-soft: rgba(139, 92, 246, 0.18);
+
+// =========================
+// SHADOWS
+// =========================
+
+$admin-shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.16);
+$admin-shadow-card: 0 12px 32px rgba(0, 0, 0, 0.22);
+$admin-shadow-panel: 0 18px 48px rgba(0, 0, 0, 0.28);
+$admin-shadow-sidebar: 6px 0 24px rgba(0, 0, 0, 0.22);
+
+// =========================
+// BLUR
+// =========================
+
+$admin-blur-surface: 14px;
+$admin-blur-strong: 22px;

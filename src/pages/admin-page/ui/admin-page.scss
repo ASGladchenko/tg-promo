@@ -1,0 +1,5 @@
+@use "@/shared/styles/admin" as s;
+
+.page__body.admin {
+  background: s.$admin-bg;
+}
