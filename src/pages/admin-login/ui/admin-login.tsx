@@ -1,3 +1,6 @@
+import { ButtonBase } from "@/shared/ui/button-base";
+import { InputField } from "@/shared/ui/input-field";
+
 import "./admin-login.scss";
 
 export function AdminLogin() {
@@ -8,10 +11,12 @@ export function AdminLogin() {
         <p className="admin-login__description">Please log in to your account</p>
 
         <form className="admin-login__form">
-          <div className="admin-login__form-group">
-            <label htmlFor="username">Username</label>
-            <input type="text" id="username" name="username" />
+          <div className="admin-login__fields">
+            <InputField name="username" label="Username" />
+            <InputField name="password" label="Password" type="password" />
           </div>
+
+          <ButtonBase type="submit">Log in</ButtonBase>
         </form>
       </div>
     </div>
