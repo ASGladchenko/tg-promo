@@ -1,7 +1,9 @@
+import "./admin-page.scss";
+
 export function AdminPage() {
   return (
-    <section className="page__body" style={{ color: "white" }}>
-      Admin
+    <section className="page__body admin" style={{ color: "white" }}>
+      Admin Nsafasdf
     </section>
   );
 }

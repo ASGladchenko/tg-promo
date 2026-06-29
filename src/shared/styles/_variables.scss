@@ -1,0 +1,46 @@
+// Dashcube-like dark admin palette.
+// Based on the provided Bootstrap variables and screenshots.
+
+// Bootstrap matches.
+$bs-white: #fff;
+$bs-black: #000;
+$bs-gray-100: #f8f9fa;
+$bs-gray-300: #dee2e6;
+$bs-gray-600: #6c757d;
+$bs-gray-700: #495057;
+$bs-gray-900: #212529;
+$bs-primary: #0d6efd;
+$bs-success: #198754;
+$bs-warning: #ffc107;
+$bs-danger: #dc3545;
+
+// Main dark theme.
+$dashcube-bg: #3d4854;
+$dashcube-bg-soft: #35414c;
+$dashcube-sidebar: #252d36;
+$dashcube-topbar: #1b2026;
+$dashcube-surface: rgba($bs-gray-900, 0.34);
+$dashcube-surface-strong: rgba($bs-gray-900, 0.46);
+$dashcube-control: rgba($bs-gray-900, 0.46);
+$dashcube-control-active: rgba($bs-gray-600, 0.58);
+$dashcube-disabled: rgba($bs-gray-600, 0.72);
+$dashcube-table-striped: rgba($bs-gray-700, 0.82);
+
+// Text and borders.
+$dashcube-text: $bs-gray-100;
+$dashcube-text-secondary: rgba($bs-gray-100, 0.78);
+$dashcube-text-muted: rgba($bs-gray-100, 0.56);
+$dashcube-text-disabled: rgba($bs-gray-100, 0.34);
+$dashcube-border-soft: rgba($bs-gray-100, 0.08);
+$dashcube-border: rgba($bs-gray-100, 0.12);
+$dashcube-border-strong: rgba($bs-gray-300, 0.22);
+
+// Accents.
+$dashcube-primary: $bs-primary;
+$dashcube-success: $bs-success;
+$dashcube-warning: $bs-warning;
+$dashcube-danger: $bs-danger;
+
+// Shape and shadow.
+$dashcube-radius: 6px;
+$dashcube-shadow: 0 0.5rem 1rem rgba($bs-black, 0.2);

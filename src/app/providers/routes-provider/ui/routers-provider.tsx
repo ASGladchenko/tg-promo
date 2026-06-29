@@ -6,6 +6,7 @@ import { LotteryPage } from "@/pages/lottery-page";
 import { AdminLayout } from "@/widgets/admin-layout";
 
 import { TelegramRoutesLayout } from "./telegram-routes-layout";
+import { AdminCssLayout } from "./wrapper-admin";
 
 export function ProviderRoutes() {
   return (
@@ -14,11 +15,14 @@ export function ProviderRoutes() {
         <Route path="/" element={<LotteryPage />} />
       </Route>
 
-      <Route path="/admin/login" element={<AdminPage />} />
+      <Route element={<AdminCssLayout />}>
+        <Route path="/admin/login" element={<AdminPage />} />
 
-      <Route element={<AdminAuthGate />}>
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminPage />} />
+        <Route element={<AdminAuthGate />}>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminPage />} />
+            <Route path="settings" element={<AdminPage />} />
+          </Route>
         </Route>
       </Route>
 
