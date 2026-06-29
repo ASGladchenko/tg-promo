@@ -1,11 +1,11 @@
-import { Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router";
 
 import { useMe } from "@/entities/me";
 
 import { canAccessAdminRoutes } from "../lib/can-access-admin-routes";
 import { NavigateWithLocations } from "./navigate-with-locations";
 
-export function AdminAuthGate() {
+export function AdminLoginGate() {
   const { data: adminSession, isLoading } = useMe();
 
   if (isLoading) {
@@ -13,12 +13,12 @@ export function AdminAuthGate() {
   }
 
   if (adminSession === undefined) {
-    return <NavigateWithLocations to="/admin/login" replace />;
+    return <Outlet />;
   }
 
-  if (!canAccessAdminRoutes(adminSession.permissions)) {
-    return <NavigateWithLocations to="/" replace />;
+  if (canAccessAdminRoutes(adminSession.permissions)) {
+    return <NavigateWithLocations to="/admin" replace />;
   }
 
-  return <Outlet />;
+  return <Navigate to="/" replace />;
 }

@@ -1,11 +1,45 @@
+@use "@/shared/styles/admin" as s;
+
 .admin-layout {
-  --gray-light: #c7c7d3;
+  min-height: 100%;
 
-  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: 64px minmax(0, 1fr);
+  grid-template-columns: 250px minmax(0, 1fr);
+  grid-template-areas:
+    "aside header"
+    "aside main";
+}
 
-  display: flex;
-  align-items: stretch;
+.admin-layout__aside {
+  min-width: 0;
 
-  background-color: #1e1d2e;
-  // background-color: #28293d;
+  padding: 16px;
+
+  grid-area: aside;
+
+  background: s.$admin-surface-dark;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  border-right: 1px solid s.$admin-border;
+}
+
+.admin-layout__header {
+  min-width: 0;
+  min-height: 64px;
+
+  padding: 16px;
+
+  grid-area: header;
+
+  background: s.$admin-surface-dark;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.075);
+  border-bottom: 1px solid s.$admin-border;
+}
+
+.admin-layout__main {
+  min-width: 0;
+
+  padding: 20px;
+
+  grid-area: main;
 }

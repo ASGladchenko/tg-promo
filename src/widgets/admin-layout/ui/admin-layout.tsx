@@ -1,22 +1,23 @@
-import { Link, Outlet } from "react-router";
+import { Outlet } from "react-router";
 
 import "./admin-layout.scss";
 
 export function AdminLayout() {
   return (
-    <main className="admin-layout">
-      <aside className="admin-layout__sidebar">
-        <nav className="admin-layout__nav" aria-label="Admin navigation" style={{ color: "white" }}>
-          Admin nav
-        </nav>
-
-        <Link to="/admin">Admin</Link>
-        <Link to="/admin/settings">Settings</Link>
+    <section className="admin-layout" aria-label="Admin layout">
+      <aside className="admin-layout__aside">
+        <div>Logo</div>
+        <div>Set prize</div>
+        <div>Set rules</div>
       </aside>
 
-      <section className="admin-layout__content">
+      <header className="admin-layout__header">
+        <div>header</div>
+      </header>
+
+      <main className="admin-layout__main" role="main">
         <Outlet />
-      </section>
-    </main>
+      </main>
+    </section>
   );
 }

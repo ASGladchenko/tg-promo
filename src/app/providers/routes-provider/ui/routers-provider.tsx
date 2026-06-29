@@ -1,32 +1,58 @@
+import { Suspense } from "react";
+
 import { Route, Routes } from "react-router";
 
-import { AdminAuthGate } from "@/app/gates";
-import { AdminPage } from "@/pages/admin-page";
 import { LotteryPage } from "@/pages/lottery-page";
-import { AdminLayout } from "@/widgets/admin-layout";
 
+import {
+  LazyAdminAuthGate,
+  LazyAdminCssLayout,
+  LazyAdminLayout,
+  LazyAdminLoginGate,
+  LazyAdminLogin,
+  LazyAdminPage
+} from "./lazy-routes";
 import { TelegramRoutesLayout } from "./telegram-routes-layout";
-import { AdminCssLayout } from "./wrapper-admin";
 
 export function ProviderRoutes() {
   return (
-    <Routes>
-      <Route element={<TelegramRoutesLayout />}>
-        <Route path="/" element={<LotteryPage />} />
-      </Route>
+    <Suspense fallback={null}>
+      <Routes>
+        <Route element={<TelegramRoutesLayout />}>
+          <Route path="/" element={<LotteryPage />} />
+        </Route>
 
-      <Route element={<AdminCssLayout />}>
-        <Route path="/admin/login" element={<AdminPage />} />
+        <Route element={<LazyAdminCssLayout />}>
+          <Route element={<LazyAdminLoginGate />}>
+            <Route path="/admin/login" element={<LazyAdminLogin />} />
+          </Route>
 
-        <Route element={<AdminAuthGate />}>
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminPage />} />
-            <Route path="settings" element={<AdminPage />} />
+          <Route element={<LazyAdminAuthGate />}>
+            <Route path="/admin" element={<LazyAdminLayout />}>
+              <Route index element={<LazyAdminPage />} />
+              <Route path="settings" element={<LazyAdminPage />} />
+            </Route>
           </Route>
         </Route>
-      </Route>
 
-      <Route path="*" element={<div style={{ color: "white" }}>404</div>} />
-    </Routes>
+        <Route
+          path="*"
+          element={
+            <div
+              style={{
+                color: "white",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: "50px",
+                height: "100vh"
+              }}
+            >
+              404
+            </div>
+          }
+        />
+      </Routes>
+    </Suspense>
   );
 }

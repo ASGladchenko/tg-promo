@@ -1,1 +1,1 @@
-export { AdminAuthGate } from "./ui";
+export { AdminAuthGate, AdminLoginGate } from "./ui";
