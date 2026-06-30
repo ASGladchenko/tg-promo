@@ -8,12 +8,22 @@ export const enTranslation = {
       sent: "Phone number sent to the bot.",
       unsupported: "Update Telegram to share your phone number."
     },
+    inviteFriend: {
+      errors: {
+        noParticipantId: "Could not create your invite link. Please reopen the app and try again.",
+        noShareUrl: "The game link is not configured. Please try again later.",
+        share: "Could not open the invite. Please try again."
+      },
+      opened: "Invite opened. Choose a chat to send it.",
+      shareText:
+        "🔐 Help me crack the safe. Open this invitation, play the game, and we will both get one extra attempt as a reward."
+    },
     channelSubscription: {
       bonusGranted: "Channel subscription confirmed. Daily attempt added.",
       confirmed: "Channel subscription confirmed.",
       opened: "Channel opened. Return here after subscribing."
     },
-    dailyExpires: "Expires today at {{time}}",
+    dailyExpires: "Expires in {{time}}",
     dailyTitle: "Daily free attempts",
     dialogLabel: "Attempts wallet details",
     dialogTitle: "Your attempts",
@@ -30,7 +40,8 @@ export const enTranslation = {
         title: "Confirm email"
       },
       inviteFriend: {
-        description: "Invite a friend who joins the promotion.",
+        description:
+          "Invite a friend to crack the safe. You both get one attempt when they join through your link.",
         title: "Invite a friend"
       },
       subscribeChannel: {

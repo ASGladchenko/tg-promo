@@ -8,12 +8,23 @@ export const frTranslation = {
       sent: "Numéro de téléphone envoyé au bot.",
       unsupported: "Mettez Telegram à jour pour partager votre numéro de téléphone."
     },
+    inviteFriend: {
+      errors: {
+        noParticipantId:
+          "Impossible de créer votre lien d’invitation. Rouvrez l’application et réessayez.",
+        noShareUrl: "Le lien du jeu n’est pas configuré. Veuillez réessayer plus tard.",
+        share: "Impossible d’ouvrir l’invitation. Veuillez réessayer."
+      },
+      opened: "Invitation ouverte. Choisissez un chat pour l’envoyer.",
+      shareText:
+        "🔐 Aide-moi à ouvrir le coffre. Ouvre cette invitation, joue, et nous recevrons chacun une tentative supplémentaire en récompense."
+    },
     channelSubscription: {
       bonusGranted: "Abonnement à la chaîne confirmé. Tentative quotidienne ajoutée.",
       confirmed: "Abonnement à la chaîne confirmé.",
       opened: "Chaîne ouverte. Revenez ici après vous être abonné."
     },
-    dailyExpires: "Expire aujourd’hui à {{time}}",
+    dailyExpires: "Expire dans {{time}}",
     dailyTitle: "Tentatives quotidiennes gratuites",
     dialogLabel: "Détails du portefeuille de tentatives",
     dialogTitle: "Vos tentatives",
@@ -30,7 +41,8 @@ export const frTranslation = {
         title: "Confirmer l’e-mail"
       },
       inviteFriend: {
-        description: "Invitez un ami qui rejoint la promotion.",
+        description:
+          "Invitez un ami à ouvrir le coffre. Vous recevez chacun une tentative quand il rejoint via votre lien.",
         title: "Inviter un ami"
       },
       subscribeChannel: {
