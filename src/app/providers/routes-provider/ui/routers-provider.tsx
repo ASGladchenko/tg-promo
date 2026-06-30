@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router";
 
 import { AdminAuthGate } from "@/app/gates";
+import { ClientLayout } from "@/app/layouts/client-layout";
 import { AdminPage } from "@/pages/admin-page";
 import { LotteryPage } from "@/pages/lottery-page";
 import { AdminLayout } from "@/widgets/admin-layout";
@@ -12,7 +13,9 @@ export function ProviderRoutes() {
   return (
     <Routes>
       <Route element={<TelegramRoutesLayout />}>
-        <Route path="/" element={<LotteryPage />} />
+        <Route element={<ClientLayout />}>
+          <Route path="/" element={<LotteryPage />} />
+        </Route>
       </Route>
 
       <Route element={<AdminCssLayout />}>
