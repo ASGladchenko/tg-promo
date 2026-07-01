@@ -1,15 +1,21 @@
 import clsx from "clsx";
+import { UseFormRegister } from "react-hook-form";
 
 import { InputBase, InputBaseProps } from "../input-base";
 
-import "./input-field.scss";
+import "./input.scss";
 
-export interface InputFieldProps extends InputBaseProps {
+export interface InputProps extends InputBaseProps {
+  error?: string;
+  label?: string;
+}
+interface InputRegister extends UseFormRegister {
   error?: string;
   label?: string;
 }
 
-export function InputField({ label, error, ...props }: InputFieldProps) {
+export function Input({ label, error, ...props }: InputRegister) {
+  console.log({ props });
   return (
     <label className={clsx("input-field", { "input-field--error": error })}>
       {label && <span className="input-field__label">{label}</span>}

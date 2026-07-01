@@ -1,0 +1,29 @@
+@use "../../../../shared/styles/index" as s;
+
+.invite-friend-button {
+  min-width: 64px;
+  min-height: 30px;
+
+  padding: 0 8px;
+
+  font-size: 0.68rem;
+  font-weight: 800;
+
+  color: s.$color-accent-gold-soft;
+  background: rgba(s.$color-accent-gold, 0.12);
+  border: 1px solid rgba(s.$color-accent-gold, 0.28);
+  border-radius: s.$radius-sm;
+
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid s.$focus-ring;
+    outline-offset: 2px;
+  }
+}
+
+@media (max-width: 420px) {
+  .invite-friend-button {
+    width: 100%;
+  }
+}

@@ -8,12 +8,22 @@ export const arTranslation = {
       sent: "تم إرسال رقم الهاتف إلى البوت.",
       unsupported: "حدّث Telegram لمشاركة رقم هاتفك."
     },
+    inviteFriend: {
+      errors: {
+        noParticipantId: "تعذر إنشاء رابط الدعوة الخاص بك. أعد فتح التطبيق وحاول مرة أخرى.",
+        noShareUrl: "رابط اللعبة غير مهيأ. حاول لاحقًا.",
+        share: "تعذر فتح الدعوة. حاول مرة أخرى."
+      },
+      opened: "تم فتح الدعوة. اختر محادثة لإرسالها.",
+      shareText:
+        "🔐 ساعدني في فتح الخزنة. افتح هذه الدعوة والعب، وسيحصل كلانا على محاولة إضافية كمكافأة."
+    },
     channelSubscription: {
       bonusGranted: "تم تأكيد الاشتراك في القناة. تمت إضافة محاولة يومية.",
       confirmed: "تم تأكيد الاشتراك في القناة.",
       opened: "تم فتح القناة. عُد إلى هنا بعد الاشتراك."
     },
-    dailyExpires: "تنتهي اليوم الساعة {{time}}",
+    dailyExpires: "تنتهي خلال {{time}}",
     dailyTitle: "محاولات يومية مجانية",
     dialogLabel: "تفاصيل محفظة المحاولات",
     dialogTitle: "محاولاتك",
@@ -30,7 +40,7 @@ export const arTranslation = {
         title: "تأكيد البريد الإلكتروني"
       },
       inviteFriend: {
-        description: "ادعُ صديقًا للانضمام إلى العرض.",
+        description: "ادعُ صديقًا لفتح الخزنة. سيحصل كل منكما على محاولة عندما ينضم عبر رابطك.",
         title: "دعوة صديق"
       },
       subscribeChannel: {

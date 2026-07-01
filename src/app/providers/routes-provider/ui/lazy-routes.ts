@@ -13,7 +13,7 @@ export const LazyAdminPage = lazy(() =>
 );
 
 export const LazyAdminLayout = lazy(() =>
-  import("@/widgets/admin-layout").then(({ AdminLayout }) => ({ default: AdminLayout }))
+  import("@/app/layouts").then(({ AdminLayout }) => ({ default: AdminLayout }))
 );
 
 export const LazyAdminCssLayout = lazy(() =>

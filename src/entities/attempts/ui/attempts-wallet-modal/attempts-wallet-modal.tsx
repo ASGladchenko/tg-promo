@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Modal } from "@/shared/ui/modal";
 
 import { type AttemptsWalletData } from "../../model/types";
+import { AttemptsWalletDailyExpirationNote } from "./attempts-wallet-daily-expiration-note";
 
 import "./attempts-wallet-modal.scss";
 
@@ -86,9 +87,7 @@ export function AttemptsWalletModal({
               <strong id={dailyTitleId} className="attempts-wallet-modal__daily-title">
                 {t("attempts.dailyTitle")}
               </strong>
-              <span className="attempts-wallet-modal__daily-note">
-                {t("attempts.dailyExpires", { time: "UNKNOWN" })}
-              </span>
+              <AttemptsWalletDailyExpirationNote />
             </span>
             <strong dir="ltr" className="attempts-wallet-modal__daily-value">
               +{data.dailyAttempts}

@@ -14,9 +14,9 @@ export {
   AttemptsWalletTrigger
 } from "./ui";
 
-export { MOCK_REWARDS } from "./lib/demo-attempts-wallet-data";
-
 export { getAttemptsWalletDto } from "./api/get-attempts-wallet";
+
+export { ATTEMPT_REWARDS_CONFIG } from "./model/attempt-rewards-config";
 
 export { attemptsWalletQueryKey, setAttemptsWalletQueryData } from "./model/attempts-wallet-query";
 
