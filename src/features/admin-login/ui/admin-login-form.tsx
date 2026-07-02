@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 import { ButtonBase } from "@/shared/ui/button-base";
 import { InputField } from "@/shared/ui/input-field";
@@ -12,6 +12,7 @@ import "./admin-login-form.scss";
 
 export function AdminLoginForm() {
   const navigate = useNavigate();
+  const location = useLocation();
   const adminLogin = useAdminLogin();
 
   const form = useForm<LoginFormState>({ resolver: zodResolver(formLoginSchema) });
@@ -27,7 +28,10 @@ export function AdminLoginForm() {
   const onSubmit = async (data: LoginFormState) => {
     try {
       await adminLogin.mutateAsync(data);
-      navigate("/admin");
+      const from = location.state?.from;
+      const redirectPath = from ? `${from.pathname}${from.search}${from.hash}` : "/admin";
+
+      navigate(redirectPath, { replace: true });
     } catch (error) {
       setError("login", {
         type: "server",
@@ -41,10 +45,11 @@ export function AdminLoginForm() {
       <form className="admin-login__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="admin-login__fields">
           <InputField<LoginFormState> name="login" label="Login" disabled={isLoginPending} />
+
           <InputField<LoginFormState>
             name="password"
-            label="Password"
             type="password"
+            label="Password"
             disabled={isLoginPending}
           />
         </div>
