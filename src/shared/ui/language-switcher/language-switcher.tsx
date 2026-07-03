@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 
 import { ArabicFlag, EnglishFlag, FrenchFlag } from "@/shared/images/flag";
+import { useOutsideClick } from "@/shared/lib/browser";
 import {
   applyLocale,
   getDefaultLocale,
@@ -65,25 +66,11 @@ export function LanguageSwitcher() {
   const [focusedIndex, setFocusedIndex] = useState(selectedIndex);
   const activeLanguage = LANGUAGE_METADATA[activeLocale];
 
-  useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
-    function handlePointerDown(event: PointerEvent) {
-      const target = event.target;
-
-      if (target instanceof Node && !rootRef.current?.contains(target)) {
-        setIsOpen(false);
-      }
-    }
-
-    document.addEventListener("pointerdown", handlePointerDown);
-
-    return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
-    };
-  }, [isOpen]);
+  useOutsideClick({
+    ref: rootRef,
+    enabled: isOpen,
+    onOutsideClick: () => setIsOpen(false)
+  });
 
   useEffect(() => {
     if (!isOpen) {

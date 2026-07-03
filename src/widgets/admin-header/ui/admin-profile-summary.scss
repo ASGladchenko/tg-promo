@@ -1,0 +1,29 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-profile-summary {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-profile-summary__name,
+.admin-profile-summary__role {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-profile-summary__name {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.admin-profile-summary__role {
+  font-size: 14px;
+  font-weight: 600;
+
+  color: s.$admin-text-secondary;
+}

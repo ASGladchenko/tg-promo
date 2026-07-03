@@ -1,0 +1,42 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-profile-menu {
+  position: relative;
+
+  display: flex;
+  align-self: stretch;
+}
+
+.admin-profile-menu__trigger {
+  width: 232px;
+  height: auto;
+  min-height: 0;
+
+  padding: 0 16px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+
+  font: inherit;
+  text-align: left;
+
+  color: s.$admin-text;
+  background: rgb(0 0 0 / 10%);
+  border: 0;
+  border-radius: 0;
+  border-left: 1px solid s.$admin-border;
+  border-right: 1px solid s.$admin-border;
+
+  cursor: pointer;
+}
+
+.admin-profile-menu__trigger:hover,
+.admin-profile-menu__trigger--open {
+  background: s.$admin-surface-dark;
+}
+
+.admin-profile-menu__trigger:focus-visible {
+  outline: 1px solid s.$admin-white;
+  outline-offset: 1px;
+}

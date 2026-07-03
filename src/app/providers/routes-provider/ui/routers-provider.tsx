@@ -12,7 +12,7 @@ import {
   LazyAdminLayout,
   LazyAdminLogin,
   LazyAdminLoginGate,
-  LazyAdminPage,
+  LazyAdminPage
 } from "./lazy-routes";
 import { TelegramRoutesLayout } from "./telegram-routes-layout";
 
@@ -51,10 +51,10 @@ export function ProviderRoutes() {
             style={{
               color: "white",
               display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              height: "100vh",
               fontSize: "50px",
-              height: "100vh"
+              alignItems: "center",
+              justifyContent: "center"
             }}
           >
             404
