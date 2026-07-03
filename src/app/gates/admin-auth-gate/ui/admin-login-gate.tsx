@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from "react-router";
 
 import { useMe } from "@/entities/me";
+import { APP_ROUTES } from "@/shared/config";
 
 import { canAccessAdminRoutes } from "../lib/can-access-admin-routes";
 import { NavigateWithLocations } from "./navigate-with-locations";
@@ -17,8 +18,8 @@ export function AdminLoginGate() {
   }
 
   if (canAccessAdminRoutes(adminSession.permissions)) {
-    return <NavigateWithLocations to="/admin" replace />;
+    return <NavigateWithLocations to={APP_ROUTES.admin} replace />;
   }
 
-  return <Navigate to="/" replace />;
+  return <Navigate to={APP_ROUTES.home} replace />;
 }

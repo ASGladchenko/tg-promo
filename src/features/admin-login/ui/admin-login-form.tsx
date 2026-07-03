@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
 
+import { APP_ROUTES } from "@/shared/config";
 import { ButtonBase } from "@/shared/ui/button-base";
 import { CircularProgressLoader } from "@/shared/ui/circular-progress-loader";
 import { InputField } from "@/shared/ui/input-field";
@@ -31,7 +32,7 @@ export function AdminLoginForm() {
     try {
       await adminLogin.mutateAsync(data);
       const from = location.state?.from;
-      const redirectPath = from ? `${from.pathname}${from.search}${from.hash}` : "/admin";
+      const redirectPath = from ? `${from.pathname}${from.search}${from.hash}` : APP_ROUTES.admin;
 
       navigate(redirectPath, { replace: true });
     } catch (error) {

@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router";
 
 import { ClientLayout } from "@/app/layouts";
 import { LotteryPage } from "@/pages/lottery-page";
+import { APP_ROUTES } from "@/shared/config";
 
 import {
   LazyAdminAuthGate,
@@ -20,7 +21,7 @@ export function ProviderRoutes() {
     <Routes>
       <Route element={<TelegramRoutesLayout />}>
         <Route element={<ClientLayout />}>
-          <Route path="/" element={<LotteryPage />} />
+          <Route path={APP_ROUTES.home} element={<LotteryPage />} />
         </Route>
       </Route>
 
@@ -32,13 +33,13 @@ export function ProviderRoutes() {
         }
       >
         <Route element={<LazyAdminLoginGate />}>
-          <Route path="/admin/login" element={<LazyAdminLogin />} />
+          <Route path={APP_ROUTES.adminLogin} element={<LazyAdminLogin />} />
         </Route>
 
         <Route element={<LazyAdminAuthGate />}>
-          <Route path="/admin" element={<LazyAdminLayout />}>
+          <Route path={APP_ROUTES.admin} element={<LazyAdminLayout />}>
             <Route index element={<LazyAdminPage />} />
-            <Route path="settings" element={<LazyAdminPage />} />
+            <Route path={APP_ROUTES.adminSettings} element={<LazyAdminPage />} />
           </Route>
         </Route>
       </Route>

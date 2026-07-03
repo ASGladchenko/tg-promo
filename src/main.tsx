@@ -24,14 +24,3 @@ createRoot(root).render(
     </BrowserRouter>
   </StrictMode>
 );
-
-// createRoot(root).render(
-//   <StrictMode>
-//     <I18nProvider>
-//       <QueryProvider>
-//         <App />
-//         <ToastNotifications />
-//       </QueryProvider>
-//     </I18nProvider>
-//   </StrictMode>
-// );
