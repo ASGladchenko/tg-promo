@@ -1,19 +1,15 @@
 import { Outlet } from "react-router";
 
+import { AdminHeader } from "@/widgets/admin-header";
+import { AdminSidebar } from "@/widgets/admin-sidebar";
+
 import "./admin-layout.scss";
 
 export function AdminLayout() {
   return (
     <section className="admin-layout" aria-label="Admin layout">
-      <aside className="admin-layout__aside">
-        <div>Logo</div>
-        <div>Set prize</div>
-        <div>Set rules</div>
-      </aside>
-
-      <header className="admin-layout__header">
-        <div>header</div>
-      </header>
+      <AdminSidebar />
+      <AdminHeader />
 
       <main className="admin-layout__main" role="main">
         <Outlet />

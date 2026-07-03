@@ -1,0 +1,14 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-header {
+  min-width: 0;
+  min-height: 64px;
+
+  padding: 16px;
+
+  grid-area: header;
+
+  background: s.$admin-surface-dark;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.075);
+  border-bottom: 1px solid s.$admin-border;
+}

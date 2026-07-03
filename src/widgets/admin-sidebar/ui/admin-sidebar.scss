@@ -1,0 +1,13 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-sidebar {
+  min-width: 0;
+
+  padding: 16px;
+
+  grid-area: aside;
+
+  background: s.$admin-surface-dark;
+  box-shadow: s.$admin-shadow;
+  border-right: 1px solid s.$admin-border;
+}
