@@ -1,0 +1,73 @@
+@use "@/shared/styles" as s;
+
+.circular-progress-loader {
+  --circular-progress-loader-fill: #fff;
+  --circular-progress-loader-size: 44px;
+  --circular-progress-loader-track: rgb(255 255 255 / 20%);
+
+  position: relative;
+
+  width: var(--circular-progress-loader-size);
+  height: var(--circular-progress-loader-size);
+
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+
+  line-height: 0;
+
+  border-radius: 50%;
+}
+
+.circular-progress-loader__scale {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  animation: circular-progress-loader-rotate 3.4s linear infinite;
+}
+
+.circular-progress-loader__track,
+.circular-progress-loader__indicator {
+  fill: none;
+  stroke-width: 4;
+}
+
+.circular-progress-loader__track {
+  stroke: var(--circular-progress-loader-track);
+}
+
+.circular-progress-loader__indicator {
+  animation: circular-progress-loader-dash 2.6s ease-in-out infinite;
+  transform: rotate(-90deg);
+  transform-origin: 24px 24px;
+
+  stroke: var(--circular-progress-loader-fill);
+  stroke-dasharray: 1 126;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+}
+
+@keyframes circular-progress-loader-rotate {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes circular-progress-loader-dash {
+  0% {
+    stroke-dasharray: 1 126;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 86 126;
+    stroke-dashoffset: -34;
+  }
+
+  100% {
+    stroke-dasharray: 86 126;
+    stroke-dashoffset: -124;
+  }
+}

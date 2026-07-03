@@ -3,6 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
 
 import { ButtonBase } from "@/shared/ui/button-base";
+import { CircularProgressLoader } from "@/shared/ui/circular-progress-loader";
 import { InputField } from "@/shared/ui/input-field";
 
 import { formLoginSchema, LoginFormState } from "../model/admin-login-schema";
@@ -54,8 +55,8 @@ export function AdminLoginForm() {
           />
         </div>
 
-        <ButtonBase type="submit" disabled={isLoginPending}>
-          Log in
+        <ButtonBase className="admin-login__submit" type="submit" disabled={isLoginPending}>
+          {isLoginPending ? <CircularProgressLoader size="1.25em" /> : <span>Log in</span>}
         </ButtonBase>
       </form>
     </FormProvider>
