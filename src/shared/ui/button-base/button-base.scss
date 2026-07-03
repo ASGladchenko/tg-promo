@@ -16,6 +16,10 @@
 
   cursor: pointer;
 
+  * {
+    cursor: inherit;
+  }
+
   &:not(:disabled):hover {
     background: a.$admin-border-strong;
     border-color: a.$admin-text-muted;

@@ -8,6 +8,7 @@ import { InputField } from "@/shared/ui/input-field";
 
 import { formLoginSchema, LoginFormState } from "../model/admin-login-schema";
 import { useAdminLogin } from "../model/use-admin-login";
+import { AdminLoginPasswordField } from "./admin-login-password-field";
 
 import "./admin-login-form.scss";
 
@@ -47,12 +48,7 @@ export function AdminLoginForm() {
         <div className="admin-login__fields">
           <InputField<LoginFormState> name="login" label="Login" disabled={isLoginPending} />
 
-          <InputField<LoginFormState>
-            name="password"
-            type="password"
-            label="Password"
-            disabled={isLoginPending}
-          />
+          <AdminLoginPasswordField disabled={isLoginPending} />
         </div>
 
         <ButtonBase className="admin-login__submit" type="submit" disabled={isLoginPending}>
