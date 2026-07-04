@@ -1,0 +1,17 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-rules {
+  min-width: 0;
+
+  padding: 14px 18px;
+
+  color: s.$admin-text;
+}
+
+.admin-rules__title {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+}

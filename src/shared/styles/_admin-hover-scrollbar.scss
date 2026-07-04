@@ -49,6 +49,6 @@
   .admin-hover-scrollbar-container:focus-within .admin-hover-scrollbar::-webkit-scrollbar-thumb,
   .admin-hover-scrollbar:focus-within::-webkit-scrollbar-thumb,
   .admin-hover-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(s.$admin-white, 0.44);
+    background-color: s.$admin-border-strong;
   }
 }
