@@ -2,5 +2,6 @@ export const APP_ROUTES = {
   home: "/",
   admin: "/admin",
   adminLogin: "/admin/login",
-  adminSettings: "settings"
+  adminRules: "rules",
+  adminPrizes: "prizes"
 } as const;

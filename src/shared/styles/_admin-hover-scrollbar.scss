@@ -1,0 +1,54 @@
+@use "admin" as s;
+
+.admin-hover-scrollbar {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  scrollbar-gutter: stable;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .admin-hover-scrollbar {
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
+  }
+
+  .admin-hover-scrollbar:hover,
+  .admin-hover-scrollbar-container:hover .admin-hover-scrollbar,
+  .admin-hover-scrollbar-container:focus-within .admin-hover-scrollbar,
+  .admin-hover-scrollbar:focus-within {
+    scrollbar-color: rgba(s.$admin-white, 0.34) transparent;
+  }
+}
+
+@supports selector(::-webkit-scrollbar) {
+  .admin-hover-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .admin-hover-scrollbar::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+
+    display: none;
+  }
+
+  .admin-hover-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .admin-hover-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 6px;
+  }
+
+  .admin-hover-scrollbar:hover::-webkit-scrollbar-thumb,
+  .admin-hover-scrollbar-container:hover .admin-hover-scrollbar::-webkit-scrollbar-thumb,
+  .admin-hover-scrollbar-container:focus-within .admin-hover-scrollbar::-webkit-scrollbar-thumb,
+  .admin-hover-scrollbar:focus-within::-webkit-scrollbar-thumb,
+  .admin-hover-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(s.$admin-white, 0.44);
+  }
+}

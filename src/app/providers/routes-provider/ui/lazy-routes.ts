@@ -23,3 +23,11 @@ export const LazyAdminCssLayout = lazy(() =>
 export const LazyAdminLogin = lazy(() =>
   import("@/pages/admin-login").then(({ AdminLogin }) => ({ default: AdminLogin }))
 );
+
+export const LazyAdminPrizes = lazy(() =>
+  import("@/pages/admin-prizes").then(({ AdminPrizes }) => ({ default: AdminPrizes }))
+);
+
+export const LazyAdminRules = lazy(() =>
+  import("@/pages/admin-rules").then(({ AdminRules }) => ({ default: AdminRules }))
+);
