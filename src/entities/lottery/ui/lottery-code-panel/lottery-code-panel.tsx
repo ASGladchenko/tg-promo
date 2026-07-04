@@ -14,6 +14,7 @@ import "./lottery-code-panel.scss";
 type LotteryCodePanelProps = {
   hideSelectedDigitsFromOtherColumns?: boolean;
   isChecking?: boolean;
+  isInteractionDisabled?: boolean;
   onCheck: (digits: string[]) => void;
   onCodeChange?: () => void;
 };
@@ -21,6 +22,7 @@ type LotteryCodePanelProps = {
 export function LotteryCodePanel({
   hideSelectedDigitsFromOtherColumns = false,
   isChecking = false,
+  isInteractionDisabled = false,
   onCheck,
   onCodeChange
 }: LotteryCodePanelProps) {
@@ -36,9 +38,11 @@ export function LotteryCodePanel({
   const submitCodeInStore = useLotteryStore((state) => state.submitCode);
   const hasMissingDigits = digits.some((digit) => !digit);
   const code = digits.join("");
+  const isPanelLocked = isCodeLocked || isInteractionDisabled;
+  const isInputDisabled = isPanelLocked || isChecking;
 
   function openPicker(index: number) {
-    if (isChecking) {
+    if (isInputDisabled) {
       return;
     }
 
@@ -46,7 +50,7 @@ export function LotteryCodePanel({
   }
 
   function updateDigit(index: number, digit: string) {
-    if (isChecking) {
+    if (isInputDisabled) {
       return;
     }
 
@@ -59,6 +63,10 @@ export function LotteryCodePanel({
   }
 
   function checkCode() {
+    if (isInputDisabled) {
+      return;
+    }
+
     const didSubmit = submitCodeInStore();
 
     if (!didSubmit) {
@@ -73,7 +81,7 @@ export function LotteryCodePanel({
     <div className="lottery-code-panel" aria-label={t("lottery.enterCode")}>
       <div className="lottery-code-panel__slots">
         {digits.map((digit, index) => {
-          const isActive = !isCodeLocked && isPickerOpen && activeIndex === index;
+          const isActive = !isPanelLocked && !isChecking && isPickerOpen && activeIndex === index;
           const isInvalid = hasSubmitAttempt && !digit;
 
           return (
@@ -81,17 +89,17 @@ export function LotteryCodePanel({
               className={clsx("lottery-code-panel__slot", {
                 "lottery-code-panel__slot--filled": digit,
                 "lottery-code-panel__slot--active": isActive,
-                "lottery-code-panel__slot--locked": isCodeLocked,
+                "lottery-code-panel__slot--locked": isPanelLocked,
                 "lottery-code-panel__slot--invalid": isInvalid
               })}
               key={index}
               type="button"
               aria-label={
-                isCodeLocked || isChecking
+                isInputDisabled
                   ? t("lottery.slotUnavailable", { position: index + 1 })
                   : t("lottery.chooseDigitPosition", { position: index + 1 })
               }
-              disabled={isCodeLocked || isChecking}
+              disabled={isInputDisabled}
               onClick={() => openPicker(index)}
             >
               {digit ? (
@@ -105,12 +113,12 @@ export function LotteryCodePanel({
 
         <button
           className={clsx("lottery-code-panel__lock-button", {
-            "lottery-code-panel__lock-button--locked": isCodeLocked,
+            "lottery-code-panel__lock-button--locked": isPanelLocked,
             "lottery-code-panel__lock-button--checking": isChecking,
             "lottery-code-panel__lock-button--invalid": hasSubmitAttempt && hasMissingDigits
           })}
           type="button"
-          disabled={isCodeLocked || isChecking}
+          disabled={isInputDisabled}
           aria-label={isChecking ? t("lottery.checkingCode", { code }) : t("lottery.checkCode")}
           onClick={(event) => {
             event.stopPropagation();

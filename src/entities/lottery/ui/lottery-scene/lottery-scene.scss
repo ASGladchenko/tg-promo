@@ -41,8 +41,6 @@
 
   margin-inline: auto;
 
-  overflow: hidden;
-
   user-select: none;
 
   -webkit-touch-callout: none;
@@ -69,6 +67,23 @@
   object-fit: cover;
 }
 
+.lottery-scene__safe-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+
+  width: 42%;
+  min-height: 28%;
+
+  display: grid;
+  place-items: center;
+
+  transform: translate(-50%, -50%);
+
+  pointer-events: none;
+}
+
 .lottery-scene__door-wrapper {
   position: absolute;
   top: 50%;
@@ -83,6 +98,9 @@
 
   cursor: pointer;
   pointer-events: auto;
+
+  aspect-ratio: 1 / 1;
+  perspective: 900px;
 
   &:active {
     transform: translate(-50%, -50%) scale(0.985);
@@ -116,9 +134,18 @@
     border-radius: 50%;
     filter: blur(8px);
 
+    transition: opacity 220ms ease;
     animation: lottery-scene-gold-glow-spin 7s linear infinite;
 
     content: "";
+  }
+
+  &:has(.lottery-scene__door-panel--jackpot-reveal)::before,
+  &:has(.lottery-scene__door-panel--jackpot-open)::before,
+  &:has(.lottery-scene__door-panel--open)::before {
+    opacity: 0;
+
+    animation-play-state: paused;
   }
 }
 
@@ -127,27 +154,130 @@
   pointer-events: none;
 }
 
-.lottery-scene__door {
-  position: relative;
+.lottery-scene__door-panel {
+  --door-open-angle: 150deg;
+  --door-peek-angle: 4deg;
+  --door-second-peek-angle: 9deg;
+
+  position: absolute;
   z-index: 2;
+  inset: 0;
+
+  transition: transform 2s cubic-bezier(0.2, 0.95, 0.35, 1);
+  transform-style: preserve-3d;
+}
+
+.lottery-scene__door-panel--lose-peek {
+  animation: lottery-scene-door-lose-peek 900ms cubic-bezier(0.2, 0.82, 0.2, 1) both;
+  transform-origin: 93% 50%;
+}
+
+.lottery-scene__door-panel--peek-twice {
+  animation: lottery-scene-door-peek 2s cubic-bezier(0.2, 0.82, 0.2, 1) both;
+  transform-origin: 93% 50%;
+}
+
+.lottery-scene__door-panel--jackpot-reveal {
+  animation: lottery-scene-door-jackpot-reveal 3.2s cubic-bezier(0.18, 0.88, 0.2, 1) both;
+  transform-origin: 93% 50%;
+}
+
+.lottery-scene__door-panel--jackpot-open {
+  transform: rotateY(var(--door-open-angle));
+  transform-origin: 93% 50%;
+}
+
+.lottery-scene__door-panel--open {
+  animation: lottery-scene-door-open 760ms cubic-bezier(0.18, 0.88, 0.2, 1) both;
+  transform-origin: 93% 50%;
+}
+
+.lottery-scene__door {
+  position: absolute;
+  inset: 0;
 
   width: 100%;
-  height: auto;
+  height: 100%;
 
-  display: flex;
+  display: block;
 
   animation: lottery-scene-safe-pulse 3.8s ease-in-out infinite;
 
   pointer-events: none;
   user-select: none;
 
+  -webkit-backface-visibility: hidden;
   -webkit-user-drag: none;
+  backface-visibility: hidden;
   object-fit: contain;
+
+  &--backface {
+    transform: rotateY(180deg);
+  }
 }
 
 @keyframes lottery-scene-gold-glow-spin {
   to {
     transform: rotate(1turn);
+  }
+}
+
+@keyframes lottery-scene-door-lose-peek {
+  0%,
+  100% {
+    transform: rotateY(0deg);
+  }
+
+  48% {
+    transform: rotateY(var(--door-peek-angle));
+  }
+}
+
+@keyframes lottery-scene-door-peek {
+  0%,
+  34%,
+  68%,
+  100% {
+    transform: rotateY(0deg);
+  }
+
+  17% {
+    transform: rotateY(var(--door-peek-angle));
+  }
+
+  51% {
+    transform: rotateY(var(--door-second-peek-angle));
+  }
+}
+
+@keyframes lottery-scene-door-jackpot-reveal {
+  0%,
+  24%,
+  48%,
+  62% {
+    transform: rotateY(0deg);
+  }
+
+  12% {
+    transform: rotateY(var(--door-peek-angle));
+  }
+
+  36% {
+    transform: rotateY(var(--door-second-peek-angle));
+  }
+
+  100% {
+    transform: rotateY(var(--door-open-angle));
+  }
+}
+
+@keyframes lottery-scene-door-open {
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  100% {
+    transform: rotateY(var(--door-open-angle));
   }
 }
 

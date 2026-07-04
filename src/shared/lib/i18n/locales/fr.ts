@@ -92,8 +92,35 @@ export const frTranslation = {
     loadingScene: "Chargement de la scène",
     openCodePicker: "Ouvrir le sélecteur de code",
     pickerDialog: "Choisir les trois chiffres du code",
+    prizeModal: {
+      close: "Fermer les détails du prix",
+      eyebrow: "Prix débloqué",
+      fields: {
+        description: "Description",
+        name: "Prix",
+        promoCode: "Code promo"
+      },
+      label: "Détails du prix du combo jackpot",
+      noDetails: "Les détails du prix seront bientôt disponibles."
+    },
+    results: {
+      gameFinished: "Tous les coffres ont été ouverts aujourd’hui.",
+      jackpot: "Jackpot gagné.",
+      jackpotAlreadyWon: "Le jackpot a déjà été gagné. Votre tentative n’a pas été dépensée.",
+      jackpotWithPrize: "Jackpot gagné. Prix : {{prizeDetails}}",
+      duplicateSemiJackpotLose: "Jackpot non gagné. Le combo jackpot est toujours actif.",
+      lose: "Pas de chance cette fois.",
+      noRules: "Le coffre n’est pas disponible aujourd’hui.",
+      semiJackpot: "Combo jackpot gagné.",
+      semiJackpotAlreadyWon:
+        "Le combo jackpot a déjà été gagné. Votre tentative n’a pas été dépensée.",
+      semiJackpotWithPrize: "Combo jackpot gagné. Prix : {{prizeDetails}}"
+    },
     safeAlt: "Coffre-fort",
     safeDoorAlt: "Porte du coffre-fort",
+    safeResult: {
+      jackpot: "Jackpot"
+    },
     safeWheelAlt: "Roue du coffre-fort",
     sceneLabel: "Scène de loterie",
     slotUnavailable: "Choisir le chiffre {{position}}, le code est indisponible",

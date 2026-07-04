@@ -18,5 +18,7 @@
   user-select: none;
 
   -webkit-user-drag: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   object-fit: contain;
 }

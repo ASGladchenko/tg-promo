@@ -1,0 +1,53 @@
+@use "../../../../shared/styles/index" as s;
+
+.lottery-safe-result {
+  width: 100%;
+  min-height: 100%;
+
+  display: grid;
+  gap: 6px;
+  align-content: center;
+  justify-items: center;
+
+  text-align: center;
+}
+
+.lottery-safe-result__title {
+  font-size: clamp(0.68rem, 2.6vw, 1rem);
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+
+  color: s.$color-accent-gold-soft;
+  text-shadow:
+    0 0 12px rgba(255, 210, 92, 0.52),
+    0 2px 0 rgba(0, 0, 0, 0.54);
+}
+
+.lottery-safe-result__code {
+  max-width: 100%;
+
+  overflow-wrap: anywhere;
+
+  font-size: clamp(1rem, 4.4vw, 1.7rem);
+  font-weight: 900;
+  line-height: 1;
+
+  color: #fff;
+  text-shadow:
+    0 0 14px rgba(255, 210, 92, 0.56),
+    0 2px 0 rgba(0, 0, 0, 0.64);
+}
+
+.lottery-safe-result__description {
+  max-width: 100%;
+
+  overflow-wrap: anywhere;
+
+  font-size: clamp(0.58rem, 2.1vw, 0.78rem);
+  font-weight: 700;
+  line-height: 1.15;
+
+  color: rgba(s.$color-warm-strong, 0.82);
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.48);
+}

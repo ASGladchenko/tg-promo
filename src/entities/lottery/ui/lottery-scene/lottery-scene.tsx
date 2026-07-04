@@ -1,8 +1,16 @@
-import { type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
+import {
+  type AnimationEvent,
+  type KeyboardEvent,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 
+import safeDoorBackfaceImage from "@/shared/images/back_face_safe.webp";
 import safeDoorImage from "@/shared/images/safe_door.webp";
 import safeImage from "@/shared/images/safe.webp";
 import MuteIcon from "@/shared/svg/mute.svg?react";
@@ -15,8 +23,19 @@ import "./lottery-scene.scss";
 
 type LotterySceneProps = {
   codePanel: ReactNode;
+  doorState?: LotterySceneDoorState;
+  isDoorDisabled?: boolean;
   onAssetsReady?: () => void;
+  onDoorAnimationEnd?: (doorState: LotterySceneDoorState) => void;
+  safeContent?: ReactNode;
 };
+export type LotterySceneDoorState =
+  | "idle"
+  | "jackpotOpen"
+  | "jackpotReveal"
+  | "losePeek"
+  | "open"
+  | "peekTwice";
 
 const LOOP_AUDIO_SRC = "/audio/16s.ogg";
 
@@ -44,7 +63,14 @@ function waitForImageReady(image: HTMLImageElement) {
   });
 }
 
-export function LotteryScene({ codePanel, onAssetsReady }: LotterySceneProps) {
+export function LotteryScene({
+  codePanel,
+  doorState = "idle",
+  isDoorDisabled = false,
+  onAssetsReady,
+  onDoorAnimationEnd,
+  safeContent
+}: LotterySceneProps) {
   const { t } = useTranslation();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const sceneRef = useRef<HTMLElement | null>(null);
@@ -53,6 +79,7 @@ export function LotteryScene({ codePanel, onAssetsReady }: LotterySceneProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const isCodeLocked = useLotteryStore((state) => state.isCodeLocked);
   const openCodePicker = useLotteryStore((state) => state.openCodePicker);
+  const isDoorInteractionDisabled = isCodeLocked || isDoorDisabled;
 
   async function playAudio(audio: HTMLAudioElement) {
     try {
@@ -196,6 +223,10 @@ export function LotteryScene({ codePanel, onAssetsReady }: LotterySceneProps) {
   }
 
   function openCodePickerFromDoor() {
+    if (isDoorInteractionDisabled) {
+      return;
+    }
+
     const didOpen = openCodePicker(0);
 
     if (didOpen) {
@@ -212,6 +243,14 @@ export function LotteryScene({ codePanel, onAssetsReady }: LotterySceneProps) {
     openCodePickerFromDoor();
   }
 
+  function handleDoorAnimationEnd(event: AnimationEvent<HTMLDivElement>) {
+    if (event.currentTarget !== event.target || doorState === "idle") {
+      return;
+    }
+
+    onDoorAnimationEnd?.(doorState);
+  }
+
   return (
     <section ref={sceneRef} className="lottery-scene" aria-label={t("lottery.sceneLabel")}>
       <audio ref={audioRef} src={LOOP_AUDIO_SRC} loop preload="none" />
@@ -225,27 +264,51 @@ export function LotteryScene({ codePanel, onAssetsReady }: LotterySceneProps) {
           draggable={false}
         />
 
+        {safeContent ? <div className="lottery-scene__safe-content">{safeContent}</div> : null}
+
         <div
           className={clsx("lottery-scene__door-wrapper", {
-            "lottery-scene__door-wrapper--locked": isCodeLocked
+            "lottery-scene__door-wrapper--locked": isDoorInteractionDisabled
           })}
           role="button"
-          tabIndex={isCodeLocked ? -1 : 0}
-          aria-label={isCodeLocked ? t("lottery.codeLocked") : t("lottery.openCodePicker")}
-          aria-disabled={isCodeLocked}
+          tabIndex={isDoorInteractionDisabled ? -1 : 0}
+          aria-label={
+            isDoorInteractionDisabled ? t("lottery.codeLocked") : t("lottery.openCodePicker")
+          }
+          aria-disabled={isDoorInteractionDisabled}
           onClick={openCodePickerFromDoor}
           onKeyDown={handleDoorKeyDown}
         >
-          <img
-            className="lottery-scene__door"
-            src={safeDoorImage}
-            alt={t("lottery.safeDoorAlt")}
-            loading="eager"
-            decoding="sync"
-            draggable={false}
-          />
+          <div
+            className={clsx("lottery-scene__door-panel", {
+              "lottery-scene__door-panel--jackpot-open": doorState === "jackpotOpen",
+              "lottery-scene__door-panel--jackpot-reveal": doorState === "jackpotReveal",
+              "lottery-scene__door-panel--lose-peek": doorState === "losePeek",
+              "lottery-scene__door-panel--open": doorState === "open",
+              "lottery-scene__door-panel--peek-twice": doorState === "peekTwice"
+            })}
+            onAnimationEnd={handleDoorAnimationEnd}
+          >
+            <img
+              className="lottery-scene__door lottery-scene__door--backface"
+              src={safeDoorBackfaceImage}
+              alt={t("lottery.safeDoorAlt")}
+              loading="eager"
+              decoding="sync"
+              draggable={false}
+            />
 
-          <SafeWheel />
+            <img
+              className="lottery-scene__door"
+              src={safeDoorImage}
+              alt={t("lottery.safeDoorAlt")}
+              loading="eager"
+              decoding="sync"
+              draggable={false}
+            />
+
+            <SafeWheel />
+          </div>
         </div>
       </div>
 

@@ -90,8 +90,34 @@ export const arTranslation = {
     loadingScene: "جارٍ تحميل المشهد",
     openCodePicker: "افتح اختيار الرمز",
     pickerDialog: "اختيار أرقام الرمز الثلاثة",
+    prizeModal: {
+      close: "إغلاق تفاصيل الجائزة",
+      eyebrow: "تم فتح الجائزة",
+      fields: {
+        description: "الوصف",
+        name: "الجائزة",
+        promoCode: "رمز العرض"
+      },
+      label: "تفاصيل جائزة الجائزة المركبة",
+      noDetails: "ستتوفر تفاصيل الجائزة قريبًا."
+    },
+    results: {
+      gameFinished: "تم فتح كل الخزنات لهذا اليوم.",
+      jackpot: "فزت بالجائزة الكبرى.",
+      jackpotAlreadyWon: "تم الفوز بالجائزة الكبرى بالفعل. لم تُستخدم محاولتك.",
+      jackpotWithPrize: "فزت بالجائزة الكبرى. الجائزة: {{prizeDetails}}",
+      duplicateSemiJackpotLose: "لم تفز بالجائزة الكبرى. الجائزة المركبة ما زالت نشطة.",
+      lose: "لا حظ هذه المرة.",
+      noRules: "الخزنة غير متاحة اليوم.",
+      semiJackpot: "فزت بالجائزة المركبة.",
+      semiJackpotAlreadyWon: "تم الفوز بالجائزة المركبة بالفعل. لم تُستخدم محاولتك.",
+      semiJackpotWithPrize: "فزت بالجائزة المركبة. الجائزة: {{prizeDetails}}"
+    },
     safeAlt: "خزنة",
     safeDoorAlt: "باب الخزنة",
+    safeResult: {
+      jackpot: "الجائزة الكبرى"
+    },
     safeWheelAlt: "عجلة الخزنة",
     sceneLabel: "مشهد اليانصيب",
     slotUnavailable: "اختر الرقم {{position}}، الرمز غير متاح",

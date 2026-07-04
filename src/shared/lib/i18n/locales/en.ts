@@ -91,8 +91,34 @@ export const enTranslation = {
     loadingScene: "Loading scene",
     openCodePicker: "Open code picker",
     pickerDialog: "Choose the three code digits",
+    prizeModal: {
+      close: "Close prize details",
+      eyebrow: "Prize unlocked",
+      fields: {
+        description: "Description",
+        name: "Prize",
+        promoCode: "Promo code"
+      },
+      label: "Combo jackpot prize details",
+      noDetails: "Prize details will be available soon."
+    },
+    results: {
+      gameFinished: "All safes have been cracked for today.",
+      jackpot: "Jackpot won.",
+      jackpotAlreadyWon: "The jackpot has already been won. Your attempt was not spent.",
+      jackpotWithPrize: "Jackpot won. Prize: {{prizeDetails}}",
+      duplicateSemiJackpotLose: "Jackpot not won. Combo jackpot is still active.",
+      lose: "No luck this time.",
+      noRules: "The safe is not available today.",
+      semiJackpot: "Combo jackpot won.",
+      semiJackpotAlreadyWon: "The combo jackpot has already been won. Your attempt was not spent.",
+      semiJackpotWithPrize: "Combo jackpot won. Prize: {{prizeDetails}}"
+    },
     safeAlt: "Safe",
     safeDoorAlt: "Safe door",
+    safeResult: {
+      jackpot: "Jackpot"
+    },
     safeWheelAlt: "Safe wheel",
     sceneLabel: "Lottery scene",
     slotUnavailable: "Choose digit {{position}}, code is unavailable",
