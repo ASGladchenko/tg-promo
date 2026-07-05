@@ -26,12 +26,7 @@ export function AdminPrizeMetadataFields({ disabled }: AdminPrizeMetadataFieldsP
           Metadata
         </h3>
 
-        <ButtonBase
-          type="button"
-          variant="dark"
-          disabled={disabled}
-          onClick={() => append({ key: "", value: "" })}
-        >
+        <ButtonBase type="button" disabled={disabled} onClick={() => append({ key: "", value: "" })}>
           Add field
         </ButtonBase>
       </div>
