@@ -1,0 +1,19 @@
+@use "@/shared/styles/admin" as a;
+@use "@/shared/styles" as s;
+
+.textarea-base {
+  width: 100%;
+  min-height: 96px;
+
+  padding: 8px 12px;
+
+  resize: vertical;
+  background: a.$admin-surface-dark;
+  border: 1px solid a.$admin-border;
+  border-radius: s.$radius-sm;
+  outline: none;
+
+  &:focus {
+    border-color: a.$admin-primary;
+  }
+}

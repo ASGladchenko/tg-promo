@@ -1,5 +1,6 @@
 import { CheckboxField } from "@/shared/ui/checkbox-field";
 import { InputField } from "@/shared/ui/input-field";
+import { TextareaField } from "@/shared/ui/textarea-field";
 
 import { type AdminPrizeFormState } from "../model/admin-prize-form-schema";
 import { AdminPrizeMetadataFields } from "./admin-prize-metadata-fields";
@@ -16,10 +17,10 @@ export function AdminPrizeFormFields({ disabled }: AdminPrizeFormFieldsProps) {
       <InputField<AdminPrizeFormState>
         name="name"
         label="Name"
-        placeholder="Bonus prize"
         disabled={disabled}
+        placeholder="Bonus prize"
       />
-      <InputField<AdminPrizeFormState>
+      <TextareaField<AdminPrizeFormState>
         name="description"
         label="Description"
         disabled={disabled}
