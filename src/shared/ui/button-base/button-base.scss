@@ -2,11 +2,20 @@
 @use "@/shared/styles/admin" as a;
 
 .button-base {
+  height: var(--button-base-height, auto);
+
   padding: 12px 16px;
 
   display: inline-flex;
   justify-content: center;
   align-items: center;
+
+  flex: 0 0 auto;
+
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
 
   background: a.$admin-border;
   border: 1px solid a.$admin-text-disabled;
@@ -36,4 +45,24 @@
 
     cursor: not-allowed;
   }
+}
+
+.button-base--primary {
+  @include s.button-variant(a.$admin-primary, a.$admin-white);
+}
+
+.button-base--success {
+  @include s.button-variant(a.$admin-success, a.$admin-white);
+}
+
+.button-base--warning {
+  @include s.button-variant(a.$admin-warning, a.$admin-black);
+}
+
+.button-base--danger {
+  @include s.button-variant(a.$admin-danger, a.$admin-white);
+}
+
+.button-base--dark {
+  @include s.button-variant(a.$admin-topbar, a.$admin-white);
 }

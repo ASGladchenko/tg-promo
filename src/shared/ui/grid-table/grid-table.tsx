@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
+import { Fragment, type CSSProperties, type ReactNode } from "react";
 
 import clsx from "clsx";
 
@@ -29,8 +29,8 @@ export function GridTable<TItem>({
     <div className={clsx("grid-table", "admin-hover-scrollbar-container", className)}>
       <div className="grid-table__scroll admin-hover-scrollbar" role="table" aria-label={ariaLabel} tabIndex={0}>
         <div className="grid-table__content">
-          <div className="grid-table__header" role="rowgroup">
-            <div className="grid-table__row grid-table__row--header" role="row" style={gridStyle}>
+          <div role="rowgroup">
+            <div className="grid-table__row" role="row" style={gridStyle}>
               {header.map((item, index) => (
                 <div key={index} className="grid-table__cell grid-table__cell--header" role="columnheader">
                   {item}
@@ -39,12 +39,12 @@ export function GridTable<TItem>({
             </div>
           </div>
 
-          <div className="grid-table__body" role="rowgroup">
+          <div role="rowgroup">
             {items.length > 0 ? (
               items.map((item, rowIndex) => (
-                <div key={rowIndex} className="grid-table__row" role="row" style={gridStyle}>
+                <Fragment key={rowIndex}>
                   {renderRow(item, rowIndex)}
-                </div>
+                </Fragment>
               ))
             ) : (
               <div className="grid-table__empty" role="row" style={gridStyle}>

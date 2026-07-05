@@ -1,0 +1,32 @@
+@use "@/shared/styles/admin" as s;
+
+.copy-id-button {
+  width: 100%;
+  min-width: 0;
+
+  padding: 0;
+
+  display: block;
+
+  overflow: hidden;
+
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: color 0.15s ease-in-out;
+}
+
+.copy-id-button:focus-visible {
+  outline: 2px solid currentcolor;
+  outline-offset: 2px;
+}
+
+.copy-id-button--copied {
+  color: s.$admin-primary;
+}

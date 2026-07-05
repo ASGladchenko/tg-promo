@@ -1,7 +1,9 @@
 export type Prize = {
-  id: string;
-  title: string;
+  createdAt: string;
   description: string;
-  amount: string;
-  status: string;
+  id: string;
+  isActive: boolean;
+  metadata: Record<string, unknown>;
+  name: string;
+  updatedAt: string;
 };

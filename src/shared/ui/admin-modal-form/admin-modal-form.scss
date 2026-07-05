@@ -1,0 +1,107 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-modal-form {
+  padding: 20px;
+
+  display: grid;
+  gap: 18px;
+}
+
+.admin-modal-form__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.admin-modal-form__eyebrow {
+  margin-bottom: 4px;
+
+  font-size: 13px;
+
+  color: s.$admin-text-muted;
+}
+
+.admin-modal-form__title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.admin-modal-form__close {
+  width: 28px;
+  height: 28px;
+
+  padding: 0;
+
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+
+  color: s.$admin-text-secondary;
+  background: s.$admin-surface;
+  border: 1px solid s.$admin-border;
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  &:hover {
+    color: s.$admin-text;
+    background: s.$admin-surface-strong;
+    border-color: s.$admin-border-strong;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+  }
+
+  &:disabled:hover {
+    color: s.$admin-text-secondary;
+    background: s.$admin-surface;
+    border-color: s.$admin-border;
+  }
+
+  &:focus-visible {
+    outline: 2px solid s.$admin-primary;
+    outline-offset: 2px;
+  }
+}
+
+.admin-modal-form__close-icon {
+  position: relative;
+
+  width: 13px;
+  height: 13px;
+
+  display: block;
+
+  transition: transform 0.1s ease-in-out;
+
+  &::before,
+  &::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 13px;
+    height: 1.4px;
+
+    background: currentColor;
+    border-radius: 999px;
+
+    content: "";
+  }
+
+  &::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}
+
+.admin-modal-form__close:hover .admin-modal-form__close-icon {
+  transform: scale(1.05);
+}

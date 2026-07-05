@@ -1,22 +1,23 @@
 import { usePrizes } from "@/entities/prizes";
+import { AdminPrizeCreateTrigger } from "@/features/admin-create-prize";
 import { AdminPageHeader } from "@/shared/ui/admin-page-header";
-import { ButtonBase } from "@/shared/ui/button-base";
 import { GridTable } from "@/shared/ui/grid-table";
 
 import { AdminPrizeRow } from "./admin-prize-row";
 
 import "./admin-prizes.scss";
 
-const prizesGridTemplateColumns = "420px 220px 320px 160px 160px 220px";
+const prizesGridTemplateColumns =
+  "minmax(240px, 1.4fr) minmax(160px, 0.9fr) minmax(220px, 1.2fr) minmax(90px, 0.45fr) minmax(220px, 1.1fr) minmax(150px, 0.75fr) minmax(150px, 0.75fr) minmax(90px, 0.6fr)";
 
-const prizesHeader = ["ID", "Title", "Description", "Amount", "Status", ""];
+const prizesHeader = ["ID", "Name", "Description", "Active", "Metadata", "Created", "Updated", ""];
 
 export function AdminPrizes() {
   const prizesQuery = usePrizes();
 
   return (
     <section className="admin-prizes">
-      <AdminPageHeader title="Prizes" slot={<ButtonBase>Add Prize</ButtonBase>} />
+      <AdminPageHeader title="Prizes" slot={<AdminPrizeCreateTrigger />} />
 
       {prizesQuery.isLoading ? (
         <p className="admin-prizes__state" aria-live="polite">
@@ -37,7 +38,9 @@ export function AdminPrizes() {
           items={prizesQuery.data}
           emptyMessage="No prizes found"
           gridTemplateColumns={prizesGridTemplateColumns}
-          renderRow={(prize) => <AdminPrizeRow prize={prize} />}
+          renderRow={(prize) => (
+            <AdminPrizeRow gridTemplateColumns={prizesGridTemplateColumns} prize={prize} />
+          )}
         />
       ) : null}
     </section>

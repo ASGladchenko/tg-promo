@@ -1,0 +1,36 @@
+@use "@/shared/styles/admin" as a;
+
+.checkbox {
+  display: grid;
+  gap: 4px;
+
+  color: a.$admin-text-secondary;
+
+  cursor: pointer;
+}
+
+.checkbox__content {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox__label {
+  color: inherit;
+}
+
+.checkbox__error {
+  font-size: 12px;
+
+  color: a.$admin-danger;
+}
+
+.checkbox--error {
+  color: a.$admin-danger;
+}
+
+.checkbox--disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+}

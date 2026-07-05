@@ -18,15 +18,13 @@ function formatValue(value: number | string | null | undefined, fallback = "-") 
 }
 
 export function mapPrizesDtoToPrizes(dto: PrizesResponseDto): Prize[] {
-  return readPrizesDto(dto).map((prize, index) => {
-    const id = formatValue(prize.id, String(index + 1));
-
-    return {
-      id,
-      title: formatValue(prize.title ?? prize.name, `Prize ${index + 1}`),
-      description: formatValue(prize.description),
-      amount: formatValue(prize.amount),
-      status: formatValue(prize.status)
-    };
-  });
+  return readPrizesDto(dto).map((prize) => ({
+    name: prize.name,
+    id: String(prize.id),
+    isActive: prize.isActive,
+    updatedAt: prize.updatedAt,
+    createdAt: prize.createdAt,
+    metadata: { ...prize.metadata },
+    description: formatValue(prize.description)
+  }));
 }

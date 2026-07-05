@@ -6,34 +6,36 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
 
-function readOptionalString(value: unknown): string | null | undefined {
-  if (value === null || value === undefined || typeof value === "string") {
-    return value;
-  }
-
-  return undefined;
-}
-
-function readOptionalStringOrNumber(value: unknown): number | string | null | undefined {
-  if (value === null || value === undefined || typeof value === "string" || typeof value === "number") {
-    return value;
-  }
-
-  return undefined;
-}
-
 function parsePrizeDto(value: unknown): PrizeDto | null {
   if (!isRecord(value)) {
     return null;
   }
 
+  const { createdAt, description, id, isActive, metadata, name, updatedAt } = value;
+
+  if (
+    (typeof id !== "string" && typeof id !== "number") ||
+    typeof name !== "string" ||
+    typeof isActive !== "boolean" ||
+    !isRecord(metadata) ||
+    typeof createdAt !== "string" ||
+    typeof updatedAt !== "string"
+  ) {
+    return null;
+  }
+
+  if (description !== null && description !== undefined && typeof description !== "string") {
+    return null;
+  }
+
   return {
-    id: readOptionalStringOrNumber(value.id),
-    name: readOptionalString(value.name),
-    title: readOptionalString(value.title),
-    description: readOptionalString(value.description),
-    amount: readOptionalStringOrNumber(value.amount),
-    status: readOptionalString(value.status)
+    createdAt,
+    description,
+    id,
+    isActive,
+    metadata,
+    name,
+    updatedAt
   };
 }
 
