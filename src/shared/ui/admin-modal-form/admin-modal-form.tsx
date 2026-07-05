@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
-import type { FieldValues, SubmitHandler, UseFormReturn } from "react-hook-form";
+
+import type { FieldValues, SubmitErrorHandler, SubmitHandler, UseFormReturn } from "react-hook-form";
 import { FormProvider } from "react-hook-form";
 
 import "./admin-modal-form.scss";
@@ -11,23 +12,25 @@ type AdminModalFormProps<TFormValues extends FieldValues> = {
   form: UseFormReturn<TFormValues>;
   isCloseDisabled?: boolean;
   onClose: () => void;
+  onInvalidSubmit?: SubmitErrorHandler<TFormValues>;
   onSubmit: SubmitHandler<TFormValues>;
   title: string;
 };
 
 export function AdminModalForm<TFormValues extends FieldValues>({
-  children,
-  closeAriaLabel,
-  eyebrow,
   form,
-  isCloseDisabled = false,
+  title,
+  eyebrow,
   onClose,
+  children,
   onSubmit,
-  title
+  closeAriaLabel,
+  onInvalidSubmit,
+  isCloseDisabled = false
 }: AdminModalFormProps<TFormValues>) {
   return (
     <FormProvider {...form}>
-      <form className="admin-modal-form" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="admin-modal-form" onSubmit={form.handleSubmit(onSubmit, onInvalidSubmit)}>
         <div className="admin-modal-form__header">
           <div>
             {eyebrow ? <p className="admin-modal-form__eyebrow">{eyebrow}</p> : null}

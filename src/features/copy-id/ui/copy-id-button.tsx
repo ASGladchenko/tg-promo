@@ -12,7 +12,7 @@ type CopyIdButtonProps = {
   id: string;
 };
 
-const copiedStateDurationMs = 3_000;
+const copiedStateDurationMs = 300;
 
 export function CopyIdButton({ ariaLabel, children, id }: CopyIdButtonProps) {
   const [isCopied, setIsCopied] = useState(false);

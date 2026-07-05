@@ -8,10 +8,24 @@
   color: s.$admin-text;
 }
 
-.admin-rules__title {
+.admin-rules__state {
   margin: 0;
+  padding: 20px;
 
-  font-size: 20px;
-  font-weight: 700;
-  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 500;
+
+  color: s.$admin-text-secondary;
+  background: s.$admin-surface;
+  border-radius: s.$admin-radius;
+}
+
+.admin-rules__state--error {
+  color: s.$admin-danger;
+}
+
+.admin-rules__actions {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
 }

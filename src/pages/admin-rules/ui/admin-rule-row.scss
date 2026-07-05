@@ -1,0 +1,14 @@
+.admin-rule-row__reward {
+  white-space: pre-wrap;
+
+  font-size: 13px;
+}
+
+.admin-rule-row__actions {
+  min-width: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
