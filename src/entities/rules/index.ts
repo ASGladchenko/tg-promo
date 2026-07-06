@@ -1,5 +1,4 @@
-export type { Rule, RuleReward } from "./model/types";
-export type { AdminRuleFormInput, AdminRuleFormState } from "./model/admin-rule-form-schema";
+export type { AdminRuleFormInput, AdminRuleFormState, Rule, RuleReward } from "./model/types";
 
 export { AdminRuleFormFields } from "./ui/admin-rule-form-fields";
 export { AdminRuleFormModalTrigger } from "./ui/admin-rule-form-modal-trigger";

@@ -1,5 +1,7 @@
-import { ADMIN_RULE_DEFAULT_CODE_LENGTH, type AdminRuleFormInput } from "../model/admin-rule-form-schema";
-import { type RuleReward, type Rule } from "../model/types";
+import * as z from "zod";
+
+import { ADMIN_RULE_DEFAULT_CODE_LENGTH } from "../model/admin-rule-form-schema";
+import { type AdminRuleFormInput, type RuleReward, type Rule } from "../model/types";
 
 function mapRewardToFormValue(reward: RuleReward | null) {
   if (!reward) {
@@ -15,7 +17,7 @@ function mapRewardToFormValue(reward: RuleReward | null) {
   };
 }
 
-export function getAdminRuleFormDefaultValues(rule?: Rule): AdminRuleFormInput {
+const adminRuleFormDefaultValuesSchema = z.custom<Rule | undefined>().transform((rule): AdminRuleFormInput => {
   if (!rule) {
     return {
       gameDate: "",
@@ -37,4 +39,8 @@ export function getAdminRuleFormDefaultValues(rule?: Rule): AdminRuleFormInput {
     jackpotPrize: mapRewardToFormValue(rule.jackpotPrize),
     semiJackpotPrize: mapRewardToFormValue(rule.semiJackpotPrize)
   };
+});
+
+export function getAdminRuleFormDefaultValues(rule?: Rule): AdminRuleFormInput {
+  return adminRuleFormDefaultValuesSchema.parse(rule);
 }

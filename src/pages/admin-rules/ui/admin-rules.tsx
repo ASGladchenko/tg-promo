@@ -1,6 +1,7 @@
 import { useRules } from "@/entities/rules";
 import { AdminCreateTodayRuleButton } from "@/features/admin-create-today-rule";
 import { AdminRuleCreateTrigger } from "@/features/admin-create-rule";
+import { getErrorMessage } from "@/shared/lib/error";
 import { AdminPageHeader } from "@/shared/ui/admin-page-header";
 import { GridTable } from "@/shared/ui/grid-table";
 
@@ -26,6 +27,7 @@ const rulesHeader = [
 
 export function AdminRules() {
   const rulesQuery = useRules();
+  const rulesErrorMessage = getErrorMessage(rulesQuery.error, "Unknown rules loading error");
 
   return (
     <section className="admin-rules">
@@ -47,7 +49,7 @@ export function AdminRules() {
 
       {rulesQuery.isError ? (
         <p className="admin-rules__state admin-rules__state--error" role="alert">
-          Failed to load rules.
+          Failed to load rules. {rulesErrorMessage}
         </p>
       ) : null}
 

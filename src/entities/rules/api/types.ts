@@ -1,21 +1,10 @@
-export type RuleRewardDto = {
-  prizeId: string;
-  promoCodes: string[];
-};
+import { type z } from "zod";
 
-export type RuleDto = {
-  codeLength: number;
-  createdAt: string;
-  gameDate: string;
-  id: number | string;
-  jackpotPrize: RuleRewardDto | null;
-  jackpotWinsLimit: number;
-  semiJackpotPrize: RuleRewardDto | null;
-  semiJackpotWinsLimit: number;
-  updatedAt: string;
-};
+import { ruleDtoSchema, ruleRewardDtoSchema, rulesResponseDtoSchema } from "./rules-response-schema";
 
-export type RulesResponseDto = RuleDto[] | { rules?: RuleDto[]; data?: RuleDto[] };
+export type RuleRewardDto = z.output<typeof ruleRewardDtoSchema>;
+export type RuleDto = z.output<typeof ruleDtoSchema>;
+export type RulesResponseDto = z.output<typeof rulesResponseDtoSchema>;
 
 export type RuleRewardPayload = {
   prizeId: string;

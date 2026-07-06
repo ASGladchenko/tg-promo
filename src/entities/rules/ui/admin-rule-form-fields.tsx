@@ -1,6 +1,6 @@
 import { InputField } from "@/shared/ui/input-field";
 
-import { type AdminRuleFormState } from "../model/admin-rule-form-schema";
+import { type AdminRuleFormState } from "../model/types";
 import { AdminRuleRewardFields } from "./admin-rule-reward-fields";
 
 import "./admin-rule-form-fields.scss";

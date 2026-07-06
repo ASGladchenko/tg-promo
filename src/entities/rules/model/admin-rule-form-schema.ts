@@ -41,6 +41,3 @@ export const adminRuleFormSchema = z
       });
     }
   });
-
-export type AdminRuleFormInput = z.infer<typeof adminRuleFormSchema>;
-export type AdminRuleFormState = AdminRuleFormInput;

@@ -1,6 +1,5 @@
 import { type CreateRulePayload, type RuleRewardPayload, type UpdateRulePayload } from "../api/types";
-import { type AdminRuleFormState } from "../model/admin-rule-form-schema";
-import { type RuleReward, type Rule } from "../model/types";
+import { type AdminRuleFormState, type RuleReward, type Rule } from "../model/types";
 
 function mapRewardFormToPayload(reward: AdminRuleFormState["jackpotPrize"]): RuleRewardPayload {
   return {
