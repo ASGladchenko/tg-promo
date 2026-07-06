@@ -1,8 +1,8 @@
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode } from "react";
 
 import clsx from "clsx";
 
-import { copyIdToClipboard } from "../lib/copy-id-to-clipboard";
+import { useCopy } from "@/shared/lib/browser";
 
 import "./copy-id-button.scss";
 
@@ -12,32 +12,17 @@ type CopyIdButtonProps = {
   id: string;
 };
 
-const copiedStateDurationMs = 300;
-
 export function CopyIdButton({ ariaLabel, children, id }: CopyIdButtonProps) {
-  const [isCopied, setIsCopied] = useState(false);
-
-  useEffect(() => {
-    if (!isCopied) {
-      return;
-    }
-
-    const timeoutId = window.setTimeout(() => setIsCopied(false), copiedStateDurationMs);
-
-    return () => window.clearTimeout(timeoutId);
-  }, [isCopied]);
+  const { isCopied, onCopy } = useCopy(id);
 
   return (
     <button
       type="button"
+      onClick={onCopy}
       aria-label={ariaLabel}
       className={clsx("copy-id-button", {
         "copy-id-button--copied": isCopied
       })}
-      onClick={() => {
-        copyIdToClipboard(id);
-        setIsCopied(true);
-      }}
     >
       {children ?? id}
     </button>

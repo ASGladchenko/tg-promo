@@ -24,8 +24,6 @@ export function AdminCreateTodayRuleButton() {
 
         delete (payload as Partial<typeof payload>).gameDate;
 
-        console.log("createTodayRule payload:", payload);
-
         return createTodayRule.mutateAsync(payload);
       }}
       renderTrigger={({ openModal }) => (

@@ -7,7 +7,10 @@ export interface InputFieldProps<TFormValues extends FieldValues> extends Omit<I
   name: Path<TFormValues>;
 }
 
-export function InputField<TFormValues extends FieldValues>({ name, ...props }: InputFieldProps<TFormValues>) {
+export function InputField<TFormValues extends FieldValues>({
+  name,
+  ...props
+}: InputFieldProps<TFormValues>) {
   const {
     register,
     formState: { errors }
