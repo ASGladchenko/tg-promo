@@ -63,6 +63,10 @@ Domain model может:
 
 Не дублируй DTO отдельной domain model, если их форма и смысл полностью совпадают.
 
+Не переписывай вручную одинаковые поля между DTO, domain, form и payload types. Если тип почти
+совпадает с уже существующим, выводи его из источника через `z.output`, `Omit`, `Pick`,
+intersection или другой type composition, а вручную описывай только реальные отличия.
+
 ## Entity mapper
 
 Стабильный DTO → domain mapper принадлежит entity:

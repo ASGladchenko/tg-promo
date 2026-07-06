@@ -1,14 +1,9 @@
-export type PrizeDto = {
-  createdAt: string;
-  description?: string | null;
-  id: number | string;
-  isActive: boolean;
-  metadata: Record<string, unknown>;
-  name: string;
-  updatedAt: string;
-};
+import { type z } from "zod";
 
-export type PrizesResponseDto = PrizeDto[] | { prizes?: PrizeDto[]; data?: PrizeDto[] };
+import { prizeDtoSchema, prizesResponseDtoSchema } from "./prizes-response-schema";
+
+export type PrizeDto = z.output<typeof prizeDtoSchema>;
+export type PrizesResponseDto = z.output<typeof prizesResponseDtoSchema>;
 
 export type CreatePrizePayload = {
   name: string;
@@ -18,8 +13,8 @@ export type CreatePrizePayload = {
 };
 
 export type UpdatePrizePayload = CreatePrizePayload;
-
+export type PrizeId = PrizeDto["id"];
 export type UpdatePrizeVariables = {
-  id: string;
+  id: PrizeId;
   payload: UpdatePrizePayload;
 };

@@ -1,5 +1,5 @@
 import { type CreatePrizePayload } from "../api/types";
-import { type AdminPrizeFormState } from "../model/admin-prize-form-schema";
+import { type AdminPrizeFormState } from "../model/types";
 
 export function mapAdminPrizeFormToPayload(data: AdminPrizeFormState): CreatePrizePayload {
   const description = data.description.trim();

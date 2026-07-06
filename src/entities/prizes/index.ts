@@ -1,5 +1,4 @@
-export type { Prize } from "./model/types";
-export type { AdminPrizeFormState } from "./model/admin-prize-form-schema";
+export type { AdminPrizeFormState, Prize } from "./model/types";
 
 export { AdminPrizeFormFields } from "./ui/admin-prize-form-fields";
 export { AdminPrizeFormModalTrigger } from "./ui/admin-prize-form-modal-trigger";

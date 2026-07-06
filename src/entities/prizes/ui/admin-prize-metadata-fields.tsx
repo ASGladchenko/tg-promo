@@ -4,7 +4,7 @@ import { ButtonBase } from "@/shared/ui/button-base";
 import { Input } from "@/shared/ui/input";
 import { InputField } from "@/shared/ui/input-field";
 
-import { type AdminPrizeFormState } from "../model/admin-prize-form-schema";
+import { type AdminPrizeFormState } from "../model/types";
 
 import "./admin-prize-metadata-fields.scss";
 

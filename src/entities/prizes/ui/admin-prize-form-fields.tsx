@@ -2,7 +2,7 @@ import { CheckboxField } from "@/shared/ui/checkbox-field";
 import { InputField } from "@/shared/ui/input-field";
 import { TextareaField } from "@/shared/ui/textarea-field";
 
-import { type AdminPrizeFormState } from "../model/admin-prize-form-schema";
+import { type AdminPrizeFormState } from "../model/types";
 import { AdminPrizeMetadataFields } from "./admin-prize-metadata-fields";
 
 import "./admin-prize-form-fields.scss";
