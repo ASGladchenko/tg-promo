@@ -17,10 +17,10 @@ export function AdminRuleFormFields({ canClearSemiJackpotPrize, disabled }: Admi
       <InputField<AdminRuleFormState>
         min={1}
         step={1}
+        disabled
         type="number"
         name="codeLength"
         label="Code length"
-        disabled={disabled}
       />
 
       <AdminRuleRewardFields title="Jackpot Prize" fieldName="jackpotPrize" disabled={disabled} />
