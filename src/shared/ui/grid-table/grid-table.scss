@@ -1,0 +1,110 @@
+@use "@/shared/styles/admin" as s;
+
+.grid-table {
+  --grid-table-scrollbar-content-gap: 16px;
+
+  position: relative;
+
+  min-width: 0;
+
+  padding: 20px 20px 0;
+
+  display: flow-root;
+
+  background: s.$admin-surface-dark;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+}
+
+.grid-table::after {
+  content: "";
+
+  position: absolute;
+  top: 64px;
+  right: 20px;
+  left: 20px;
+
+  height: 1px;
+
+  background: s.$admin-border;
+}
+
+.grid-table__scroll {
+  min-width: 0;
+
+  margin-bottom: 1px;
+  padding-bottom: var(--grid-table-scrollbar-content-gap);
+
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.grid-table__scroll.admin-hover-scrollbar {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.grid-table__content {
+  width: max(100%, var(--grid-table-min-width, 0px));
+  min-width: 100%;
+}
+
+.grid-table__row {
+  width: 100%;
+  min-width: 100%;
+
+  display: grid;
+  align-items: center;
+  grid-template-columns: var(--grid-table-columns);
+}
+
+.grid-table__row + .grid-table__row {
+  border-top: 1px solid s.$admin-border;
+}
+
+.grid-table__cell {
+  min-width: 0;
+
+  padding: 10px;
+
+  overflow: hidden;
+
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.grid-table__cell > * {
+  min-width: 0;
+}
+
+.grid-table__cell--header {
+  font-weight: 700;
+
+  color: s.$admin-text;
+}
+
+.grid-table__empty {
+  width: 100%;
+  min-width: 100%;
+
+  display: grid;
+  grid-template-columns: var(--grid-table-columns);
+
+  color: s.$admin-text-secondary;
+}
+
+.grid-table__empty-content {
+  min-width: 0;
+
+  padding: 28px 10px 0;
+
+  grid-column: 1 / -1;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

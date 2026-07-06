@@ -1,64 +1,43 @@
-// =========================
-// APP BACKGROUNDS
-// =========================
+// Bootstrap matches.
+$admin-white: #fff;
+$admin-black: #000;
+$admin-gray-100: #f8f9fa;
+$admin-gray-300: #dee2e6;
+$admin-gray-600: #6c757d;
+$admin-gray-700: #495057;
+$admin-gray-900: #212529;
+$admin-primary: #0d6efd;
+$admin-success: #198754;
+$admin-warning: #ffc107;
+$admin-danger: #dc3545;
 
+// Main dark theme.
 $admin-bg: #3d4854;
 $admin-bg-soft: #35414c;
-$admin-bg-deep: #252d36;
+$admin-sidebar: #252d36;
+$admin-topbar: #1b2026;
+$admin-surface-dark: rgb(0 0 0 / 20%);
+$admin-surface: rgba($admin-gray-900, 0.34);
+$admin-surface-strong: rgba($admin-gray-900, 0.46);
+$admin-control: rgba($admin-gray-900, 0.46);
+$admin-disabled: rgba($admin-gray-600, 0.72);
+$admin-table-striped: rgba($admin-gray-700, 0.82);
 
-// =========================
-// SURFACES / PANELS
-// =========================
+// Text and borders.
+$admin-text: $admin-white;
+$admin-text-secondary: rgba($admin-white, 0.78);
+$admin-text-muted: rgba($admin-white, 0.56);
+$admin-text-disabled: rgba($admin-white, 0.34);
+$admin-border-soft: rgba($admin-white, 0.08);
+$admin-border: rgba($admin-white, 0.15);
+$admin-border-strong: rgba($admin-white, 0.22);
 
-$admin-surface-sidebar: rgba(31, 39, 48, 0.88);
-$admin-surface-topbar: rgba(38, 47, 57, 0.82);
+// Accents.
+$admin-primary: $admin-primary;
+$admin-success: $admin-success;
+$admin-warning: $admin-warning;
+$admin-danger: $admin-danger;
 
-$admin-surface-card: rgba(34, 43, 53, 0.72);
-$admin-surface-card-hover: rgba(39, 50, 61, 0.82);
-$admin-surface-panel: rgba(35, 44, 54, 0.76);
-
-$admin-surface-input: rgba(28, 36, 44, 0.72);
-$admin-surface-icon: rgba(255, 255, 255, 0.16);
-
-// =========================
-// BORDERS / DIVIDERS
-// =========================
-
-$admin-border-soft: rgba(255, 255, 255, 0.07);
-$admin-border-medium: rgba(255, 255, 255, 0.11);
-$admin-border-strong: rgba(255, 255, 255, 0.16);
-
-$admin-divider: rgba(255, 255, 255, 0.08);
-
-// =========================
-// TEXT
-// =========================
-
-$admin-text-main: #f4f6f8;
-$admin-text-secondary: rgba(244, 246, 248, 0.76);
-$admin-text-muted: rgba(244, 246, 248, 0.52);
-$admin-text-disabled: rgba(244, 246, 248, 0.34);
-
-// =========================
-// ACCENTS
-// =========================
-
-$admin-accent: #8b5cf6;
-$admin-accent-hover: #a78bfa;
-$admin-accent-soft: rgba(139, 92, 246, 0.18);
-
-// =========================
-// SHADOWS
-// =========================
-
-$admin-shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.16);
-$admin-shadow-card: 0 12px 32px rgba(0, 0, 0, 0.22);
-$admin-shadow-panel: 0 18px 48px rgba(0, 0, 0, 0.28);
-$admin-shadow-sidebar: 6px 0 24px rgba(0, 0, 0, 0.22);
-
-// =========================
-// BLUR
-// =========================
-
-$admin-blur-surface: 14px;
-$admin-blur-strong: 22px;
+// Shape and shadow.
+$admin-radius: 6px;
+$admin-shadow: 0 4px 12px rgba($admin-black, 0.12);

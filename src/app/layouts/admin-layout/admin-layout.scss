@@ -1,0 +1,20 @@
+.admin-layout {
+  min-height: 100%;
+
+  display: grid;
+  grid-template-rows: 64px minmax(0, 1fr);
+  grid-template-columns: 250px minmax(0, 1fr);
+  grid-template-areas:
+      "aside header"
+      "aside main";
+
+  direction: ltr;
+}
+
+.admin-layout__main {
+  min-width: 0;
+
+  padding: 20px;
+
+  grid-area: main;
+}

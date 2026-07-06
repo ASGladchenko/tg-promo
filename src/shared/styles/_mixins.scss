@@ -1,3 +1,5 @@
+@use "sass:color";
+
 @mixin center-grid {
   display: grid;
   place-items: center;
@@ -7,4 +9,21 @@
   font: inherit;
 
   border: 0;
+}
+
+@mixin button-variant($background, $foreground) {
+  color: $foreground;
+  background: $background;
+  border-color: $background;
+
+  &:not(:disabled):hover {
+    background: color.adjust($background, $lightness: -6%);
+    border-color: color.adjust($background, $lightness: -6%);
+  }
+
+  &:not(:disabled):active {
+    color: $foreground;
+    background: color.adjust($background, $lightness: -11%);
+    border-color: color.adjust($background, $lightness: -11%);
+  }
 }

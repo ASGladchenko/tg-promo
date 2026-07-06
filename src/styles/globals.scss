@@ -6,6 +6,9 @@
 
 * {
   box-sizing: border-box;
+
+  font-size: 16px;
+  line-height: 1.2;
 }
 
 html,
@@ -13,8 +16,6 @@ body {
   min-height: 100dvh;
 
   margin: 0;
-
-  background: #12100d;
 
   color-scheme: dark;
 }
@@ -33,6 +34,19 @@ body {
 
   color: var(--foreground);
   background: #12100d;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
 }
 
 button,

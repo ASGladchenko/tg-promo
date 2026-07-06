@@ -1,0 +1,16 @@
+.admin-prize-row__status {
+  font-weight: 700;
+}
+
+.admin-prize-row__metadata {
+  font-size: 15px;
+}
+
+.admin-prize-row__actions {
+  min-width: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}

@@ -1,0 +1,33 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-logout-button {
+  flex: 1 1 auto;
+
+  width: 100%;
+  min-height: 44px;
+
+  padding: 0 20px 0 52px;
+
+  display: flex;
+  align-items: center;
+
+  color: s.$admin-text;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+
+  background: transparent;
+  border: 0;
+
+  cursor: pointer;
+}
+
+.admin-logout-button:focus-visible {
+  outline: none;
+}
+
+.admin-logout-button:disabled {
+  cursor: default;
+  opacity: 0.7;
+}

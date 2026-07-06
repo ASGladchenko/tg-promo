@@ -1,0 +1,56 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-rule-reward-fields {
+  min-width: 0;
+
+  display: grid;
+  gap: 12px;
+
+  margin: 0;
+  padding: 14px;
+
+  border: 1px solid s.$admin-border;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+}
+
+.admin-rule-reward-fields__title {
+  padding: 0 6px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  color: s.$admin-text-secondary;
+}
+
+.admin-rule-reward-fields__content {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-rule-reward-fields__promo-codes {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-rule-reward-fields__promo-codes-header,
+.admin-rule-reward-fields__promo-code {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 10px;
+}
+
+.admin-rule-reward-fields__promo-code .button-base {
+  margin-top: 27px;
+}
+
+.admin-rule-reward-fields__label {
+  font-weight: 600;
+  color: s.$admin-text-secondary;
+}
+
+.admin-rule-reward-fields__error {
+  font-size: 12px;
+  color: s.$admin-danger;
+}

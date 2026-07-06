@@ -1,0 +1,30 @@
+@use "@/shared/styles/admin" as a;
+@use "@/shared/styles" as s;
+
+.input-field {
+  cursor: pointer;
+}
+
+.input-field--error {
+  color: a.$admin-danger;
+
+  .input-base,
+  .input-base:focus,
+  .input-base:focus-visible {
+    border-color: a.$admin-danger;
+  }
+}
+
+.input-field__label {
+  margin-bottom: 8px;
+
+  display: flex;
+}
+
+.input-field__error {
+  margin-top: 4px;
+
+  font-size: 12px;
+
+  color: a.$admin-danger;
+}

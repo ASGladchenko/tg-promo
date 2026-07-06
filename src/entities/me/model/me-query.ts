@@ -38,3 +38,7 @@ export function patchMeQueryData(queryClient: QueryClient, patch: MeQueryPatch):
 
   return mapMeDtoToMe(meDto);
 }
+
+export function removeMeQueryData(queryClient: QueryClient): void {
+  queryClient.removeQueries({ queryKey: meQueryKey });
+}

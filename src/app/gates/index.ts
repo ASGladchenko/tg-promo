@@ -1,4 +1,4 @@
-export { AdminAuthGate } from "./admin-auth-gate";
+export { AdminAuthGate, AdminLoginGate } from "./admin-auth-gate";
 
 export { AuthGate } from "./auth-gate";
 

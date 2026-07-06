@@ -1,7 +1,9 @@
 import { Outlet } from "react-router";
 
 import { useMe } from "@/entities/me";
+import { APP_ROUTES } from "@/shared/config";
 
+import { canAccessAdminRoutes } from "../lib/can-access-admin-routes";
 import { NavigateWithLocations } from "./navigate-with-locations";
 
 export function AdminAuthGate() {
@@ -12,11 +14,11 @@ export function AdminAuthGate() {
   }
 
   if (adminSession === undefined) {
-    return <NavigateWithLocations to="/admin/login" replace state={{ from: location }} />;
+    return <NavigateWithLocations to={APP_ROUTES.adminLogin} replace />;
   }
 
-  if (!adminSession?.permissions?.includes("admin.access")) {
-    return <NavigateWithLocations to="/" replace state={{ from: location }} />;
+  if (!canAccessAdminRoutes(adminSession.permissions)) {
+    return <NavigateWithLocations to={APP_ROUTES.home} replace />;
   }
 
   return <Outlet />;

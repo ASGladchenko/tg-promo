@@ -1,0 +1,28 @@
+@use "@/shared/styles/admin" as a;
+
+.textarea-field {
+  cursor: pointer;
+}
+
+.textarea-field--error {
+  color: a.$admin-danger;
+
+  .textarea-base,
+  .textarea-base:focus,
+  .textarea-base:focus-visible {
+    border-color: a.$admin-danger;
+  }
+}
+
+.textarea-field__label {
+  margin-bottom: 8px;
+
+  display: flex;
+}
+
+.textarea-field__error {
+  margin-top: 4px;
+
+  color: a.$admin-danger;
+  font-size: 12px;
+}
