@@ -7,7 +7,7 @@ import { Checkbox } from "@/shared/ui/checkbox";
 import { InputField } from "@/shared/ui/input-field";
 
 import { readFieldArrayErrorMessage } from "../lib/read-field-array-error-message";
-import { type AdminRuleFormState } from "../model/admin-rule-form-schema";
+import { type AdminRuleFormState } from "../model/types";
 
 import "./admin-rule-reward-fields.scss";
 

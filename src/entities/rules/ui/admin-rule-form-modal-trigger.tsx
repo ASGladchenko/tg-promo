@@ -1,4 +1,4 @@
-import { type ReactNode, useState } from "react";
+import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -8,28 +8,12 @@ import { ButtonBase } from "@/shared/ui/button-base";
 import { ButtonLoading } from "@/shared/ui/button-loading";
 import { Modal } from "@/shared/ui/modal";
 
-import { adminRuleFormSchema, type AdminRuleFormState } from "../model/admin-rule-form-schema";
+import { adminRuleFormSchema } from "../model/admin-rule-form-schema";
+import { type AdminRuleFormState } from "../model/types";
 import { AdminRuleFormFields } from "./admin-rule-form-fields";
+import { AdminRuleFormModalTriggerProps } from "./types";
 
 import "./admin-rule-form-modal-trigger.scss";
-
-type AdminRuleFormModalTriggerRenderProps = {
-  isPending: boolean;
-  openModal: () => void;
-};
-type AdminRuleFormModalTriggerProps = {
-  canClearSemiJackpotPrize?: boolean;
-  closeAriaLabel: string;
-  defaultValues: AdminRuleFormState;
-  failureMessage: string;
-  isPending: boolean;
-  modalAriaLabel: string;
-  onReset: () => void;
-  onSubmit: (data: AdminRuleFormState) => Promise<void>;
-  renderTrigger: (props: AdminRuleFormModalTriggerRenderProps) => ReactNode;
-  submitLabel: string;
-  title: string;
-};
 
 export function AdminRuleFormModalTrigger({
   title,

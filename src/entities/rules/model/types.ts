@@ -1,16 +1,10 @@
-export type RuleReward = {
-  prizeId: string;
-  promoCodes: string[];
-};
+import { type z } from "zod";
 
-export type Rule = {
-  codeLength: number;
-  createdAt: string;
-  gameDate: string;
-  id: string;
-  jackpotPrize: RuleReward | null;
-  jackpotWinsLimit: number;
-  semiJackpotPrize: RuleReward | null;
-  semiJackpotWinsLimit: number;
-  updatedAt: string;
-};
+import { type RuleDto, type RuleRewardDto } from "../api/types";
+import { adminRuleFormSchema } from "./admin-rule-form-schema";
+
+export type AdminRuleFormInput = z.input<typeof adminRuleFormSchema>;
+export type AdminRuleFormState = z.output<typeof adminRuleFormSchema>;
+
+export type RuleReward = RuleRewardDto;
+export type Rule = RuleDto;
