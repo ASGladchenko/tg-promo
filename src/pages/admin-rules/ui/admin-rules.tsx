@@ -1,6 +1,6 @@
 import { useRules } from "@/entities/rules";
-import { AdminCreateTodayRuleButton } from "@/features/admin-create-today-rule";
 import { AdminRuleCreateTrigger } from "@/features/admin-create-rule";
+import { AdminCreateTodayRuleButton } from "@/features/admin-create-today-rule";
 import { getErrorMessage } from "@/shared/lib/error";
 import { AdminPageHeader } from "@/shared/ui/admin-page-header";
 import { GridTable } from "@/shared/ui/grid-table";
@@ -10,7 +10,7 @@ import { AdminRuleRow } from "./admin-rule-row";
 import "./admin-rules.scss";
 
 const rulesGridTemplateColumns =
-  "minmax(100px, 0.6fr) minmax(130px, 0.7fr) minmax(110px, 0.55fr) minmax(260px, 1.25fr) minmax(260px, 1.25fr) minmax(140px, 0.65fr) minmax(170px, 0.75fr) minmax(150px, 0.75fr) minmax(150px, 0.75fr) minmax(90px, 0.6fr)";
+  "minmax(100px, 1fr) minmax(80px, 0.4fr) minmax(40px, 0.4fr) minmax(100px, 0.8fr) minmax(100px, 0.8fr) minmax(60px, 0.4fr) minmax(60px, 0.4fr) minmax(150px, 0.75fr) minmax(150px, 0.75fr) minmax(100px, 0.4fr)";
 
 const rulesHeader = [
   "ID",
@@ -60,9 +60,7 @@ export function AdminRules() {
           items={rulesQuery.data}
           emptyMessage="No rules found"
           gridTemplateColumns={rulesGridTemplateColumns}
-          renderRow={(rule) => (
-            <AdminRuleRow gridTemplateColumns={rulesGridTemplateColumns} rule={rule} />
-          )}
+          renderRow={(rule) => <AdminRuleRow gridTemplateColumns={rulesGridTemplateColumns} rule={rule} />}
         />
       ) : null}
     </section>

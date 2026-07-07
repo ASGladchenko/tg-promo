@@ -5,12 +5,5 @@ export function formatAdminRuleReward(reward: RuleReward | null) {
     return "None";
   }
 
-  return JSON.stringify(
-    {
-      prizeId: reward.prizeId,
-      promoCodes: reward.promoCodes
-    },
-    null,
-    2
-  );
+  return reward.promoCodes.join("\n");
 }

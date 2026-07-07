@@ -1,4 +1,5 @@
 import { getApiUrl } from "@/shared/api";
+import { readResponseErrorMessage } from "@/shared/lib/error";
 
 import { type CreateRulePayload } from "./types";
 
@@ -18,6 +19,8 @@ export async function createRule(payload: CreateRulePayload, signal?: AbortSigna
       throw new Error("Rules cannot be created for today.");
     }
 
-    throw new Error(`Create rule request failed with status ${response.status}`);
+    throw new Error(
+      await readResponseErrorMessage(response, `Create rule request failed with status ${response.status}`)
+    );
   }
 }

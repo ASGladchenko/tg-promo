@@ -1,5 +1,5 @@
 import { getApiUrl } from "@/shared/api";
-import { formatZodError } from "@/shared/lib/zod";
+import { formatZodError } from "@/shared/lib/error";
 
 import { rulesResponseDtoSchema } from "./rules-response-schema";
 import { type RulesResponseDto } from "./types";

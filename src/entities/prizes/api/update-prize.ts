@@ -1,4 +1,5 @@
 import { getApiUrl } from "@/shared/api";
+import { readResponseErrorMessage } from "@/shared/lib/error";
 
 import { type UpdatePrizePayload } from "./types";
 
@@ -14,6 +15,8 @@ export async function updatePrize(id: string, payload: UpdatePrizePayload, signa
   });
 
   if (!response.ok) {
-    throw new Error(`Update prize request failed with status ${response.status}`);
+    throw new Error(
+      await readResponseErrorMessage(response, `Update prize request failed with status ${response.status}`)
+    );
   }
 }

@@ -1,13 +1,14 @@
 import { type ChangeEvent } from "react";
 
-import { get, type Path, useFieldArray, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
-import { ButtonBase } from "@/shared/ui/button-base";
 import { Checkbox } from "@/shared/ui/checkbox";
-import { InputField } from "@/shared/ui/input-field";
+import { SelectField } from "@/shared/ui/select-field";
+import { TextareaField } from "@/shared/ui/textarea-field";
 
-import { readFieldArrayErrorMessage } from "../lib/read-field-array-error-message";
 import { type AdminRuleFormState } from "../model/types";
+import { AdminRulePrizeOptions } from "./admin-rule-prize-options";
+import { type AdminRulePrizeOption } from "./types";
 
 import "./admin-rule-reward-fields.scss";
 
@@ -15,39 +16,25 @@ type AdminRuleRewardFieldsProps = {
   disabled: boolean;
   fieldName: "jackpotPrize" | "semiJackpotPrize";
   isNullable?: boolean;
+  prizeOptions: AdminRulePrizeOption[];
   title: string;
 };
 
 const emptyRewardValue = {
   prizeId: "",
-  promoCodes: [{ value: "" }]
+  promoCodes: ""
 };
-
-const emptyPromoCodeValue = { value: "" };
 
 export function AdminRuleRewardFields({
   title,
   disabled,
   fieldName,
+  prizeOptions,
   isNullable = false
 }: AdminRuleRewardFieldsProps) {
-  const {
-    control,
-    setValue,
-    watch,
-    formState: { errors }
-  } = useFormContext<AdminRuleFormState>();
+  const { setValue, watch } = useFormContext<AdminRuleFormState>();
   const rewardValue = watch(fieldName);
   const isEnabled = rewardValue !== null;
-  const promoCodesFieldName = `${fieldName}.promoCodes` as "jackpotPrize.promoCodes";
-
-  const { append, fields, remove } = useFieldArray<AdminRuleFormState, "jackpotPrize.promoCodes">({
-    control,
-    name: promoCodesFieldName
-  });
-
-  const promoCodesError = get(errors, `${fieldName}.promoCodes`);
-  const promoCodesErrorMessage = readFieldArrayErrorMessage(promoCodesError);
 
   const handleEnabledChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(fieldName, event.target.checked ? emptyRewardValue : null, {
@@ -72,49 +59,27 @@ export function AdminRuleRewardFields({
 
       {isEnabled ? (
         <div className="admin-rule-reward-fields__content">
-          <InputField<AdminRuleFormState>
-            name={`${fieldName}.prizeId`}
-            label="Prize ID"
+          <SelectField<AdminRuleFormState>
+            label="Prize"
             disabled={disabled}
-            placeholder="00000000-0000-4000-8000-000000000001"
+            placeholder="Select prize"
+            name={`${fieldName}.prizeId`}
+            getDisplayValue={(value) =>
+              prizeOptions.find((prizeOption) => prizeOption.id === value)?.name ?? value
+            }
+            renderOptions={({ onSelect, value }) => (
+              <AdminRulePrizeOptions onSelect={onSelect} prizeOptions={prizeOptions} value={value} />
+            )}
           />
 
           <div className="admin-rule-reward-fields__promo-codes">
-            <div className="admin-rule-reward-fields__promo-codes-header">
-              <span className="admin-rule-reward-fields__label">Promo codes</span>
-              <ButtonBase
-                type="button"
-                height={34}
-                disabled={disabled}
-                onClick={() => append(emptyPromoCodeValue)}
-              >
-                Add Code
-              </ButtonBase>
-            </div>
-
-            {fields.map((field, index) => (
-              <div key={field.id} className="admin-rule-reward-fields__promo-code">
-                <InputField<AdminRuleFormState>
-                  name={`${fieldName}.promoCodes.${index}.value` as Path<AdminRuleFormState>}
-                  label={`Code ${index + 1}`}
-                  disabled={disabled}
-                  placeholder={fieldName === "jackpotPrize" ? "JACKPOT-001" : "SEMI-001"}
-                />
-                <ButtonBase
-                  type="button"
-                  height={40}
-                  variant="danger"
-                  disabled={disabled || fields.length === 1}
-                  onClick={() => remove(index)}
-                >
-                  Remove
-                </ButtonBase>
-              </div>
-            ))}
-
-            {promoCodesErrorMessage ? (
-              <span className="admin-rule-reward-fields__error">{promoCodesErrorMessage}</span>
-            ) : null}
+            <TextareaField<AdminRuleFormState>
+              rows={4}
+              label="Promo codes"
+              disabled={disabled}
+              name={`${fieldName}.promoCodes`}
+              placeholder={fieldName === "jackpotPrize" ? "JACKPOT-001, JACKPOT-002" : "SEMI-001, SEMI-002"}
+            />
           </div>
         </div>
       ) : null}
