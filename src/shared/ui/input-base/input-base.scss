@@ -10,6 +10,7 @@
   background: a.$admin-surface-dark;
   border: 1px solid a.$admin-border;
   border-radius: s.$radius-sm;
+  box-shadow: a.$admin-shadow;
   outline: none;
 
   &:focus {

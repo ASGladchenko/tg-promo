@@ -82,11 +82,13 @@
   border: 0;
   border-radius: 6px;
 
+  transition: all 0.2s ease-in-out;
+
   cursor: pointer;
 
   &:hover,
   &:focus-visible {
-    background: a.$admin-surface;
+    background: a.$admin-surface-dark;
     outline: none;
   }
 }

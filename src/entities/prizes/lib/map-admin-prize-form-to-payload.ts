@@ -1,9 +1,13 @@
 import { type CreatePrizePayload } from "../api/types";
+import { adminPrizeRequiredMetadataLanguageKeys } from "../model/admin-prize-form-schema";
 import { type AdminPrizeFormState } from "../model/types";
 
 export function mapAdminPrizeFormToPayload(data: AdminPrizeFormState): CreatePrizePayload {
   const description = data.description.trim();
   const metadataType = data.metadataType.trim();
+  const metadataLanguages = Object.fromEntries(
+    adminPrizeRequiredMetadataLanguageKeys.map((key) => [key, data.metadataLanguages[key].trim()])
+  );
 
   const metadata = data.metadata.reduce<Record<string, unknown>>(
     (result, field) => {
@@ -11,7 +15,7 @@ export function mapAdminPrizeFormToPayload(data: AdminPrizeFormState): CreatePri
 
       return result;
     },
-    { type: metadataType }
+    { type: metadataType, ...metadataLanguages }
   );
 
   return {

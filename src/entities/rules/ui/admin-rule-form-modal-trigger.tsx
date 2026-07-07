@@ -101,7 +101,7 @@ export function AdminRuleFormModalTrigger({
           ) : null}
 
           <div className="admin-rule-form-modal-trigger__actions">
-            <ButtonBase type="button" onClick={closeModal} disabled={isFormPending}>
+            <ButtonBase type="button" onClick={closeModal} disabled={isFormPending} variant="danger">
               Cancel
             </ButtonBase>
 

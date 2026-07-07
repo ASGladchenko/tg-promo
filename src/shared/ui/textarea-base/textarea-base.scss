@@ -1,19 +1,27 @@
 @use "@/shared/styles/admin" as a;
 @use "@/shared/styles" as s;
 
+@use "@/shared/styles/mixins" as m;
+
 .textarea-base {
   width: 100%;
   min-height: 96px;
 
   padding: 8px 12px;
 
-  resize: vertical;
   background: a.$admin-surface-dark;
   border: 1px solid a.$admin-border;
   border-radius: s.$radius-sm;
+  box-shadow: a.$admin-shadow;
   outline: none;
+
+  resize: vertical;
 
   &:focus {
     border-color: a.$admin-primary;
   }
+}
+
+.admin-textarea-hover-scrollbar {
+  @include m.admin-hover-scrollbar($width: 4px);
 }
