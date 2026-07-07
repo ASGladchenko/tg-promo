@@ -10,7 +10,7 @@ import { AdminRuleRow } from "./admin-rule-row";
 import "./admin-rules.scss";
 
 const rulesGridTemplateColumns =
-  "minmax(100px, 1fr) minmax(80px, 0.4fr) minmax(40px, 0.4fr) minmax(100px, 0.8fr) minmax(100px, 0.8fr) minmax(60px, 0.4fr) minmax(60px, 0.4fr) minmax(150px, 0.75fr) minmax(150px, 0.75fr) minmax(100px, 0.4fr)";
+  "minmax(100px, 1fr) minmax(80px, 0.4fr) minmax(40px, 0.4fr) minmax(100px, 0.8fr) minmax(100px, 0.8fr) minmax(60px, 0.4fr) minmax(60px, 0.5fr) minmax(150px, 0.75fr) minmax(150px, 0.75fr) minmax(100px, 0.4fr)";
 
 const rulesHeader = [
   "ID",
