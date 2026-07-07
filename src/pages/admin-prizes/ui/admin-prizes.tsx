@@ -1,5 +1,6 @@
 import { usePrizes } from "@/entities/prizes";
 import { AdminPrizeCreateTrigger } from "@/features/admin-create-prize";
+import { getErrorMessage } from "@/shared/lib/error";
 import { AdminPageHeader } from "@/shared/ui/admin-page-header";
 import { GridTable } from "@/shared/ui/grid-table";
 
@@ -14,6 +15,7 @@ const prizesHeader = ["ID", "Name", "Description", "Active", "Metadata", "Create
 
 export function AdminPrizes() {
   const prizesQuery = usePrizes();
+  const prizesErrorMessage = getErrorMessage(prizesQuery.error, "Unknown prizes loading error");
 
   return (
     <section className="admin-prizes">
@@ -27,7 +29,7 @@ export function AdminPrizes() {
 
       {prizesQuery.isError ? (
         <p className="admin-prizes__state admin-prizes__state--error" role="alert">
-          Failed to load prizes.
+          Failed to load prizes. {prizesErrorMessage}
         </p>
       ) : null}
 

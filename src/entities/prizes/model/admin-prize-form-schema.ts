@@ -46,5 +46,3 @@ export const adminPrizeFormSchema = z
       seenKeys.add(normalizedKey);
     });
   });
-
-export type AdminPrizeFormState = z.infer<typeof adminPrizeFormSchema>;

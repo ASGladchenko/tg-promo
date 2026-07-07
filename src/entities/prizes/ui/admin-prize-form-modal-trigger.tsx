@@ -1,4 +1,4 @@
-import { type ReactNode, useState } from "react";
+import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -8,27 +8,12 @@ import { ButtonBase } from "@/shared/ui/button-base";
 import { ButtonLoading } from "@/shared/ui/button-loading";
 import { Modal } from "@/shared/ui/modal";
 
-import { adminPrizeFormSchema, type AdminPrizeFormState } from "../model/admin-prize-form-schema";
+import { adminPrizeFormSchema } from "../model/admin-prize-form-schema";
+import { type AdminPrizeFormState } from "../model/types";
 import { AdminPrizeFormFields } from "./admin-prize-form-fields";
+import { AdminPrizeFormModalTriggerProps } from "./types";
 
 import "./admin-prize-form-modal-trigger.scss";
-
-type AdminPrizeFormModalTriggerRenderProps = {
-  isPending: boolean;
-  openModal: () => void;
-};
-type AdminPrizeFormModalTriggerProps = {
-  closeAriaLabel: string;
-  defaultValues: AdminPrizeFormState;
-  failureMessage: string;
-  isPending: boolean;
-  modalAriaLabel: string;
-  onReset: () => void;
-  onSubmit: (data: AdminPrizeFormState) => Promise<void>;
-  renderTrigger: (props: AdminPrizeFormModalTriggerRenderProps) => ReactNode;
-  submitLabel: string;
-  title: string;
-};
 
 export function AdminPrizeFormModalTrigger({
   title,

@@ -1,9 +1,10 @@
-export type Prize = {
-  createdAt: string;
+import { type z } from "zod";
+
+import { type PrizeDto } from "../api/types";
+import { adminPrizeFormSchema } from "./admin-prize-form-schema";
+
+export type AdminPrizeFormState = z.output<typeof adminPrizeFormSchema>;
+
+export type Prize = Omit<PrizeDto, "description"> & {
   description: string;
-  id: string;
-  isActive: boolean;
-  metadata: Record<string, unknown>;
-  name: string;
-  updatedAt: string;
 };
