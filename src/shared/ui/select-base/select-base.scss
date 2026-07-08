@@ -1,0 +1,49 @@
+@use "@/shared/styles/admin" as a;
+@use "@/shared/styles" as s;
+
+.select-base {
+  width: 100%;
+  height: 40px;
+
+  padding: 8px 38px 8px 12px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+
+  text-align: left;
+
+  color: inherit;
+  background: a.$admin-surface-dark;
+  border: 1px solid a.$admin-border;
+  border-radius: s.$radius-sm;
+  box-shadow: a.$admin-shadow;
+  outline: none;
+
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+  }
+
+  &:focus,
+  &:focus-visible {
+    border-color: a.$admin-primary;
+  }
+}
+
+.select-base--placeholder {
+  color: a.$admin-text-muted;
+}
+
+.select-base__value {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,107 @@
+@use "@/shared/styles/admin" as a;
+
+.select-field {
+  cursor: pointer;
+}
+
+.select-field--error {
+  color: a.$admin-danger;
+
+  .select-base,
+  .select-base:focus,
+  .select-base:focus-visible {
+    border-color: a.$admin-danger;
+  }
+}
+
+.select-field__label {
+  margin-bottom: 8px;
+
+  display: flex;
+}
+
+.select-field__control {
+  position: relative;
+
+  display: block;
+}
+
+.select-field__icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+
+  width: 18px;
+  height: 18px;
+
+  color: currentColor;
+
+  transition: transform 160ms ease;
+  transform: translateY(-50%) rotate(0deg);
+
+  pointer-events: none;
+}
+
+.select-field__icon--open {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.select-field__options {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  left: 0;
+  z-index: 20;
+
+  max-height: 220px;
+
+  padding: 4px;
+
+  overflow-y: auto;
+
+  color: a.$admin-text;
+  background: a.$admin-bg-soft;
+  border: 1px solid a.$admin-border;
+  border-radius: 8px;
+  box-shadow: a.$admin-shadow;
+}
+
+.select-field__option {
+  width: 100%;
+  min-height: 36px;
+
+  padding: 8px 10px;
+
+  display: flex;
+  align-items: center;
+
+  text-align: left;
+
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+
+  transition: all 0.2s ease-in-out;
+
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    background: a.$admin-surface-dark;
+    outline: none;
+  }
+}
+
+.select-field__option--selected {
+  color: a.$admin-primary;
+  background: rgba(a.$admin-primary, 0.14);
+}
+
+.select-field__error {
+  margin-top: 4px;
+
+  font-size: 12px;
+
+  color: a.$admin-danger;
+}

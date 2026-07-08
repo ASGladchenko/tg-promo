@@ -1,10 +1,17 @@
 import { type CreateRulePayload, type RuleRewardPayload, type UpdateRulePayload } from "../api/types";
 import { type AdminRuleFormState, type RuleReward, type Rule } from "../model/types";
 
+function parsePromoCodes(value: string) {
+  return value
+    .split(",")
+    .map((promoCode) => promoCode.trim())
+    .filter(Boolean);
+}
+
 function mapRewardFormToPayload(reward: AdminRuleFormState["jackpotPrize"]): RuleRewardPayload {
   return {
     prizeId: reward.prizeId.trim(),
-    promoCodes: reward.promoCodes.map((promoCode) => promoCode.value.trim()).filter(Boolean)
+    promoCodes: parsePromoCodes(reward.promoCodes)
   };
 }
 

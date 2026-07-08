@@ -23,6 +23,7 @@ export function AdminRuleFormModalTrigger({
   submitLabel,
   defaultValues,
   failureMessage,
+  prizeOptions,
   renderTrigger,
   closeAriaLabel,
   modalAriaLabel,
@@ -87,7 +88,11 @@ export function AdminRuleFormModalTrigger({
           isCloseDisabled={isFormPending}
           closeAriaLabel={closeAriaLabel}
         >
-          <AdminRuleFormFields disabled={isFormPending} canClearSemiJackpotPrize={canClearSemiJackpotPrize} />
+          <AdminRuleFormFields
+            disabled={isFormPending}
+            prizeOptions={prizeOptions}
+            canClearSemiJackpotPrize={canClearSemiJackpotPrize}
+          />
 
           {rootErrorMessage ? (
             <p className="admin-rule-form-modal-trigger__root-error" role="alert">
@@ -96,7 +101,7 @@ export function AdminRuleFormModalTrigger({
           ) : null}
 
           <div className="admin-rule-form-modal-trigger__actions">
-            <ButtonBase type="button" onClick={closeModal} disabled={isFormPending}>
+            <ButtonBase type="button" onClick={closeModal} disabled={isFormPending} variant="danger">
               Cancel
             </ButtonBase>
 

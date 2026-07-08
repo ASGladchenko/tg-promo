@@ -1,10 +1,15 @@
 @use "@/shared/styles/admin" as s;
 
 .admin-modal-form {
+  max-height: calc(100dvh - 32px);
+
   padding: 20px;
 
   display: grid;
   gap: 18px;
+  grid-template-rows: auto minmax(0, 1fr);
+
+  overflow: hidden;
 }
 
 .admin-modal-form__header {
@@ -27,15 +32,25 @@
   font-weight: 600;
 }
 
+.admin-modal-form__content {
+  min-height: 0;
+
+  margin-right: -19px;
+  padding-right: 19px;
+
+  display: grid;
+  gap: 18px;
+}
+
 .admin-modal-form__close {
   width: 28px;
   height: 28px;
 
   padding: 0;
 
-  display: grid;
-  flex: 0 0 auto;
-  place-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   color: s.$admin-text-secondary;
   background: s.$admin-surface;
@@ -85,7 +100,7 @@
     left: 50%;
 
     width: 13px;
-    height: 1.4px;
+    height: 2px;
 
     background: currentColor;
     border-radius: 999px;

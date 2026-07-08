@@ -28,10 +28,11 @@
   display: grid;
   align-items: start;
   gap: 12px;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) 140px;
 }
 
 .admin-prize-metadata-fields__required {
+  width: 100%;
   min-height: 40px;
 
   margin-top: 27px;
@@ -51,6 +52,27 @@
   border-radius: s.$admin-radius;
 }
 
+.admin-prize-metadata-fields__item--compact .admin-prize-metadata-fields__required {
+  margin-top: 0;
+}
+
+.admin-prize-metadata-fields__language-value {
+  height: 62px;
+  min-height: 62px;
+
+  overflow-y: auto;
+
+  line-height: 1.35;
+
+  resize: vertical;
+}
+
 .admin-prize-metadata-fields__remove {
+  width: 100%;
+
   margin-top: 28px;
+}
+
+.admin-prize-metadata-fields__item--compact .admin-prize-metadata-fields__remove {
+  margin-top: 0;
 }

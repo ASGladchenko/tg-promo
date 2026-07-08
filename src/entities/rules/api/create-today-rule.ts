@@ -1,4 +1,5 @@
 import { getApiUrl } from "@/shared/api";
+import { readResponseErrorMessage } from "@/shared/lib/error";
 
 import { type CreateTodayRulePayload } from "./types";
 
@@ -14,6 +15,11 @@ export async function createTodayRule(payload: CreateTodayRulePayload, signal?: 
   });
 
   if (!response.ok) {
-    throw new Error(`Create today rule request failed with status ${response.status}`);
+    throw new Error(
+      await readResponseErrorMessage(
+        response,
+        `Create today rule request failed with status ${response.status}`
+      )
+    );
   }
 }

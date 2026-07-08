@@ -30,7 +30,10 @@ export function AdminModalForm<TFormValues extends FieldValues>({
 }: AdminModalFormProps<TFormValues>) {
   return (
     <FormProvider {...form}>
-      <form className="admin-modal-form" onSubmit={form.handleSubmit(onSubmit, onInvalidSubmit)}>
+      <form
+        className="admin-modal-form admin-hover-scrollbar-container"
+        onSubmit={form.handleSubmit(onSubmit, onInvalidSubmit)}
+      >
         <div className="admin-modal-form__header">
           <div>
             {eyebrow ? <p className="admin-modal-form__eyebrow">{eyebrow}</p> : null}
@@ -48,7 +51,7 @@ export function AdminModalForm<TFormValues extends FieldValues>({
           </button>
         </div>
 
-        {children}
+        <div className="admin-modal-form__content admin-hover-scrollbar">{children}</div>
       </form>
     </FormProvider>
   );

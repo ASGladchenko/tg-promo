@@ -1,21 +1,29 @@
+import { usePrizes } from "@/entities/prizes";
 import {
   AdminRuleFormModalTrigger,
   getAdminRuleFormDefaultValues,
   mapAdminRuleFormToCreatePayload,
+  mapAdminRulePrizesToOptions,
   useCreateTodayRule
 } from "@/entities/rules";
 import { ButtonBase } from "@/shared/ui/button-base";
 
 export function AdminCreateTodayRuleButton() {
   const createTodayRule = useCreateTodayRule();
+  const prizesQuery = usePrizes();
+
+  const prizeOptions = mapAdminRulePrizesToOptions(prizesQuery.data);
+
+  const isPending = createTodayRule.isPending || prizesQuery.isLoading;
 
   return (
     <AdminRuleFormModalTrigger
       submitLabel="Create"
+      isPending={isPending}
       title="Add Rule for Today"
+      prizeOptions={prizeOptions}
       onReset={createTodayRule.reset}
       modalAriaLabel="Add rule for today"
-      isPending={createTodayRule.isPending}
       failureMessage="Failed to create today's rule"
       closeAriaLabel="Close add rule for today modal"
       defaultValues={getAdminRuleFormDefaultValues()}
@@ -26,8 +34,14 @@ export function AdminCreateTodayRuleButton() {
 
         return createTodayRule.mutateAsync(payload);
       }}
-      renderTrigger={({ openModal }) => (
-        <ButtonBase type="button" variant="warning" aria-haspopup="dialog" onClick={openModal}>
+      renderTrigger={({ isPending: isTriggerPending, openModal }) => (
+        <ButtonBase
+          type="button"
+          variant="warning"
+          onClick={openModal}
+          aria-haspopup="dialog"
+          disabled={isTriggerPending || prizesQuery.isError}
+        >
           Add Rule for Today
         </ButtonBase>
       )}

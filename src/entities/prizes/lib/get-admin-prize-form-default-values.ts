@@ -1,14 +1,27 @@
 import * as z from "zod";
 
+import { adminPrizeRequiredMetadataLanguageKeys } from "../model/admin-prize-form-schema";
 import { type AdminPrizeFormState, type Prize } from "../model/types";
 
 function getMetadataType(metadata: Prize["metadata"]) {
   return typeof metadata.type === "string" ? metadata.type : "";
 }
 
+function getMetadataLanguages(metadata: Prize["metadata"]): AdminPrizeFormState["metadataLanguages"] {
+  return Object.fromEntries(
+    adminPrizeRequiredMetadataLanguageKeys.map((key) => {
+      const value = metadata[key];
+
+      return [key, typeof value === "string" ? value : ""];
+    })
+  ) as AdminPrizeFormState["metadataLanguages"];
+}
+
 function getMetadataFields(metadata: Prize["metadata"]) {
+  const reservedKeys = new Set(["type", ...adminPrizeRequiredMetadataLanguageKeys]);
+
   return Object.entries(metadata)
-    .filter(([key]) => key.toLowerCase() !== "type")
+    .filter(([key]) => !reservedKeys.has(key.toLowerCase()))
     .map(([key, value]) => ({
       key,
       value: typeof value === "string" ? value : JSON.stringify(value)
@@ -22,6 +35,11 @@ const adminPrizeFormDefaultValuesSchema = z.custom<Prize | undefined>().transfor
       description: "",
       isActive: true,
       metadataType: "",
+      metadataLanguages: {
+        ar: "",
+        fr: "",
+        en: ""
+      },
       metadata: []
     };
   }
@@ -31,6 +49,7 @@ const adminPrizeFormDefaultValuesSchema = z.custom<Prize | undefined>().transfor
     description: prize.description,
     isActive: prize.isActive,
     metadataType: getMetadataType(prize.metadata),
+    metadataLanguages: getMetadataLanguages(prize.metadata),
     metadata: getMetadataFields(prize.metadata)
   };
 });

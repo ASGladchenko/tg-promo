@@ -95,7 +95,7 @@ export function AdminPrizeFormModalTrigger({
           ) : null}
 
           <div className="admin-prize-form-modal-trigger__actions">
-            <ButtonBase type="button" onClick={closeModal} disabled={isFormPending}>
+            <ButtonBase type="button" onClick={closeModal} disabled={isFormPending} variant="danger">
               Cancel
             </ButtonBase>
 

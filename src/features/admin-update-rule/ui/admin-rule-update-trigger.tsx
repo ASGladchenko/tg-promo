@@ -1,7 +1,9 @@
+import { usePrizes } from "@/entities/prizes";
 import {
   AdminRuleFormModalTrigger,
   getAdminRuleFormDefaultValues,
   mapAdminRuleFormToUpdatePayload,
+  mapAdminRulePrizesToOptions,
   type Rule,
   useUpdateRule
 } from "@/entities/rules";
@@ -13,14 +15,19 @@ type AdminRuleUpdateTriggerProps = {
 
 export function AdminRuleUpdateTrigger({ rule }: AdminRuleUpdateTriggerProps) {
   const updateRule = useUpdateRule();
+  const prizesQuery = usePrizes();
+
+  const prizeOptions = mapAdminRulePrizesToOptions(prizesQuery.data);
+  const isPending = updateRule.isPending || prizesQuery.isLoading;
 
   return (
     <AdminRuleFormModalTrigger
       title="Edit Rule"
       submitLabel="Save"
+      isPending={isPending}
       modalAriaLabel="Edit rule"
       onReset={updateRule.reset}
-      isPending={updateRule.isPending}
+      prizeOptions={prizeOptions}
       closeAriaLabel="Close edit rule modal"
       failureMessage="Failed to update rule"
       defaultValues={getAdminRuleFormDefaultValues(rule)}
@@ -38,7 +45,7 @@ export function AdminRuleUpdateTrigger({ rule }: AdminRuleUpdateTriggerProps) {
           height={36}
           type="button"
           onClick={openModal}
-          disabled={isPending}
+          disabled={isPending || prizesQuery.isError}
           isLoading={isPending}
         >
           Edit

@@ -1,4 +1,5 @@
 import { getApiUrl } from "@/shared/api";
+import { readResponseErrorMessage } from "@/shared/lib/error";
 
 import { type UpdateRulePayload } from "./types";
 
@@ -22,6 +23,8 @@ export async function updateRule(
       throw new Error("Today's rules cannot be edited.");
     }
 
-    throw new Error(`Update rule request failed with status ${response.status}`);
+    throw new Error(
+      await readResponseErrorMessage(response, `Update rule request failed with status ${response.status}`)
+    );
   }
 }
