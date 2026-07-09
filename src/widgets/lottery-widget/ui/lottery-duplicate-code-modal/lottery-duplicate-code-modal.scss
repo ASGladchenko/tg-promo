@@ -1,0 +1,100 @@
+@use "../../../../shared/styles/index" as s;
+
+.lottery-duplicate-code-modal {
+  width: min(380px, 100%);
+
+  padding: 22px;
+
+  text-align: center;
+
+  color: s.$color-warm-strong;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(s.$color-accent-gold, 0.13), transparent 42%),
+    rgba(s.$color-surface-deep, 0.97);
+  border: 1px solid rgba(s.$color-accent-gold, 0.28);
+  border-radius: s.$radius-lg;
+  box-shadow: 0 24px 64px rgba(s.$color-black, 0.54);
+  backdrop-filter: blur(14px);
+}
+
+.lottery-duplicate-code-modal__title {
+  margin: 0;
+
+  font-size: clamp(1.25rem, 6vw, 1.55rem);
+  line-height: 1.15;
+
+  color: s.$color-accent-gold-soft;
+}
+
+.lottery-duplicate-code-modal__code {
+  margin: 18px 0 0;
+
+  display: block;
+
+  font-size: clamp(2rem, 12vw, 3rem);
+  line-height: 1;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+
+  color: #fff;
+  text-shadow:
+    0 0 18px rgba(s.$color-accent-gold, 0.38),
+    0 2px 0 rgba(s.$color-black, 0.64);
+}
+
+.lottery-duplicate-code-modal__message {
+  margin: 16px 0 0;
+
+  font-size: 0.94rem;
+  line-height: 1.4;
+
+  color: rgba(s.$color-warm-strong, 0.76);
+}
+
+.lottery-duplicate-code-modal__actions {
+  margin-top: 22px;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.lottery-duplicate-code-modal__button {
+  min-height: 46px;
+
+  padding: 10px 12px;
+
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 800;
+  line-height: 1.2;
+
+  border: 1px solid transparent;
+  border-radius: s.$radius-sm;
+
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid s.$focus-ring;
+    outline-offset: 2px;
+  }
+}
+
+.lottery-duplicate-code-modal__button--cancel {
+  color: s.$color-surface-deep;
+  background: linear-gradient(135deg, s.$color-accent-gold-soft, s.$color-accent-gold);
+  border-color: rgba(s.$color-accent-gold-soft, 0.58);
+  box-shadow: 0 8px 20px rgba(s.$color-accent-gold, 0.18);
+}
+
+.lottery-duplicate-code-modal__button--confirm {
+  color: rgba(s.$color-warm-strong, 0.82);
+  background: rgba(s.$color-warm-strong, 0.06);
+  border-color: rgba(s.$color-warm-strong, 0.16);
+}
+
+@media (max-width: 360px) {
+  .lottery-duplicate-code-modal__actions {
+    grid-template-columns: 1fr;
+  }
+}

@@ -4,7 +4,8 @@ export type LotteryAttemptNoSpendReason =
   | "gameFinished"
   | "jackpotAlreadyWon"
   | "noRules"
-  | "semiJackpotAlreadyWon";
+  | "semiJackpotAlreadyWon"
+  | "userJackpotAlreadyWon";
 
 export type LotteryAttemptWallet = {
   isChannelBonusGranted: boolean;
@@ -35,3 +36,10 @@ export type LotteryAttemptNoSpendResult = {
 };
 
 export type LotteryAttemptResult = LotteryAttemptNoSpendResult | LotteryAttemptSuccessResult;
+
+export type LotteryAvailability = {
+  enteredCodes: string[];
+  isAvailable: boolean;
+  message: string | null;
+  prize?: LotteryAttemptPrize;
+};

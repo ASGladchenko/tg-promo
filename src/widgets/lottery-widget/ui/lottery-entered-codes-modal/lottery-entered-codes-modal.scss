@@ -1,0 +1,100 @@
+@use "../../../../shared/styles/index" as s;
+
+.lottery-entered-codes-modal {
+  width: min(380px, 100%);
+  max-height: min(560px, 100%);
+
+  padding: 20px;
+
+  overflow-y: auto;
+
+  color: s.$color-warm-strong;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(s.$color-accent-gold, 0.13), transparent 42%),
+    rgba(s.$color-surface-deep, 0.97);
+  border: 1px solid rgba(s.$color-accent-gold, 0.28);
+  border-radius: s.$radius-lg;
+  box-shadow: 0 24px 64px rgba(s.$color-black, 0.54);
+  backdrop-filter: blur(14px);
+}
+
+.lottery-entered-codes-modal__header {
+  position: sticky;
+  z-index: 1;
+  top: -20px;
+
+  margin: -20px -20px 0;
+  padding: 20px 20px 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  background:
+    radial-gradient(circle at 50% 0%, rgba(s.$color-accent-gold, 0.13), transparent 80%),
+    rgba(s.$color-surface-deep, 0.98);
+  border-bottom: 1px solid rgba(s.$color-warm-strong, 0.08);
+}
+
+.lottery-entered-codes-modal__title {
+  margin: 0;
+
+  font-size: clamp(1.2rem, 6vw, 1.5rem);
+  line-height: 1.15;
+
+  color: s.$color-accent-gold-soft;
+}
+
+.lottery-entered-codes-modal__close {
+  width: 32px;
+  height: 32px;
+
+  padding: 0;
+
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+
+  font-size: 1.35rem;
+  line-height: 1;
+
+  color: rgba(s.$color-warm-strong, 0.74);
+  background: rgba(s.$color-accent-gold-soft, 0.045);
+  border: 1px solid rgba(s.$color-warm-strong, 0.12);
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid s.$focus-ring;
+    outline-offset: 2px;
+  }
+}
+
+.lottery-entered-codes-modal__list {
+  margin: 14px 0 0;
+  padding: 0;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(74px, 1fr));
+  gap: 8px;
+
+  list-style: none;
+}
+
+.lottery-entered-codes-modal__code {
+  padding: 10px 8px;
+
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+
+  color: s.$color-accent-gold-soft;
+  background: rgba(s.$color-accent-gold, 0.08);
+  border: 1px solid rgba(s.$color-accent-gold, 0.2);
+  border-radius: s.$radius-sm;
+}

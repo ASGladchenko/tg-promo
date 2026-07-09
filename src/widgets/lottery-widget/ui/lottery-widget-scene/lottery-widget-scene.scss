@@ -1,3 +1,38 @@
+@use "../../../../shared/styles/index" as s;
+
+.lottery-widget-scene__entered-codes-trigger {
+  min-height: 32px;
+
+  margin: 8px auto 0;
+  padding: 6px 13px;
+
+  display: block;
+
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1.15;
+
+  color: s.$color-accent-gold-soft;
+  background: rgba(s.$color-surface-deep, 0.78);
+  border: 1px solid rgba(s.$color-accent-gold, 0.34);
+  border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(s.$color-black, 0.24);
+
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid s.$focus-ring;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.48;
+
+    cursor: default;
+  }
+}
+
 .lottery-widget-scene__check-error {
   max-width: min(360px, 100%);
 

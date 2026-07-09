@@ -1,6 +1,9 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 
+import clsx from "clsx";
 import { useTranslation } from "react-i18next";
+
+import { useLotteryAvailability } from "@/entities/lottery";
 
 import { LotteryWidgetLoader } from "../lottery-widget-loader";
 
@@ -12,10 +15,22 @@ const LazyLotteryWidgetScene = lazy(() =>
   }))
 );
 
+const PREPARING_NEW_SAFE_AVAILABILITY_MESSAGE = "Preparing a new safe. Wait for the notification";
+const EMPTY_ENTERED_CODES: string[] = [];
+
 export function LotteryWidget() {
   const { t } = useTranslation();
   const [isSceneReady, setIsSceneReady] = useState(false);
   const [isSceneVisible, setIsSceneVisible] = useState(false);
+
+  const { isLoading, data } = useLotteryAvailability();
+
+  const isSceneAvailable = isSceneVisible && !isLoading;
+  const isGameUnavailable = data !== undefined && !data.isAvailable && !data.prize;
+  const unavailableMessage =
+    data?.message === PREPARING_NEW_SAFE_AVAILABILITY_MESSAGE
+      ? t("lottery.availability.preparingNewSafe")
+      : t("lottery.availability.fallback");
 
   const handleAssetsReady = useCallback(() => {
     setIsSceneReady(true);
@@ -41,25 +56,37 @@ export function LotteryWidget() {
     };
   }, [isSceneReady]);
 
+  if (isGameUnavailable) {
+    return (
+      <section className="lottery-widget lottery-widget--unavailable" aria-label={t("lottery.widgetLabel")}>
+        <div className="lottery-widget__unavailable" role="status">
+          <p className="lottery-widget__unavailable-message">{unavailableMessage}</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="lottery-widget" aria-label={t("lottery.widgetLabel")}>
       <div
-        className={
-          isSceneVisible ? "lottery-widget__scene lottery-widget__scene--visible" : "lottery-widget__scene"
-        }
+        className={clsx("lottery-widget__scene", {
+          "lottery-widget__scene--visible": isSceneAvailable
+        })}
       >
         <Suspense fallback={null}>
-          <LazyLotteryWidgetScene onAssetsReady={handleAssetsReady} />
+          <LazyLotteryWidgetScene
+            enteredCodes={data?.enteredCodes ?? EMPTY_ENTERED_CODES}
+            initialPrize={data?.prize}
+            onAssetsReady={handleAssetsReady}
+          />
         </Suspense>
       </div>
 
       <div
-        className={
-          isSceneVisible
-            ? "lottery-widget__loader-overlay lottery-widget__loader-overlay--hidden"
-            : "lottery-widget__loader-overlay"
-        }
-        aria-hidden={isSceneVisible}
+        className={clsx("lottery-widget__loader-overlay", {
+          "lottery-widget__loader-overlay--hidden": isSceneAvailable
+        })}
+        aria-hidden={isSceneAvailable}
       >
         <LotteryWidgetLoader />
       </div>

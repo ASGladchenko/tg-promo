@@ -10,8 +10,7 @@ export const frTranslation = {
     },
     inviteFriend: {
       errors: {
-        noParticipantId:
-          "Impossible de créer votre lien d’invitation. Rouvrez l’application et réessayez.",
+        noParticipantId: "Impossible de créer votre lien d’invitation. Rouvrez l’application et réessayez.",
         noShareUrl: "Le lien du jeu n’est pas configuré. Veuillez réessayer plus tard.",
         share: "Impossible d’ouvrir l’invitation. Veuillez réessayer."
       },
@@ -77,6 +76,10 @@ export const frTranslation = {
   },
   lottery: {
     accept: "Valider",
+    availability: {
+      fallback: "Le coffre-fort est temporairement indisponible. Nous annoncerons le prochain sur la chaîne.",
+      preparingNewSafe: "Un nouveau coffre-fort est en préparation. Attendez notre annonce sur la chaîne."
+    },
     checkCode: "Vérifier le code",
     checkingCode: "Vérification du code {{code}}",
     chooseCodeDigits: "Choisissez les trois chiffres du code",
@@ -85,7 +88,20 @@ export const frTranslation = {
     clearPosition: "Effacer la position {{position}}",
     codeLocked: "Le code est verrouillé",
     digitPosition: "Chiffre {{position}}",
+    duplicateCodeModal: {
+      cancel: "Non",
+      confirm: "Oui",
+      label: "Confirmer la nouvelle saisie du code",
+      message: "Vous avez déjà saisi ce code. Voulez-vous le saisir à nouveau ?",
+      title: "Code déjà utilisé"
+    },
     enterCode: "Saisissez les trois chiffres du code",
+    enteredCodesModal: {
+      close: "Fermer les codes saisis",
+      label: "Codes saisis précédemment",
+      title: "Codes saisis"
+    },
+    enteredCodesTrigger: "Codes : {{count}}",
     errors: {
       checkCombination: "Impossible de vérifier la combinaison. Veuillez réessayer."
     },
@@ -110,11 +126,13 @@ export const frTranslation = {
       jackpotWithPrize: "Jackpot gagné. Prix : {{prizeDetails}}",
       duplicateSemiJackpotLose: "Jackpot non gagné. Le combo jackpot est toujours actif.",
       lose: "Pas de chance cette fois.",
+      noAttempts: "Vous n’avez plus de tentatives. Ouvrez le portefeuille pour en obtenir davantage.",
       noRules: "Le coffre n’est pas disponible aujourd’hui.",
       semiJackpot: "Combo jackpot gagné.",
-      semiJackpotAlreadyWon:
-        "Le combo jackpot a déjà été gagné. Votre tentative n’a pas été dépensée.",
-      semiJackpotWithPrize: "Combo jackpot gagné. Prix : {{prizeDetails}}"
+      semiJackpotAlreadyWon: "Le combo jackpot a déjà été gagné. Votre tentative n’a pas été dépensée.",
+      semiJackpotWithPrize: "Combo jackpot gagné. Prix : {{prizeDetails}}",
+      userJackpotAlreadyWon:
+        "Vous avez déjà gagné le jackpot aujourd’hui. Votre tentative n’a pas été dépensée."
     },
     safeAlt: "Coffre-fort",
     safeDoorAlt: "Porte du coffre-fort",

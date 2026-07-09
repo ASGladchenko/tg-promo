@@ -1,14 +1,7 @@
-import {
-  type LotteryAttemptNoSpendReasonDto,
-  type LotteryAttemptOutcomeDto,
-  type LotteryAttemptResponseDto
-} from "../api/types";
-import {
-  type LotteryAttemptNoSpendReason,
-  type LotteryAttemptOutcome,
-  type LotteryAttemptPrize,
-  type LotteryAttemptResult
-} from "../model/types";
+import { type LotteryAttemptOutcomeDto, type LotteryAttemptResponseDto } from "../api/types";
+import { type LotteryAttemptOutcome, type LotteryAttemptResult } from "../model/types";
+import { mapLotteryAttemptNoSpendReasonDtoToLotteryAttemptNoSpendReason } from "./map-lottery-attempt-no-spend-reason-dto-to-lottery-attempt-no-spend-reason";
+import { mapLotteryPrizeDtoToLotteryAttemptPrize } from "./map-lottery-prize-dto-to-lottery-attempt-prize";
 
 const outcomeMap: Record<LotteryAttemptOutcomeDto, LotteryAttemptOutcome> = {
   jackpot: "jackpot",
@@ -16,28 +9,12 @@ const outcomeMap: Record<LotteryAttemptOutcomeDto, LotteryAttemptOutcome> = {
   semi_jackpot: "semiJackpot"
 };
 
-const noSpendReasonMap: Record<LotteryAttemptNoSpendReasonDto, LotteryAttemptNoSpendReason> = {
-  game_finished: "gameFinished",
-  jackpot_already_won: "jackpotAlreadyWon",
-  no_rules: "noRules",
-  semi_jackpot_already_won: "semiJackpotAlreadyWon"
-};
-
-function getOptionalString(value: unknown): string | null {
-  return typeof value === "string" && value.trim() ? value : null;
-}
-
-function mapPrize(dto: LotteryAttemptResponseDto): LotteryAttemptPrize | undefined {
+function mapPrize(dto: LotteryAttemptResponseDto) {
   if (!dto.attemptSpent || !dto.prize) {
     return undefined;
   }
 
-  return {
-    description: getOptionalString(dto.prize.prizeData.description),
-    id: dto.prize.id,
-    name: getOptionalString(dto.prize.prizeData.name),
-    promoCode: getOptionalString(dto.prize.prizeData.promoCode)
-  };
+  return mapLotteryPrizeDtoToLotteryAttemptPrize(dto.prize);
 }
 
 export function mapLotteryAttemptDtoToLotteryAttemptResult(
@@ -47,7 +24,7 @@ export function mapLotteryAttemptDtoToLotteryAttemptResult(
     return {
       attemptSpent: false,
       message: dto.message,
-      reason: noSpendReasonMap[dto.reason]
+      reason: mapLotteryAttemptNoSpendReasonDtoToLotteryAttemptNoSpendReason(dto.reason)
     };
   }
 

@@ -76,6 +76,10 @@ export const enTranslation = {
   },
   lottery: {
     accept: "Accept",
+    availability: {
+      fallback: "The safe is temporarily unavailable. We will announce a new one in the channel.",
+      preparingNewSafe: "A new safe is being prepared. Wait for an announcement in the channel."
+    },
     checkCode: "Check code",
     checkingCode: "Checking code {{code}}",
     chooseCodeDigits: "Choose the three code digits",
@@ -84,7 +88,20 @@ export const enTranslation = {
     clearPosition: "Clear position {{position}}",
     codeLocked: "Code is locked",
     digitPosition: "Digit {{position}}",
+    duplicateCodeModal: {
+      cancel: "No",
+      confirm: "Yes",
+      label: "Confirm repeated code entry",
+      message: "You have already entered this code. Do you want to enter it again?",
+      title: "Code already used"
+    },
     enterCode: "Enter the three code digits",
+    enteredCodesModal: {
+      close: "Close entered codes",
+      label: "Previously entered codes",
+      title: "Entered codes"
+    },
+    enteredCodesTrigger: "Codes: {{count}}",
     errors: {
       checkCombination: "Could not check the combination. Please try again."
     },
@@ -109,10 +126,12 @@ export const enTranslation = {
       jackpotWithPrize: "Jackpot won. Prize: {{prizeDetails}}",
       duplicateSemiJackpotLose: "Jackpot not won. Combo jackpot is still active.",
       lose: "No luck this time.",
+      noAttempts: "You have no attempts left. Open the attempts wallet to earn more.",
       noRules: "The safe is not available today.",
       semiJackpot: "Combo jackpot won.",
       semiJackpotAlreadyWon: "The combo jackpot has already been won. Your attempt was not spent.",
-      semiJackpotWithPrize: "Combo jackpot won. Prize: {{prizeDetails}}"
+      semiJackpotWithPrize: "Combo jackpot won. Prize: {{prizeDetails}}",
+      userJackpotAlreadyWon: "You have already won the jackpot today. Your attempt was not spent."
     },
     safeAlt: "Safe",
     safeDoorAlt: "Safe door",
