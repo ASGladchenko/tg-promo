@@ -15,8 +15,7 @@ export const arTranslation = {
         share: "تعذر فتح الدعوة. حاول مرة أخرى."
       },
       opened: "تم فتح الدعوة. اختر محادثة لإرسالها.",
-      shareText:
-        "🔐 ساعدني في فتح الخزنة. افتح هذه الدعوة والعب، وسيحصل كلانا على محاولة إضافية كمكافأة."
+      shareText: "🔐 ساعدني في فتح الخزنة. افتح هذه الدعوة والعب، وسيحصل كلانا على محاولة إضافية كمكافأة."
     },
     channelSubscription: {
       bonusGranted: "تم تأكيد الاشتراك في القناة. تمت إضافة محاولة يومية.",
@@ -75,6 +74,10 @@ export const arTranslation = {
   },
   lottery: {
     accept: "تأكيد",
+    availability: {
+      fallback: "الخزنة غير متاحة مؤقتًا. سنعلن عن الخزنة الجديدة في القناة.",
+      preparingNewSafe: "يتم تجهيز خزنة جديدة. انتظروا الإعلان في القناة."
+    },
     checkCode: "تحقق من الرمز",
     checkingCode: "جارٍ التحقق من الرمز {{code}}",
     chooseCodeDigits: "اختر الأرقام الثلاثة للرمز",
@@ -83,7 +86,20 @@ export const arTranslation = {
     clearPosition: "امسح الموضع {{position}}",
     codeLocked: "تم تثبيت الرمز",
     digitPosition: "الرقم {{position}}",
+    duplicateCodeModal: {
+      cancel: "لا",
+      confirm: "نعم",
+      label: "تأكيد إعادة إدخال الرمز",
+      message: "لقد أدخلت هذا الرمز من قبل. هل تريد إدخاله مجددًا؟",
+      title: "تم استخدام الرمز من قبل"
+    },
     enterCode: "أدخل أرقام الرمز الثلاثة",
+    enteredCodesModal: {
+      close: "إغلاق الرموز المدخلة",
+      label: "الرموز المدخلة سابقًا",
+      title: "الرموز المدخلة"
+    },
+    enteredCodesTrigger: "الرموز: {{count}}",
     errors: {
       checkCombination: "تعذر التحقق من الرمز. حاول مرة أخرى."
     },
@@ -108,10 +124,12 @@ export const arTranslation = {
       jackpotWithPrize: "فزت بالجائزة الكبرى. الجائزة: {{prizeDetails}}",
       duplicateSemiJackpotLose: "لم تفز بالجائزة الكبرى. الجائزة المركبة ما زالت نشطة.",
       lose: "لا حظ هذه المرة.",
+      noAttempts: "لم تعد لديك محاولات. افتح محفظة المحاولات للحصول على المزيد.",
       noRules: "الخزنة غير متاحة اليوم.",
       semiJackpot: "فزت بالجائزة المركبة.",
       semiJackpotAlreadyWon: "تم الفوز بالجائزة المركبة بالفعل. لم تُستخدم محاولتك.",
-      semiJackpotWithPrize: "فزت بالجائزة المركبة. الجائزة: {{prizeDetails}}"
+      semiJackpotWithPrize: "فزت بالجائزة المركبة. الجائزة: {{prizeDetails}}",
+      userJackpotAlreadyWon: "لقد فزت بالجائزة الكبرى اليوم بالفعل. لم تُستخدم محاولتك."
     },
     safeAlt: "خزنة",
     safeDoorAlt: "باب الخزنة",

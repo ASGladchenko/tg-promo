@@ -1,39 +1,62 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+
+import { useTranslation } from "react-i18next";
 
 import {
+  type LotteryAttemptPrize,
   LotteryCodePanel,
   LotteryScene,
-  useLotteryStore,
-  type LotteryAttemptPrize,
-  type LotterySceneDoorState
+  type LotterySceneDoorState,
+  useLotteryStore
 } from "@/entities/lottery";
 import { useLotteryCodeCheckFlow } from "@/features/check-lottery-combination";
 
+import { LotteryDuplicateCodeModal } from "../lottery-duplicate-code-modal";
+import { LotteryEnteredCodesModal } from "../lottery-entered-codes-modal";
 import { LotteryPrizeResultModal } from "../lottery-prize-result-modal";
 import { LotterySafeResult } from "../lottery-safe-result";
+import { useReadyTimer } from "./use-ready-timer";
 
 import "./lottery-widget-scene.scss";
 
 type LotteryWidgetSceneProps = {
+  enteredCodes: string[];
+  initialPrize: LotteryAttemptPrize | undefined;
   onAssetsReady?: () => void;
 };
-
 type LotterySafeResultState = {
   outcome: "jackpot";
   prize?: LotteryAttemptPrize;
 };
 
-export function LotteryWidgetScene({ onAssetsReady }: LotteryWidgetSceneProps) {
-  const { checkCombination, checkError, clearCheckError, isChecking, notifyLoseResult } =
-    useLotteryCodeCheckFlow();
+export function LotteryWidgetScene({ enteredCodes, onAssetsReady, initialPrize }: LotteryWidgetSceneProps) {
+  const { t } = useTranslation();
+  const {
+    checkCombination,
+    checkError,
+    clearCheckError,
+    ensureAttemptsAvailable,
+    isChecking,
+    notifyLoseResult
+  } = useLotteryCodeCheckFlow();
   const lockSubmittedCode = useLotteryStore((state) => state.lockCode);
   const [doorState, setDoorState] = useState<LotterySceneDoorState>("idle");
+  const [duplicateCodeDigits, setDuplicateCodeDigits] = useState<string[] | null>(null);
+  const [isEnteredCodesModalOpen, setIsEnteredCodesModalOpen] = useState(false);
   const [isSemiJackpotModalOpen, setIsSemiJackpotModalOpen] = useState(false);
   const [loseMessage, setLoseMessage] = useState<string | undefined>();
+
   const [safeResult, setSafeResult] = useState<LotterySafeResultState | null>(null);
+
   const [semiJackpotPrize, setSemiJackpotPrize] = useState<LotteryAttemptPrize | undefined>();
   const isResultAnimationActive =
     doorState === "jackpotReveal" || doorState === "losePeek" || doorState === "peekTwice";
+  const isInitialJackpotWon = Boolean(initialPrize);
+  const { isReady, startReadyTimer } = useReadyTimer();
+  const isInteractionLocked = isResultAnimationActive || isInitialJackpotWon;
+  const isDuplicateCodeModalOpen = duplicateCodeDigits !== null;
+  const isCodeInteractionDisabled =
+    isInteractionLocked || isDuplicateCodeModalOpen || isEnteredCodesModalOpen;
 
   const resetResultPresentation = useCallback(() => {
     setDoorState("idle");
@@ -43,9 +66,9 @@ export function LotteryWidgetScene({ onAssetsReady }: LotteryWidgetSceneProps) {
     setSemiJackpotPrize(undefined);
   }, []);
 
-  const handleCheck = useCallback(
+  const checkCode = useCallback(
     async (digits: string[]) => {
-      if (isResultAnimationActive) {
+      if (isInteractionLocked) {
         return;
       }
 
@@ -66,6 +89,7 @@ export function LotteryWidgetScene({ onAssetsReady }: LotteryWidgetSceneProps) {
       if (result.outcome === "jackpot") {
         setSafeResult({ outcome: "jackpot", prize: result.prize });
         setDoorState("jackpotReveal");
+        startReadyTimer(800);
         lockSubmittedCode();
         return;
       }
@@ -73,7 +97,31 @@ export function LotteryWidgetScene({ onAssetsReady }: LotteryWidgetSceneProps) {
       setSemiJackpotPrize(result.prize);
       setDoorState("peekTwice");
     },
-    [checkCombination, isResultAnimationActive, lockSubmittedCode, resetResultPresentation]
+    [checkCombination, isInteractionLocked, lockSubmittedCode, resetResultPresentation, startReadyTimer]
+  );
+
+  const handleCheck = useCallback(
+    (digits: string[]) => {
+      if (isCodeInteractionDisabled) {
+        return;
+      }
+
+      if (!ensureAttemptsAvailable()) {
+        return;
+      }
+
+      const submittedDigits = [...digits];
+      const submittedCode = submittedDigits.join("");
+
+      if (enteredCodes.includes(submittedCode)) {
+        clearCheckError();
+        setDuplicateCodeDigits(submittedDigits);
+        return;
+      }
+
+      void checkCode(submittedDigits);
+    },
+    [checkCode, clearCheckError, ensureAttemptsAvailable, enteredCodes, isCodeInteractionDisabled]
   );
 
   const handleCodeChange = useCallback(() => {
@@ -97,10 +145,25 @@ export function LotteryWidgetScene({ onAssetsReady }: LotteryWidgetSceneProps) {
 
       if (nextDoorState === "jackpotReveal") {
         setDoorState("jackpotOpen");
+        startReadyTimer(800);
       }
     },
-    [loseMessage, notifyLoseResult]
+    [loseMessage, notifyLoseResult, startReadyTimer]
   );
+
+  useEffect(() => {
+    if (!initialPrize) {
+      return;
+    }
+
+    setSafeResult({
+      outcome: "jackpot",
+      prize: initialPrize
+    });
+
+    setDoorState("jackpotOpen");
+    startReadyTimer(800);
+  }, [initialPrize, startReadyTimer]);
 
   const closeSemiJackpotModal = useCallback(() => {
     setIsSemiJackpotModalOpen(false);
@@ -108,15 +171,48 @@ export function LotteryWidgetScene({ onAssetsReady }: LotteryWidgetSceneProps) {
     setSemiJackpotPrize(undefined);
   }, []);
 
+  const cancelDuplicateCode = useCallback(() => {
+    setDuplicateCodeDigits(null);
+  }, []);
+
+  const confirmDuplicateCode = useCallback(() => {
+    if (!duplicateCodeDigits) {
+      return;
+    }
+
+    const submittedDigits = [...duplicateCodeDigits];
+    setDuplicateCodeDigits(null);
+    void checkCode(submittedDigits);
+  }, [checkCode, duplicateCodeDigits]);
+
+  const openEnteredCodesModal = useCallback(() => {
+    setIsEnteredCodesModalOpen(true);
+  }, []);
+
+  const closeEnteredCodesModal = useCallback(() => {
+    setIsEnteredCodesModalOpen(false);
+  }, []);
+
   const codePanel = (
     <>
       <LotteryCodePanel
         hideSelectedDigitsFromOtherColumns
-        isInteractionDisabled={isResultAnimationActive}
+        isInteractionDisabled={isCodeInteractionDisabled}
         isChecking={isChecking}
         onCheck={handleCheck}
         onCodeChange={handleCodeChange}
       />
+
+      {enteredCodes.length > 0 ? (
+        <button
+          className="lottery-widget-scene__entered-codes-trigger"
+          type="button"
+          disabled={isCodeInteractionDisabled || isChecking}
+          onClick={openEnteredCodesModal}
+        >
+          {t("lottery.enteredCodesTrigger", { count: enteredCodes.length })}
+        </button>
+      ) : null}
 
       {checkError ? (
         <p className="lottery-widget-scene__check-error" role="status">
@@ -131,12 +227,26 @@ export function LotteryWidgetScene({ onAssetsReady }: LotteryWidgetSceneProps) {
       <LotteryScene
         codePanel={codePanel}
         doorState={doorState}
-        isDoorDisabled={isResultAnimationActive}
+        isDoorOpen={isReady}
+        isDoorDisabled={isCodeInteractionDisabled}
         onAssetsReady={onAssetsReady}
         onDoorAnimationEnd={handleDoorAnimationEnd}
         safeContent={
           safeResult?.outcome === "jackpot" ? <LotterySafeResult prize={safeResult.prize} /> : null
         }
+      />
+
+      <LotteryDuplicateCodeModal
+        code={duplicateCodeDigits?.join("") ?? ""}
+        isOpen={isDuplicateCodeModalOpen}
+        onCancel={cancelDuplicateCode}
+        onConfirm={confirmDuplicateCode}
+      />
+
+      <LotteryEnteredCodesModal
+        codes={enteredCodes}
+        isOpen={isEnteredCodesModalOpen}
+        onClose={closeEnteredCodesModal}
       />
 
       <LotteryPrizeResultModal

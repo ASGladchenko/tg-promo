@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 
+import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 
 import "./attempts-wallet-trigger.scss";
@@ -13,11 +14,14 @@ type AttemptsWalletTriggerProps = {
 export const AttemptsWalletTrigger = forwardRef<HTMLButtonElement, AttemptsWalletTriggerProps>(
   function AttemptsWalletTrigger({ isExpanded, onClick, totalAttempts }, ref) {
     const { t } = useTranslation();
+    const shouldDrawAttention = totalAttempts === 0 && !isExpanded;
 
     return (
       <button
         ref={ref}
-        className="attempts-wallet-trigger"
+        className={clsx("attempts-wallet-trigger", {
+          "attempts-wallet-trigger--attention": shouldDrawAttention
+        })}
         type="button"
         aria-haspopup="dialog"
         aria-expanded={isExpanded}

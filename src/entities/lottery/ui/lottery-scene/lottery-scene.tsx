@@ -1,11 +1,4 @@
-import {
-  type AnimationEvent,
-  type KeyboardEvent,
-  type ReactNode,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import { type AnimationEvent, type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
 
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
@@ -18,6 +11,7 @@ import VolumeIcon from "@/shared/svg/volume.svg?react";
 
 import { useLotteryStore } from "../../model/lottery-store";
 import { SafeWheel } from "../safe-wheel";
+import { waitForImageReady } from "./wait-for-image-ready";
 
 import "./lottery-scene.scss";
 
@@ -25,6 +19,7 @@ type LotterySceneProps = {
   codePanel: ReactNode;
   doorState?: LotterySceneDoorState;
   isDoorDisabled?: boolean;
+  isDoorOpen?: boolean;
   onAssetsReady?: () => void;
   onDoorAnimationEnd?: (doorState: LotterySceneDoorState) => void;
   safeContent?: ReactNode;
@@ -41,32 +36,11 @@ const LOOP_AUDIO_SRC = "/audio/16s.ogg";
 
 const AUDIO_START_EVENTS = ["pointerdown", "click", "touchstart", "keydown"] as const;
 
-function waitForImageReady(image: HTMLImageElement) {
-  const decodeImage = () =>
-    typeof image.decode === "function" ? image.decode().catch(() => undefined) : Promise.resolve();
-
-  if (image.complete && image.naturalWidth > 0) {
-    return decodeImage();
-  }
-
-  return new Promise<void>((resolve) => {
-    const handleLoad = () => {
-      void decodeImage().finally(resolve);
-    };
-
-    const handleError = () => {
-      resolve();
-    };
-
-    image.addEventListener("load", handleLoad, { once: true });
-    image.addEventListener("error", handleError, { once: true });
-  });
-}
-
 export function LotteryScene({
   codePanel,
   doorState = "idle",
   isDoorDisabled = false,
+  isDoorOpen,
   onAssetsReady,
   onDoorAnimationEnd,
   safeContent
@@ -264,7 +238,15 @@ export function LotteryScene({
           draggable={false}
         />
 
-        {safeContent ? <div className="lottery-scene__safe-content">{safeContent}</div> : null}
+        {safeContent ? (
+          <div
+            className={clsx("lottery-scene__safe-content", {
+              clickable: isDoorOpen
+            })}
+          >
+            {safeContent}
+          </div>
+        ) : null}
 
         <div
           className={clsx("lottery-scene__door-wrapper", {
@@ -272,9 +254,7 @@ export function LotteryScene({
           })}
           role="button"
           tabIndex={isDoorInteractionDisabled ? -1 : 0}
-          aria-label={
-            isDoorInteractionDisabled ? t("lottery.codeLocked") : t("lottery.openCodePicker")
-          }
+          aria-label={isDoorInteractionDisabled ? t("lottery.codeLocked") : t("lottery.openCodePicker")}
           aria-disabled={isDoorInteractionDisabled}
           onClick={openCodePickerFromDoor}
           onKeyDown={handleDoorKeyDown}

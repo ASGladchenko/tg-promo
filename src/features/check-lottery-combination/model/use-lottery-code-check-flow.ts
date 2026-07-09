@@ -3,8 +3,12 @@ import { useCallback, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
-import { setAttemptsWalletQueryData } from "@/entities/attempts";
-import { checkLotteryCombination, type LotteryAttemptResult } from "@/entities/lottery";
+import { setAttemptsWalletQueryData, useAttemptsWallet } from "@/entities/attempts";
+import {
+  addLotteryEnteredCodeToQueryData,
+  checkLotteryCombination,
+  type LotteryAttemptResult
+} from "@/entities/lottery";
 import { triggerErrorHapticFeedback, triggerRigidHapticFeedback } from "@/shared/lib/telegram";
 import { notify } from "@/shared/lib/toast";
 
@@ -27,6 +31,19 @@ export function useLotteryCodeCheckFlow() {
   const [isChecking, setIsChecking] = useState(false);
   const [checkError, setCheckError] = useState<string | null>(null);
   const isCheckingRef = useRef(false);
+  const { data: wallet } = useAttemptsWallet({ enabled: false });
+  const totalAttempts = wallet?.totalAttempts;
+
+  const ensureAttemptsAvailable = useCallback(() => {
+    if (totalAttempts !== 0) {
+      return true;
+    }
+
+    setCheckError(null);
+    notify.warning(t("lottery.results.noAttempts"));
+    triggerErrorHapticFeedback();
+    return false;
+  }, [t, totalAttempts]);
 
   const notifyAttemptResult = useCallback(
     (result: LotteryAttemptResult) => {
@@ -42,25 +59,32 @@ export function useLotteryCodeCheckFlow() {
     [queryClient, t]
   );
 
-  const notifyLoseResult = useCallback((message?: string) => {
-    const normalizedMessage = getNormalizedMessage(message);
+  const notifyLoseResult = useCallback(
+    (message?: string) => {
+      const normalizedMessage = getNormalizedMessage(message);
 
-    if (!normalizedMessage || DEFAULT_LOSE_MESSAGES.has(normalizedMessage)) {
-      notify.info(t("lottery.results.lose"));
-      return;
-    }
+      if (!normalizedMessage || DEFAULT_LOSE_MESSAGES.has(normalizedMessage)) {
+        notify.info(t("lottery.results.lose"));
+        return;
+      }
 
-    if (DUPLICATE_SEMI_JACKPOT_LOSE_MESSAGES.has(normalizedMessage)) {
-      notify.info(t("lottery.results.duplicateSemiJackpotLose"));
-      return;
-    }
+      if (DUPLICATE_SEMI_JACKPOT_LOSE_MESSAGES.has(normalizedMessage)) {
+        notify.info(t("lottery.results.duplicateSemiJackpotLose"));
+        return;
+      }
 
-    notify.info(normalizedMessage);
-  }, [t]);
+      notify.info(normalizedMessage);
+    },
+    [t]
+  );
 
   const checkCombination = useCallback(
     async (digits: string[]): Promise<LotteryAttemptResult | null> => {
       if (isCheckingRef.current) {
+        return null;
+      }
+
+      if (!ensureAttemptsAvailable()) {
         return null;
       }
 
@@ -70,6 +94,11 @@ export function useLotteryCodeCheckFlow() {
 
       try {
         const result = await checkLotteryCombination(digits);
+
+        if (result.attemptSpent) {
+          addLotteryEnteredCodeToQueryData(queryClient, digits.join(""));
+        }
+
         notifyAttemptResult(result);
         return result;
       } catch {
@@ -83,7 +112,7 @@ export function useLotteryCodeCheckFlow() {
         setIsChecking(false);
       }
     },
-    [notifyAttemptResult, t]
+    [ensureAttemptsAvailable, notifyAttemptResult, queryClient, t]
   );
 
   const clearCheckError = useCallback(() => {
@@ -94,6 +123,7 @@ export function useLotteryCodeCheckFlow() {
     checkCombination,
     checkError,
     clearCheckError,
+    ensureAttemptsAvailable,
     notifyLoseResult,
     isChecking
   };

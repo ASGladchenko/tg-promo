@@ -2,8 +2,7 @@ import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 
 import { triggerErrorHapticFeedback, triggerSoftHapticFeedback } from "@/shared/lib/telegram";
-import LockIcon from "@/shared/svg/lock.svg?react";
-import UnlockIcon from "@/shared/svg/un-lock.svg?react";
+import Play from "@/shared/svg/play.svg?react";
 import { Modal } from "@/shared/ui/modal";
 
 import { useLotteryStore } from "../../model/lottery-store";
@@ -125,7 +124,7 @@ export function LotteryCodePanel({
             checkCode();
           }}
         >
-          {isCodeLocked ? <LockIcon aria-hidden="true" /> : <UnlockIcon aria-hidden="true" />}
+          <Play />
         </button>
       </div>
 

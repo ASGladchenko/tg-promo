@@ -71,7 +71,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  z-index: 1;
+  z-index: 4;
 
   width: 42%;
   min-height: 28%;
@@ -81,13 +81,18 @@
 
   transform: translate(-50%, -50%);
 
-  pointer-events: none;
+  pointer-events: auto;
+
+  & .clickable {
+    z-index: 6;
+  }
 }
 
 .lottery-scene__door-wrapper {
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: 5;
 
   width: 67%;
 
@@ -160,7 +165,6 @@
   --door-second-peek-angle: 9deg;
 
   position: absolute;
-  z-index: 2;
   inset: 0;
 
   transition: transform 2s cubic-bezier(0.2, 0.95, 0.35, 1);
