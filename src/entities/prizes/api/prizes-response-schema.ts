@@ -11,3 +11,19 @@ export const prizeDtoSchema = z.object({
 });
 
 export const prizesResponseDtoSchema = z.array(prizeDtoSchema);
+
+export const userPrizeDtoSchema = z.object({
+  awardOrder: z.number(),
+  createdAt: z.string(),
+  createdBy: z.string().nullable(),
+  id: z.uuid(),
+  outcome: z.unknown().optional(),
+  prizeData: z.record(z.string(), z.unknown()),
+  prizeId: z.uuid(),
+  sourceId: z.string().nullable(),
+  sourceType: z.string(),
+  updatedAt: z.string(),
+  userId: z.uuid()
+});
+
+export const myPrizesResponseDtoSchema = z.array(userPrizeDtoSchema);

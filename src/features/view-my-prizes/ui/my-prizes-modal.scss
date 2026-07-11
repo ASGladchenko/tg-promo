@@ -1,0 +1,370 @@
+@use "@/shared/styles" as s;
+
+.my-prizes-modal {
+  width: min(430px, 100%);
+  max-height: min(660px, 100%);
+
+  padding: 0;
+
+  overflow-y: auto;
+
+  color: s.$color-warm-strong;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(s.$color-accent-gold, 0.12), transparent 34%),
+    rgba(s.$color-surface-deep, 0.96);
+  border: 1px solid rgba(s.$color-accent-gold, 0.24);
+  border-radius: s.$radius-lg;
+  box-shadow:
+    0 28px 70px rgba(s.$color-black, 0.54),
+    inset 0 0 0 1px rgba(s.$color-accent-gold-soft, 0.035);
+  backdrop-filter: blur(14px);
+
+  scrollbar-color: rgba(s.$color-accent-gold, 0.32) transparent;
+  scrollbar-width: thin;
+}
+
+.my-prizes-modal__sticky {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  padding: 16px 16px 12px;
+
+  background:
+    radial-gradient(circle at 85% 0%, rgba(s.$color-accent-gold, 0.11), transparent 42%),
+    rgba(s.$color-surface-deep, 0.98);
+  border-bottom: 1px solid rgba(s.$color-warm-strong, 0.07);
+}
+
+.my-prizes-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 12px;
+}
+
+.my-prizes-modal__heading {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.my-prizes-modal__title-copy {
+  min-width: 0;
+
+  display: block;
+}
+
+.my-prizes-modal__eyebrow {
+  margin: 0 0 3px;
+
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  color: rgba(s.$color-accent-gold, 0.66);
+}
+
+.my-prizes-modal__title {
+  margin: 0;
+
+  font-size: clamp(1.15rem, 5vw, 1.45rem);
+  line-height: 1.12;
+
+  color: s.$color-accent-gold-soft;
+}
+
+.my-prizes-modal__icon-button {
+  width: 32px;
+  height: 32px;
+
+  padding: 0;
+
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+
+  font-size: 1.35rem;
+  line-height: 1;
+
+  color: rgba(s.$color-warm-strong, 0.72);
+  background: rgba(s.$color-accent-gold-soft, 0.045);
+  border: 1px solid rgba(s.$color-warm-strong, 0.12);
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  & > svg {
+    width: 16px;
+    height: 16px;
+
+    display: block;
+  }
+
+  &:focus-visible {
+    outline: 2px solid s.$focus-ring;
+    outline-offset: 2px;
+  }
+}
+
+.my-prizes-modal__back > svg {
+  transform: rotate(90deg);
+}
+
+.my-prizes-modal__body {
+  padding: 12px 16px 16px;
+}
+
+.my-prizes-modal__list {
+  margin: 0;
+  padding: 0;
+
+  display: grid;
+  gap: 8px;
+
+  list-style: none;
+}
+
+.my-prizes-modal__row {
+  min-height: 96px;
+
+  padding: 10px 11px 11px;
+
+  display: grid;
+  gap: 8px;
+  grid-template-columns: minmax(0, 1fr);
+
+  background: rgba(s.$color-accent-warm, 0.055);
+  border: 1px solid rgba(s.$color-accent-warm, 0.15);
+  border-radius: 5px;
+}
+
+.my-prizes-modal__outcome-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.my-prizes-modal__main {
+  min-width: 0;
+
+  display: grid;
+  align-items: center;
+  gap: 8px;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.my-prizes-modal__promo {
+  min-width: 0;
+
+  overflow: hidden;
+
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: s.$color-accent-gold-soft;
+}
+
+.my-prizes-modal__outcome {
+  max-width: 132px;
+
+  padding: 4px 7px;
+
+  display: inline-flex;
+  flex: 0 0 auto;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+
+  font-size: 0.6rem;
+  font-weight: 800;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: s.$color-accent-gold-soft;
+  background: rgba(s.$color-accent-gold-soft, 0.055);
+  border: 1px solid rgba(s.$color-accent-gold-soft, 0.54);
+  border-radius: 6px;
+}
+
+.my-prizes-modal__copy {
+  min-width: 66px;
+
+  padding: 7px 10px;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+
+  color: s.$color-ink;
+  background: linear-gradient(145deg, s.$color-accent-gold-soft, s.$color-accent-gold);
+  border: 1px solid transparent;
+  border-radius: s.$radius-sm;
+  box-shadow: 0 6px 16px rgba(s.$color-black, 0.22);
+
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid s.$focus-ring;
+    outline-offset: 2px;
+  }
+}
+
+.my-prizes-modal__copy--copied {
+  color: s.$color-accent-gold-soft;
+  background: rgba(s.$color-accent-gold-soft, 0.08);
+  border: 1px solid rgba(s.$color-accent-gold-soft, 0.16);
+}
+
+.my-prizes-modal__meta {
+  min-width: 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.my-prizes-modal__date {
+  min-width: 0;
+
+  overflow: hidden;
+
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: rgba(s.$color-warm-strong, 0.62);
+}
+
+.my-prizes-modal__info {
+  width: 32px;
+  height: 32px;
+
+  padding: 0;
+
+  display: grid;
+  place-items: center;
+
+  color: rgba(s.$color-accent-gold-soft, 0.76);
+  background: rgba(s.$color-accent-gold-soft, 0.045);
+  border: 1px solid rgba(s.$color-warm-strong, 0.12);
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  & > svg {
+    width: 16px;
+    height: 16px;
+
+    display: block;
+  }
+
+  &:focus-visible {
+    outline: 2px solid s.$focus-ring;
+    outline-offset: 2px;
+  }
+}
+
+.my-prizes-modal__details {
+  padding: 13px 12px;
+
+  display: grid;
+  gap: 10px;
+
+  background: rgba(s.$color-accent-warm, 0.055);
+  border: 1px solid rgba(s.$color-accent-warm, 0.15);
+  border-radius: s.$radius-sm;
+}
+
+.my-prizes-modal__details-head {
+  min-width: 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.my-prizes-modal__details-code {
+  min-width: 0;
+
+  overflow: hidden;
+
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: s.$color-accent-gold-soft;
+}
+
+.my-prizes-modal__details-title {
+  margin: 0;
+
+  font-size: 0.92rem;
+  line-height: 1.2;
+
+  color: rgba(s.$color-warm-strong, 0.84);
+}
+
+.my-prizes-modal__details-text {
+  margin: 0;
+
+  font-size: 0.82rem;
+  line-height: 1.45;
+
+  color: rgba(s.$color-warm-strong, 0.68);
+}
+
+.my-prizes-modal__state {
+  min-height: 54px;
+
+  margin: 0;
+  padding: 14px 12px;
+
+  display: grid;
+  place-items: center;
+
+  font-size: 0.82rem;
+  line-height: 1.35;
+  text-align: center;
+
+  color: rgba(s.$color-warm-strong, 0.68);
+  background: rgba(s.$color-accent-warm, 0.045);
+  border: 1px solid rgba(s.$color-accent-warm, 0.12);
+  border-radius: s.$radius-sm;
+}
+
+.my-prizes-modal__state--loading {
+  gap: 10px;
+}
+
+.my-prizes-modal__loader {
+  --circular-progress-loader-fill: #{s.$color-accent-gold-soft};
+  --circular-progress-loader-track: #{rgba(s.$color-accent-gold, 0.18)};
+}
+
+.my-prizes-modal__state--error {
+  color: s.$color-error;
+  border-color: rgba(s.$color-error, 0.24);
+}
+
+@media (max-width: 420px) {
+  .my-prizes-modal__copy {
+    min-width: 58px;
+
+    padding-inline: 8px;
+  }
+}

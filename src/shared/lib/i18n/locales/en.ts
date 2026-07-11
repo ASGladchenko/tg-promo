@@ -74,6 +74,28 @@ export const enTranslation = {
     changeLanguage: "Change language",
     menuLabel: "Choose a language"
   },
+  myPrizes: {
+    close: "Close prizes",
+    back: "Back to rewards",
+    copied: "Copied",
+    copy: "Copy",
+    copyAriaLabel: "Copy promo code {{promoCode}}",
+    descriptionTitle: "Prize description",
+    empty: "No rewards yet. Your promo codes will appear here.",
+    error: "Could not load your rewards. Please try again.",
+    eyebrow: "Prizes",
+    infoAriaLabel: "Open prize details for {{prize}}",
+    loading: "Loading rewards...",
+    modalLabel: "Your prize rewards",
+    noDescription: "Prize description is not available yet.",
+    noPromoCode: "No promo code",
+    open: "Open your prizes",
+    outcomes: {
+      jackpot: "Jackpot",
+      semiJackpot: "Combo jackpot"
+    },
+    title: "Your rewards"
+  },
   lottery: {
     accept: "Accept",
     availability: {

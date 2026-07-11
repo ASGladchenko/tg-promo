@@ -1,14 +1,5 @@
 @use "../../../../shared/styles/index" as s;
 
-.attempts-wallet-widget {
-  width: min(968px, 100%);
-
-  margin: 0 auto;
-  padding: s.$space-2 s.$space-2 0;
-}
-
 .attempts-wallet-widget__trigger {
-  width: min(520px, 100%);
-
   margin-inline: auto;
 }

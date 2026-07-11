@@ -5,6 +5,22 @@
   flex: 1 1;
   flex-direction: column;
 
+  &--subhead {
+    width: min(520px, 100%);
+
+    margin: 0 auto;
+    padding: s.$space-2 s.$space-2 0;
+
+    display: flex;
+    gap: 8px;
+
+    & > .attempts-wallet-widget {
+      min-width: 0;
+
+      flex: 1 1 auto;
+    }
+  }
+
   & .client_layout-content {
     width: min(968px, 100%);
 
