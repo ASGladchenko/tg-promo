@@ -74,6 +74,28 @@ export const frTranslation = {
     changeLanguage: "Changer de langue",
     menuLabel: "Choisir une langue"
   },
+  myPrizes: {
+    close: "Fermer les prix",
+    back: "Retour aux récompenses",
+    copied: "Copié",
+    copy: "Copier",
+    copyAriaLabel: "Copier le code promo {{promoCode}}",
+    descriptionTitle: "Description du prix",
+    empty: "Aucune récompense pour le moment. Vos codes promo apparaîtront ici.",
+    error: "Impossible de charger vos récompenses. Veuillez réessayer.",
+    eyebrow: "Prix",
+    infoAriaLabel: "Ouvrir les détails du prix pour {{prize}}",
+    loading: "Chargement des récompenses...",
+    modalLabel: "Vos récompenses",
+    noDescription: "La description du prix n’est pas encore disponible.",
+    noPromoCode: "Aucun code promo",
+    open: "Ouvrir vos prix",
+    outcomes: {
+      jackpot: "Jackpot",
+      semiJackpot: "Combo jackpot"
+    },
+    title: "Vos récompenses"
+  },
   lottery: {
     accept: "Valider",
     availability: {

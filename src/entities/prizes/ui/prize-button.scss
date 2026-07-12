@@ -1,0 +1,88 @@
+@use "@/shared/styles" as s;
+
+.prize-button {
+  position: relative;
+
+  width: 58px;
+  min-width: 56px;
+  height: 58px;
+
+  padding: 0;
+
+  display: grid;
+  place-items: center;
+
+  overflow: hidden;
+
+  color: s.$color-accent-gold-soft;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(s.$color-accent-gold-soft, 0.18), transparent 32%),
+    linear-gradient(145deg, rgba(s.$color-accent-gold, 0.12), transparent 58%),
+    rgba(s.$color-surface-deep, 0.92);
+  border: 1px solid rgba(s.$color-accent-gold, 0.32);
+  border-radius: s.$radius-lg;
+  box-shadow:
+    0 12px 30px rgba(s.$color-black, 0.3),
+    0 0 20px rgba(s.$color-accent-gold, 0.1),
+    inset 0 1px 0 rgba(s.$color-accent-gold-soft, 0.08);
+
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 120ms ease;
+
+  cursor: pointer;
+
+  &::before {
+    position: absolute;
+    inset: 7px;
+
+    background: linear-gradient(145deg, rgba(s.$color-accent-gold-soft, 0.18), transparent 48%);
+    border: 1px solid rgba(s.$color-accent-gold-soft, 0.14);
+    border-radius: s.$radius-md;
+
+    content: "";
+  }
+
+  &:hover {
+    border-color: rgba(s.$color-accent-gold, 0.5);
+    box-shadow:
+      0 14px 34px rgba(s.$color-black, 0.36),
+      0 0 26px rgba(s.$color-accent-gold, 0.16),
+      inset 0 1px 0 rgba(s.$color-accent-gold-soft, 0.1);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid s.$focus-ring;
+    outline-offset: 3px;
+  }
+}
+
+.prize-button > svg {
+  position: relative;
+  z-index: 1;
+
+  width: 30px;
+  height: 30px;
+
+  display: block;
+
+  filter: drop-shadow(0 0 12px rgba(s.$color-accent-gold, 0.34));
+}
+
+@media (max-width: 420px) {
+  .prize-button {
+    width: 58px;
+    min-width: 58px;
+    height: 58px;
+  }
+
+  .prize-button > svg {
+    width: 28px;
+    height: 28px;
+  }
+}

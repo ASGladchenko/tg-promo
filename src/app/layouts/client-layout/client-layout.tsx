@@ -1,5 +1,6 @@
 import { Outlet } from "react-router";
 
+import { MyPrizesTrigger } from "@/features/view-my-prizes";
 import { AttemptsWalletWidget } from "@/widgets/attempts-wallet-widget";
 import { WidgetHeader } from "@/widgets/widget-header";
 
@@ -9,7 +10,10 @@ export function ClientLayout() {
   return (
     <main className="client_layout">
       <WidgetHeader siteUrl="/google.com" />
-      <AttemptsWalletWidget />
+      <div className="client_layout--subhead">
+        <AttemptsWalletWidget />
+        <MyPrizesTrigger className="client_layout-prize-button" />
+      </div>
 
       <div className="client_layout-content">
         <Outlet />

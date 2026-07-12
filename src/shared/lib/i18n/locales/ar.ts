@@ -72,6 +72,28 @@ export const arTranslation = {
     changeLanguage: "تغيير اللغة",
     menuLabel: "اختر اللغة"
   },
+  myPrizes: {
+    close: "إغلاق الجوائز",
+    back: "العودة إلى المكافآت",
+    copied: "تم النسخ",
+    copy: "نسخ",
+    copyAriaLabel: "نسخ رمز العرض {{promoCode}}",
+    descriptionTitle: "وصف الجائزة",
+    empty: "لا توجد مكافآت بعد. ستظهر رموز العروض الخاصة بك هنا.",
+    error: "تعذر تحميل مكافآتك. حاول مرة أخرى.",
+    eyebrow: "الجوائز",
+    infoAriaLabel: "فتح تفاصيل الجائزة لـ {{prize}}",
+    loading: "جارٍ تحميل المكافآت...",
+    modalLabel: "مكافآتك",
+    noDescription: "وصف الجائزة غير متاح بعد.",
+    noPromoCode: "لا يوجد رمز عرض",
+    open: "فتح جوائزك",
+    outcomes: {
+      jackpot: "الجائزة الكبرى",
+      semiJackpot: "الجائزة المركبة"
+    },
+    title: "مكافآتك"
+  },
   lottery: {
     accept: "تأكيد",
     availability: {

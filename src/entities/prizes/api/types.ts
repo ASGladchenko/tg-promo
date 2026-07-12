@@ -1,9 +1,16 @@
 import { type z } from "zod";
 
-import { prizeDtoSchema, prizesResponseDtoSchema } from "./prizes-response-schema";
+import {
+  myPrizesResponseDtoSchema,
+  prizeDtoSchema,
+  prizesResponseDtoSchema,
+  userPrizeDtoSchema
+} from "./prizes-response-schema";
 
 export type PrizeDto = z.output<typeof prizeDtoSchema>;
 export type PrizesResponseDto = z.output<typeof prizesResponseDtoSchema>;
+export type UserPrizeDto = z.output<typeof userPrizeDtoSchema>;
+export type MyPrizesResponseDto = z.output<typeof myPrizesResponseDtoSchema>;
 
 export type CreatePrizePayload = {
   name: string;
