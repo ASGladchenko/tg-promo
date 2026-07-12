@@ -1,0 +1,1 @@
+export { AdminConsolationPrizes } from "./ui";
