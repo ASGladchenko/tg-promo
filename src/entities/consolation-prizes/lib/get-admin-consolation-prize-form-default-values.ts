@@ -14,7 +14,7 @@ function getMetadataLanguages(
 }
 
 function getMetadataFields(metadata: ConsolationPrize["metadata"]) {
-  const reservedKeys = new Set(adminConsolationPrizeRequiredMetadataLanguageKeys);
+  const reservedKeys = new Set<string>(adminConsolationPrizeRequiredMetadataLanguageKeys);
 
   return Object.entries(metadata)
     .filter(([key]) => !reservedKeys.has(key.toLowerCase()))

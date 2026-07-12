@@ -45,7 +45,7 @@ export const adminConsolationPrizeFormSchema = z
   })
   .superRefine((data, context) => {
     const seenKeys = new Set<string>();
-    const reservedKeys = new Set(adminConsolationPrizeRequiredMetadataLanguageKeys);
+    const reservedKeys = new Set<string>(adminConsolationPrizeRequiredMetadataLanguageKeys);
 
     data.metadata.forEach((field, index) => {
       const key = field.key.trim();
