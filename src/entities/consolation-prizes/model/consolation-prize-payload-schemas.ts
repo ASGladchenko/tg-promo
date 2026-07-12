@@ -6,6 +6,7 @@ const consolationPrizePayloadFields = {
   prizeId: z.uuid("Prize id must be a UUID"),
   promoCode: z.string().trim().min(1, "Promo code is required").max(100, "Promo code is too long"),
   description: z.string().trim(),
+  metadata: z.record(z.string(), z.unknown()),
   isActive: z.boolean()
 };
 
@@ -20,6 +21,7 @@ export const updateConsolationPrizePayloadSchema = z.object({
   prizeId: consolationPrizePayloadFields.prizeId.optional(),
   promoCode: consolationPrizePayloadFields.promoCode.optional(),
   description: consolationPrizePayloadFields.description.optional(),
+  metadata: consolationPrizePayloadFields.metadata.optional(),
   expiresAt: dateSchema.nullable().optional(),
   isActive: consolationPrizePayloadFields.isActive.optional()
 });

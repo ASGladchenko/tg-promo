@@ -83,7 +83,8 @@ className={clsx("lottery-code-panel__slot", {
 })}
 ```
 
-Не используй ручные массивы с `.filter(Boolean).join(" ")`.
+Не собирай `className` вручную через тернарные строки, конкатенацию, template literals или массивы с
+`.filter(Boolean).join(" ")`.
 
 ## Accessibility
 

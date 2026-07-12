@@ -7,6 +7,7 @@ export const consolationPrizeDtoSchema = z.object({
   expiresAt: z.string().nullable(),
   id: z.uuid(),
   isActive: z.boolean(),
+  metadata: z.record(z.string(), z.unknown()),
   prizeId: z.uuid(),
   promoCode: z.string(),
   updatedAt: z.string()

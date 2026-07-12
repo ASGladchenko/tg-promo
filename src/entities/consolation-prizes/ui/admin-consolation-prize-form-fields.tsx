@@ -5,6 +5,7 @@ import { SelectOption } from "@/shared/ui/select-option";
 import { TextareaField } from "@/shared/ui/textarea-field";
 
 import { type AdminConsolationPrizeFormState, type ConsolationPrizeOption } from "../model/types";
+import { AdminConsolationPrizeMetadataFields } from "./admin-consolation-prize-metadata-fields";
 
 import "./admin-consolation-prize-form-fields.scss";
 
@@ -29,12 +30,7 @@ export function AdminConsolationPrizeFormFields({
         getDisplayValue={getPrizeName}
         renderOptions={({ onSelect, value }) =>
           prizeOptions.map((prize) => (
-            <SelectOption
-              key={prize.id}
-              value={prize.id}
-              onSelect={onSelect}
-              isSelected={prize.id === value}
-            >
+            <SelectOption key={prize.id} value={prize.id} onSelect={onSelect} isSelected={prize.id === value}>
               {prize.name}
             </SelectOption>
           ))
@@ -52,6 +48,7 @@ export function AdminConsolationPrizeFormFields({
         placeholder="Consolation prize description"
         disabled={disabled}
       />
+      <AdminConsolationPrizeMetadataFields disabled={disabled} />
       <InputField<AdminConsolationPrizeFormState>
         name="expiresAt"
         label="Expiration date"
