@@ -76,6 +76,12 @@ export const frTranslation = {
   },
   myPrizes: {
     close: "Fermer les prix",
+    awardedModal: {
+      close: "Fermer les details du prix",
+      eyebrow: "Prix debloque",
+      label: "Details du prix de consolation",
+      title: "Prix de consolation gagne"
+    },
     back: "Retour aux récompenses",
     copied: "Copié",
     copy: "Copier",

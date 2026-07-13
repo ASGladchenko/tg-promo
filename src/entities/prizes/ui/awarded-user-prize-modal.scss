@@ -1,0 +1,99 @@
+@use "../../../shared/styles/index" as s;
+
+.awarded-user-prize-modal {
+  width: min(360px, 100%);
+
+  padding: 18px;
+
+  color: s.$color-warm-strong;
+  background: rgba(13, 11, 9, 0.94);
+  border: 1px solid rgba(s.$color-accent-gold, 0.24);
+  border-radius: s.$radius-md;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.42);
+}
+
+.awarded-user-prize-modal__header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.awarded-user-prize-modal__eyebrow {
+  margin: 0 0 4px;
+
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  color: rgba(s.$color-accent-gold, 0.7);
+}
+
+.awarded-user-prize-modal__title {
+  margin: 0;
+
+  font-size: 1.35rem;
+  line-height: 1.12;
+
+  color: s.$color-accent-gold-soft;
+}
+
+.awarded-user-prize-modal__close {
+  width: 32px;
+  height: 32px;
+
+  padding: 0;
+
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+
+  font-size: 1.35rem;
+  line-height: 1;
+
+  color: rgba(s.$color-warm-strong, 0.74);
+  background: rgba(s.$color-accent-gold-soft, 0.045);
+  border: 1px solid rgba(s.$color-warm-strong, 0.12);
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid s.$focus-ring;
+    outline-offset: 2px;
+  }
+}
+
+.awarded-user-prize-modal__result {
+  margin: 22px 0 0;
+
+  display: grid;
+  gap: 10px;
+
+  text-align: center;
+}
+
+.awarded-user-prize-modal__code {
+  overflow-wrap: anywhere;
+
+  font-size: clamp(1.6rem, 10vw, 2.5rem);
+  font-weight: 900;
+  line-height: 1;
+
+  color: #fff;
+  text-shadow:
+    0 0 18px rgba(255, 210, 92, 0.44),
+    0 2px 0 rgba(0, 0, 0, 0.64);
+}
+
+.awarded-user-prize-modal__description {
+  margin: 0;
+
+  overflow-wrap: anywhere;
+
+  font-size: 0.98rem;
+  line-height: 1.35;
+
+  color: rgba(s.$color-warm-strong, 0.78);
+}

@@ -1,12 +1,12 @@
 import { useAttemptsWalletRealtimeSync } from "@/entities/attempts";
-import { useConsolationPrizeAwardedRealtimeSync } from "@/entities/consolation-prizes";
 import { useMeRealtimeSync } from "@/entities/me";
+import { useConsolationPrizeAwardedRealtimePopup } from "@/features/show-consolation-prize-award";
 import { useRealtimeConnection } from "@/shared/lib/realtime";
 
 export function RealtimeGate() {
   useRealtimeConnection();
   useAttemptsWalletRealtimeSync();
-  useConsolationPrizeAwardedRealtimeSync();
+  useConsolationPrizeAwardedRealtimePopup();
   useMeRealtimeSync();
 
   return null;

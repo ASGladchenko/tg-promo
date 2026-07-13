@@ -74,6 +74,12 @@ export const arTranslation = {
   },
   myPrizes: {
     close: "إغلاق الجوائز",
+    awardedModal: {
+      close: "إغلاق تفاصيل الجائزة",
+      eyebrow: "تم فتح الجائزة",
+      label: "تفاصيل جائزة الترضية",
+      title: "فزت بجائزة ترضية"
+    },
     back: "العودة إلى المكافآت",
     copied: "تم النسخ",
     copy: "نسخ",

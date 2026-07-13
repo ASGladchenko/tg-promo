@@ -3,6 +3,7 @@ import { useId } from "react";
 import { useTranslation } from "react-i18next";
 
 import { type UserPrize } from "@/entities/prizes";
+import { getLocalizedMetadataString } from "@/shared/lib/i18n";
 
 import { MyPrizeOutcomeLabel } from "./my-prize-outcome-label";
 
@@ -11,7 +12,9 @@ type MyPrizeDetailsProps = {
 };
 
 export function MyPrizeDetails({ prize }: MyPrizeDetailsProps) {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
+  const locale = i18n.resolvedLanguage ?? i18n.language;
+  const description = getLocalizedMetadataString(prize.prizeData, locale, prize.prizeData.description);
   const titleId = useId();
 
   return (
@@ -29,7 +32,7 @@ export function MyPrizeDetails({ prize }: MyPrizeDetailsProps) {
       </h3>
 
       <p className="my-prizes-modal__details-text">
-        {prize.description ?? t("myPrizes.noDescription")}
+        {description ?? t("myPrizes.noDescription")}
       </p>
     </section>
   );

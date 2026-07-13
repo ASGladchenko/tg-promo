@@ -11,6 +11,5 @@ export {
   mapAdminConsolationPrizeFormToUpdatePayload
 } from "./lib/map-admin-consolation-prize-form-to-payload";
 export { useConsolationPrizes } from "./model/use-consolation-prizes";
-export { useConsolationPrizeAwardedRealtimeSync } from "./model/use-consolation-prize-awarded-realtime-sync";
 export { useCreateConsolationPrize } from "./model/use-create-consolation-prize";
 export { useUpdateConsolationPrize } from "./model/use-update-consolation-prize";
