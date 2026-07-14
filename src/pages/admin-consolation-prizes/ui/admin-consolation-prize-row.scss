@@ -1,0 +1,12 @@
+.admin-consolation-prize-row__prize {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-consolation-prize-row__status { font-weight: 700; }
+
+.admin-consolation-prize-row__actions {
+  display: inline-flex;
+  justify-content: flex-end;
+}

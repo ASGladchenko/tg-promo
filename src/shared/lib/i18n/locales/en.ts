@@ -76,6 +76,12 @@ export const enTranslation = {
   },
   myPrizes: {
     close: "Close prizes",
+    awardedModal: {
+      close: "Close prize details",
+      eyebrow: "Prize unlocked",
+      label: "Consolation prize details",
+      title: "Consolation prize won"
+    },
     back: "Back to rewards",
     copied: "Copied",
     copy: "Copy",
@@ -92,7 +98,8 @@ export const enTranslation = {
     open: "Open your prizes",
     outcomes: {
       jackpot: "Jackpot",
-      semiJackpot: "Combo jackpot"
+      semiJackpot: "Combo jackpot",
+      consolationPrize: "Consolation prize"
     },
     title: "Your rewards"
   },

@@ -8,8 +8,7 @@ type MyPrizeOutcomeLabelProps = {
 
 export function MyPrizeOutcomeLabel({ outcome }: MyPrizeOutcomeLabelProps) {
   const { t } = useTranslation();
-  const label =
-    outcome === "jackpot" ? t("myPrizes.outcomes.jackpot") : t("myPrizes.outcomes.semiJackpot");
+  const label = t(`myPrizes.outcomes.${outcome}`);
 
   return <span className="my-prizes-modal__outcome">{label}</span>;
 }

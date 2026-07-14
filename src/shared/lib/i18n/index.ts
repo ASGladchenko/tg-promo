@@ -1,4 +1,5 @@
 export { applyLocale, i18n } from "./i18n";
+export { getLocalizedMetadataString } from "./get-localized-metadata-string";
 
 export {
   getBrowserLanguages,

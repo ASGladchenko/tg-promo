@@ -17,9 +17,9 @@ const rulesHeader = [
   "Game Date",
   "Code Length",
   "Jackpot Prize",
-  "Semi-Jackpot Prize",
+  "Semi Prize",
   "Jackpot Wins",
-  "Semi-Jackpot Wins",
+  "Semi Wins",
   "Created",
   "Updated",
   ""

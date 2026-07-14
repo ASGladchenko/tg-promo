@@ -1,5 +1,6 @@
 import { Outlet } from "react-router";
 
+import { AwardedUserPrizeModal } from "@/entities/prizes";
 import { MyPrizesTrigger } from "@/features/view-my-prizes";
 import { AttemptsWalletWidget } from "@/widgets/attempts-wallet-widget";
 import { WidgetHeader } from "@/widgets/widget-header";
@@ -18,6 +19,8 @@ export function ClientLayout() {
       <div className="client_layout-content">
         <Outlet />
       </div>
+
+      <AwardedUserPrizeModal />
     </main>
   );
 }

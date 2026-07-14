@@ -14,8 +14,9 @@ type LotteryPrizeResultModalProps = {
 };
 
 export function LotteryPrizeResultModal({ isOpen, onClose, prize }: LotteryPrizeResultModalProps) {
-  const { t } = useTranslation();
-  const { description, promoCode } = getLotteryPrizeDetails(prize);
+  const { i18n, t } = useTranslation();
+  const locale = i18n.resolvedLanguage ?? i18n.language;
+  const { description, promoCode } = getLotteryPrizeDetails(prize, locale);
 
   return (
     <Modal

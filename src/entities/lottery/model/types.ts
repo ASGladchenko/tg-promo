@@ -17,6 +17,7 @@ export type LotteryAttemptWallet = {
 export type LotteryAttemptPrize = {
   description: string | null;
   id: string;
+  metadata: Record<string, unknown>;
   name: string | null;
   promoCode: string | null;
 };

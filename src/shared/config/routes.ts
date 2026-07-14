@@ -3,5 +3,6 @@ export const APP_ROUTES = {
   admin: "/admin",
   adminLogin: "/admin/login",
   adminRules: "rules",
-  adminPrizes: "prizes"
+  adminPrizes: "prizes",
+  adminConsolation: "consolation"
 } as const;

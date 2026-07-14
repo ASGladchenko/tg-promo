@@ -74,6 +74,12 @@ export const arTranslation = {
   },
   myPrizes: {
     close: "إغلاق الجوائز",
+    awardedModal: {
+      close: "إغلاق تفاصيل الجائزة",
+      eyebrow: "تم فتح الجائزة",
+      label: "تفاصيل جائزة الترضية",
+      title: "فزت بجائزة ترضية"
+    },
     back: "العودة إلى المكافآت",
     copied: "تم النسخ",
     copy: "نسخ",
@@ -90,7 +96,8 @@ export const arTranslation = {
     open: "فتح جوائزك",
     outcomes: {
       jackpot: "الجائزة الكبرى",
-      semiJackpot: "الجائزة المركبة"
+      semiJackpot: "الجائزة المركبة",
+      consolationPrize: "جائزة ترضية"
     },
     title: "مكافآتك"
   },

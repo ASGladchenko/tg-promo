@@ -11,8 +11,9 @@ type LotterySafeResultProps = {
 };
 
 export function LotterySafeResult({ prize }: LotterySafeResultProps) {
-  const { t } = useTranslation();
-  const { description, promoCode } = getLotteryPrizeDetails(prize);
+  const { i18n, t } = useTranslation();
+  const locale = i18n.resolvedLanguage ?? i18n.language;
+  const { description, promoCode } = getLotteryPrizeDetails(prize, locale);
 
   return (
     <div className="lottery-safe-result" aria-live="polite">

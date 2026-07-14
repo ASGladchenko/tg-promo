@@ -1,3 +1,5 @@
+import { getLocalizedMetadataString } from "@/shared/lib/i18n";
+
 import { type MyPrizesResponseDto } from "../api/types";
 import { type UserPrize, type UserPrizeOutcome } from "../model/types";
 
@@ -14,13 +16,17 @@ function mapUserPrizeOutcome(value: unknown): UserPrizeOutcome | null {
     return "semiJackpot";
   }
 
+  if (value === "consolation_prize") {
+    return "consolationPrize";
+  }
+
   return null;
 }
 
 export function mapUserPrizesDtoToUserPrizes(dto: MyPrizesResponseDto): UserPrize[] {
   return dto.map((userPrize) => ({
     ...userPrize,
-    description: getOptionalString(userPrize.prizeData.description),
+    description: getLocalizedMetadataString(userPrize.prizeData, undefined, userPrize.prizeData.description),
     outcome: mapUserPrizeOutcome(userPrize.prizeData.outcome ?? userPrize.outcome),
     prizeData: { ...userPrize.prizeData },
     promoCode: getOptionalString(userPrize.prizeData.promoCode)

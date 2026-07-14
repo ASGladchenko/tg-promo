@@ -1,0 +1,81 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-consolation-prize-form-fields {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-consolation-prize-form-fields__metadata,
+.admin-consolation-prize-form-fields__metadata-items {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-consolation-prize-form-fields__metadata-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-consolation-prize-form-fields__metadata-title {
+  font-size: 18px;
+  font-weight: 600;
+
+  color: s.$admin-text;
+}
+
+.admin-consolation-prize-form-fields__metadata-item {
+  display: grid;
+  align-items: start;
+  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) 140px;
+}
+
+.admin-consolation-prize-form-fields__metadata-required {
+  width: 100%;
+  min-height: 40px;
+
+  margin-top: 27px;
+  padding: 0 16px;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+
+  color: s.$admin-text-secondary;
+  background: s.$admin-surface;
+  border: 1px solid s.$admin-border;
+  border-radius: s.$admin-radius;
+}
+
+.admin-consolation-prize-form-fields__metadata-item--compact
+  .admin-consolation-prize-form-fields__metadata-required {
+  margin-top: 0;
+}
+
+.admin-consolation-prize-form-fields__metadata-language-value {
+  height: 62px;
+  min-height: 62px;
+
+  overflow-y: auto;
+
+  line-height: 1.35;
+
+  resize: vertical;
+}
+
+.admin-consolation-prize-form-fields__metadata-remove {
+  width: 100%;
+
+  margin-top: 28px;
+}
+
+.admin-consolation-prize-form-fields__metadata-item--compact
+  .admin-consolation-prize-form-fields__metadata-remove {
+  margin-top: 0;
+}
