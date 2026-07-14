@@ -30,8 +30,8 @@ export const adminSidebarItems: AdminSidebarItem[] = [
         end: true
       },
       {
-        title: "Codes",
-        to: `${APP_ROUTES.admin}/${APP_ROUTES.adminCrackSafeCodes}`,
+        title: "Snapshots",
+        to: `${APP_ROUTES.admin}/${APP_ROUTES.adminCrackSafeSnapshots}`,
         end: true
       }
     ]

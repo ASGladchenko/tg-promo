@@ -4,7 +4,7 @@ export const APP_ROUTES = {
   adminLogin: "/admin/login",
   adminCrackSafe: "crack-safe",
   adminCrackSafeRules: "crack-safe/rules",
-  adminCrackSafeCodes: "crack-safe/codes",
+  adminCrackSafeSnapshots: "crack-safe/snapshots",
   adminPrizes: "prizes",
   adminConsolation: "consolation"
 } as const;

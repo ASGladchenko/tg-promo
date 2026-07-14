@@ -34,9 +34,9 @@ export const LazyAdminCrackSafeRules = lazy(() =>
   }))
 );
 
-export const LazyAdminCrackSafeCodes = lazy(() =>
-  import("@/pages/admin-crack-safe-codes").then(({ AdminCrackSafeCodes }) => ({
-    default: AdminCrackSafeCodes
+export const LazyAdminCrackSafeSnapshots = lazy(() =>
+  import("@/pages/admin-crack-safe-snapshots").then(({ AdminCrackSafeSnapshots }) => ({
+    default: AdminCrackSafeSnapshots
   }))
 );
 
