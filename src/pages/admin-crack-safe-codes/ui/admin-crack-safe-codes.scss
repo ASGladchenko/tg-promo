@@ -1,0 +1,17 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-crack-safe-codes {
+  min-width: 0;
+
+  display: grid;
+  gap: 18px;
+}
+
+.admin-crack-safe-codes__state {
+  margin: 0;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  color: s.$admin-text-secondary;
+}

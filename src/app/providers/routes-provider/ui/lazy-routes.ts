@@ -34,6 +34,12 @@ export const LazyAdminCrackSafeRules = lazy(() =>
   }))
 );
 
+export const LazyAdminCrackSafeCodes = lazy(() =>
+  import("@/pages/admin-crack-safe-codes").then(({ AdminCrackSafeCodes }) => ({
+    default: AdminCrackSafeCodes
+  }))
+);
+
 export const LazyAdminConsolationPrizes = lazy(() =>
   import("@/pages/admin-consolation-prizes").then(({ AdminConsolationPrizes }) => ({
     default: AdminConsolationPrizes

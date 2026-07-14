@@ -30,7 +30,7 @@
   text-decoration: none;
 
   color: s.$admin-text;
-  background: rgba(s.$admin-white, 0.08);
+  background: s.$admin-border-soft;
   border-radius: s.$admin-radius;
 
   transition:
@@ -41,12 +41,12 @@
 .admin-sidebar__brand:hover,
 .admin-sidebar__brand:focus-visible {
   color: s.$admin-text;
-  background: rgba(s.$admin-white, 0.13);
+  background: s.$admin-border;
 }
 
 .admin-sidebar__brand:focus-visible,
 .admin-sidebar__link:focus-visible {
-  outline: 2px solid rgba(s.$admin-white, 0.78);
+  outline: 2px solid s.$admin-text-secondary;
   outline-offset: 2px;
 }
 
@@ -64,12 +64,14 @@
 }
 
 .admin-sidebar__link {
+  width: 100%;
   min-width: 0;
   min-height: 52px;
 
   padding: 0 18px;
 
   display: flex;
+  justify-content: space-between;
   align-items: center;
 
   font-size: 17px;
@@ -78,30 +80,79 @@
   text-decoration: none;
 
   color: s.$admin-text-secondary;
+  background: transparent;
+  border: 0;
   border-radius: s.$admin-radius;
 
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
+
+  cursor: pointer;
 }
 
 .admin-sidebar__link:hover,
 .admin-sidebar__link:focus-visible {
   color: s.$admin-text;
-  background: rgba(s.$admin-white, 0.1);
+  background: s.$admin-border-soft;
 }
 
 .admin-sidebar__link--active {
   color: s.$admin-text;
-  background: rgba(s.$admin-white, 0.16);
+  background: s.$admin-border;
 }
 
 .admin-sidebar__link-label {
   min-width: 0;
 
   display: block;
+
   overflow: hidden;
 
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.admin-sidebar__group {
+  min-width: 0;
+
+  display: grid;
+  gap: 4px;
+}
+
+.admin-sidebar__group-indicator {
+  width: 18px;
+  height: 18px;
+
+  flex: 0 0 auto;
+
+  transition: transform 0.2s ease;
+  transform: rotate(0deg);
+}
+
+.admin-sidebar__group-trigger--open .admin-sidebar__group-indicator {
+  transform: rotate(180deg);
+}
+
+.admin-sidebar__subnav {
+  display: grid;
+  gap: 4px;
+}
+
+.admin-sidebar__sublink {
+  min-height: 38px;
+
+  padding: 0 18px 0 34px;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  color: s.$admin-text-muted;
+  border-radius: s.$admin-radius;
+}
+
+.admin-sidebar__sublink.admin-sidebar__link--active {
+  color: s.$admin-text;
+  background: s.$admin-border-soft;
+  box-shadow: inset 3px 0 0 s.$admin-warning;
 }
