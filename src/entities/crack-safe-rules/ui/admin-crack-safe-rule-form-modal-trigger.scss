@@ -1,0 +1,26 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-crack-safe-rule-form-modal-trigger__modal {
+  width: min(740px, 100%);
+
+  color: s.$admin-text;
+  background: s.$admin-bg-soft;
+  border: 1px solid s.$admin-border;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+}
+
+.admin-crack-safe-rule-form-modal-trigger__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.admin-crack-safe-rule-form-modal-trigger__root-error {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+
+  color: s.$admin-danger;
+}

@@ -7,8 +7,8 @@ export const adminSidebarItems = [
     end: true
   },
   {
-    title: "Rules",
-    to: `${APP_ROUTES.admin}/${APP_ROUTES.adminRules}`,
+    title: "Crack Safe Rules",
+    to: `${APP_ROUTES.admin}/${APP_ROUTES.adminCrackSafeRules}`,
     end: true
   },
   {
