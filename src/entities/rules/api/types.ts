@@ -16,7 +16,6 @@ export type CreateRulePayload = {
   jackpotPrize: RuleRewardPayload;
   semiJackpotPrize?: RuleRewardPayload;
 };
-export type CreateTodayRulePayload = Omit<CreateRulePayload, "gameDate">;
 export type UpdateRulePayload = Partial<{
   codeLength: number;
   gameDate: string;

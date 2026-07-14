@@ -12,6 +12,5 @@ export {
 } from "./lib/map-admin-rule-form-to-payload";
 export { rulesQueryKey } from "./model/rules-query";
 export { useCreateRule } from "./model/use-create-rule";
-export { useCreateTodayRule } from "./model/use-create-today-rule";
 export { useRules } from "./model/use-rules";
 export { useUpdateRule } from "./model/use-update-rule";

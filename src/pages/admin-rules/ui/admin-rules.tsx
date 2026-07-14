@@ -1,6 +1,5 @@
 import { useRules } from "@/entities/rules";
 import { AdminRuleCreateTrigger } from "@/features/admin-create-rule";
-import { AdminCreateTodayRuleButton } from "@/features/admin-create-today-rule";
 import { getErrorMessage } from "@/shared/lib/error";
 import { AdminPageHeader } from "@/shared/ui/admin-page-header";
 import { GridTable } from "@/shared/ui/grid-table";
@@ -35,7 +34,6 @@ export function AdminRules() {
         title="Rules"
         slot={
           <div className="admin-rules__actions">
-            <AdminCreateTodayRuleButton />
             <AdminRuleCreateTrigger />
           </div>
         }
