@@ -96,7 +96,8 @@ export const arTranslation = {
     open: "فتح جوائزك",
     outcomes: {
       jackpot: "الجائزة الكبرى",
-      semiJackpot: "الجائزة المركبة"
+      semiJackpot: "الجائزة المركبة",
+      consolationPrize: "جائزة ترضية"
     },
     title: "مكافآتك"
   },

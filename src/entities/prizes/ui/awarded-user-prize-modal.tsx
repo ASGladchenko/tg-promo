@@ -3,19 +3,18 @@ import { useTranslation } from "react-i18next";
 import { getLocalizedMetadataString } from "@/shared/lib/i18n";
 import { Modal } from "@/shared/ui/modal";
 
-import { type UserPrize } from "../model/types";
+import { useConsolationModalStore } from "../model/use-consolation-modal-store";
 
 import "./awarded-user-prize-modal.scss";
 
-type AwardedUserPrizeModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  prize: UserPrize | null;
-};
-
-export function AwardedUserPrizeModal({ isOpen, onClose, prize }: AwardedUserPrizeModalProps) {
+export function AwardedUserPrizeModal() {
   const { i18n, t } = useTranslation();
   const locale = i18n.resolvedLanguage ?? i18n.language;
+
+  const isOpen = useConsolationModalStore((state) => state.isOpen);
+  const onClose = useConsolationModalStore((state) => state.close);
+  const prize = useConsolationModalStore((state) => state.prize);
+
   const description = getLocalizedMetadataString(prize?.prizeData, locale, prize?.prizeData.description);
 
   return (
@@ -46,9 +45,7 @@ export function AwardedUserPrizeModal({ isOpen, onClose, prize }: AwardedUserPri
         <strong className="awarded-user-prize-modal__code">
           {prize?.promoCode ?? t("myPrizes.noPromoCode")}
         </strong>
-        <p className="awarded-user-prize-modal__description">
-          {description ?? t("myPrizes.noDescription")}
-        </p>
+        <p className="awarded-user-prize-modal__description">{description ?? t("myPrizes.noDescription")}</p>
       </div>
     </Modal>
   );

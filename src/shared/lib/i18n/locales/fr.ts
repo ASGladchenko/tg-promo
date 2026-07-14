@@ -98,7 +98,8 @@ export const frTranslation = {
     open: "Ouvrir vos prix",
     outcomes: {
       jackpot: "Jackpot",
-      semiJackpot: "Combo jackpot"
+      semiJackpot: "Combo jackpot",
+      consolationPrize: "Prix de consolation"
     },
     title: "Vos récompenses"
   },

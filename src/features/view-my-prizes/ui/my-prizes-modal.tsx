@@ -39,7 +39,7 @@ export function MyPrizesModal({ isError, isLoading, isOpen, onClose, prizes }: M
     prizes,
     selectedPrize,
     t,
-    titleId,
+    titleId
   });
 
   return (

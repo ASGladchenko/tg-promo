@@ -98,7 +98,8 @@ export const enTranslation = {
     open: "Open your prizes",
     outcomes: {
       jackpot: "Jackpot",
-      semiJackpot: "Combo jackpot"
+      semiJackpot: "Combo jackpot",
+      consolationPrize: "Consolation prize"
     },
     title: "Your rewards"
   },
