@@ -22,7 +22,7 @@ export const crackSafeSnapshotDtoSchema = z.object({
   semiJackpotWinsCount: z.number().default(0),
   semiJackpotWinsLimit: z.number(),
   startsAt: z.string(),
-  status: z.string(),
+  status: z.enum(["active", "finished"]),
   updatedAt: z.string()
 });
 

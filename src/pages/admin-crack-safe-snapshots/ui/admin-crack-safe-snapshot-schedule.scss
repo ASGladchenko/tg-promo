@@ -1,0 +1,127 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-crack-safe-snapshot-details__panel {
+  min-width: 0;
+
+  padding: 24px;
+
+  background: s.$admin-surface-dark;
+  border: 1px solid s.$admin-border-soft;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+}
+
+.admin-crack-safe-snapshot-details__panel--schedule {
+  grid-area: schedule;
+}
+
+.admin-crack-safe-snapshot-details__schedule-heading {
+  margin-bottom: 18px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.admin-crack-safe-snapshot-details__schedule-heading h2 {
+  margin: 0;
+
+  font-size: 24px;
+  line-height: 1.15;
+
+  color: s.$admin-text;
+}
+
+.admin-crack-safe-snapshot-details__schedule-heading span {
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+
+  color: s.$admin-text-muted;
+}
+
+.admin-crack-safe-snapshot-details__schedule-date--active {
+  color: s.$admin-success;
+}
+
+.admin-crack-safe-snapshot-details__schedule-date--finished {
+  color: s.$admin-danger;
+}
+
+.admin-crack-safe-snapshot-details__schedule {
+  margin: 0;
+
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.admin-crack-safe-snapshot-details__schedule-item {
+  min-width: 0;
+
+  padding: 18px 18px 18px 20px;
+
+  display: grid;
+  align-content: center;
+  gap: 10px;
+
+  background: rgba(s.$admin-text, 0.025);
+  border: 1px solid s.$admin-border-soft;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+  border-left: 4px solid s.$admin-border-soft;
+}
+
+.admin-crack-safe-snapshot-details__schedule-item--active {
+  border-left-color: s.$admin-success;
+}
+
+.admin-crack-safe-snapshot-details__schedule-item--finished {
+  border-left-color: s.$admin-danger;
+}
+
+.admin-crack-safe-snapshot-details__schedule-item dt,
+.admin-crack-safe-snapshot-details__schedule-item dd {
+  margin: 0;
+
+  overflow-wrap: anywhere;
+}
+
+.admin-crack-safe-snapshot-details__schedule-item dt {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+
+  color: s.$admin-text-muted;
+}
+
+.admin-crack-safe-snapshot-details__schedule-item dd {
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.2;
+
+  color: s.$admin-text;
+}
+
+@media (max-width: 1100px) {
+  .admin-crack-safe-snapshot-details__schedule {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .admin-crack-safe-snapshot-details__panel {
+    padding: 18px;
+  }
+
+  .admin-crack-safe-snapshot-details__schedule-heading {
+    display: grid;
+    gap: 8px;
+  }
+
+  .admin-crack-safe-snapshot-details__schedule {
+    grid-template-columns: 1fr;
+  }
+}

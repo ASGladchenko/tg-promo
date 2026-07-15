@@ -4,6 +4,8 @@ import { type getAdminCrackSafeSnapshotSemiCodes } from "../lib/get-admin-crack-
 import { type getAdminCrackSafeSnapshotUsedPromoCodes } from "../lib/get-admin-crack-safe-snapshot-used-promo-codes";
 import { AdminCrackSafeSnapshotPrizeCodeGroup } from "./admin-crack-safe-snapshot-prize-code-group";
 
+import "./admin-crack-safe-snapshot-prize-codes.scss";
+
 type AdminCrackSafeSnapshotPrizeCodesProps = {
   safeCodesCount: number;
   semiCodeGroups: ReturnType<typeof getAdminCrackSafeSnapshotSemiCodes>;

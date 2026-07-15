@@ -5,6 +5,8 @@ import { type CrackSafeSnapshot } from "@/entities/crack-safe-snapshots";
 import { formatAdminCrackSafeSnapshotWins } from "../lib/format-admin-crack-safe-snapshot-wins";
 import { isAdminCrackSafeSnapshotFinished } from "../lib/get-admin-crack-safe-snapshot-status";
 
+import "./admin-crack-safe-snapshot-overview.scss";
+
 type AdminCrackSafeSnapshotOverviewProps = {
   semiJackpotWinsCount: number;
   snapshot: CrackSafeSnapshot;

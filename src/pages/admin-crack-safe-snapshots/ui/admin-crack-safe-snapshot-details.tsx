@@ -10,6 +10,7 @@ import {
   getAdminCrackSafeSnapshotSemiCodes,
   getAdminCrackSafeSnapshotUnmatchedSemiWins
 } from "../lib/get-admin-crack-safe-snapshot-semi-codes";
+import { isAdminCrackSafeSnapshotActive } from "../lib/get-admin-crack-safe-snapshot-status";
 import { getAdminCrackSafeSnapshotUsedPromoCodes } from "../lib/get-admin-crack-safe-snapshot-used-promo-codes";
 import { AdminCrackSafeSnapshotOverview } from "./admin-crack-safe-snapshot-overview";
 import { AdminCrackSafeSnapshotPrizeCodes } from "./admin-crack-safe-snapshot-prize-codes";
@@ -17,13 +18,19 @@ import { AdminCrackSafeSnapshotSchedule } from "./admin-crack-safe-snapshot-sche
 
 import "./admin-crack-safe-snapshot-details.scss";
 
+const REFETCH_INTERVAL_ACTIVE_SNAPSHOT = 60_000;
+
 export function AdminCrackSafeSnapshotDetails() {
   const { gameDate } = useParams();
-  const historyQuery = useCrackSafeHistory();
-  const snapshotCodesQuery = useCrackSafeSnapshotCodes(gameDate);
-  const snapshotsQuery = useCrackSafeSnapshots();
+  const snapshotsQuery = useCrackSafeSnapshots(gameDate, REFETCH_INTERVAL_ACTIVE_SNAPSHOT);
 
   const snapshot = snapshotsQuery.data?.find((item) => item.gameDate === gameDate);
+  const isSnapshotActive = snapshot ? isAdminCrackSafeSnapshotActive(snapshot.status) : false;
+
+  const refetchInterval = isSnapshotActive ? REFETCH_INTERVAL_ACTIVE_SNAPSHOT : false;
+
+  const historyQuery = useCrackSafeHistory(refetchInterval);
+  const snapshotCodesQuery = useCrackSafeSnapshotCodes(gameDate, refetchInterval);
 
   const usedPromoCodes = snapshot
     ? getAdminCrackSafeSnapshotUsedPromoCodes(snapshot, snapshotCodesQuery.data)
@@ -36,12 +43,15 @@ export function AdminCrackSafeSnapshotDetails() {
   const jackpotCodes = [...(snapshotCodesQuery.data ?? [])].sort(
     (left, right) => left.sequence - right.sequence
   );
+
   const semiCodeGroups = snapshot
     ? getAdminCrackSafeSnapshotSemiCodes(snapshot, jackpotCodes, historyQuery.data)
     : [];
+
   const unmatchedSemiWins = snapshot
     ? getAdminCrackSafeSnapshotUnmatchedSemiWins(snapshot, semiCodeGroups, historyQuery.data)
     : [];
+
   const semiJackpotWinsCount = (historyQuery.data ?? []).filter(
     (item) => item.gameDate === snapshot?.gameDate && item.outcome === "semi_jackpot"
   ).length;
@@ -98,10 +108,10 @@ export function AdminCrackSafeSnapshotDetails() {
 
           <div className="admin-crack-safe-snapshot-details__grid">
             <AdminCrackSafeSnapshotPrizeCodes
-              safeCodesCount={snapshotCodesQuery.data?.length ?? 0}
               semiCodeGroups={semiCodeGroups}
-              unmatchedSemiWins={unmatchedSemiWins}
               usedPromoCodes={usedPromoCodes}
+              unmatchedSemiWins={unmatchedSemiWins}
+              safeCodesCount={snapshotCodesQuery.data?.length ?? 0}
             />
             <AdminCrackSafeSnapshotSchedule snapshot={snapshot} />
           </div>

@@ -8,6 +8,8 @@ import {
   isAdminCrackSafeSnapshotFinished
 } from "../lib/get-admin-crack-safe-snapshot-status";
 
+import "./admin-crack-safe-snapshot-schedule.scss";
+
 type AdminCrackSafeSnapshotScheduleProps = {
   snapshot: CrackSafeSnapshot;
 };

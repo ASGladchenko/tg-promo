@@ -7,6 +7,8 @@ import { type AdminCrackSafeSnapshotSemiCodeGroup } from "../lib/get-admin-crack
 import { type getAdminCrackSafeSnapshotUsedPromoCodes } from "../lib/get-admin-crack-safe-snapshot-used-promo-codes";
 import { AdminCrackSafeSnapshotSemiWinningCodeRow } from "./admin-crack-safe-snapshot-semi-winning-code-row";
 
+import "./admin-crack-safe-snapshot-prize-code-group.scss";
+
 type AdminCrackSafeSnapshotPrizeCodeGroupProps = {
   group: AdminCrackSafeSnapshotSemiCodeGroup;
   isDefaultOpen: boolean;

@@ -5,13 +5,11 @@ export type AdminSidebarLinkItem = {
   title: string;
   to: string;
 };
-
 export type AdminSidebarGroupItem = {
   basePath: string;
   children: AdminSidebarLinkItem[];
   title: string;
 };
-
 export type AdminSidebarItem = AdminSidebarGroupItem | AdminSidebarLinkItem;
 
 export const adminSidebarItems: AdminSidebarItem[] = [
@@ -32,7 +30,7 @@ export const adminSidebarItems: AdminSidebarItem[] = [
       {
         title: "Snapshots",
         to: `${APP_ROUTES.admin}/${APP_ROUTES.adminCrackSafeSnapshots}`,
-        end: true
+        end: false
       }
     ]
   },
