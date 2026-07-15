@@ -10,6 +10,7 @@ type AdminCrackSafeSnapshotPrizeCodesProps = {
   jackpotCodes: CrackSafeSnapshotCode[];
   safeCodesCount: number;
   semiCodes: ReturnType<typeof getAdminCrackSafeSnapshotSemiCodes>;
+  semiJackpotWinsCount: number;
   snapshot: CrackSafeSnapshot;
   usedPromoCodes: ReturnType<typeof getAdminCrackSafeSnapshotUsedPromoCodes>;
   wonSemiCodes: Set<string>;
@@ -19,10 +20,13 @@ export function AdminCrackSafeSnapshotPrizeCodes({
   jackpotCodes,
   safeCodesCount,
   semiCodes,
+  semiJackpotWinsCount,
   snapshot,
   usedPromoCodes,
   wonSemiCodes
 }: AdminCrackSafeSnapshotPrizeCodesProps) {
+  const semiJackpotPromoCodesCount = snapshot.semiJackpotPrize?.promoCodes.length ?? 0;
+
   return (
     <section className="admin-crack-safe-snapshot-details__panel admin-crack-safe-snapshot-details__panel--prizes">
       <div className="admin-crack-safe-snapshot-details__panel-heading">
@@ -50,10 +54,7 @@ export function AdminCrackSafeSnapshotPrizeCodes({
           <div className="admin-crack-safe-snapshot-details__prize-card-heading">
             <h3>Semi Jackpot</h3>
             <span>
-              {formatAdminCrackSafeSnapshotWins(
-                snapshot.semiJackpotWinsCount,
-                snapshot.semiJackpotWinsLimit
-              )}
+              {formatAdminCrackSafeSnapshotWins(semiJackpotWinsCount, semiJackpotPromoCodesCount)}
             </span>
           </div>
 

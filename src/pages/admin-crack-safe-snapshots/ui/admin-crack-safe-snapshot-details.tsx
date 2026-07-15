@@ -35,6 +35,9 @@ export function AdminCrackSafeSnapshotDetails() {
       .filter((item) => item.gameDate === snapshot?.gameDate && item.outcome === "semi_jackpot")
       .map((item) => item.enteredCode)
   );
+  const semiJackpotWinsCount = (historyQuery.data ?? []).filter(
+    (item) => item.gameDate === snapshot?.gameDate && item.outcome === "semi_jackpot"
+  ).length;
 
   const snapshotsErrorMessage = getErrorMessage(
     snapshotsQuery.error,
@@ -84,13 +87,17 @@ export function AdminCrackSafeSnapshotDetails() {
 
       {snapshot ? (
         <>
-          <AdminCrackSafeSnapshotOverview snapshot={snapshot} />
+          <AdminCrackSafeSnapshotOverview
+            semiJackpotWinsCount={semiJackpotWinsCount}
+            snapshot={snapshot}
+          />
 
           <div className="admin-crack-safe-snapshot-details__grid">
             <AdminCrackSafeSnapshotPrizeCodes
               jackpotCodes={jackpotCodes}
               safeCodesCount={snapshotCodesQuery.data?.length ?? 0}
               semiCodes={semiCodes}
+              semiJackpotWinsCount={semiJackpotWinsCount}
               snapshot={snapshot}
               usedPromoCodes={usedPromoCodes}
               wonSemiCodes={wonSemiCodes}

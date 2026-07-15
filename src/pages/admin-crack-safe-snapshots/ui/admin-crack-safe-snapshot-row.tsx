@@ -7,22 +7,26 @@ import { CopyIdButton } from "@/features/copy-id";
 import { APP_ROUTES } from "@/shared/config";
 
 import { formatAdminCrackSafeSnapshotDate } from "../lib/format-admin-crack-safe-snapshot-date";
-import { formatAdminCrackSafeSnapshotPrize } from "../lib/format-admin-crack-safe-snapshot-prize";
 import { formatAdminCrackSafeSnapshotWins } from "../lib/format-admin-crack-safe-snapshot-wins";
-
-import "./admin-crack-safe-snapshot-row.scss";
 
 type AdminCrackSafeSnapshotRowProps = {
   gridTemplateColumns: string;
+  semiJackpotWinsCount: number;
   snapshot: CrackSafeSnapshot;
 };
 
 export function AdminCrackSafeSnapshotRow({
+  semiJackpotWinsCount,
   snapshot,
   gridTemplateColumns
 }: AdminCrackSafeSnapshotRowProps) {
   const navigate = useNavigate();
   const rowStyle = { "--grid-table-columns": gridTemplateColumns } as CSSProperties;
+  const jackpotPromoCodesCount = snapshot.jackpotPrize?.promoCodes.length ?? 0;
+  const semiJackpotPromoCodesCount = snapshot.semiJackpotPrize?.promoCodes.length ?? 0;
+  const semiJackpotPromoCodesPerJackpot = jackpotPromoCodesCount
+    ? semiJackpotPromoCodesCount / jackpotPromoCodesCount
+    : 0;
 
   function openSnapshot() {
     navigate(
@@ -69,15 +73,11 @@ export function AdminCrackSafeSnapshotRow({
       </div>
 
       <div className="grid-table__cell" role="cell">
-        <code className="admin-crack-safe-snapshot-row__prize">
-          {formatAdminCrackSafeSnapshotPrize(snapshot.jackpotPrize)}
-        </code>
+        {jackpotPromoCodesCount}
       </div>
 
       <div className="grid-table__cell" role="cell">
-        <code className="admin-crack-safe-snapshot-row__prize">
-          {formatAdminCrackSafeSnapshotPrize(snapshot.semiJackpotPrize)}
-        </code>
+        {semiJackpotPromoCodesPerJackpot}/{semiJackpotPromoCodesCount}
       </div>
 
       <div className="grid-table__cell" role="cell">
@@ -85,7 +85,7 @@ export function AdminCrackSafeSnapshotRow({
       </div>
 
       <div className="grid-table__cell" role="cell">
-        {formatAdminCrackSafeSnapshotWins(snapshot.semiJackpotWinsCount, snapshot.semiJackpotWinsLimit)}
+        {formatAdminCrackSafeSnapshotWins(semiJackpotWinsCount, semiJackpotPromoCodesCount)}
       </div>
 
       <div className="grid-table__cell" role="cell">

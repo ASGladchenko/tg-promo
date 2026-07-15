@@ -3,10 +3,16 @@ import { type CrackSafeSnapshot } from "@/entities/crack-safe-snapshots";
 import { formatAdminCrackSafeSnapshotWins } from "../lib/format-admin-crack-safe-snapshot-wins";
 
 type AdminCrackSafeSnapshotOverviewProps = {
+  semiJackpotWinsCount: number;
   snapshot: CrackSafeSnapshot;
 };
 
-export function AdminCrackSafeSnapshotOverview({ snapshot }: AdminCrackSafeSnapshotOverviewProps) {
+export function AdminCrackSafeSnapshotOverview({
+  semiJackpotWinsCount,
+  snapshot
+}: AdminCrackSafeSnapshotOverviewProps) {
+  const semiJackpotPromoCodesCount = snapshot.semiJackpotPrize?.promoCodes.length ?? 0;
+
   return (
     <div className="admin-crack-safe-snapshot-details__overview" aria-label="Snapshot summary">
       <div className="admin-crack-safe-snapshot-details__summary-card">
@@ -32,12 +38,9 @@ export function AdminCrackSafeSnapshotOverview({ snapshot }: AdminCrackSafeSnaps
       </div>
 
       <div className="admin-crack-safe-snapshot-details__summary-card">
-        <span>Semi Wins / Jackpot</span>
+        <span>Semi Wins / All</span>
         <strong>
-          {formatAdminCrackSafeSnapshotWins(
-            snapshot.semiJackpotWinsCount,
-            snapshot.semiJackpotWinsLimit
-          )}
+          {formatAdminCrackSafeSnapshotWins(semiJackpotWinsCount, semiJackpotPromoCodesCount)}
         </strong>
       </div>
     </div>

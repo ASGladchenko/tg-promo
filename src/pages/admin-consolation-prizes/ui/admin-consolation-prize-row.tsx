@@ -28,9 +28,8 @@ export function AdminConsolationPrizeRow({
       <div className="grid-table__cell" role="cell">
         <CopyIdButton ariaLabel={`Copy consolation prize ID ${consolationPrize.id}`} id={consolationPrize.id} />
       </div>
-      <div className="grid-table__cell admin-consolation-prize-row__prize" role="cell">
-        <span>{linkedPrize?.name ?? consolationPrize.prizeId}</span>
-        <CopyIdButton ariaLabel={`Copy linked prize ID ${consolationPrize.prizeId}`} id={consolationPrize.prizeId} />
+      <div className="grid-table__cell" role="cell">
+        {linkedPrize?.name ?? consolationPrize.prizeId}
       </div>
       <div className="grid-table__cell" role="cell">{consolationPrize.promoCode}</div>
       <div className="grid-table__cell" role="cell">{consolationPrize.description || "—"}</div>

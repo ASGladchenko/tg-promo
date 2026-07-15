@@ -1,3 +1,4 @@
+import { useCrackSafeHistory } from "@/entities/crack-safe-history";
 import { useCrackSafeSnapshots } from "@/entities/crack-safe-snapshots";
 import { getErrorMessage } from "@/shared/lib/error";
 import { AdminPageHeader } from "@/shared/ui/admin-page-header";
@@ -8,23 +9,24 @@ import { AdminCrackSafeSnapshotRow } from "./admin-crack-safe-snapshot-row";
 import "./admin-crack-safe-snapshots.scss";
 
 const crackSafeSnapshotsGridTemplateColumns =
-  "minmax(100px, 1fr) minmax(80px, 0.45fr) minmax(70px, 0.45fr) minmax(40px, 0.35fr) minmax(110px, 0.8fr) minmax(110px, 0.8fr) minmax(70px, 0.45fr) minmax(70px, 0.45fr) minmax(150px, 0.75fr) minmax(150px, 0.75fr) minmax(100px, 0.75fr)";
+  "minmax(100px, 1fr) minmax(80px, 0.45fr) minmax(70px, 0.45fr) minmax(40px, 0.35fr) minmax(60px, 0.4fr) minmax(60px, 0.4fr) minmax(70px, 0.6fr) minmax(70px, 0.6fr) minmax(150px, 0.75fr) minmax(150px, 0.75fr) minmax(100px, 0.75fr)";
 
 const crackSafeSnapshotsHeader = [
   "ID",
   "Game Date",
   "Status",
   "Code Length",
-  "Jackpot Prize",
-  "Semi Prize",
+  "Jackpot",
+  "Semi / Jackpot",
   "Jackpot Wins",
-  "Semi Wins / Jackpot",
+  "Semi Wins / All",
   "Starts",
   "Ends",
   "Rules ID"
 ];
 
 export function AdminCrackSafeSnapshots() {
+  const historyQuery = useCrackSafeHistory();
   const crackSafeSnapshotsQuery = useCrackSafeSnapshots();
   const crackSafeSnapshotsErrorMessage = getErrorMessage(
     crackSafeSnapshotsQuery.error,
@@ -60,6 +62,11 @@ export function AdminCrackSafeSnapshots() {
           renderRow={(snapshot) => (
             <AdminCrackSafeSnapshotRow
               gridTemplateColumns={crackSafeSnapshotsGridTemplateColumns}
+              semiJackpotWinsCount={
+                historyQuery.data?.filter(
+                  (item) => item.gameDate === snapshot.gameDate && item.outcome === "semi_jackpot"
+                ).length ?? 0
+              }
               snapshot={snapshot}
             />
           )}
