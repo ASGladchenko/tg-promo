@@ -5,6 +5,7 @@ export const APP_ROUTES = {
   adminCrackSafe: "crack-safe",
   adminCrackSafeRules: "crack-safe/rules",
   adminCrackSafeSnapshots: "crack-safe/snapshots",
+  adminCrackSafeSnapshot: "crack-safe/snapshots/:gameDate",
   adminPrizes: "prizes",
   adminConsolation: "consolation"
 } as const;

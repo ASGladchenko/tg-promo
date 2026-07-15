@@ -1,1 +1,1 @@
-export { AdminCrackSafeSnapshots } from "./ui";
+export { AdminCrackSafeSnapshotDetails, AdminCrackSafeSnapshots } from "./ui";

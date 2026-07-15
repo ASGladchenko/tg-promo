@@ -9,6 +9,7 @@ import { APP_ROUTES } from "@/shared/config";
 import {
   LazyAdminAuthGate,
   LazyAdminConsolationPrizes,
+  LazyAdminCrackSafeSnapshotDetails,
   LazyAdminCrackSafeSnapshots,
   LazyAdminCrackSafeRules,
   LazyAdminCssLayout,
@@ -47,6 +48,7 @@ export function ProviderRoutes() {
 
             <Route path={APP_ROUTES.adminCrackSafeRules} element={<LazyAdminCrackSafeRules />} />
             <Route path={APP_ROUTES.adminCrackSafeSnapshots} element={<LazyAdminCrackSafeSnapshots />} />
+            <Route path={APP_ROUTES.adminCrackSafeSnapshot} element={<LazyAdminCrackSafeSnapshotDetails />} />
 
             <Route path={APP_ROUTES.adminConsolation} element={<LazyAdminConsolationPrizes />} />
           </Route>

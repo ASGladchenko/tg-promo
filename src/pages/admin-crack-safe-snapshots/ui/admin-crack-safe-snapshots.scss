@@ -3,15 +3,23 @@
 .admin-crack-safe-snapshots {
   min-width: 0;
 
-  display: grid;
-  gap: 18px;
+  padding: 14px 18px;
+
+  color: s.$admin-text;
 }
 
 .admin-crack-safe-snapshots__state {
   margin: 0;
+  padding: 20px;
 
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 500;
 
   color: s.$admin-text-secondary;
+  background: s.$admin-surface;
+  border-radius: s.$admin-radius;
+}
+
+.admin-crack-safe-snapshots__state--error {
+  color: s.$admin-danger;
 }

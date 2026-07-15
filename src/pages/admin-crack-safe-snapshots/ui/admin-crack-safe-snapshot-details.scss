@@ -1,0 +1,479 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-crack-safe-snapshot-details {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 1560px;
+
+  margin: 0 auto;
+  padding: 18px 24px 32px;
+
+  color: s.$admin-text;
+}
+
+.admin-crack-safe-snapshot-details__state {
+  margin: 0 0 16px;
+  padding: 18px 20px;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  color: s.$admin-text-secondary;
+  background: s.$admin-surface-dark;
+  border: 1px solid s.$admin-border-soft;
+  border-radius: s.$admin-radius;
+}
+
+.admin-crack-safe-snapshot-details__state--error {
+  color: s.$admin-danger;
+}
+
+.admin-crack-safe-snapshot-details__overview {
+  margin-bottom: 22px;
+
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.admin-crack-safe-snapshot-details__summary-card {
+  min-width: 0;
+  min-height: 110px;
+
+  padding: 20px;
+
+  display: grid;
+  align-content: center;
+  gap: 12px;
+
+  background: s.$admin-surface-dark;
+  border: 1px solid s.$admin-border-soft;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+}
+
+.admin-crack-safe-snapshot-details__summary-card span {
+  display: block;
+
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+
+  color: s.$admin-text-muted;
+}
+
+.admin-crack-safe-snapshot-details__summary-card strong {
+  min-width: 0;
+
+  overflow: hidden;
+
+  font-size: 28px;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-crack-safe-snapshot-details__summary-card mark {
+  width: fit-content;
+  max-width: 100%;
+
+  overflow: hidden;
+
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: s.$admin-success;
+  background: transparent;
+}
+
+.admin-crack-safe-snapshot-details__grid {
+  display: grid;
+  align-items: stretch;
+  gap: 22px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    "prizes prizes"
+    "schedule schedule";
+}
+
+.admin-crack-safe-snapshot-details__panel {
+  min-width: 0;
+
+  padding: 24px;
+
+  background: s.$admin-surface-dark;
+  border: 1px solid s.$admin-border-soft;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+}
+
+.admin-crack-safe-snapshot-details__panel--prizes {
+  grid-area: prizes;
+}
+
+.admin-crack-safe-snapshot-details__panel--schedule {
+  grid-area: schedule;
+}
+
+.admin-crack-safe-snapshot-details__panel-heading {
+  margin-bottom: 22px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.admin-crack-safe-snapshot-details__panel h2,
+.admin-crack-safe-snapshot-details__panel-heading h2 {
+  margin: 0;
+
+  font-size: 24px;
+  line-height: 1.15;
+
+  color: s.$admin-text;
+}
+
+.admin-crack-safe-snapshot-details__panel-heading > span {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  color: s.$admin-text-muted;
+}
+
+.admin-crack-safe-snapshot-details__panel > h2 {
+  margin-bottom: 22px;
+}
+
+.admin-crack-safe-snapshot-details__prizes {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.admin-crack-safe-snapshot-details__prize-section {
+  min-width: 0;
+
+  display: grid;
+  gap: 12px;
+  grid-template-rows: auto 1fr;
+}
+
+.admin-crack-safe-snapshot-details__prize-card {
+  min-width: 0;
+  height: 100%;
+
+  padding: 20px;
+
+  background: s.$admin-surface-dark;
+  border: 1px solid s.$admin-border-soft;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+}
+
+.admin-crack-safe-snapshot-details__prize-card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.admin-crack-safe-snapshot-details__prize-card-heading h3 {
+  margin: 0;
+
+  font-size: 18px;
+
+  color: s.$admin-text-secondary;
+}
+
+.admin-crack-safe-snapshot-details__prize-card-heading span {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.2;
+
+  color: s.$admin-text-muted;
+}
+
+.admin-crack-safe-snapshot-details__prizes code {
+  display: block;
+
+  font: inherit;
+  font-weight: 700;
+  line-height: 1.45;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+
+  color: s.$admin-text;
+}
+
+.admin-crack-safe-snapshot-details__jackpot-codes,
+.admin-crack-safe-snapshot-details__semi-codes {
+  width: 100%;
+
+  display: grid;
+}
+
+.admin-crack-safe-snapshot-details__jackpot-code,
+.admin-crack-safe-snapshot-details__semi-code {
+  min-width: 0;
+
+  padding: 9px 0;
+
+  display: grid;
+  align-items: baseline;
+  gap: 14px;
+
+  border-bottom: 1px solid s.$admin-border-soft;
+}
+
+.admin-crack-safe-snapshot-details__jackpot-code {
+  grid-template-columns: minmax(0, 1.5fr) minmax(72px, 0.55fr) minmax(0, 1fr);
+}
+
+.admin-crack-safe-snapshot-details__semi-code {
+  grid-template-columns: minmax(0, 1.5fr) minmax(72px, 0.55fr) minmax(0, 1fr);
+}
+
+.admin-crack-safe-snapshot-details__jackpot-code--head,
+.admin-crack-safe-snapshot-details__semi-code--head {
+  padding-top: 0;
+
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+
+  color: s.$admin-text-muted;
+}
+
+.admin-crack-safe-snapshot-details__jackpot-code--head span:last-child,
+.admin-crack-safe-snapshot-details__semi-code--head span:last-child {
+  text-align: right;
+}
+
+.admin-crack-safe-snapshot-details__jackpot-safe-code,
+.admin-crack-safe-snapshot-details__semi-safe-code {
+  color: s.$admin-text;
+}
+
+.admin-crack-safe-snapshot-details__semi-safe-codes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+
+.admin-crack-safe-snapshot-details__jackpot-safe-code--won,
+.admin-crack-safe-snapshot-details__semi-safe-code--won {
+  color: s.$admin-warning;
+}
+
+.admin-crack-safe-snapshot-details__semi-safe-code--expired {
+  color: s.$admin-danger;
+}
+
+.admin-crack-safe-snapshot-details__jackpot-code-promo,
+.admin-crack-safe-snapshot-details__semi-code .admin-crack-safe-snapshot-details__promo-code {
+  overflow-wrap: anywhere;
+
+  text-align: right;
+}
+
+.admin-crack-safe-snapshot-details__jackpot-code-promo--used,
+.admin-crack-safe-snapshot-details__promo-code--used {
+  text-decoration: line-through;
+
+  color: s.$admin-warning;
+}
+
+.admin-crack-safe-snapshot-details__jackpot-code-status,
+.admin-crack-safe-snapshot-details__semi-code-status {
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.admin-crack-safe-snapshot-details__jackpot-code-status {
+  color: s.$admin-text-muted;
+}
+
+.admin-crack-safe-snapshot-details__jackpot-code-status--active,
+.admin-crack-safe-snapshot-details__semi-code-status--available {
+  color: s.$admin-success;
+}
+
+.admin-crack-safe-snapshot-details__jackpot-code-status--won,
+.admin-crack-safe-snapshot-details__semi-code-status--used {
+  color: s.$admin-warning;
+}
+
+.admin-crack-safe-snapshot-details__promo-code {
+  display: block;
+
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.admin-crack-safe-snapshot-details__promo-code--expired {
+  text-decoration-style: dotted;
+
+  color: s.$admin-danger;
+}
+
+.admin-crack-safe-snapshot-details__semi-code-status--expired {
+  color: s.$admin-danger;
+}
+
+.admin-crack-safe-snapshot-details__schedule-heading {
+  margin-bottom: 18px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.admin-crack-safe-snapshot-details__schedule-heading h2 {
+  margin: 0;
+
+  font-size: 24px;
+  line-height: 1.15;
+
+  color: s.$admin-text;
+}
+
+.admin-crack-safe-snapshot-details__schedule-heading span {
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+
+  color: s.$admin-text-muted;
+}
+
+.admin-crack-safe-snapshot-details__schedule-date--active {
+  color: s.$admin-success;
+}
+
+.admin-crack-safe-snapshot-details__schedule-date--past {
+  color: s.$admin-danger;
+}
+
+.admin-crack-safe-snapshot-details__schedule {
+  margin: 0;
+
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.admin-crack-safe-snapshot-details__schedule-item {
+  min-width: 0;
+
+  padding: 18px 18px 18px 20px;
+
+  display: grid;
+  align-content: center;
+  gap: 10px;
+
+  background: rgba(s.$admin-text, 0.025);
+  border: 1px solid s.$admin-border-soft;
+  border-left: 4px solid s.$admin-border-soft;
+  border-radius: s.$admin-radius;
+}
+
+.admin-crack-safe-snapshot-details__schedule-item--active {
+  border-left-color: s.$admin-success;
+}
+
+.admin-crack-safe-snapshot-details__schedule-item--past {
+  border-left-color: s.$admin-danger;
+}
+
+.admin-crack-safe-snapshot-details__schedule-item dt,
+.admin-crack-safe-snapshot-details__schedule-item dd {
+  margin: 0;
+
+  overflow-wrap: anywhere;
+}
+
+.admin-crack-safe-snapshot-details__schedule-item dt {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+
+  color: s.$admin-text-muted;
+}
+
+.admin-crack-safe-snapshot-details__schedule-item dd {
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.2;
+
+  color: s.$admin-text;
+}
+
+@media (max-width: 1100px) {
+  .admin-crack-safe-snapshot-details__overview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-crack-safe-snapshot-details__grid,
+  .admin-crack-safe-snapshot-details__prizes {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-crack-safe-snapshot-details__grid {
+    grid-template-areas:
+      "prizes"
+      "schedule";
+  }
+
+  .admin-crack-safe-snapshot-details__schedule {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .admin-crack-safe-snapshot-details {
+    padding: 14px 16px 24px;
+  }
+
+  .admin-crack-safe-snapshot-details__overview {
+    gap: 14px;
+    grid-template-columns: 1fr;
+  }
+
+  .admin-crack-safe-snapshot-details__summary-card {
+    min-height: 96px;
+  }
+
+  .admin-crack-safe-snapshot-details__grid {
+    gap: 14px;
+  }
+
+  .admin-crack-safe-snapshot-details__panel {
+    padding: 18px;
+  }
+
+  .admin-crack-safe-snapshot-details__schedule-heading {
+    display: grid;
+    gap: 8px;
+  }
+
+  .admin-crack-safe-snapshot-details__schedule {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-crack-safe-snapshot-details__jackpot-code {
+    grid-template-columns: minmax(0, 1.5fr) minmax(72px, 0.55fr) minmax(0, 1fr);
+  }
+
+  .admin-crack-safe-snapshot-details__semi-code {
+    grid-template-columns: minmax(0, 1.5fr) minmax(72px, 0.55fr) minmax(0, 1fr);
+  }
+}

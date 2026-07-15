@@ -80,6 +80,12 @@ export function AdminCrackSafeRuleRewardFields({
               name={`${fieldName}.promoCodes`}
               placeholder={fieldName === "jackpotPrize" ? "JACKPOT-001, JACKPOT-002" : "SEMI-001, SEMI-002"}
             />
+
+            {fieldName === "semiJackpotPrize" ? (
+              <p className="admin-crack-safe-rule-reward-fields__hint">
+                Semi codes are split equally between jackpot codes.
+              </p>
+            ) : null}
           </div>
         </div>
       ) : null}

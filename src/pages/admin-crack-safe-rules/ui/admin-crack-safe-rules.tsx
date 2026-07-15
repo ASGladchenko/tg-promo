@@ -9,16 +9,14 @@ import { AdminCrackSafeRuleRow } from "./admin-crack-safe-rule-row";
 import "./admin-crack-safe-rules.scss";
 
 const crackSafeRulesGridTemplateColumns =
-  "minmax(100px, 1fr) minmax(80px, 0.4fr) minmax(40px, 0.4fr) minmax(100px, 0.8fr) minmax(100px, 0.8fr) minmax(60px, 0.4fr) minmax(60px, 0.5fr) minmax(150px, 0.75fr) minmax(150px, 0.75fr) minmax(100px, 0.4fr)";
+  "minmax(100px, 1fr) minmax(80px, 0.4fr) minmax(40px, 0.4fr) minmax(60px, 0.4fr) minmax(60px, 0.5fr) minmax(150px, 0.75fr) minmax(150px, 0.75fr) minmax(100px, 0.4fr)";
 
 const crackSafeRulesHeader = [
   "ID",
   "Game Date",
   "Code Length",
-  "Jackpot Prize",
-  "Semi Prize",
-  "Jackpot Wins",
-  "Semi Wins",
+  "Jackpot",
+  "Semi / Jackpot",
   "Created",
   "Updated",
   ""
