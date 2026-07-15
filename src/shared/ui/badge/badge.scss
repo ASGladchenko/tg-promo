@@ -1,0 +1,60 @@
+@use "@/shared/styles/admin" as a;
+
+.badge {
+  width: fit-content;
+  max-width: 100%;
+
+  padding: 4px 7px;
+
+  display: inline-flex;
+  align-items: center;
+
+  overflow: hidden;
+
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  border-radius: a.$admin-radius;
+}
+
+.badge--struck {
+  text-decoration: line-through;
+}
+
+.badge--primary {
+  color: a.$admin-white;
+  background: a.$admin-primary;
+}
+
+.badge--secondary {
+  color: a.$admin-white;
+  background: a.$admin-gray-600;
+}
+
+.badge--success {
+  color: a.$admin-white;
+  background: a.$admin-success;
+}
+
+.badge--danger {
+  color: a.$admin-white;
+  background: a.$admin-danger;
+}
+
+.badge--warning {
+  color: a.$admin-black;
+  background: a.$admin-warning;
+}
+
+.badge--light {
+  color: a.$admin-gray-900;
+  background: a.$admin-gray-100;
+}
+
+.badge--dark {
+  color: a.$admin-white;
+  background: a.$admin-topbar;
+}

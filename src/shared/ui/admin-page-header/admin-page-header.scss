@@ -6,14 +6,71 @@
 
 .admin-page-header__content {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-page-header__heading {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-page-header__back {
+  width: 32px;
+  height: 32px;
+
+  display: inline-flex;
+  flex: 0 0 auto;
+  justify-content: center;
+  align-items: center;
+
+  color: s.$admin-text;
+  border: 1px solid s.$admin-border;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+
+  transition:
+    color 0.15s ease-in-out,
+    background 0.15s ease-in-out,
+    border-color 0.15s ease-in-out;
+}
+
+.admin-page-header__back:hover {
+  color: s.$admin-white;
+  background: rgba(s.$admin-primary, 0.18);
+  border-color: s.$admin-primary;
+}
+
+.admin-page-header__back:focus-visible {
+  outline: 2px solid s.$admin-primary;
+  outline-offset: 2px;
+}
+
+.admin-page-header__back > svg {
+  width: 18px;
+  height: 18px;
+
+  transform: rotate(90deg);
 }
 
 .admin-page-header__title {
+  min-width: 0;
+
+  margin: 0;
+  padding: 0 8px 8px 0;
+
+  overflow: hidden;
+
   font-size: 20px;
   font-weight: 700;
   text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-shadow: 2px 2px 5px rgba(s.$admin-warning, 0.35);
 }
 
 .admin-page-header__divider {

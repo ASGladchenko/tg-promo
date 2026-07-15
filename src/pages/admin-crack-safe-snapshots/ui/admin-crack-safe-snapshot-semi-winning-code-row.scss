@@ -1,0 +1,79 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-crack-safe-snapshot-details__semi-winning-code {
+  min-width: 0;
+
+  padding: 6px 0;
+
+  display: grid;
+  align-items: baseline;
+  gap: 14px;
+  grid-template-columns: minmax(90px, 0.55fr) minmax(64px, 0.25fr) minmax(150px, 0.75fr);
+
+  border-bottom: 1px solid s.$admin-border-soft;
+}
+
+.admin-crack-safe-snapshot-details__semi-winning-code > span {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.admin-crack-safe-snapshot-details__semi-safe-code {
+  font-size: 15px;
+  font-weight: 800;
+
+  color: s.$admin-text;
+}
+
+.admin-crack-safe-snapshot-details__semi-safe-code--won {
+  color: s.$admin-warning;
+}
+
+.admin-crack-safe-snapshot-details__semi-code-status {
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.admin-crack-safe-snapshot-details__semi-code-status--available {
+  color: s.$admin-success;
+}
+
+.admin-crack-safe-snapshot-details__semi-code-status--used {
+  color: s.$admin-warning;
+}
+
+.admin-crack-safe-snapshot-details__issued-promo-codes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px 10px;
+}
+
+.admin-crack-safe-snapshot-details__empty-value {
+  margin: 0;
+
+  font-weight: 700;
+
+  color: s.$admin-text-muted;
+}
+
+.admin-crack-safe-snapshot-details__semi-winning-code > .admin-crack-safe-snapshot-details__empty-value {
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  .admin-crack-safe-snapshot-details__semi-winning-code {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-crack-safe-snapshot-details__issued-promo-codes {
+    justify-content: flex-start;
+  }
+
+  .admin-crack-safe-snapshot-details__semi-winning-code > .admin-crack-safe-snapshot-details__empty-value {
+    text-align: left;
+  }
+}
