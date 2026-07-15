@@ -1,32 +1,22 @@
-import { type CrackSafeSnapshot, type CrackSafeSnapshotCode } from "@/entities/crack-safe-snapshots";
+import { type CrackSafeHistoryItem } from "@/entities/crack-safe-history";
 
-import { formatAdminCrackSafeSnapshotWins } from "../lib/format-admin-crack-safe-snapshot-wins";
 import { type getAdminCrackSafeSnapshotSemiCodes } from "../lib/get-admin-crack-safe-snapshot-semi-codes";
 import { type getAdminCrackSafeSnapshotUsedPromoCodes } from "../lib/get-admin-crack-safe-snapshot-used-promo-codes";
-import { AdminCrackSafeSnapshotJackpotCodes } from "./admin-crack-safe-snapshot-jackpot-codes";
-import { AdminCrackSafeSnapshotSemiCodes } from "./admin-crack-safe-snapshot-semi-codes";
+import { AdminCrackSafeSnapshotPrizeCodeGroup } from "./admin-crack-safe-snapshot-prize-code-group";
 
 type AdminCrackSafeSnapshotPrizeCodesProps = {
-  jackpotCodes: CrackSafeSnapshotCode[];
   safeCodesCount: number;
-  semiCodes: ReturnType<typeof getAdminCrackSafeSnapshotSemiCodes>;
-  semiJackpotWinsCount: number;
-  snapshot: CrackSafeSnapshot;
+  semiCodeGroups: ReturnType<typeof getAdminCrackSafeSnapshotSemiCodes>;
+  unmatchedSemiWins: CrackSafeHistoryItem[];
   usedPromoCodes: ReturnType<typeof getAdminCrackSafeSnapshotUsedPromoCodes>;
-  wonSemiCodes: Set<string>;
 };
 
 export function AdminCrackSafeSnapshotPrizeCodes({
-  jackpotCodes,
   safeCodesCount,
-  semiCodes,
-  semiJackpotWinsCount,
-  snapshot,
-  usedPromoCodes,
-  wonSemiCodes
+  semiCodeGroups,
+  unmatchedSemiWins,
+  usedPromoCodes
 }: AdminCrackSafeSnapshotPrizeCodesProps) {
-  const semiJackpotPromoCodesCount = snapshot.semiJackpotPrize?.promoCodes.length ?? 0;
-
   return (
     <section className="admin-crack-safe-snapshot-details__panel admin-crack-safe-snapshot-details__panel--prizes">
       <div className="admin-crack-safe-snapshot-details__panel-heading">
@@ -34,37 +24,33 @@ export function AdminCrackSafeSnapshotPrizeCodes({
         <span>{safeCodesCount} safe codes</span>
       </div>
 
-      <div className="admin-crack-safe-snapshot-details__prizes">
-        <div className="admin-crack-safe-snapshot-details__prize-section">
-          <div className="admin-crack-safe-snapshot-details__prize-card-heading">
-            <h3>Jackpot</h3>
-            <span>
-              {formatAdminCrackSafeSnapshotWins(snapshot.jackpotWinsCount, snapshot.jackpotWinsLimit)}
-            </span>
+      <div className="admin-crack-safe-snapshot-details__jackpot-groups">
+        {semiCodeGroups.length ? (
+          semiCodeGroups.map((group, index) => (
+            <AdminCrackSafeSnapshotPrizeCodeGroup
+              group={group}
+              isDefaultOpen={index === 0}
+              key={group.id}
+              usedPromoCodes={usedPromoCodes}
+            />
+          ))
+        ) : (
+          <p className="admin-crack-safe-snapshot-details__empty">Snapshot safe codes are not available.</p>
+        )}
+
+        {unmatchedSemiWins.length ? (
+          <div className="admin-crack-safe-snapshot-details__unmatched-semi">
+            <h3>Unmatched semi wins</h3>
+            <div className="admin-crack-safe-snapshot-details__unmatched-semi-list">
+              {unmatchedSemiWins.map((item) => (
+                <span key={item.id}>
+                  {item.enteredCode}
+                  {item.prize?.prizeData.promoCode ? ` -> ${item.prize.prizeData.promoCode}` : ""}
+                </span>
+              ))}
+            </div>
           </div>
-
-          <AdminCrackSafeSnapshotJackpotCodes
-            jackpotCodes={jackpotCodes}
-            snapshot={snapshot}
-            usedPromoCodes={usedPromoCodes}
-          />
-        </div>
-
-        <div className="admin-crack-safe-snapshot-details__prize-section">
-          <div className="admin-crack-safe-snapshot-details__prize-card-heading">
-            <h3>Semi Jackpot</h3>
-            <span>
-              {formatAdminCrackSafeSnapshotWins(semiJackpotWinsCount, semiJackpotPromoCodesCount)}
-            </span>
-          </div>
-
-          <AdminCrackSafeSnapshotSemiCodes
-            semiCodes={semiCodes}
-            snapshot={snapshot}
-            usedPromoCodes={usedPromoCodes}
-            wonSemiCodes={wonSemiCodes}
-          />
-        </div>
+        ) : null}
       </div>
     </section>
   );

@@ -3,6 +3,10 @@ import clsx from "clsx";
 import { type CrackSafeSnapshot } from "@/entities/crack-safe-snapshots";
 
 import { formatAdminCrackSafeSnapshotDate } from "../lib/format-admin-crack-safe-snapshot-date";
+import {
+  isAdminCrackSafeSnapshotActive,
+  isAdminCrackSafeSnapshotFinished
+} from "../lib/get-admin-crack-safe-snapshot-status";
 
 type AdminCrackSafeSnapshotScheduleProps = {
   snapshot: CrackSafeSnapshot;
@@ -16,11 +20,8 @@ const scheduleItems = [
 ] as const;
 
 export function AdminCrackSafeSnapshotSchedule({ snapshot }: AdminCrackSafeSnapshotScheduleProps) {
-  const now = Date.now();
-  const startsAt = new Date(snapshot.startsAt).getTime();
-  const endsAt = new Date(snapshot.endsAt).getTime();
-  const isActive = startsAt <= now && now <= endsAt;
-  const isPast = endsAt < now;
+  const isActive = isAdminCrackSafeSnapshotActive(snapshot.status);
+  const isFinished = isAdminCrackSafeSnapshotFinished(snapshot.status);
 
   return (
     <section className="admin-crack-safe-snapshot-details__panel admin-crack-safe-snapshot-details__panel--schedule">
@@ -29,7 +30,7 @@ export function AdminCrackSafeSnapshotSchedule({ snapshot }: AdminCrackSafeSnaps
         <span
           className={clsx({
             "admin-crack-safe-snapshot-details__schedule-date--active": isActive,
-            "admin-crack-safe-snapshot-details__schedule-date--past": isPast
+            "admin-crack-safe-snapshot-details__schedule-date--finished": isFinished
           })}
         >
           {snapshot.gameDate}
@@ -41,7 +42,7 @@ export function AdminCrackSafeSnapshotSchedule({ snapshot }: AdminCrackSafeSnaps
           <div
             className={clsx("admin-crack-safe-snapshot-details__schedule-item", {
               "admin-crack-safe-snapshot-details__schedule-item--active": isActive,
-              "admin-crack-safe-snapshot-details__schedule-item--past": isPast
+              "admin-crack-safe-snapshot-details__schedule-item--finished": isFinished
             })}
             key={item.field}
           >

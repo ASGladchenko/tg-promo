@@ -6,7 +6,10 @@ import { APP_ROUTES } from "@/shared/config";
 import { getErrorMessage } from "@/shared/lib/error";
 import { AdminPageHeader } from "@/shared/ui/admin-page-header";
 
-import { getAdminCrackSafeSnapshotSemiCodes } from "../lib/get-admin-crack-safe-snapshot-semi-codes";
+import {
+  getAdminCrackSafeSnapshotSemiCodes,
+  getAdminCrackSafeSnapshotUnmatchedSemiWins
+} from "../lib/get-admin-crack-safe-snapshot-semi-codes";
 import { getAdminCrackSafeSnapshotUsedPromoCodes } from "../lib/get-admin-crack-safe-snapshot-used-promo-codes";
 import { AdminCrackSafeSnapshotOverview } from "./admin-crack-safe-snapshot-overview";
 import { AdminCrackSafeSnapshotPrizeCodes } from "./admin-crack-safe-snapshot-prize-codes";
@@ -24,17 +27,21 @@ export function AdminCrackSafeSnapshotDetails() {
 
   const usedPromoCodes = snapshot
     ? getAdminCrackSafeSnapshotUsedPromoCodes(snapshot, snapshotCodesQuery.data)
-    : { expiredSemiJackpot: new Set<string>(), jackpot: new Set<string>(), semiJackpot: new Set<string>() };
-  const jackpotCodes = [...(snapshotCodesQuery.data ?? [])].sort((left, right) => left.sequence - right.sequence);
-  const semiCodes = getAdminCrackSafeSnapshotSemiCodes(
-    jackpotCodes,
-    snapshot?.semiJackpotPrize?.promoCodes ?? []
+    : {
+        expiredJackpot: new Set<string>(),
+        expiredSemiJackpot: new Set<string>(),
+        jackpot: new Set<string>(),
+        semiJackpot: new Set<string>()
+      };
+  const jackpotCodes = [...(snapshotCodesQuery.data ?? [])].sort(
+    (left, right) => left.sequence - right.sequence
   );
-  const wonSemiCodes = new Set(
-    (historyQuery.data ?? [])
-      .filter((item) => item.gameDate === snapshot?.gameDate && item.outcome === "semi_jackpot")
-      .map((item) => item.enteredCode)
-  );
+  const semiCodeGroups = snapshot
+    ? getAdminCrackSafeSnapshotSemiCodes(snapshot, jackpotCodes, historyQuery.data)
+    : [];
+  const unmatchedSemiWins = snapshot
+    ? getAdminCrackSafeSnapshotUnmatchedSemiWins(snapshot, semiCodeGroups, historyQuery.data)
+    : [];
   const semiJackpotWinsCount = (historyQuery.data ?? []).filter(
     (item) => item.gameDate === snapshot?.gameDate && item.outcome === "semi_jackpot"
   ).length;
@@ -87,20 +94,14 @@ export function AdminCrackSafeSnapshotDetails() {
 
       {snapshot ? (
         <>
-          <AdminCrackSafeSnapshotOverview
-            semiJackpotWinsCount={semiJackpotWinsCount}
-            snapshot={snapshot}
-          />
+          <AdminCrackSafeSnapshotOverview semiJackpotWinsCount={semiJackpotWinsCount} snapshot={snapshot} />
 
           <div className="admin-crack-safe-snapshot-details__grid">
             <AdminCrackSafeSnapshotPrizeCodes
-              jackpotCodes={jackpotCodes}
               safeCodesCount={snapshotCodesQuery.data?.length ?? 0}
-              semiCodes={semiCodes}
-              semiJackpotWinsCount={semiJackpotWinsCount}
-              snapshot={snapshot}
+              semiCodeGroups={semiCodeGroups}
+              unmatchedSemiWins={unmatchedSemiWins}
               usedPromoCodes={usedPromoCodes}
-              wonSemiCodes={wonSemiCodes}
             />
             <AdminCrackSafeSnapshotSchedule snapshot={snapshot} />
           </div>

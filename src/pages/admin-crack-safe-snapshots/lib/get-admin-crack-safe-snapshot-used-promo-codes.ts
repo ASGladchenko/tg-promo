@@ -1,10 +1,13 @@
 import { type CrackSafeSnapshot, type CrackSafeSnapshotCode } from "@/entities/crack-safe-snapshots";
 
+import { isAdminCrackSafeSnapshotFinished } from "./get-admin-crack-safe-snapshot-status";
+
 export function getAdminCrackSafeSnapshotUsedPromoCodes(
   snapshot: CrackSafeSnapshot,
   codes: CrackSafeSnapshotCode[] | undefined
 ) {
   const jackpot = new Set<string>();
+  const expiredJackpot = new Set<string>();
   const semiJackpot = new Set<string>();
   const expiredSemiJackpot = new Set<string>();
 
@@ -27,5 +30,19 @@ export function getAdminCrackSafeSnapshotUsedPromoCodes(
     });
   });
 
-  return { expiredSemiJackpot, jackpot, semiJackpot };
+  if (isAdminCrackSafeSnapshotFinished(snapshot.status)) {
+    snapshot.jackpotPrize?.promoCodes.forEach((promoCode) => {
+      if (!jackpot.has(promoCode)) {
+        expiredJackpot.add(promoCode);
+      }
+    });
+
+    snapshot.semiJackpotPrize?.promoCodes.forEach((promoCode) => {
+      if (!semiJackpot.has(promoCode)) {
+        expiredSemiJackpot.add(promoCode);
+      }
+    });
+  }
+
+  return { expiredJackpot, expiredSemiJackpot, jackpot, semiJackpot };
 }

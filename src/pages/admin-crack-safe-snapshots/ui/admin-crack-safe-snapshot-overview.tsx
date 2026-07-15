@@ -1,6 +1,9 @@
+import clsx from "clsx";
+
 import { type CrackSafeSnapshot } from "@/entities/crack-safe-snapshots";
 
 import { formatAdminCrackSafeSnapshotWins } from "../lib/format-admin-crack-safe-snapshot-wins";
+import { isAdminCrackSafeSnapshotFinished } from "../lib/get-admin-crack-safe-snapshot-status";
 
 type AdminCrackSafeSnapshotOverviewProps = {
   semiJackpotWinsCount: number;
@@ -12,6 +15,7 @@ export function AdminCrackSafeSnapshotOverview({
   snapshot
 }: AdminCrackSafeSnapshotOverviewProps) {
   const semiJackpotPromoCodesCount = snapshot.semiJackpotPrize?.promoCodes.length ?? 0;
+  const isFinishedStatus = isAdminCrackSafeSnapshotFinished(snapshot.status);
 
   return (
     <div className="admin-crack-safe-snapshot-details__overview" aria-label="Snapshot summary">
@@ -22,7 +26,13 @@ export function AdminCrackSafeSnapshotOverview({
 
       <div className="admin-crack-safe-snapshot-details__summary-card">
         <span>Status</span>
-        <mark>{snapshot.status}</mark>
+        <mark
+          className={clsx({
+            "admin-crack-safe-snapshot-details__summary-status--finished": isFinishedStatus
+          })}
+        >
+          {snapshot.status}
+        </mark>
       </div>
 
       <div className="admin-crack-safe-snapshot-details__summary-card">

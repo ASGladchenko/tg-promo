@@ -1,4 +1,7 @@
-import { type CrackSafeSnapshotCode } from "@/entities/crack-safe-snapshots";
+import { type CrackSafeHistoryItem } from "@/entities/crack-safe-history";
+import { type CrackSafeSnapshot, type CrackSafeSnapshotCode } from "@/entities/crack-safe-snapshots";
+
+import { isAdminCrackSafeSnapshotFinished } from "./get-admin-crack-safe-snapshot-status";
 
 function getCodePermutations(code: string) {
   const result = new Set<string>();
@@ -20,12 +23,20 @@ function getCodePermutations(code: string) {
   return [...result];
 }
 
-function splitCodesByPromoCodes(codes: string[], promoCodesCount: number) {
-  let offset = 0;
-  const baseSize = Math.floor(codes.length / promoCodesCount);
-  const extraCodesCount = codes.length % promoCodesCount;
+function isString(value: string | undefined): value is string {
+  return typeof value === "string";
+}
 
-  return Array.from({ length: promoCodesCount }, (_, index) => {
+function splitCodesByGroups(codes: string[], groupsCount: number) {
+  if (!groupsCount) {
+    return [];
+  }
+
+  let offset = 0;
+  const baseSize = Math.floor(codes.length / groupsCount);
+  const extraCodesCount = codes.length % groupsCount;
+
+  return Array.from({ length: groupsCount }, (_, index) => {
     const size = baseSize + (index < extraCodesCount ? 1 : 0);
     const chunk = codes.slice(offset, offset + size);
 
@@ -36,28 +47,77 @@ function splitCodesByPromoCodes(codes: string[], promoCodesCount: number) {
 }
 
 export function getAdminCrackSafeSnapshotSemiCodes(
+  snapshot: CrackSafeSnapshot,
   codes: CrackSafeSnapshotCode[] | undefined,
-  semiPromoCodes: string[]
+  history: CrackSafeHistoryItem[] | undefined
 ) {
   const jackpotCodes = codes ?? [];
+  const jackpotCodesBySequence = new Map(jackpotCodes.map((code) => [code.sequence, code]));
+  const jackpotPromoCodes = snapshot.jackpotPrize?.promoCodes ?? [];
+  const semiPromoCodes = snapshot.semiJackpotPrize?.promoCodes ?? [];
+  const isFinished = isAdminCrackSafeSnapshotFinished(snapshot.status);
+  const semiWins = (history ?? []).filter(
+    (item) => item.gameDate === snapshot.gameDate && item.outcome === "semi_jackpot"
+  );
+  const groupsCount = Math.max(jackpotCodes.length, jackpotPromoCodes.length);
+  const semiPromoCodeGroups = splitCodesByGroups(semiPromoCodes, groupsCount);
 
-  if (!jackpotCodes.length || semiPromoCodes.length % jackpotCodes.length !== 0) {
-    return [];
-  }
+  return Array.from({ length: groupsCount }, (_, index) => {
+    const sequence = index + 1;
+    const jackpotCode = jackpotCodesBySequence.get(sequence);
+    const semiWinningCodes = jackpotCode ? getCodePermutations(jackpotCode.code) : [];
+    const semiWinningCodeSet = new Set(semiWinningCodes);
+    const issuedSemiWins = semiWins.filter((item) => semiWinningCodeSet.has(item.enteredCode));
+    const groupSemiPromoCodes = semiPromoCodeGroups[index] ?? [];
+    const issuedPromoCodes = issuedSemiWins.map((item) => item.prize?.prizeData.promoCode).filter(isString);
+    const expiredSemiPromoCodeSet = new Set(jackpotCode?.expiredSemiJackpotCodes ?? []);
 
-  const promoCodesPerJackpot = semiPromoCodes.length / jackpotCodes.length;
+    if (isFinished) {
+      groupSemiPromoCodes.forEach((promoCode) => {
+        if (!issuedPromoCodes.includes(promoCode)) {
+          expiredSemiPromoCodeSet.add(promoCode);
+        }
+      });
+    }
 
-  return jackpotCodes.flatMap((jackpotCode, jackpotCodeIndex) => {
-    const permutations = getCodePermutations(jackpotCode.code);
-    const jackpotPromoCodes = semiPromoCodes.slice(
-      jackpotCodeIndex * promoCodesPerJackpot,
-      (jackpotCodeIndex + 1) * promoCodesPerJackpot
-    );
-    const codeChunks = splitCodesByPromoCodes(permutations, jackpotPromoCodes.length);
+    return {
+      expiredSemiPromoCodes: [...expiredSemiPromoCodeSet],
+      id: jackpotCode?.id ?? `pending-jackpot-${sequence}`,
+      issuedSemiCount: issuedSemiWins.length,
+      jackpotCode,
+      jackpotPromoCode: jackpotPromoCodes[index] ?? null,
+      sequence,
+      semiPromoCodes: groupSemiPromoCodes,
+      semiCodes: semiWinningCodes.map((code) => {
+        const issued = issuedSemiWins.filter((item) => item.enteredCode === code);
 
-    return jackpotPromoCodes.map((promoCode, index) => ({
-      codes: codeChunks[index] ?? [],
-      promoCode
-    }));
+        return {
+          code,
+          issuedPromoCodes: issued.map((item) => item.prize?.prizeData.promoCode).filter(isString),
+          winsCount: issued.length
+        };
+      })
+    };
   });
 }
+
+export function getAdminCrackSafeSnapshotUnmatchedSemiWins(
+  snapshot: CrackSafeSnapshot,
+  groups: ReturnType<typeof getAdminCrackSafeSnapshotSemiCodes>,
+  history: CrackSafeHistoryItem[] | undefined
+) {
+  const knownSemiCodes = new Set(groups.flatMap((group) => group.semiCodes.map((semiCode) => semiCode.code)));
+
+  return (history ?? []).filter(
+    (item) =>
+      item.gameDate === snapshot.gameDate &&
+      item.outcome === "semi_jackpot" &&
+      !knownSemiCodes.has(item.enteredCode)
+  );
+}
+
+export type AdminCrackSafeSnapshotSemiCodeGroup = ReturnType<
+  typeof getAdminCrackSafeSnapshotSemiCodes
+>[number];
+
+export type AdminCrackSafeSnapshotSemiWinningCode = AdminCrackSafeSnapshotSemiCodeGroup["semiCodes"][number];
