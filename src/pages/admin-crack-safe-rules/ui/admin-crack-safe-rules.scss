@@ -26,6 +26,14 @@
   --grid-table-min-width: 740px;
 }
 
+.admin-crack-safe-rules__table .grid-table__header {
+  column-gap: 20px;
+}
+
+.admin-crack-safe-rules__table .grid-table__header-item {
+  padding: 10px 0;
+}
+
 .admin-crack-safe-rules__actions {
   display: flex;
   align-items: flex-start;

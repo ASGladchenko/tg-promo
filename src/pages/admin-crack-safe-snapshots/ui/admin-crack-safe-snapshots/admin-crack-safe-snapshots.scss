@@ -25,3 +25,11 @@
 .snapshots-page__table {
   --grid-table-min-width: 920px;
 }
+
+.snapshots-page__table .grid-table__header {
+  column-gap: 20px;
+}
+
+.snapshots-page__table .grid-table__header-item {
+  padding: 10px 0;
+}

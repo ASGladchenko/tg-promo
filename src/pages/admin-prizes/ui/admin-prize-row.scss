@@ -6,6 +6,7 @@
 
   display: grid;
   align-items: center;
+  column-gap: 20px;
   grid-template-columns: var(--grid-table-columns);
 
   border-bottom: 1px solid s.$admin-border;
@@ -18,7 +19,7 @@
 .prize-row__cell {
   min-width: 0;
 
-  padding: 10px;
+  padding: 10px 0;
 
   overflow: hidden;
 

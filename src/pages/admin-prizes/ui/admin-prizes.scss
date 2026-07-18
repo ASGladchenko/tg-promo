@@ -25,3 +25,11 @@
 .admin-prizes__table {
   --grid-table-min-width: 1320px;
 }
+
+.admin-prizes__table .grid-table__header {
+  column-gap: 20px;
+}
+
+.admin-prizes__table .grid-table__header-item {
+  padding: 10px 0;
+}

@@ -51,8 +51,6 @@
 .grid-table__header-item {
   min-width: 0;
 
-  padding: 10px;
-
   overflow: hidden;
 
   font-size: 18px;
@@ -81,7 +79,7 @@
 .grid-table__empty-content {
   min-width: 0;
 
-  padding: 28px 10px 0;
+  padding: 28px 0 0;
 
   grid-column: 1 / -1;
 
