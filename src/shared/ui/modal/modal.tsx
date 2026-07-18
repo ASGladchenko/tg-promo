@@ -9,11 +9,12 @@ type ModalProps = {
   ariaLabel: string;
   children: ReactNode;
   className?: string;
+  hasOverlay?: boolean;
   isOpen: boolean;
   onClose: () => void;
 };
 
-export function Modal({ isOpen, onClose, children, ariaLabel, className }: ModalProps) {
+export function Modal({ isOpen, onClose, children, ariaLabel, className, hasOverlay = false }: ModalProps) {
   useEffect(() => {
     if (!isOpen || typeof document === "undefined") {
       return;
@@ -45,7 +46,12 @@ export function Modal({ isOpen, onClose, children, ariaLabel, className }: Modal
   }
 
   return createPortal(
-    <div className="modal" onClick={onClose}>
+    <div
+      className={clsx("modal", {
+        "modal--overlay": hasOverlay
+      })}
+      onClick={onClose}
+    >
       <div
         className={clsx("modal__content", className)}
         role="dialog"

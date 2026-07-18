@@ -41,7 +41,18 @@ export const adminSidebarItems: AdminSidebarItem[] = [
   },
   {
     title: "Settings",
-    to: `${APP_ROUTES.admin}/${APP_ROUTES.adminSettings}`,
-    end: true
+    basePath: `${APP_ROUTES.admin}/${APP_ROUTES.adminSettings}`,
+    children: [
+      {
+        title: "General",
+        to: `${APP_ROUTES.admin}/${APP_ROUTES.adminSettings}`,
+        end: true
+      },
+      {
+        title: "AI settings",
+        to: `${APP_ROUTES.admin}/${APP_ROUTES.adminSettingsAi}`,
+        end: true
+      }
+    ]
   }
 ];

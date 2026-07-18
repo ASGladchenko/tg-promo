@@ -75,6 +75,7 @@ export function AdminPrizeFormModalTrigger({
         isOpen={isModalOpen}
         onClose={closeModal}
         ariaLabel={modalAriaLabel}
+        hasOverlay
         className="admin-prize-form-modal-trigger__modal"
       >
         <AdminModalForm<AdminPrizeFormState>
@@ -99,7 +100,7 @@ export function AdminPrizeFormModalTrigger({
               Cancel
             </ButtonBase>
 
-            <ButtonLoading type="submit" variant="dark" disabled={isFormPending} isLoading={isFormPending}>
+            <ButtonLoading type="submit" variant="primary" disabled={isFormPending} isLoading={isFormPending}>
               <span>{submitLabel}</span>
             </ButtonLoading>
           </div>

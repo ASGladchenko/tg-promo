@@ -16,19 +16,6 @@
   box-shadow: s.$admin-shadow;
 }
 
-.grid-table::after {
-  content: "";
-
-  position: absolute;
-  top: 64px;
-  right: 20px;
-  left: 20px;
-
-  height: 1px;
-
-  background: s.$admin-border;
-}
-
 .grid-table__scroll {
   min-width: 0;
 
@@ -37,6 +24,7 @@
 
   overflow-x: auto;
   overflow-y: hidden;
+  outline: none;
 }
 
 .grid-table__scroll.admin-hover-scrollbar {
@@ -56,6 +44,8 @@
   display: grid;
   align-items: center;
   grid-template-columns: var(--grid-table-columns);
+
+  border-bottom: 1px solid s.$admin-border;
 }
 
 .grid-table__header-item {

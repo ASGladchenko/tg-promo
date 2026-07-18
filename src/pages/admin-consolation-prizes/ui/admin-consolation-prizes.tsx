@@ -35,11 +35,12 @@ export function AdminConsolationPrizes() {
 
       {consolationPrizesQuery.data && prizesQuery.data ? (
         <GridTable
-          ariaLabel="Consolation prizes"
           header={header}
+          ariaLabel="Consolation prizes"
           items={consolationPrizesQuery.data}
-          emptyMessage="No consolation prizes found"
           gridTemplateColumns={gridTemplateColumns}
+          emptyMessage="No consolation prizes found"
+          className="admin-consolation-prizes__table"
           renderRow={(consolationPrize) => (
             <AdminConsolationPrizeRow
               consolationPrize={consolationPrize}

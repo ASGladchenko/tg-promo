@@ -1,0 +1,27 @@
+@use "@/shared/styles/admin" as s;
+
+.provider-form {
+  width: min(100%, 520px);
+
+  color: s.$admin-text;
+  background: s.$admin-bg-soft;
+  border: 1px solid s.$admin-border;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+}
+
+.provider-form__root-error {
+  margin: 0;
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+
+  color: s.$admin-danger;
+}
+
+.provider-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

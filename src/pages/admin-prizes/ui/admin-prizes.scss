@@ -21,3 +21,7 @@
 .admin-prizes__state--error {
   color: s.$admin-danger;
 }
+
+.admin-prizes__table {
+  --grid-table-min-width: 1320px;
+}

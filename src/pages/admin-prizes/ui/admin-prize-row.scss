@@ -8,7 +8,11 @@
   align-items: center;
   grid-template-columns: var(--grid-table-columns);
 
-  border-top: 1px solid s.$admin-border;
+  border-bottom: 1px solid s.$admin-border;
+}
+
+.prize-row:last-child {
+  border-bottom: 0;
 }
 
 .prize-row__cell {

@@ -32,11 +32,11 @@
 }
 
 .admin-profile-menu__trigger:hover,
+.admin-profile-menu__trigger:focus-visible,
 .admin-profile-menu__trigger--open {
   background: s.$admin-surface-dark;
 }
 
 .admin-profile-menu__trigger:focus-visible {
-  outline: 1px solid s.$admin-white;
-  outline-offset: 1px;
+  outline: none;
 }

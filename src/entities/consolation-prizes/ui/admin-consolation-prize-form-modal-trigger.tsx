@@ -68,6 +68,7 @@ export function AdminConsolationPrizeFormModalTrigger({
         isOpen={isModalOpen}
         onClose={closeModal}
         ariaLabel={modalAriaLabel}
+        hasOverlay
         className="admin-consolation-prize-form-modal-trigger__modal"
       >
         <AdminModalForm<AdminConsolationPrizeFormState>
@@ -89,7 +90,7 @@ export function AdminConsolationPrizeFormModalTrigger({
             <ButtonBase type="button" onClick={closeModal} disabled={isFormPending} variant="danger">
               Cancel
             </ButtonBase>
-            <ButtonLoading type="submit" variant="dark" disabled={isFormPending} isLoading={isFormPending}>
+            <ButtonLoading type="submit" variant="primary" disabled={isFormPending} isLoading={isFormPending}>
               <span>{submitLabel}</span>
             </ButtonLoading>
           </div>

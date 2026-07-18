@@ -1,12 +1,12 @@
 @use "@/shared/styles/admin" as s;
 
-.admin-crack-safe-snapshots {
+.snapshots-page {
   min-width: 0;
 
   color: s.$admin-text;
 }
 
-.admin-crack-safe-snapshots__state {
+.snapshots-page__state {
   margin: 0;
   padding: 20px;
 
@@ -18,6 +18,10 @@
   border-radius: s.$admin-radius;
 }
 
-.admin-crack-safe-snapshots__state--error {
+.snapshots-page__state--error {
   color: s.$admin-danger;
+}
+
+.snapshots-page__table {
+  --grid-table-min-width: 920px;
 }

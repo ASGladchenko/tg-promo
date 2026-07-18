@@ -8,7 +8,11 @@
   align-items: center;
   grid-template-columns: var(--grid-table-columns);
 
-  border-top: 1px solid s.$admin-border;
+  border-bottom: 1px solid s.$admin-border;
+}
+
+.consolation-row:last-child {
+  border-bottom: 0;
 }
 
 .consolation-row__cell {

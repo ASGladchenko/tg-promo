@@ -39,6 +39,7 @@ export function AdminPrizes() {
           header={prizesHeader}
           items={prizesQuery.data}
           emptyMessage="No prizes found"
+          className="admin-prizes__table"
           gridTemplateColumns={prizesGridTemplateColumns}
           renderRow={(prize) => (
             <AdminPrizeRow gridTemplateColumns={prizesGridTemplateColumns} prize={prize} />

@@ -13,6 +13,10 @@
   border-bottom: 1px solid s.$admin-border-soft;
 }
 
+.snapshot-details__semi-winning-code:last-child {
+  border-bottom: 0;
+}
+
 .snapshot-details__semi-winning-code > span {
   min-width: 0;
 

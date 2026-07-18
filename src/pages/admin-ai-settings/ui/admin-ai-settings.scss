@@ -17,3 +17,11 @@
   background: s.$admin-surface;
   border-radius: s.$admin-radius;
 }
+
+.admin-ai-settings__state--error {
+  color: s.$admin-danger;
+}
+
+.admin-ai-settings__table {
+  --grid-table-min-width: 1210px;
+}

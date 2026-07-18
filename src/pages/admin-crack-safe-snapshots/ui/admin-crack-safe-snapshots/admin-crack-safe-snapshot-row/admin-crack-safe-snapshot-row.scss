@@ -8,19 +8,23 @@
   align-items: center;
   grid-template-columns: var(--grid-table-columns);
 
-  border-top: 1px solid s.$admin-border;
+  border-bottom: 1px solid s.$admin-border;
   cursor: pointer;
 
   transition: background 0.15s ease-in-out;
 }
 
-.snapshot-row:hover {
+.snapshot-row:last-child {
+  border-bottom: 0;
+}
+
+.snapshot-row:hover,
+.snapshot-row:focus-visible {
   background: rgb(255 255 255 / 4%);
 }
 
 .snapshot-row:focus-visible {
-  outline: 2px solid s.$admin-primary;
-  outline-offset: -2px;
+  outline: none;
 }
 
 .snapshot-row__cell {

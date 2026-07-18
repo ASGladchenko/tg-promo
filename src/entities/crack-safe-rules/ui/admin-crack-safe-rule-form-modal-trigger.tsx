@@ -77,6 +77,7 @@ export function AdminCrackSafeRuleFormModalTrigger({
         isOpen={isModalOpen}
         onClose={closeModal}
         ariaLabel={modalAriaLabel}
+        hasOverlay
         className="admin-crack-safe-rule-form-modal-trigger__modal"
       >
         <AdminModalForm<AdminCrackSafeRuleFormState>
@@ -105,7 +106,7 @@ export function AdminCrackSafeRuleFormModalTrigger({
               Cancel
             </ButtonBase>
 
-            <ButtonLoading type="submit" variant="dark" disabled={isFormPending} isLoading={isFormPending}>
+            <ButtonLoading type="submit" variant="primary" disabled={isFormPending} isLoading={isFormPending}>
               <span>{submitLabel}</span>
             </ButtonLoading>
           </div>

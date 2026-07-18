@@ -35,8 +35,8 @@ export function AdminCrackSafeRuleCreateTrigger() {
       renderTrigger={({ isPending: isTriggerPending, openModal }) => (
         <ButtonBase
           type="button"
-          aria-haspopup="dialog"
           onClick={openModal}
+          aria-haspopup="dialog"
           disabled={isTriggerPending || prizesQuery.isError}
         >
           Add Rule

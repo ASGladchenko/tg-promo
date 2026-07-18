@@ -1,0 +1,39 @@
+@use "@/shared/styles/admin" as s;
+
+.ai-provider-row {
+  width: 100%;
+  min-width: 100%;
+
+  display: grid;
+  align-items: center;
+  grid-template-columns: var(--grid-table-columns);
+
+  border-bottom: 1px solid s.$admin-border;
+}
+
+.ai-provider-row:last-child {
+  border-bottom: 0;
+}
+
+.ai-provider-row__cell {
+  min-width: 0;
+
+  padding: 10px;
+
+  overflow: hidden;
+
+  font-size: 18px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ai-provider-row__cell > * {
+  min-width: 0;
+}
+
+.ai-provider-row__selected--active {
+  font-weight: 700;
+
+  color: s.$admin-success;
+}

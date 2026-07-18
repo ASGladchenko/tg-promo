@@ -41,15 +41,15 @@
     border-color 0.15s ease-in-out;
 }
 
-.admin-page-header__back:hover {
+.admin-page-header__back:hover,
+.admin-page-header__back:focus-visible {
   color: s.$admin-white;
   background: rgba(s.$admin-primary, 0.18);
   border-color: s.$admin-primary;
 }
 
 .admin-page-header__back:focus-visible {
-  outline: 2px solid s.$admin-primary;
-  outline-offset: 2px;
+  outline: none;
 }
 
 .admin-page-header__back > svg {

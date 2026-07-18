@@ -20,6 +20,7 @@
   border: 1px solid a.$admin-text-disabled;
   border-radius: s.$radius-sm;
   box-shadow: a.$admin-shadow;
+  outline: none;
 
   transition: all 0.2s ease-in-out;
 
@@ -30,6 +31,11 @@
   }
 
   &:not(:disabled):hover {
+    background: a.$admin-border-strong;
+    border-color: a.$admin-text-muted;
+  }
+
+  &:not(:disabled):focus-visible {
     background: a.$admin-border-strong;
     border-color: a.$admin-text-muted;
   }

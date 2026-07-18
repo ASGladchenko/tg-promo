@@ -34,18 +34,18 @@ export function AdminCrackSafeSnapshots() {
   );
 
   return (
-    <section className="admin-crack-safe-snapshots">
+    <section className="snapshots-page">
       <AdminPageHeader title="Crack Safe Snapshots" />
 
       {crackSafeSnapshotsQuery.isLoading ? (
-        <p className="admin-crack-safe-snapshots__state" aria-live="polite">
+        <p className="snapshots-page__state" aria-live="polite">
           Loading Crack Safe snapshots...
         </p>
       ) : null}
 
       {crackSafeSnapshotsQuery.isError ? (
         <p
-          className="admin-crack-safe-snapshots__state admin-crack-safe-snapshots__state--error"
+          className="snapshots-page__state snapshots-page__state--error"
           role="alert"
         >
           Failed to load Crack Safe snapshots. {crackSafeSnapshotsErrorMessage}
@@ -55,6 +55,7 @@ export function AdminCrackSafeSnapshots() {
       {crackSafeSnapshotsQuery.data ? (
         <GridTable
           ariaLabel="Crack Safe Snapshots"
+          className="snapshots-page__table"
           header={crackSafeSnapshotsHeader}
           items={crackSafeSnapshotsQuery.data}
           emptyMessage="No Crack Safe snapshots found"
