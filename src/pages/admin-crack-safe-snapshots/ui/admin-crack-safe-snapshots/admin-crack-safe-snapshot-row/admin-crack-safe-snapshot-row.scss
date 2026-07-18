@@ -9,9 +9,10 @@
   grid-template-columns: var(--grid-table-columns);
 
   border-bottom: 1px solid s.$admin-border;
-  cursor: pointer;
 
   transition: background 0.15s ease-in-out;
+
+  cursor: pointer;
 }
 
 .snapshot-row:last-child {
@@ -34,9 +35,6 @@
 
   overflow: hidden;
 
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.2;
   text-overflow: ellipsis;
   white-space: nowrap;
 }

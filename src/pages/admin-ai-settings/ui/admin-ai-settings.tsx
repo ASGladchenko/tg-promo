@@ -10,7 +10,7 @@ import { AdminAiProviderRow } from "./admin-ai-provider-row";
 import "./admin-ai-settings.scss";
 
 const aiProvidersGridTemplateColumns =
-  "minmax(160px, 0.8fr) minmax(180px, 0.8fr) minmax(260px, 1.4fr) minmax(100px, 0.5fr) minmax(160px, 0.8fr) minmax(90px, 0.45fr) minmax(100px, 0.5fr) minmax(160px, 0.8fr)";
+  "minmax(160px, 0.8fr) minmax(100px, 0.6fr) minmax(260px, 1.4fr) minmax(120px, 0.5fr) minmax(160px, 0.8fr) minmax(120px, 0.5fr) minmax(100px, 0.5fr) minmax(160px, 0.8fr)";
 
 const aiProvidersHeader = [
   "Name",

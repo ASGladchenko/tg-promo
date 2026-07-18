@@ -42,10 +42,10 @@ export function AdminModalForm<TFormValues extends FieldValues>({
 
           <button
             type="button"
-            className="admin-modal-form__close"
-            aria-label={closeAriaLabel}
             onClick={onClose}
             disabled={isCloseDisabled}
+            aria-label={closeAriaLabel}
+            className="admin-modal-form__close"
           >
             <span className="admin-modal-form__close-icon" aria-hidden="true" />
           </button>

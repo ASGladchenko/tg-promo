@@ -22,9 +22,6 @@
 
   overflow: hidden;
 
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.2;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -37,7 +34,7 @@
   min-width: 0;
 
   display: inline-flex;
-  align-items: center;
   justify-content: flex-end;
+  align-items: center;
   gap: 8px;
 }

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { AdminModalForm } from "@/shared/ui/admin-modal-form";
+import { AdminModalForm, AdminModalFormRootError } from "@/shared/ui/admin-modal-form";
 import { ButtonBase } from "@/shared/ui/button-base";
 import { ButtonLoading } from "@/shared/ui/button-loading";
 import { Modal } from "@/shared/ui/modal";
@@ -95,13 +95,9 @@ export function AdminAiProviderFormModalTrigger({
         >
           <AdminAiProviderFormFields disabled={isFormPending} />
 
-          {typeof rootErrorMessage === "string" ? (
-            <p className="provider-form__root-error" role="alert">
-              {rootErrorMessage}
-            </p>
-          ) : null}
+          <AdminModalFormRootError message={rootErrorMessage} />
 
-          <div className="provider-form__actions">
+          <div className="admin-modal-form__actions">
             <ButtonBase type="button" onClick={closeModal} disabled={isFormPending} variant="danger">
               Cancel
             </ButtonBase>

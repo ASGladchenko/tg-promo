@@ -29,6 +29,25 @@
   }
 }
 
+@mixin button-outline-variant($color, $active-foreground: s.$admin-gray-900) {
+  color: $color;
+  background: transparent;
+  border-color: $color;
+
+  &:not(:disabled):hover,
+  &:not(:disabled):focus-visible {
+    color: $color;
+    background: rgba($color, 0.12);
+    border-color: $color;
+  }
+
+  &:not(:disabled):active {
+    color: $active-foreground;
+    background: $color;
+    border-color: $color;
+  }
+}
+
 @mixin admin-hover-scrollbar(
   $width: 6px,
   $height: 6px,
