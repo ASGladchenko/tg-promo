@@ -18,36 +18,36 @@ export function AdminPrizeRow({ prize, gridTemplateColumns }: AdminPrizeRowProps
   const rowStyle = { "--grid-table-columns": gridTemplateColumns } as CSSProperties;
 
   return (
-    <div className="grid-table__row" role="row" style={rowStyle}>
-      <div className="grid-table__cell" role="cell">
+    <div className="prize-row" role="row" style={rowStyle}>
+      <div className="prize-row__cell" role="cell">
         <CopyIdButton ariaLabel={`Copy prize ID ${prize.id}`} id={prize.id} />
       </div>
 
-      <div className="grid-table__cell" role="cell">
+      <div className="prize-row__cell" role="cell">
         {prize.name}
       </div>
 
-      <div className="grid-table__cell" role="cell">
+      <div className="prize-row__cell" role="cell">
         {prize.description}
       </div>
 
-      <div className="grid-table__cell" role="cell">
-        <span className="admin-prize-row__status">{prize.isActive ? "Active" : "Inactive"}</span>
+      <div className="prize-row__cell" role="cell">
+        <span className="prize-row__status">{prize.isActive ? "Active" : "Inactive"}</span>
       </div>
 
-      <div className="grid-table__cell" role="cell">
-        <code className="admin-prize-row__metadata">{formatAdminPrizeMetadata(prize.metadata)}</code>
+      <div className="prize-row__cell" role="cell">
+        <code className="prize-row__metadata">{formatAdminPrizeMetadata(prize.metadata)}</code>
       </div>
 
-      <div className="grid-table__cell" role="cell">
+      <div className="prize-row__cell" role="cell">
         {formatAdminPrizeDate(prize.createdAt)}
       </div>
 
-      <div className="grid-table__cell" role="cell">
+      <div className="prize-row__cell" role="cell">
         {formatAdminPrizeDate(prize.updatedAt)}
       </div>
 
-      <div className="grid-table__cell admin-prize-row__actions" role="cell">
+      <div className="prize-row__cell prize-row__actions" role="cell">
         <AdminPrizeUpdateTrigger prize={prize} />
       </div>
     </div>

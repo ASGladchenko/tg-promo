@@ -2,11 +2,11 @@ import clsx from "clsx";
 
 import { type CrackSafeSnapshot } from "@/entities/crack-safe-snapshots";
 
-import { formatAdminCrackSafeSnapshotDate } from "../lib/format-admin-crack-safe-snapshot-date";
+import { formatAdminCrackSafeSnapshotDate } from "../../../lib/format-admin-crack-safe-snapshot-date";
 import {
   isAdminCrackSafeSnapshotActive,
   isAdminCrackSafeSnapshotFinished
-} from "../lib/get-admin-crack-safe-snapshot-status";
+} from "../../../lib/get-admin-crack-safe-snapshot-status";
 
 import "./admin-crack-safe-snapshot-schedule.scss";
 
@@ -26,25 +26,25 @@ export function AdminCrackSafeSnapshotSchedule({ snapshot }: AdminCrackSafeSnaps
   const isFinished = isAdminCrackSafeSnapshotFinished(snapshot.status);
 
   return (
-    <section className="admin-crack-safe-snapshot-details__panel admin-crack-safe-snapshot-details__panel--schedule">
-      <div className="admin-crack-safe-snapshot-details__schedule-heading">
+    <section className="snapshot-details__panel snapshot-details__panel--schedule">
+      <div className="snapshot-details__schedule-heading">
         <h2>Schedule</h2>
         <span
           className={clsx({
-            "admin-crack-safe-snapshot-details__schedule-date--active": isActive,
-            "admin-crack-safe-snapshot-details__schedule-date--finished": isFinished
+            "snapshot-details__schedule-date--active": isActive,
+            "snapshot-details__schedule-date--finished": isFinished
           })}
         >
           {snapshot.gameDate}
         </span>
       </div>
 
-      <dl className="admin-crack-safe-snapshot-details__schedule">
+      <dl className="snapshot-details__schedule">
         {scheduleItems.map((item) => (
           <div
-            className={clsx("admin-crack-safe-snapshot-details__schedule-item", {
-              "admin-crack-safe-snapshot-details__schedule-item--active": isActive,
-              "admin-crack-safe-snapshot-details__schedule-item--finished": isFinished
+            className={clsx("snapshot-details__schedule-item", {
+              "snapshot-details__schedule-item--active": isActive,
+              "snapshot-details__schedule-item--finished": isFinished
             })}
             key={item.field}
           >

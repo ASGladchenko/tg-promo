@@ -9,9 +9,9 @@ import { AdminPageHeader } from "@/shared/ui/admin-page-header";
 import {
   getAdminCrackSafeSnapshotSemiCodes,
   getAdminCrackSafeSnapshotUnmatchedSemiWins
-} from "../lib/get-admin-crack-safe-snapshot-semi-codes";
-import { isAdminCrackSafeSnapshotActive } from "../lib/get-admin-crack-safe-snapshot-status";
-import { getAdminCrackSafeSnapshotUsedPromoCodes } from "../lib/get-admin-crack-safe-snapshot-used-promo-codes";
+} from "../../lib/get-admin-crack-safe-snapshot-semi-codes";
+import { isAdminCrackSafeSnapshotActive } from "../../lib/get-admin-crack-safe-snapshot-status";
+import { getAdminCrackSafeSnapshotUsedPromoCodes } from "../../lib/get-admin-crack-safe-snapshot-used-promo-codes";
 import { AdminCrackSafeSnapshotOverview } from "./admin-crack-safe-snapshot-overview";
 import { AdminCrackSafeSnapshotPrizeCodes } from "./admin-crack-safe-snapshot-prize-codes";
 import { AdminCrackSafeSnapshotSchedule } from "./admin-crack-safe-snapshot-schedule";
@@ -67,21 +67,21 @@ export function AdminCrackSafeSnapshotDetails() {
   );
 
   return (
-    <section className="admin-crack-safe-snapshot-details">
+    <section className="snapshot-details">
       <AdminPageHeader
         backTo={`${APP_ROUTES.admin}/${APP_ROUTES.adminCrackSafeSnapshots}`}
         title="Crack Safe Snapshot"
       />
 
       {snapshotsQuery.isLoading ? (
-        <p className="admin-crack-safe-snapshot-details__state" aria-live="polite">
+        <p className="snapshot-details__state" aria-live="polite">
           Loading Crack Safe snapshot...
         </p>
       ) : null}
 
       {snapshotsQuery.isError ? (
         <p
-          className="admin-crack-safe-snapshot-details__state admin-crack-safe-snapshot-details__state--error"
+          className="snapshot-details__state snapshot-details__state--error"
           role="alert"
         >
           Failed to load Crack Safe snapshot. {snapshotsErrorMessage}
@@ -90,7 +90,7 @@ export function AdminCrackSafeSnapshotDetails() {
 
       {snapshotCodesQuery.isError ? (
         <p
-          className="admin-crack-safe-snapshot-details__state admin-crack-safe-snapshot-details__state--error"
+          className="snapshot-details__state snapshot-details__state--error"
           role="alert"
         >
           Failed to load Crack Safe snapshot codes. Used promo codes are not marked.{" "}
@@ -99,14 +99,14 @@ export function AdminCrackSafeSnapshotDetails() {
       ) : null}
 
       {!snapshotsQuery.isLoading && snapshotsQuery.data && !snapshot ? (
-        <p className="admin-crack-safe-snapshot-details__state">Crack Safe snapshot not found</p>
+        <p className="snapshot-details__state">Crack Safe snapshot not found</p>
       ) : null}
 
       {snapshot ? (
         <>
           <AdminCrackSafeSnapshotOverview semiJackpotWinsCount={semiJackpotWinsCount} snapshot={snapshot} />
 
-          <div className="admin-crack-safe-snapshot-details__grid">
+          <div className="snapshot-details__grid">
             <AdminCrackSafeSnapshotPrizeCodes
               semiCodeGroups={semiCodeGroups}
               usedPromoCodes={usedPromoCodes}

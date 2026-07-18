@@ -1,4 +1,35 @@
-.admin-crack-safe-rule-row__actions {
+@use "@/shared/styles/admin" as s;
+
+.rule-row {
+  width: 100%;
+  min-width: 100%;
+
+  display: grid;
+  align-items: center;
+  grid-template-columns: var(--grid-table-columns);
+
+  border-top: 1px solid s.$admin-border;
+}
+
+.rule-row__cell {
+  min-width: 0;
+
+  padding: 10px;
+
+  overflow: hidden;
+
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rule-row__cell > * {
+  min-width: 0;
+}
+
+.rule-row__actions {
   min-width: 0;
 
   display: inline-flex;

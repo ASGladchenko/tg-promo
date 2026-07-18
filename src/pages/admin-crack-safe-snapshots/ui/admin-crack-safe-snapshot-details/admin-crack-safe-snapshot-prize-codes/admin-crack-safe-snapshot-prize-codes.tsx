@@ -1,8 +1,8 @@
 import { type CrackSafeHistoryItem } from "@/entities/crack-safe-history";
 
-import { type getAdminCrackSafeSnapshotSemiCodes } from "../lib/get-admin-crack-safe-snapshot-semi-codes";
-import { type getAdminCrackSafeSnapshotUsedPromoCodes } from "../lib/get-admin-crack-safe-snapshot-used-promo-codes";
-import { AdminCrackSafeSnapshotPrizeCodeGroup } from "./admin-crack-safe-snapshot-prize-code-group";
+import { type getAdminCrackSafeSnapshotSemiCodes } from "../../../lib/get-admin-crack-safe-snapshot-semi-codes";
+import { type getAdminCrackSafeSnapshotUsedPromoCodes } from "../../../lib/get-admin-crack-safe-snapshot-used-promo-codes";
+import { AdminCrackSafeSnapshotPrizeCodeGroup } from "../admin-crack-safe-snapshot-prize-code-group";
 
 import "./admin-crack-safe-snapshot-prize-codes.scss";
 
@@ -20,13 +20,13 @@ export function AdminCrackSafeSnapshotPrizeCodes({
   usedPromoCodes
 }: AdminCrackSafeSnapshotPrizeCodesProps) {
   return (
-    <section className="admin-crack-safe-snapshot-details__panel admin-crack-safe-snapshot-details__panel--prizes">
-      <div className="admin-crack-safe-snapshot-details__panel-heading">
+    <section className="snapshot-details__panel snapshot-details__panel--prizes">
+      <div className="snapshot-details__panel-heading">
         <h2>Prize Codes</h2>
         <span>{safeCodesCount} safe codes</span>
       </div>
 
-      <div className="admin-crack-safe-snapshot-details__jackpot-groups">
+      <div className="snapshot-details__jackpot-groups">
         {semiCodeGroups.length ? (
           semiCodeGroups.map((group, index) => (
             <AdminCrackSafeSnapshotPrizeCodeGroup
@@ -37,13 +37,13 @@ export function AdminCrackSafeSnapshotPrizeCodes({
             />
           ))
         ) : (
-          <p className="admin-crack-safe-snapshot-details__empty">Snapshot safe codes are not available.</p>
+          <p className="snapshot-details__empty">Snapshot safe codes are not available.</p>
         )}
 
         {unmatchedSemiWins.length ? (
-          <div className="admin-crack-safe-snapshot-details__unmatched-semi">
+          <div className="snapshot-details__unmatched-semi">
             <h3>Unmatched semi wins</h3>
-            <div className="admin-crack-safe-snapshot-details__unmatched-semi-list">
+            <div className="snapshot-details__unmatched-semi-list">
               {unmatchedSemiWins.map((item) => (
                 <span key={item.id}>
                   {item.enteredCode}

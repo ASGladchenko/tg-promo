@@ -1,6 +1,6 @@
 @use "@/shared/styles/admin" as s;
 
-.admin-crack-safe-snapshot-details__jackpot-group {
+.snapshot-details__jackpot-group {
   min-width: 0;
 
   background: rgba(s.$admin-text, 0.02);
@@ -9,7 +9,7 @@
   box-shadow: s.$admin-shadow;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-group-summary {
+.snapshot-details__jackpot-group-summary {
   min-width: 0;
 
   padding: 14px 16px;
@@ -24,11 +24,11 @@
   cursor: pointer;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-group-summary::-webkit-details-marker {
+.snapshot-details__jackpot-group-summary::-webkit-details-marker {
   display: none;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-group-chevron {
+.snapshot-details__jackpot-group-chevron {
   width: 16px;
   height: 16px;
 
@@ -40,13 +40,13 @@
   justify-self: center;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-group[open]
-  > .admin-crack-safe-snapshot-details__jackpot-group-summary
-  .admin-crack-safe-snapshot-details__jackpot-group-chevron {
+.snapshot-details__jackpot-group[open]
+  > .snapshot-details__jackpot-group-summary
+  .snapshot-details__jackpot-group-chevron {
   transform: rotate(0deg);
 }
 
-.admin-crack-safe-snapshot-details__jackpot-group-code {
+.snapshot-details__jackpot-group-code {
   display: grid;
   align-items: baseline;
   gap: 10px;
@@ -58,7 +58,7 @@
   color: s.$admin-text;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-group-code::before {
+.snapshot-details__jackpot-group-code::before {
   font-size: 12px;
   font-weight: 800;
   text-transform: uppercase;
@@ -68,8 +68,8 @@
   content: "Jackpot";
 }
 
-.admin-crack-safe-snapshot-details__jackpot-group-summary > span,
-.admin-crack-safe-snapshot-details__jackpot-group-summary strong {
+.snapshot-details__jackpot-group-summary > span,
+.snapshot-details__jackpot-group-summary strong {
   min-width: 0;
 
   overflow: hidden;
@@ -78,16 +78,16 @@
   white-space: nowrap;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-group-summary > span:not(:first-of-type),
-.admin-crack-safe-snapshot-details__jackpot-group-summary strong {
+.snapshot-details__jackpot-group-summary > span:not(:first-of-type),
+.snapshot-details__jackpot-group-summary strong {
   text-align: center;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-group-summary strong {
+.snapshot-details__jackpot-group-summary strong {
   color: s.$admin-text;
 }
 
-.admin-crack-safe-snapshot-details__semi-card {
+.snapshot-details__semi-card {
   margin: 0 8px 8px;
   padding: 10px 12px;
 
@@ -102,7 +102,7 @@
   box-shadow: s.$admin-shadow;
 }
 
-.admin-crack-safe-snapshot-details__group-promo-pool {
+.snapshot-details__group-promo-pool {
   width: 100%;
   min-width: 0;
   max-width: 500px;
@@ -121,7 +121,7 @@
   box-shadow: s.$admin-shadow;
 }
 
-.admin-crack-safe-snapshot-details__group-promo-pool > legend {
+.snapshot-details__group-promo-pool > legend {
   padding: 0 6px;
 
   font-size: 12px;
@@ -131,19 +131,19 @@
   color: s.$admin-text-muted;
 }
 
-.admin-crack-safe-snapshot-details__group-promo-list {
+.snapshot-details__group-promo-list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.admin-crack-safe-snapshot-details__semi-winning-codes {
+.snapshot-details__semi-winning-codes {
   display: grid;
   align-content: start;
   grid-area: codes;
 }
 
-.admin-crack-safe-snapshot-details__semi-winning-code {
+.snapshot-details__semi-winning-code {
   min-width: 0;
 
   padding: 6px 0;
@@ -156,7 +156,7 @@
   border-bottom: 1px solid s.$admin-border-soft;
 }
 
-.admin-crack-safe-snapshot-details__semi-winning-code > span {
+.snapshot-details__semi-winning-code > span {
   min-width: 0;
 
   overflow: hidden;
@@ -164,7 +164,7 @@
   text-overflow: ellipsis;
 }
 
-.admin-crack-safe-snapshot-details__semi-winning-code--head {
+.snapshot-details__semi-winning-code--head {
   padding-top: 0;
 
   font-size: 12px;
@@ -174,52 +174,52 @@
   color: s.$admin-text-muted;
 }
 
-.admin-crack-safe-snapshot-details__semi-winning-code--head span:last-child {
+.snapshot-details__semi-winning-code--head span:last-child {
   text-align: right;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-code-promo {
+.snapshot-details__jackpot-code-promo {
   text-align: right;
   overflow-wrap: anywhere;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-code-promo--used {
+.snapshot-details__jackpot-code-promo--used {
   text-decoration: line-through;
 
   color: s.$admin-warning;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-code-promo--expired {
+.snapshot-details__jackpot-code-promo--expired {
   text-decoration: line-through;
 
   color: s.$admin-danger;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-code-status {
+.snapshot-details__jackpot-code-status {
   font-weight: 800;
   text-transform: capitalize;
 
   color: s.$admin-text-muted;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-code-status--active {
+.snapshot-details__jackpot-code-status--active {
   color: s.$admin-success;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-code-status--pending {
+.snapshot-details__jackpot-code-status--pending {
   color: s.$admin-text-muted;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-code-status--won {
+.snapshot-details__jackpot-code-status--won {
   color: s.$admin-warning;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-code-status--expired {
+.snapshot-details__jackpot-code-status--expired {
   color: s.$admin-danger;
 }
 
-.admin-crack-safe-snapshot-details__empty-value,
-.admin-crack-safe-snapshot-details__pending-jackpot {
+.snapshot-details__empty-value,
+.snapshot-details__pending-jackpot {
   margin: 0;
 
   font-weight: 700;
@@ -227,11 +227,11 @@
   color: s.$admin-text-muted;
 }
 
-.admin-crack-safe-snapshot-details__pending-jackpot {
+.snapshot-details__pending-jackpot {
   padding: 4px 0 0;
 }
 
-.admin-crack-safe-snapshot-details__expired-semi-promo {
+.snapshot-details__expired-semi-promo {
   min-width: 0;
 
   margin: 0 8px 8px;
@@ -246,7 +246,7 @@
   box-shadow: s.$admin-shadow;
 }
 
-.admin-crack-safe-snapshot-details__expired-semi-promo > legend {
+.snapshot-details__expired-semi-promo > legend {
   margin: 0;
   padding: 0 6px;
 
@@ -257,57 +257,57 @@
   color: s.$admin-danger;
 }
 
-.admin-crack-safe-snapshot-details__expired-semi-promo > div {
+.snapshot-details__expired-semi-promo > div {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 12px;
 }
 
 @media (max-width: 1320px) {
-  .admin-crack-safe-snapshot-details__semi-card {
+  .snapshot-details__semi-card {
     grid-template-columns: 1fr;
     grid-template-areas:
       "promo"
       "codes";
   }
 
-  .admin-crack-safe-snapshot-details__group-promo-pool {
+  .snapshot-details__group-promo-pool {
     max-width: none;
   }
 }
 
 @media (max-width: 1100px) {
-  .admin-crack-safe-snapshot-details__jackpot-group-summary {
+  .snapshot-details__jackpot-group-summary {
     grid-template-columns: 30px repeat(3, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 720px) {
-  .admin-crack-safe-snapshot-details__semi-card {
+  .snapshot-details__semi-card {
     margin-right: 0;
     margin-left: 0;
     padding: 16px;
   }
 
-  .admin-crack-safe-snapshot-details__jackpot-group-summary {
+  .snapshot-details__jackpot-group-summary {
     align-items: start;
     grid-template-columns: 30px minmax(0, 1fr);
   }
 
-  .admin-crack-safe-snapshot-details__jackpot-group-summary > * {
+  .snapshot-details__jackpot-group-summary > * {
     grid-column: 2;
   }
 
-  .admin-crack-safe-snapshot-details__jackpot-group-chevron {
+  .snapshot-details__jackpot-group-chevron {
     grid-row: 1;
     grid-column: 1;
   }
 
-  .admin-crack-safe-snapshot-details__semi-winning-code {
+  .snapshot-details__semi-winning-code {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .admin-crack-safe-snapshot-details__semi-winning-code--head {
+  .snapshot-details__semi-winning-code--head {
     display: none;
   }
 }

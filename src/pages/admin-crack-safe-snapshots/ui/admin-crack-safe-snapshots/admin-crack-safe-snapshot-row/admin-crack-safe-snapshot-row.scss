@@ -1,6 +1,6 @@
 @use "@/shared/styles/admin" as s;
 
-.prize-row {
+.snapshot-row {
   width: 100%;
   min-width: 100%;
 
@@ -9,9 +9,21 @@
   grid-template-columns: var(--grid-table-columns);
 
   border-top: 1px solid s.$admin-border;
+  cursor: pointer;
+
+  transition: background 0.15s ease-in-out;
 }
 
-.prize-row__cell {
+.snapshot-row:hover {
+  background: rgb(255 255 255 / 4%);
+}
+
+.snapshot-row:focus-visible {
+  outline: 2px solid s.$admin-primary;
+  outline-offset: -2px;
+}
+
+.snapshot-row__cell {
   min-width: 0;
 
   padding: 10px;
@@ -25,23 +37,6 @@
   white-space: nowrap;
 }
 
-.prize-row__cell > * {
+.snapshot-row__cell > * {
   min-width: 0;
-}
-
-.prize-row__status {
-  font-weight: 700;
-}
-
-.prize-row__metadata {
-  font-size: 15px;
-}
-
-.prize-row__actions {
-  min-width: 0;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
 }

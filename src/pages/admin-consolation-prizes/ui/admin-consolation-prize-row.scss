@@ -1,6 +1,39 @@
-.admin-consolation-prize-row__status { font-weight: 700; }
+@use "@/shared/styles/admin" as s;
 
-.admin-consolation-prize-row__actions {
+.consolation-row {
+  width: 100%;
+  min-width: 100%;
+
+  display: grid;
+  align-items: center;
+  grid-template-columns: var(--grid-table-columns);
+
+  border-top: 1px solid s.$admin-border;
+}
+
+.consolation-row__cell {
+  min-width: 0;
+
+  padding: 10px;
+
+  overflow: hidden;
+
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.consolation-row__cell > * {
+  min-width: 0;
+}
+
+.consolation-row__status {
+  font-weight: 700;
+}
+
+.consolation-row__actions {
   display: inline-flex;
   justify-content: flex-end;
 }

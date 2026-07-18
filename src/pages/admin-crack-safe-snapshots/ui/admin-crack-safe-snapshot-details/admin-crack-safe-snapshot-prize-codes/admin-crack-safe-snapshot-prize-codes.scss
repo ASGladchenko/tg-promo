@@ -1,6 +1,6 @@
 @use "@/shared/styles/admin" as s;
 
-.admin-crack-safe-snapshot-details__panel {
+.snapshot-details__panel {
   min-width: 0;
 
   padding: 24px;
@@ -11,11 +11,11 @@
   box-shadow: s.$admin-shadow;
 }
 
-.admin-crack-safe-snapshot-details__panel--prizes {
+.snapshot-details__panel--prizes {
   grid-area: prizes;
 }
 
-.admin-crack-safe-snapshot-details__panel-heading {
+.snapshot-details__panel-heading {
   margin-bottom: 22px;
 
   display: flex;
@@ -24,8 +24,8 @@
   gap: 16px;
 }
 
-.admin-crack-safe-snapshot-details__panel h2,
-.admin-crack-safe-snapshot-details__panel-heading h2 {
+.snapshot-details__panel h2,
+.snapshot-details__panel-heading h2 {
   margin: 0;
 
   font-size: 24px;
@@ -34,7 +34,7 @@
   color: s.$admin-text;
 }
 
-.admin-crack-safe-snapshot-details__panel-heading > span {
+.snapshot-details__panel-heading > span {
   font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
@@ -42,12 +42,12 @@
   color: s.$admin-text-muted;
 }
 
-.admin-crack-safe-snapshot-details__jackpot-groups {
+.snapshot-details__jackpot-groups {
   display: grid;
   gap: 12px;
 }
 
-.admin-crack-safe-snapshot-details__empty {
+.snapshot-details__empty {
   margin: 0;
 
   font-weight: 700;
@@ -55,7 +55,7 @@
   color: s.$admin-text-muted;
 }
 
-.admin-crack-safe-snapshot-details__unmatched-semi {
+.snapshot-details__unmatched-semi {
   min-width: 0;
 
   margin: 0 8px 8px;
@@ -69,7 +69,7 @@
   border-radius: s.$admin-radius;
 }
 
-.admin-crack-safe-snapshot-details__unmatched-semi h3 {
+.snapshot-details__unmatched-semi h3 {
   margin: 0;
   padding: 0 6px;
 
@@ -80,14 +80,14 @@
   color: s.$admin-danger;
 }
 
-.admin-crack-safe-snapshot-details__unmatched-semi-list {
+.snapshot-details__unmatched-semi-list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 12px;
 }
 
 @media (max-width: 720px) {
-  .admin-crack-safe-snapshot-details__panel {
+  .snapshot-details__panel {
     padding: 18px;
   }
 }

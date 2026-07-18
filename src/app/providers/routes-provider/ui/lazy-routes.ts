@@ -51,3 +51,11 @@ export const LazyAdminConsolationPrizes = lazy(() =>
     default: AdminConsolationPrizes
   }))
 );
+
+export const LazyAdminSettings = lazy(() =>
+  import("@/pages/admin-settings").then(({ AdminSettings }) => ({ default: AdminSettings }))
+);
+
+export const LazyAdminAiSettings = lazy(() =>
+  import("@/pages/admin-ai-settings").then(({ AdminAiSettings }) => ({ default: AdminAiSettings }))
+);

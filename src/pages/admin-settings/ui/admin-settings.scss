@@ -1,0 +1,67 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-settings {
+  min-width: 0;
+
+  color: s.$admin-text;
+}
+
+.admin-settings__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+
+  padding: 20px;
+
+  color: s.$admin-text;
+  background: s.$admin-surface;
+  border: 1px solid s.$admin-border;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+}
+
+.admin-settings__card-title {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.admin-settings__card-description {
+  margin: 0;
+
+  font-size: 16px;
+  line-height: 1.45;
+
+  color: s.$admin-text;
+}
+
+.admin-settings__card-link {
+  margin-top: 12px;
+  padding: 10px 14px;
+
+  color: s.$admin-text;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-decoration: none;
+
+  background: rgba(s.$admin-white, 0.12);
+  border: 1px solid s.$admin-border-strong;
+  border-radius: s.$admin-radius;
+
+  transition:
+    background 0.15s ease-in-out,
+    border-color 0.15s ease-in-out;
+}
+
+.admin-settings__card-link:hover {
+  background: rgba(s.$admin-white, 0.18);
+  border-color: rgba(s.$admin-white, 0.44);
+}
+
+.admin-settings__card-link:focus-visible {
+  outline: 2px solid s.$admin-primary;
+  outline-offset: 2px;
+}

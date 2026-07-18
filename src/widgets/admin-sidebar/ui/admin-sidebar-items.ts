@@ -38,5 +38,10 @@ export const adminSidebarItems: AdminSidebarItem[] = [
     title: "Consolation",
     to: `${APP_ROUTES.admin}/${APP_ROUTES.adminConsolation}`,
     end: true
+  },
+  {
+    title: "Settings",
+    to: `${APP_ROUTES.admin}/${APP_ROUTES.adminSettings}`,
+    end: true
   }
 ];

@@ -1,6 +1,6 @@
 @use "@/shared/styles/admin" as s;
 
-.admin-crack-safe-snapshot-details {
+.snapshot-details {
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
@@ -12,7 +12,7 @@
   color: s.$admin-text;
 }
 
-.admin-crack-safe-snapshot-details__state {
+.snapshot-details__state {
   margin: 0 0 16px;
   padding: 18px 20px;
 
@@ -25,11 +25,11 @@
   border-radius: s.$admin-radius;
 }
 
-.admin-crack-safe-snapshot-details__state--error {
+.snapshot-details__state--error {
   color: s.$admin-danger;
 }
 
-.admin-crack-safe-snapshot-details__grid {
+.snapshot-details__grid {
   display: grid;
   align-items: stretch;
   gap: 22px;
@@ -40,7 +40,7 @@
 }
 
 @media (max-width: 1100px) {
-  .admin-crack-safe-snapshot-details__grid {
+  .snapshot-details__grid {
     grid-template-columns: 1fr;
     grid-template-areas:
       "prizes"
@@ -49,11 +49,11 @@
 }
 
 @media (max-width: 720px) {
-  .admin-crack-safe-snapshot-details {
+  .snapshot-details {
     padding: 14px 16px 24px;
   }
 
-  .admin-crack-safe-snapshot-details__grid {
+  .snapshot-details__grid {
     gap: 14px;
   }
 }

@@ -30,9 +30,9 @@ export function GridTable<TItem>({
       <div className="grid-table__scroll admin-hover-scrollbar" role="table" aria-label={ariaLabel} tabIndex={0}>
         <div className="grid-table__content">
           <div role="rowgroup">
-            <div className="grid-table__row" role="row" style={gridStyle}>
+            <div className="grid-table__header" role="row" style={gridStyle}>
               {header.map((item, index) => (
-                <div key={index} className="grid-table__cell grid-table__cell--header" role="columnheader">
+                <div key={index} className="grid-table__header-item" role="columnheader">
                   {item}
                 </div>
               ))}

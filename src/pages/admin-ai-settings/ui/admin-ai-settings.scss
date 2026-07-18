@@ -1,12 +1,12 @@
 @use "@/shared/styles/admin" as s;
 
-.admin-crack-safe-rules {
+.admin-ai-settings {
   min-width: 0;
 
   color: s.$admin-text;
 }
 
-.admin-crack-safe-rules__state {
+.admin-ai-settings__state {
   margin: 0;
   padding: 20px;
 
@@ -16,14 +16,4 @@
   color: s.$admin-text-secondary;
   background: s.$admin-surface;
   border-radius: s.$admin-radius;
-}
-
-.admin-crack-safe-rules__state--error {
-  color: s.$admin-danger;
-}
-
-.admin-crack-safe-rules__actions {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
 }

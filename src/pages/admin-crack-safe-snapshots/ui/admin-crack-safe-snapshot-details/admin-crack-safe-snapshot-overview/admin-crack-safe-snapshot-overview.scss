@@ -1,6 +1,6 @@
 @use "@/shared/styles/admin" as s;
 
-.admin-crack-safe-snapshot-details__overview {
+.snapshot-details__overview {
   margin-bottom: 22px;
 
   display: grid;
@@ -8,7 +8,7 @@
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
-.admin-crack-safe-snapshot-details__summary-card {
+.snapshot-details__summary-card {
   min-width: 0;
   min-height: 110px;
 
@@ -24,7 +24,7 @@
   box-shadow: s.$admin-shadow;
 }
 
-.admin-crack-safe-snapshot-details__summary-card span {
+.snapshot-details__summary-card span {
   display: block;
 
   font-size: 13px;
@@ -35,7 +35,7 @@
   color: s.$admin-text-muted;
 }
 
-.admin-crack-safe-snapshot-details__summary-card strong {
+.snapshot-details__summary-card strong {
   min-width: 0;
 
   overflow: hidden;
@@ -46,7 +46,7 @@
   white-space: nowrap;
 }
 
-.admin-crack-safe-snapshot-details__summary-card mark {
+.snapshot-details__summary-card mark {
   width: fit-content;
   max-width: 100%;
 
@@ -63,24 +63,24 @@
   background: transparent;
 }
 
-.admin-crack-safe-snapshot-details__summary-card
-  mark.admin-crack-safe-snapshot-details__summary-status--finished {
+.snapshot-details__summary-card
+  mark.snapshot-details__summary-status--finished {
   color: s.$admin-danger;
 }
 
 @media (max-width: 1100px) {
-  .admin-crack-safe-snapshot-details__overview {
+  .snapshot-details__overview {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 720px) {
-  .admin-crack-safe-snapshot-details__overview {
+  .snapshot-details__overview {
     gap: 14px;
     grid-template-columns: 1fr;
   }
 
-  .admin-crack-safe-snapshot-details__summary-card {
+  .snapshot-details__summary-card {
     min-height: 96px;
   }
 }

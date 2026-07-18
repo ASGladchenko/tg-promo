@@ -7,5 +7,7 @@ export const APP_ROUTES = {
   adminCrackSafeSnapshots: "crack-safe/snapshots",
   adminCrackSafeSnapshot: "crack-safe/snapshots/:gameDate",
   adminPrizes: "prizes",
-  adminConsolation: "consolation"
+  adminConsolation: "consolation",
+  adminSettings: "settings",
+  adminSettingsAi: "settings/ai"
 } as const;

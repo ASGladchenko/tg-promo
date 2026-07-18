@@ -3,9 +3,9 @@ import clsx from "clsx";
 import ChevronDownIcon from "@/shared/svg/chevron-down.svg?react";
 import { Badge, type BadgeVariant } from "@/shared/ui/badge";
 
-import { type AdminCrackSafeSnapshotSemiCodeGroup } from "../lib/get-admin-crack-safe-snapshot-semi-codes";
-import { type getAdminCrackSafeSnapshotUsedPromoCodes } from "../lib/get-admin-crack-safe-snapshot-used-promo-codes";
-import { AdminCrackSafeSnapshotSemiWinningCodeRow } from "./admin-crack-safe-snapshot-semi-winning-code-row";
+import { type AdminCrackSafeSnapshotSemiCodeGroup } from "../../../lib/get-admin-crack-safe-snapshot-semi-codes";
+import { type getAdminCrackSafeSnapshotUsedPromoCodes } from "../../../lib/get-admin-crack-safe-snapshot-used-promo-codes";
+import { AdminCrackSafeSnapshotSemiWinningCodeRow } from "../admin-crack-safe-snapshot-semi-winning-code-row";
 
 import "./admin-crack-safe-snapshot-prize-code-group.scss";
 
@@ -51,29 +51,29 @@ export function AdminCrackSafeSnapshotPrizeCodeGroup({
   };
 
   return (
-    <details className="admin-crack-safe-snapshot-details__jackpot-group" open={isDefaultOpen}>
-      <summary className="admin-crack-safe-snapshot-details__jackpot-group-summary">
+    <details className="snapshot-details__jackpot-group" open={isDefaultOpen}>
+      <summary className="snapshot-details__jackpot-group-summary">
         <ChevronDownIcon
-          className="admin-crack-safe-snapshot-details__jackpot-group-chevron"
+          className="snapshot-details__jackpot-group-chevron"
           aria-hidden="true"
           focusable="false"
         />
-        <span className="admin-crack-safe-snapshot-details__jackpot-group-code">{safeCodeLabel}</span>
+        <span className="snapshot-details__jackpot-group-code">{safeCodeLabel}</span>
         <span
-          className={clsx("admin-crack-safe-snapshot-details__jackpot-code-status", {
-            "admin-crack-safe-snapshot-details__jackpot-code-status--active":
+          className={clsx("snapshot-details__jackpot-code-status", {
+            "snapshot-details__jackpot-code-status--active":
               jackpotCode?.status === "active",
-            "admin-crack-safe-snapshot-details__jackpot-code-status--expired": hasExpiredJackpotPromo,
-            "admin-crack-safe-snapshot-details__jackpot-code-status--pending": !jackpotCode,
-            "admin-crack-safe-snapshot-details__jackpot-code-status--won": jackpotCode?.status === "won"
+            "snapshot-details__jackpot-code-status--expired": hasExpiredJackpotPromo,
+            "snapshot-details__jackpot-code-status--pending": !jackpotCode,
+            "snapshot-details__jackpot-code-status--won": jackpotCode?.status === "won"
           })}
         >
           {jackpotStatus}
         </span>
         <span
-          className={clsx("admin-crack-safe-snapshot-details__jackpot-code-promo", {
-            "admin-crack-safe-snapshot-details__jackpot-code-promo--expired": hasExpiredJackpotPromo,
-            "admin-crack-safe-snapshot-details__jackpot-code-promo--used": hasUsedJackpotPromo
+          className={clsx("snapshot-details__jackpot-code-promo", {
+            "snapshot-details__jackpot-code-promo--expired": hasExpiredJackpotPromo,
+            "snapshot-details__jackpot-code-promo--used": hasUsedJackpotPromo
           })}
         >
           {jackpotPromoLabel}
@@ -83,10 +83,10 @@ export function AdminCrackSafeSnapshotPrizeCodeGroup({
         <strong>{issuedSemiLabel}</strong>
       </summary>
 
-      <div className="admin-crack-safe-snapshot-details__semi-card">
-        <fieldset className="admin-crack-safe-snapshot-details__group-promo-pool">
+      <div className="snapshot-details__semi-card">
+        <fieldset className="snapshot-details__group-promo-pool">
           <legend>Promo codes</legend>
-          <div className="admin-crack-safe-snapshot-details__group-promo-list">
+          <div className="snapshot-details__group-promo-list">
             {semiPromoCodes.length ? (
               semiPromoCodes.map((promoCode) => (
                 <Badge
@@ -100,14 +100,14 @@ export function AdminCrackSafeSnapshotPrizeCodeGroup({
                 </Badge>
               ))
             ) : (
-              <span className="admin-crack-safe-snapshot-details__empty-value">None</span>
+              <span className="snapshot-details__empty-value">None</span>
             )}
           </div>
         </fieldset>
 
         {jackpotCode ? (
-          <div className="admin-crack-safe-snapshot-details__semi-winning-codes">
-            <div className="admin-crack-safe-snapshot-details__semi-winning-code admin-crack-safe-snapshot-details__semi-winning-code--head">
+          <div className="snapshot-details__semi-winning-codes">
+            <div className="snapshot-details__semi-winning-code snapshot-details__semi-winning-code--head">
               <span>Semi code</span>
               <span>Wins</span>
               <span>Issued semi promo</span>
@@ -122,14 +122,14 @@ export function AdminCrackSafeSnapshotPrizeCodeGroup({
             ))}
           </div>
         ) : (
-          <p className="admin-crack-safe-snapshot-details__pending-jackpot">
+          <p className="snapshot-details__pending-jackpot">
             Safe code and semi codes are not activated yet.
           </p>
         )}
       </div>
 
       {expiredPromoCodes.length ? (
-        <fieldset className="admin-crack-safe-snapshot-details__expired-semi-promo">
+        <fieldset className="snapshot-details__expired-semi-promo">
           <legend>Expired promo</legend>
           <div>
             {expiredPromoCodes.map((promoCode, index) => (
