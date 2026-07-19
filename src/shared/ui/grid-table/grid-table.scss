@@ -33,8 +33,9 @@
 }
 
 .grid-table__content {
-  width: max(100%, var(--grid-table-min-width, 0px));
   min-width: 100%;
+
+  display: inline-block;
 }
 
 .grid-table__header {

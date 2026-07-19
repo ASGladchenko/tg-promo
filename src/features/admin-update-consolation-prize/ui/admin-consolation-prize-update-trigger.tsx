@@ -1,5 +1,6 @@
 import {
   AdminConsolationPrizeFormModalTrigger,
+  type AdminConsolationPrizeFormModalTriggerProps,
   type ConsolationPrize,
   getAdminConsolationPrizeFormDefaultValues,
   mapAdminConsolationPrizeFormToUpdatePayload,
@@ -8,9 +9,13 @@ import {
 import { usePrizes } from "@/entities/prizes";
 import { ButtonLoading } from "@/shared/ui/button-loading";
 
-type AdminConsolationPrizeUpdateTriggerProps = { consolationPrize: ConsolationPrize };
+type AdminConsolationPrizeUpdateTriggerProps = Pick<
+  AdminConsolationPrizeFormModalTriggerProps,
+  "descriptionLabelAction"
+> & { consolationPrize: ConsolationPrize };
 
 export function AdminConsolationPrizeUpdateTrigger({
+  descriptionLabelAction,
   consolationPrize
 }: AdminConsolationPrizeUpdateTriggerProps) {
   const updateConsolationPrize = useUpdateConsolationPrize();
@@ -20,13 +25,14 @@ export function AdminConsolationPrizeUpdateTrigger({
 
   return (
     <AdminConsolationPrizeFormModalTrigger
-      title="Edit Consolation Prize"
       submitLabel="Save"
+      isPending={isPending}
+      title="Edit Consolation Prize"
       modalAriaLabel="Edit consolation prize"
+      descriptionLabelAction={descriptionLabelAction}
       closeAriaLabel="Close edit consolation prize modal"
       failureMessage="Failed to update consolation prize"
       defaultValues={getAdminConsolationPrizeFormDefaultValues(consolationPrize)}
-      isPending={isPending}
       prizeOptions={prizeOptions}
       onReset={updateConsolationPrize.reset}
       onSubmit={(data, dirtyFields) =>

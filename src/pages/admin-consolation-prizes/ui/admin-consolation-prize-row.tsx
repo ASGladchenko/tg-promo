@@ -2,6 +2,7 @@ import { type CSSProperties } from "react";
 
 import { type ConsolationPrize } from "@/entities/consolation-prizes";
 import { type Prize } from "@/entities/prizes";
+import { AdminConsolationPrizeDescriptionTranslateButton } from "@/features/admin-translate-consolation-prize-description";
 import { AdminConsolationPrizeUpdateTrigger } from "@/features/admin-update-consolation-prize";
 import { CopyIdButton } from "@/features/copy-id";
 
@@ -48,7 +49,12 @@ export function AdminConsolationPrizeRow({
         {formatAdminConsolationPrizeDate(consolationPrize.updatedAt)}
       </div>
       <div className="consolation-row__cell consolation-row__actions" role="cell">
-        <AdminConsolationPrizeUpdateTrigger consolationPrize={consolationPrize} />
+        <AdminConsolationPrizeUpdateTrigger
+          consolationPrize={consolationPrize}
+          descriptionLabelAction={({ disabled }) => (
+            <AdminConsolationPrizeDescriptionTranslateButton disabled={disabled} />
+          )}
+        />
       </div>
     </div>
   );
