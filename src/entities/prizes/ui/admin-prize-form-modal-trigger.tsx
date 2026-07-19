@@ -24,6 +24,7 @@ export function AdminPrizeFormModalTrigger({
   defaultValues,
   renderTrigger,
   closeAriaLabel,
+  descriptionLabelAction,
   failureMessage,
   modalAriaLabel
 }: AdminPrizeFormModalTriggerProps) {
@@ -87,7 +88,10 @@ export function AdminPrizeFormModalTrigger({
           isCloseDisabled={isFormPending}
           closeAriaLabel={closeAriaLabel}
         >
-          <AdminPrizeFormFields disabled={isFormPending} />
+          <AdminPrizeFormFields
+            disabled={isFormPending}
+            descriptionLabelAction={descriptionLabelAction?.({ disabled: isFormPending })}
+          />
 
           <AdminModalFormRootError message={rootErrorMessage} />
 

@@ -8,10 +8,11 @@ import { AdminPrizeMetadataFields } from "./admin-prize-metadata-fields";
 import "./admin-prize-form-fields.scss";
 
 type AdminPrizeFormFieldsProps = {
+  descriptionLabelAction?: React.ReactNode;
   disabled: boolean;
 };
 
-export function AdminPrizeFormFields({ disabled }: AdminPrizeFormFieldsProps) {
+export function AdminPrizeFormFields({ descriptionLabelAction, disabled }: AdminPrizeFormFieldsProps) {
   return (
     <div className="admin-prize-form-fields">
       <InputField<AdminPrizeFormState>
@@ -25,6 +26,7 @@ export function AdminPrizeFormFields({ disabled }: AdminPrizeFormFieldsProps) {
         label="Description"
         disabled={disabled}
         placeholder="Prize description"
+        labelAction={descriptionLabelAction}
       />
 
       <AdminPrizeMetadataFields disabled={disabled} />

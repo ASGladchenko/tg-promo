@@ -1,12 +1,15 @@
 import {
   AdminPrizeFormModalTrigger,
+  type AdminPrizeFormModalTriggerProps,
   getAdminPrizeFormDefaultValues,
   mapAdminPrizeFormToPayload,
   useCreatePrize
 } from "@/entities/prizes";
 import { ButtonBase } from "@/shared/ui/button-base";
 
-export function AdminPrizeCreateTrigger() {
+type AdminPrizeCreateTriggerProps = Pick<AdminPrizeFormModalTriggerProps, "descriptionLabelAction">;
+
+export function AdminPrizeCreateTrigger({ descriptionLabelAction }: AdminPrizeCreateTriggerProps) {
   const createPrize = useCreatePrize();
 
   return (
@@ -14,10 +17,11 @@ export function AdminPrizeCreateTrigger() {
       title="Add Prize"
       submitLabel="Create"
       modalAriaLabel="Add prize"
-      closeAriaLabel="Close add prize modal"
-      defaultValues={getAdminPrizeFormDefaultValues()}
-      failureMessage="Failed to create prize"
       isPending={createPrize.isPending}
+      closeAriaLabel="Close add prize modal"
+      failureMessage="Failed to create prize"
+      descriptionLabelAction={descriptionLabelAction}
+      defaultValues={getAdminPrizeFormDefaultValues()}
       onReset={createPrize.reset}
       onSubmit={(data) => createPrize.mutateAsync(mapAdminPrizeFormToPayload(data))}
       renderTrigger={({ openModal }) => (

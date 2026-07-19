@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 
 import { type Prize } from "@/entities/prizes";
+import { AdminPrizeDescriptionTranslateButton } from "@/features/admin-translate-prize-description";
 import { AdminPrizeUpdateTrigger } from "@/features/admin-update-prize";
 import { CopyIdButton } from "@/features/copy-id";
 
@@ -48,7 +49,10 @@ export function AdminPrizeRow({ prize, gridTemplateColumns }: AdminPrizeRowProps
       </div>
 
       <div className="prize-row__cell prize-row__actions" role="cell">
-        <AdminPrizeUpdateTrigger prize={prize} />
+        <AdminPrizeUpdateTrigger
+          prize={prize}
+          descriptionLabelAction={({ disabled }) => <AdminPrizeDescriptionTranslateButton disabled={disabled} />}
+        />
       </div>
     </div>
   );
