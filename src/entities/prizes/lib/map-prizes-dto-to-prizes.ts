@@ -1,5 +1,3 @@
-import { getLocalizedMetadataString } from "@/shared/lib/i18n";
-
 import { type PrizesResponseDto } from "../api/types";
 import { type Prize } from "../model/types";
 
@@ -11,6 +9,6 @@ export function mapPrizesDtoToPrizes(dto: PrizesResponseDto): Prize[] {
     updatedAt: prize.updatedAt,
     createdAt: prize.createdAt,
     metadata: { ...prize.metadata },
-    description: getLocalizedMetadataString(prize.metadata, undefined, prize.description) ?? "-"
+    description: prize.description?.trim() || "-"
   }));
 }
