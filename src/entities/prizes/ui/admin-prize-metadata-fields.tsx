@@ -1,4 +1,5 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
+import clsx from "clsx";
 
 import { ButtonBase } from "@/shared/ui/button-base";
 import { Input } from "@/shared/ui/input";
@@ -33,26 +34,17 @@ export function AdminPrizeMetadataFields({ disabled }: AdminPrizeMetadataFieldsP
         </ButtonBase>
       </div>
 
-      <div className="admin-prize-metadata-fields__item">
-        <Input label="Field" value="type" disabled readOnly />
-
-        <InputField<AdminPrizeFormState>
-          label="Value"
-          name="metadataType"
-          disabled={disabled}
-          placeholder="promo code"
-        />
-        <span className="admin-prize-metadata-fields__required">Required</span>
-      </div>
-
-      {adminPrizeRequiredMetadataLanguageKeys.map((languageKey) => (
+      {adminPrizeRequiredMetadataLanguageKeys.map((languageKey, index) => (
         <div
-          className="admin-prize-metadata-fields__item admin-prize-metadata-fields__item--compact"
+          className={clsx("admin-prize-metadata-fields__item", {
+            "admin-prize-metadata-fields__item--compact": index > 0
+          })}
           key={languageKey}
         >
-          <Input aria-label="Field" value={languageKey} disabled readOnly />
+          <Input label={index === 0 ? "Field" : undefined} aria-label="Field" value={languageKey} disabled readOnly />
 
           <TextareaField<AdminPrizeFormState>
+            label={index === 0 ? "Value" : undefined}
             aria-label={`${languageKey} value`}
             name={`metadataLanguages.${languageKey}` as const}
             disabled={disabled}

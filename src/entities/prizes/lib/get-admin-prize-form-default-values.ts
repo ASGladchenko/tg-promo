@@ -3,10 +3,6 @@ import * as z from "zod";
 import { adminPrizeRequiredMetadataLanguageKeys } from "../model/admin-prize-form-schema";
 import { type AdminPrizeFormState, type Prize } from "../model/types";
 
-function getMetadataType(metadata: Prize["metadata"]) {
-  return typeof metadata.type === "string" ? metadata.type : "";
-}
-
 function getMetadataLanguages(metadata: Prize["metadata"]): AdminPrizeFormState["metadataLanguages"] {
   return Object.fromEntries(
     adminPrizeRequiredMetadataLanguageKeys.map((key) => {
@@ -34,7 +30,6 @@ const adminPrizeFormDefaultValuesSchema = z.custom<Prize | undefined>().transfor
       name: "",
       description: "",
       isActive: true,
-      metadataType: "",
       metadataLanguages: {
         ar: "",
         fr: "",
@@ -48,7 +43,6 @@ const adminPrizeFormDefaultValuesSchema = z.custom<Prize | undefined>().transfor
     name: prize.name,
     description: prize.description,
     isActive: prize.isActive,
-    metadataType: getMetadataType(prize.metadata),
     metadataLanguages: getMetadataLanguages(prize.metadata),
     metadata: getMetadataFields(prize.metadata)
   };
