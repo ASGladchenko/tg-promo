@@ -1,0 +1,42 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-settings {
+  min-width: 0;
+
+  color: s.$admin-text;
+}
+
+.admin-settings__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+
+  padding: 20px;
+
+  color: s.$admin-text;
+  background: s.$admin-surface;
+  border: 1px solid s.$admin-border;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+}
+
+.admin-settings__card-title {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.admin-settings__card-description {
+  margin: 0;
+
+  font-size: 16px;
+  line-height: 1.45;
+
+  color: s.$admin-text;
+}
+
+.admin-settings__card-action {
+  margin-top: 12px;
+}

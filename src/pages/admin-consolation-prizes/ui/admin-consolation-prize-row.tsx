@@ -2,6 +2,7 @@ import { type CSSProperties } from "react";
 
 import { type ConsolationPrize } from "@/entities/consolation-prizes";
 import { type Prize } from "@/entities/prizes";
+import { AdminConsolationPrizeDescriptionTranslateButton } from "@/features/admin-translate-consolation-prize-description";
 import { AdminConsolationPrizeUpdateTrigger } from "@/features/admin-update-consolation-prize";
 import { CopyIdButton } from "@/features/copy-id";
 
@@ -24,31 +25,36 @@ export function AdminConsolationPrizeRow({
   const linkedPrize = prizes.find((prize) => prize.id === consolationPrize.prizeId);
 
   return (
-    <div className="grid-table__row" role="row" style={rowStyle}>
-      <div className="grid-table__cell" role="cell">
+    <div className="consolation-row" role="row" style={rowStyle}>
+      <div className="consolation-row__cell" role="cell">
         <CopyIdButton ariaLabel={`Copy consolation prize ID ${consolationPrize.id}`} id={consolationPrize.id} />
       </div>
-      <div className="grid-table__cell" role="cell">
+      <div className="consolation-row__cell" role="cell">
         {linkedPrize?.name ?? consolationPrize.prizeId}
       </div>
-      <div className="grid-table__cell" role="cell">{consolationPrize.promoCode}</div>
-      <div className="grid-table__cell" role="cell">{consolationPrize.description || "—"}</div>
-      <div className="grid-table__cell" role="cell">
+      <div className="consolation-row__cell" role="cell">{consolationPrize.promoCode}</div>
+      <div className="consolation-row__cell" role="cell">{consolationPrize.description || "—"}</div>
+      <div className="consolation-row__cell" role="cell">
         {formatAdminConsolationPrizeDate(consolationPrize.expiresAt)}
       </div>
-      <div className="grid-table__cell" role="cell">
-        <span className="admin-consolation-prize-row__status">
+      <div className="consolation-row__cell" role="cell">
+        <span className="consolation-row__status">
           {consolationPrize.isActive ? "Active" : "Inactive"}
         </span>
       </div>
-      <div className="grid-table__cell" role="cell">
+      <div className="consolation-row__cell" role="cell">
         {formatAdminConsolationPrizeDate(consolationPrize.createdAt)}
       </div>
-      <div className="grid-table__cell" role="cell">
+      <div className="consolation-row__cell" role="cell">
         {formatAdminConsolationPrizeDate(consolationPrize.updatedAt)}
       </div>
-      <div className="grid-table__cell admin-consolation-prize-row__actions" role="cell">
-        <AdminConsolationPrizeUpdateTrigger consolationPrize={consolationPrize} />
+      <div className="consolation-row__cell consolation-row__actions" role="cell">
+        <AdminConsolationPrizeUpdateTrigger
+          consolationPrize={consolationPrize}
+          descriptionLabelAction={({ disabled }) => (
+            <AdminConsolationPrizeDescriptionTranslateButton disabled={disabled} />
+          )}
+        />
       </div>
     </div>
   );

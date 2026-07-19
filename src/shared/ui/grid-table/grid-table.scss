@@ -16,19 +16,6 @@
   box-shadow: s.$admin-shadow;
 }
 
-.grid-table::after {
-  content: "";
-
-  position: absolute;
-  top: 64px;
-  right: 20px;
-  left: 20px;
-
-  height: 1px;
-
-  background: s.$admin-border;
-}
-
 .grid-table__scroll {
   min-width: 0;
 
@@ -37,6 +24,7 @@
 
   overflow-x: auto;
   overflow-y: hidden;
+  outline: none;
 }
 
 .grid-table__scroll.admin-hover-scrollbar {
@@ -45,59 +33,38 @@
 }
 
 .grid-table__content {
-  width: max(100%, var(--grid-table-min-width, 0px));
   min-width: 100%;
+
+  display: inline-block;
 }
 
-.grid-table__row {
+.grid-table__header {
   width: 100%;
   min-width: 100%;
 
   display: grid;
   align-items: center;
   grid-template-columns: var(--grid-table-columns);
+
+  border-bottom: 1px solid s.$admin-border;
 }
 
-.grid-table__row + .grid-table__row {
-  border-top: 1px solid s.$admin-border;
-}
-
-.grid-table__row--interactive {
-  cursor: pointer;
-  transition: background 0.15s ease-in-out;
-}
-
-.grid-table__row--interactive:hover {
-  background: rgb(255 255 255 / 4%);
-}
-
-.grid-table__row--interactive:focus-visible {
-  outline: 2px solid s.$admin-primary;
-  outline-offset: -2px;
-}
-
-.grid-table__cell {
+.grid-table__header-item {
   min-width: 0;
-
-  padding: 10px;
 
   overflow: hidden;
 
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.2;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.grid-table__cell > * {
-  min-width: 0;
-}
-
-.grid-table__cell--header {
-  font-weight: 700;
 
   color: s.$admin-text;
+}
+
+.grid-table__header-item > * {
+  min-width: 0;
 }
 
 .grid-table__empty {
@@ -113,7 +80,7 @@
 .grid-table__empty-content {
   min-width: 0;
 
-  padding: 28px 10px 0;
+  padding: 28px 0 0;
 
   grid-column: 1 / -1;
 

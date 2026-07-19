@@ -1,3 +1,5 @@
+import { type ReactNode } from "react";
+
 import { CheckboxField } from "@/shared/ui/checkbox-field";
 import { InputField } from "@/shared/ui/input-field";
 import { SelectField } from "@/shared/ui/select-field";
@@ -10,11 +12,13 @@ import { AdminConsolationPrizeMetadataFields } from "./admin-consolation-prize-m
 import "./admin-consolation-prize-form-fields.scss";
 
 type AdminConsolationPrizeFormFieldsProps = {
+  descriptionLabelAction?: ReactNode;
   disabled: boolean;
   prizeOptions: ConsolationPrizeOption[];
 };
 
 export function AdminConsolationPrizeFormFields({
+  descriptionLabelAction,
   disabled,
   prizeOptions
 }: AdminConsolationPrizeFormFieldsProps) {
@@ -23,10 +27,10 @@ export function AdminConsolationPrizeFormFields({
   return (
     <div className="admin-consolation-prize-form-fields">
       <SelectField<AdminConsolationPrizeFormState>
-        name="prizeId"
         label="Prize"
-        placeholder="Select prize"
+        name="prizeId"
         disabled={disabled}
+        placeholder="Select prize"
         getDisplayValue={getPrizeName}
         renderOptions={({ onSelect, value }) =>
           prizeOptions.map((prize) => (
@@ -39,21 +43,22 @@ export function AdminConsolationPrizeFormFields({
       <InputField<AdminConsolationPrizeFormState>
         name="promoCode"
         label="Promo code"
-        placeholder="PROMO-100"
         disabled={disabled}
+        placeholder="PROMO-100"
       />
       <TextareaField<AdminConsolationPrizeFormState>
         name="description"
         label="Description"
-        placeholder="Consolation prize description"
         disabled={disabled}
+        labelAction={descriptionLabelAction}
+        placeholder="Consolation prize description"
       />
       <AdminConsolationPrizeMetadataFields disabled={disabled} />
       <InputField<AdminConsolationPrizeFormState>
-        name="expiresAt"
-        label="Expiration date"
         type="date"
+        name="expiresAt"
         disabled={disabled}
+        label="Expiration date"
       />
       <CheckboxField<AdminConsolationPrizeFormState> name="isActive" label="Active" disabled={disabled} />
     </div>

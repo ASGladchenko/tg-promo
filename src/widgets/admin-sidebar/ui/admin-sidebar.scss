@@ -45,8 +45,7 @@
 
 .admin-sidebar__brand:focus-visible,
 .admin-sidebar__link:focus-visible {
-  outline: 2px solid s.$admin-text-secondary;
-  outline-offset: 2px;
+  outline: none;
 }
 
 .admin-sidebar__nav {

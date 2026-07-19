@@ -5,6 +5,8 @@
 }
 
 .admin-page-header__content {
+  min-height: 46px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -39,15 +41,15 @@
     border-color 0.15s ease-in-out;
 }
 
-.admin-page-header__back:hover {
+.admin-page-header__back:hover,
+.admin-page-header__back:focus-visible {
   color: s.$admin-white;
   background: rgba(s.$admin-primary, 0.18);
   border-color: s.$admin-primary;
 }
 
 .admin-page-header__back:focus-visible {
-  outline: 2px solid s.$admin-primary;
-  outline-offset: 2px;
+  outline: none;
 }
 
 .admin-page-header__back > svg {
@@ -58,10 +60,14 @@
 }
 
 .admin-page-header__title {
+  min-height: 32px;
   min-width: 0;
 
+  display: flex;
+  align-items: center;
+
   margin: 0;
-  padding: 0 8px 8px 0;
+  padding: 0 8px 0 0;
 
   overflow: hidden;
 

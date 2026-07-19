@@ -38,5 +38,21 @@ export const adminSidebarItems: AdminSidebarItem[] = [
     title: "Consolation",
     to: `${APP_ROUTES.admin}/${APP_ROUTES.adminConsolation}`,
     end: true
+  },
+  {
+    title: "Settings",
+    basePath: `${APP_ROUTES.admin}/${APP_ROUTES.adminSettings}`,
+    children: [
+      {
+        title: "General",
+        to: `${APP_ROUTES.admin}/${APP_ROUTES.adminSettings}`,
+        end: true
+      },
+      {
+        title: "AI settings",
+        to: `${APP_ROUTES.admin}/${APP_ROUTES.adminSettingsAi}`,
+        end: true
+      }
+    ]
   }
 ];

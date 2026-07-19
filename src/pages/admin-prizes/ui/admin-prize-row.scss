@@ -1,16 +1,49 @@
-.admin-prize-row__status {
+@use "@/shared/styles/admin" as s;
+
+.prize-row {
+  width: 100%;
+  min-width: 100%;
+
+  display: grid;
+  align-items: center;
+  column-gap: 20px;
+  grid-template-columns: var(--grid-table-columns);
+
+  border-bottom: 1px solid s.$admin-border;
+}
+
+.prize-row:last-child {
+  border-bottom: 0;
+}
+
+.prize-row__cell {
+  min-width: 0;
+
+  padding: 10px 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prize-row__cell > * {
+  min-width: 0;
+}
+
+.prize-row__status {
   font-weight: 700;
 }
 
-.admin-prize-row__metadata {
+.prize-row__metadata {
   font-size: 15px;
 }
 
-.admin-prize-row__actions {
+.prize-row__actions {
   min-width: 0;
 
   display: inline-flex;
-  align-items: center;
   justify-content: flex-end;
+  align-items: center;
   gap: 8px;
 }

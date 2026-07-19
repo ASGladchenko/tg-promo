@@ -1,5 +1,6 @@
 import { usePrizes } from "@/entities/prizes";
 import { AdminPrizeCreateTrigger } from "@/features/admin-create-prize";
+import { AdminPrizeDescriptionTranslateButton } from "@/features/admin-translate-prize-description";
 import { getErrorMessage } from "@/shared/lib/error";
 import { AdminPageHeader } from "@/shared/ui/admin-page-header";
 import { GridTable } from "@/shared/ui/grid-table";
@@ -19,7 +20,16 @@ export function AdminPrizes() {
 
   return (
     <section className="admin-prizes">
-      <AdminPageHeader title="Prizes" slot={<AdminPrizeCreateTrigger />} />
+      <AdminPageHeader
+        title="Prizes"
+        slot={
+          <AdminPrizeCreateTrigger
+            descriptionLabelAction={({ disabled }) => (
+              <AdminPrizeDescriptionTranslateButton disabled={disabled} />
+            )}
+          />
+        }
+      />
 
       {prizesQuery.isLoading ? (
         <p className="admin-prizes__state" aria-live="polite">
@@ -39,6 +49,7 @@ export function AdminPrizes() {
           header={prizesHeader}
           items={prizesQuery.data}
           emptyMessage="No prizes found"
+          className="admin-prizes__table"
           gridTemplateColumns={prizesGridTemplateColumns}
           renderRow={(prize) => (
             <AdminPrizeRow gridTemplateColumns={prizesGridTemplateColumns} prize={prize} />

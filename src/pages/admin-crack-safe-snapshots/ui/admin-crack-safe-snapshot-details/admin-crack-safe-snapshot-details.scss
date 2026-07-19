@@ -1,0 +1,59 @@
+@use "@/shared/styles/admin" as s;
+
+.snapshot-details {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 1560px;
+
+  margin: 0 auto;
+  padding: 18px 24px 32px;
+
+  color: s.$admin-text;
+}
+
+.snapshot-details__state {
+  margin: 0 0 16px;
+  padding: 18px 20px;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  color: s.$admin-text-secondary;
+  background: s.$admin-surface-dark;
+  border: 1px solid s.$admin-border-soft;
+  border-radius: s.$admin-radius;
+}
+
+.snapshot-details__state--error {
+  color: s.$admin-danger;
+}
+
+.snapshot-details__grid {
+  display: grid;
+  align-items: stretch;
+  gap: 22px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    "prizes prizes"
+    "schedule schedule";
+}
+
+@media (max-width: 1100px) {
+  .snapshot-details__grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "prizes"
+      "schedule";
+  }
+}
+
+@media (max-width: 720px) {
+  .snapshot-details {
+    padding: 14px 16px 24px;
+  }
+
+  .snapshot-details__grid {
+    gap: 14px;
+  }
+}

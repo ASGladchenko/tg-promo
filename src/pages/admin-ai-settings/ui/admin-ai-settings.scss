@@ -1,0 +1,38 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-ai-settings {
+  min-width: 0;
+
+  color: s.$admin-text;
+}
+
+.admin-ai-settings__state {
+  margin: 0;
+  padding: 20px;
+
+  font-size: 18px;
+  font-weight: 500;
+
+  color: s.$admin-text-secondary;
+  background: s.$admin-surface;
+  border-radius: s.$admin-radius;
+}
+
+.admin-ai-settings__state--error {
+  color: s.$admin-danger;
+}
+
+.admin-ai-settings__table .grid-table__header {
+  column-gap: 20px;
+}
+
+.admin-ai-settings__table .grid-table__header-item {
+  padding: 10px 0;
+}
+
+.admin-ai-settings__table .grid-table__header-item:nth-child(4),
+.admin-ai-settings__table .grid-table__header-item:nth-child(5),
+.admin-ai-settings__table .grid-table__header-item:nth-child(6),
+.admin-ai-settings__table .grid-table__header-item:nth-child(7) {
+  text-align: center;
+}

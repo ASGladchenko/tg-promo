@@ -4,7 +4,6 @@ import { type AdminPrizeFormState } from "../model/types";
 
 export function mapAdminPrizeFormToPayload(data: AdminPrizeFormState): CreatePrizePayload {
   const description = data.description.trim();
-  const metadataType = data.metadataType.trim();
   const metadataLanguages = Object.fromEntries(
     adminPrizeRequiredMetadataLanguageKeys.map((key) => [key, data.metadataLanguages[key].trim()])
   );
@@ -15,7 +14,7 @@ export function mapAdminPrizeFormToPayload(data: AdminPrizeFormState): CreatePri
 
       return result;
     },
-    { type: metadataType, ...metadataLanguages }
+    { type: "promo", ...metadataLanguages }
   );
 
   return {

@@ -1,5 +1,6 @@
 import {
   AdminConsolationPrizeFormModalTrigger,
+  type AdminConsolationPrizeFormModalTriggerProps,
   getAdminConsolationPrizeFormDefaultValues,
   mapAdminConsolationPrizeFormToCreatePayload,
   useCreateConsolationPrize
@@ -7,7 +8,14 @@ import {
 import { usePrizes } from "@/entities/prizes";
 import { ButtonBase } from "@/shared/ui/button-base";
 
-export function AdminConsolationPrizeCreateTrigger() {
+type AdminConsolationPrizeCreateTriggerProps = Pick<
+  AdminConsolationPrizeFormModalTriggerProps,
+  "descriptionLabelAction"
+>;
+
+export function AdminConsolationPrizeCreateTrigger({
+  descriptionLabelAction
+}: AdminConsolationPrizeCreateTriggerProps) {
   const createConsolationPrize = useCreateConsolationPrize();
   const prizesQuery = usePrizes();
   const prizeOptions = prizesQuery.data?.map(({ id, name }) => ({ id, name })) ?? [];
@@ -15,15 +23,16 @@ export function AdminConsolationPrizeCreateTrigger() {
 
   return (
     <AdminConsolationPrizeFormModalTrigger
-      title="Add Consolation Prize"
       submitLabel="Create"
-      modalAriaLabel="Add consolation prize"
-      closeAriaLabel="Close add consolation prize modal"
-      defaultValues={getAdminConsolationPrizeFormDefaultValues()}
-      failureMessage="Failed to create consolation prize"
       isPending={isPending}
       prizeOptions={prizeOptions}
+      title="Add Consolation Prize"
+      modalAriaLabel="Add consolation prize"
       onReset={createConsolationPrize.reset}
+      descriptionLabelAction={descriptionLabelAction}
+      closeAriaLabel="Close add consolation prize modal"
+      failureMessage="Failed to create consolation prize"
+      defaultValues={getAdminConsolationPrizeFormDefaultValues()}
       onSubmit={(data) =>
         createConsolationPrize.mutateAsync(mapAdminConsolationPrizeFormToCreatePayload(data))
       }

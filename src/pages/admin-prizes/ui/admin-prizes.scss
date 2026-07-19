@@ -3,8 +3,6 @@
 .admin-prizes {
   min-width: 0;
 
-  padding: 14px 18px;
-
   color: s.$admin-text;
 }
 
@@ -22,4 +20,12 @@
 
 .admin-prizes__state--error {
   color: s.$admin-danger;
+}
+
+.admin-prizes__table .grid-table__header {
+  column-gap: 20px;
+}
+
+.admin-prizes__table .grid-table__header-item {
+  padding: 10px 0;
 }

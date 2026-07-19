@@ -14,9 +14,16 @@
   }
 }
 
-.textarea-field__label {
+.textarea-field__header {
   margin-bottom: 8px;
 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.textarea-field__label {
   display: flex;
 }
 

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { AdminModalForm } from "@/shared/ui/admin-modal-form";
+import { AdminModalForm, AdminModalFormRootError } from "@/shared/ui/admin-modal-form";
 import { ButtonBase } from "@/shared/ui/button-base";
 import { ButtonLoading } from "@/shared/ui/button-loading";
 import { Modal } from "@/shared/ui/modal";
@@ -24,6 +24,7 @@ export function AdminConsolationPrizeFormModalTrigger({
   defaultValues,
   renderTrigger,
   closeAriaLabel,
+  descriptionLabelAction,
   failureMessage,
   modalAriaLabel,
   prizeOptions
@@ -68,6 +69,7 @@ export function AdminConsolationPrizeFormModalTrigger({
         isOpen={isModalOpen}
         onClose={closeModal}
         ariaLabel={modalAriaLabel}
+        hasOverlay
         className="admin-consolation-prize-form-modal-trigger__modal"
       >
         <AdminModalForm<AdminConsolationPrizeFormState>
@@ -79,17 +81,17 @@ export function AdminConsolationPrizeFormModalTrigger({
           isCloseDisabled={isFormPending}
           closeAriaLabel={closeAriaLabel}
         >
-          <AdminConsolationPrizeFormFields disabled={isFormPending} prizeOptions={prizeOptions} />
-          {typeof rootErrorMessage === "string" ? (
-            <p className="admin-consolation-prize-form-modal-trigger__root-error" role="alert">
-              {rootErrorMessage}
-            </p>
-          ) : null}
-          <div className="admin-consolation-prize-form-modal-trigger__actions">
+          <AdminConsolationPrizeFormFields
+            disabled={isFormPending}
+            prizeOptions={prizeOptions}
+            descriptionLabelAction={descriptionLabelAction?.({ disabled: isFormPending })}
+          />
+          <AdminModalFormRootError message={rootErrorMessage} />
+          <div className="admin-modal-form__actions">
             <ButtonBase type="button" onClick={closeModal} disabled={isFormPending} variant="danger">
               Cancel
             </ButtonBase>
-            <ButtonLoading type="submit" variant="dark" disabled={isFormPending} isLoading={isFormPending}>
+            <ButtonLoading type="submit" variant="primary" disabled={isFormPending} isLoading={isFormPending}>
               <span>{submitLabel}</span>
             </ButtonLoading>
           </div>

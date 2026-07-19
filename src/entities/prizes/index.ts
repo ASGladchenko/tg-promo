@@ -1,4 +1,5 @@
 export type { AdminPrizeFormState, Prize, UserPrize, UserPrizeOutcome } from "./model/types";
+export type { AdminPrizeFormModalTriggerProps } from "./ui/types";
 
 export { AdminPrizeFormFields } from "./ui/admin-prize-form-fields";
 
@@ -8,7 +9,7 @@ export { AwardedUserPrizeModal } from "./ui/awarded-user-prize-modal";
 
 export { PrizeButton } from "./ui/prize-button";
 
-export { adminPrizeFormSchema } from "./model/admin-prize-form-schema";
+export { adminPrizeFormSchema, adminPrizeRequiredMetadataLanguageKeys } from "./model/admin-prize-form-schema";
 
 export { getAdminPrizeFormDefaultValues } from "./lib/get-admin-prize-form-default-values";
 

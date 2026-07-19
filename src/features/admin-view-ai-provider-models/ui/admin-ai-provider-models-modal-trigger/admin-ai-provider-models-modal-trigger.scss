@@ -1,0 +1,60 @@
+@use "@/shared/styles" as base;
+@use "@/shared/styles/admin" as s;
+
+.models-trigger__button {
+  width: 132px;
+  min-width: 132px;
+  max-width: 132px;
+
+  justify-content: center;
+}
+
+.models-trigger__label {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.models-modal {
+  width: min(520px, 100%);
+}
+
+.models-modal__state {
+  margin: 0;
+
+  font-size: 14px;
+  line-height: 1.4;
+
+  color: s.$admin-text-secondary;
+}
+
+.models-modal__list {
+  margin: 0;
+  padding: 0;
+
+  display: grid;
+  gap: 8px;
+
+  list-style: none;
+}
+
+.models-modal__button {
+  width: 100%;
+  height: auto;
+
+  padding: 10px 12px;
+
+  justify-content: flex-start;
+
+  font-size: 14px;
+  line-height: 1.35;
+  white-space: normal;
+  overflow-wrap: anywhere;
+
+  background: s.$admin-surface;
+  border: 1px solid s.$admin-border;
+  border-radius: base.$radius-sm;
+}

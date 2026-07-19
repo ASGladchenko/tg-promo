@@ -58,6 +58,7 @@ export function AdminCrackSafeRules() {
           header={crackSafeRulesHeader}
           items={crackSafeRulesQuery.data}
           emptyMessage="No Crack Safe rules found"
+          className="admin-crack-safe-rules__table"
           gridTemplateColumns={crackSafeRulesGridTemplateColumns}
           renderRow={(rule) => (
             <AdminCrackSafeRuleRow gridTemplateColumns={crackSafeRulesGridTemplateColumns} rule={rule} />

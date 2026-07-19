@@ -20,6 +20,7 @@
   border: 1px solid a.$admin-text-disabled;
   border-radius: s.$radius-sm;
   box-shadow: a.$admin-shadow;
+  outline: none;
 
   transition: all 0.2s ease-in-out;
 
@@ -30,6 +31,11 @@
   }
 
   &:not(:disabled):hover {
+    background: a.$admin-border-strong;
+    border-color: a.$admin-text-muted;
+  }
+
+  &:not(:disabled):focus-visible {
     background: a.$admin-border-strong;
     border-color: a.$admin-text-muted;
   }
@@ -65,4 +71,28 @@
 
 .button-base--dark {
   @include s.button-variant(a.$admin-topbar, a.$admin-white);
+}
+
+.button-base--outline {
+  @include s.button-outline-variant(a.$admin-text-disabled, a.$admin-gray-900);
+}
+
+.button-base--primary.button-base--outline {
+  @include s.button-outline-variant(a.$admin-primary);
+}
+
+.button-base--success.button-base--outline {
+  @include s.button-outline-variant(a.$admin-success);
+}
+
+.button-base--warning.button-base--outline {
+  @include s.button-outline-variant(a.$admin-warning);
+}
+
+.button-base--danger.button-base--outline {
+  @include s.button-outline-variant(a.$admin-danger);
+}
+
+.button-base--dark.button-base--outline {
+  @include s.button-outline-variant(a.$admin-text-muted, a.$admin-white);
 }

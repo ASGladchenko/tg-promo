@@ -22,36 +22,36 @@ export function AdminCrackSafeRuleRow({ rule, gridTemplateColumns }: AdminCrackS
     : 0;
 
   return (
-    <div className="grid-table__row" role="row" style={rowStyle}>
-      <div className="grid-table__cell" role="cell">
+    <div className="rule-row" role="row" style={rowStyle}>
+      <div className="rule-row__cell" role="cell">
         <CopyIdButton ariaLabel={`Copy rule ID ${rule.id}`} id={rule.id} />
       </div>
 
-      <div className="grid-table__cell" role="cell">
+      <div className="rule-row__cell" role="cell">
         {rule.gameDate}
       </div>
 
-      <div className="grid-table__cell" role="cell">
+      <div className="rule-row__cell" role="cell">
         {rule.codeLength}
       </div>
 
-      <div className="grid-table__cell" role="cell">
+      <div className="rule-row__cell" role="cell">
         {jackpotPromoCodesCount}
       </div>
 
-      <div className="grid-table__cell" role="cell">
+      <div className="rule-row__cell" role="cell">
         {semiJackpotPromoCodesPerJackpot}/{semiJackpotPromoCodesCount}
       </div>
 
-      <div className="grid-table__cell" role="cell">
+      <div className="rule-row__cell" role="cell">
         {formatAdminCrackSafeRuleDate(rule.createdAt)}
       </div>
 
-      <div className="grid-table__cell" role="cell">
+      <div className="rule-row__cell" role="cell">
         {formatAdminCrackSafeRuleDate(rule.updatedAt)}
       </div>
 
-      <div className="grid-table__cell admin-crack-safe-rule-row__actions" role="cell">
+      <div className="rule-row__cell rule-row__actions" role="cell">
         <AdminCrackSafeRuleUpdateTrigger rule={rule} />
       </div>
     </div>

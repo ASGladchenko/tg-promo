@@ -1,0 +1,74 @@
+@use "@/shared/styles/admin" as s;
+
+.ai-provider-row {
+  width: 100%;
+  min-width: 100%;
+
+  display: grid;
+  align-items: center;
+  column-gap: 20px;
+  grid-template-columns: var(--grid-table-columns);
+
+  border-bottom: 1px solid s.$admin-border;
+}
+
+.ai-provider-row:last-child {
+  border-bottom: 0;
+}
+
+.ai-provider-row__cell {
+  min-width: 0;
+
+  padding: 10px 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ai-provider-row__cell > * {
+  min-width: 0;
+}
+
+.ai-provider-row__cell--api-key {
+  display: flex;
+  justify-content: center;
+
+  text-overflow: clip;
+}
+
+.ai-provider-row__cell--selected-model {
+  display: flex;
+  justify-content: center;
+
+  text-overflow: clip;
+}
+
+.ai-provider-row__cell--status {
+  display: flex;
+  justify-content: center;
+
+  text-overflow: clip;
+}
+
+.ai-provider-row__button {
+  width: 92px;
+  min-width: 92px;
+  max-width: 92px;
+}
+
+.ai-provider-row__button--active {
+  width: 116px;
+  min-width: 116px;
+  max-width: 116px;
+}
+
+.ai-provider-row__button-label {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

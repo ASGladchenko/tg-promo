@@ -27,7 +27,6 @@ export const adminPrizeFormSchema = z
       .max(100, "Prize name must contain at most 100 characters"),
     description: z.string().trim(),
     isActive: z.boolean(),
-    metadataType: z.string().trim().min(1, "Metadata type is required"),
     metadataLanguages: adminPrizeRequiredMetadataLanguagesSchema,
     metadata: z.array(adminPrizeMetadataFieldSchema)
   })

@@ -3,8 +3,6 @@
 .admin-crack-safe-rules {
   min-width: 0;
 
-  padding: 14px 18px;
-
   color: s.$admin-text;
 }
 
@@ -22,6 +20,14 @@
 
 .admin-crack-safe-rules__state--error {
   color: s.$admin-danger;
+}
+
+.admin-crack-safe-rules__table .grid-table__header {
+  column-gap: 20px;
+}
+
+.admin-crack-safe-rules__table .grid-table__header-item {
+  padding: 10px 0;
 }
 
 .admin-crack-safe-rules__actions {

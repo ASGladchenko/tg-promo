@@ -1,6 +1,7 @@
 import { useConsolationPrizes } from "@/entities/consolation-prizes";
 import { usePrizes } from "@/entities/prizes";
 import { AdminConsolationPrizeCreateTrigger } from "@/features/admin-create-consolation-prize";
+import { AdminConsolationPrizeDescriptionTranslateButton } from "@/features/admin-translate-consolation-prize-description";
 import { getErrorMessage } from "@/shared/lib/error";
 import { AdminPageHeader } from "@/shared/ui/admin-page-header";
 import { GridTable } from "@/shared/ui/grid-table";
@@ -20,7 +21,16 @@ export function AdminConsolationPrizes() {
 
   return (
     <section className="admin-consolation-prizes">
-      <AdminPageHeader title="Consolation prizes" slot={<AdminConsolationPrizeCreateTrigger />} />
+      <AdminPageHeader
+        title="Consolation prizes"
+        slot={
+          <AdminConsolationPrizeCreateTrigger
+            descriptionLabelAction={({ disabled }) => (
+              <AdminConsolationPrizeDescriptionTranslateButton disabled={disabled} />
+            )}
+          />
+        }
+      />
       {consolationPrizesQuery.isLoading || prizesQuery.isLoading ? (
         <p className="admin-consolation-prizes__state" aria-live="polite">
           Loading consolation prizes...
@@ -35,11 +45,12 @@ export function AdminConsolationPrizes() {
 
       {consolationPrizesQuery.data && prizesQuery.data ? (
         <GridTable
-          ariaLabel="Consolation prizes"
           header={header}
+          ariaLabel="Consolation prizes"
           items={consolationPrizesQuery.data}
-          emptyMessage="No consolation prizes found"
           gridTemplateColumns={gridTemplateColumns}
+          emptyMessage="No consolation prizes found"
+          className="admin-consolation-prizes__table"
           renderRow={(consolationPrize) => (
             <AdminConsolationPrizeRow
               consolationPrize={consolationPrize}
