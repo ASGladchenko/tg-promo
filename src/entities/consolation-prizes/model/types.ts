@@ -8,5 +8,5 @@ export type AdminConsolationPrizeFormState = z.output<typeof adminConsolationPri
 export type AdminConsolationPrizeDirtyFields = Partial<
   Readonly<FieldNamesMarkedBoolean<AdminConsolationPrizeFormState>>
 >;
-export type ConsolationPrize = Omit<ConsolationPrizeDto, "description"> & { description: string };
+export type ConsolationPrize = ConsolationPrizeDto;
 export type ConsolationPrizeOption = { id: string; name: string };

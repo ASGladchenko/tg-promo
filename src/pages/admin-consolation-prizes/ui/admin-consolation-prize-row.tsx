@@ -2,7 +2,6 @@ import { type CSSProperties } from "react";
 
 import { type ConsolationPrize } from "@/entities/consolation-prizes";
 import { type Prize } from "@/entities/prizes";
-import { AdminConsolationPrizeDescriptionTranslateButton } from "@/features/admin-translate-consolation-prize-description";
 import { AdminConsolationPrizeUpdateTrigger } from "@/features/admin-update-consolation-prize";
 import { CopyIdButton } from "@/features/copy-id";
 
@@ -33,14 +32,13 @@ export function AdminConsolationPrizeRow({
         {linkedPrize?.name ?? consolationPrize.prizeId}
       </div>
       <div className="consolation-row__cell" role="cell">{consolationPrize.promoCode}</div>
-      <div className="consolation-row__cell" role="cell">{consolationPrize.description || "—"}</div>
-      <div className="consolation-row__cell" role="cell">
-        {formatAdminConsolationPrizeDate(consolationPrize.expiresAt)}
-      </div>
       <div className="consolation-row__cell" role="cell">
         <span className="consolation-row__status">
           {consolationPrize.isActive ? "Active" : "Inactive"}
         </span>
+      </div>
+      <div className="consolation-row__cell" role="cell">
+        {formatAdminConsolationPrizeDate(consolationPrize.expiresAt)}
       </div>
       <div className="consolation-row__cell" role="cell">
         {formatAdminConsolationPrizeDate(consolationPrize.createdAt)}
@@ -49,12 +47,7 @@ export function AdminConsolationPrizeRow({
         {formatAdminConsolationPrizeDate(consolationPrize.updatedAt)}
       </div>
       <div className="consolation-row__cell consolation-row__actions" role="cell">
-        <AdminConsolationPrizeUpdateTrigger
-          consolationPrize={consolationPrize}
-          descriptionLabelAction={({ disabled }) => (
-            <AdminConsolationPrizeDescriptionTranslateButton disabled={disabled} />
-          )}
-        />
+        <AdminConsolationPrizeUpdateTrigger consolationPrize={consolationPrize} />
       </div>
     </div>
   );

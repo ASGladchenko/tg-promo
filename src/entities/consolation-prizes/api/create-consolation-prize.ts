@@ -1,12 +1,13 @@
 import { getApiUrl } from "@/shared/api";
 import { readResponseErrorMessage } from "@/shared/lib/error";
 
-import { type CreateConsolationPrizePayload } from "./types";
+import { consolationPrizeDtoSchema } from "./consolation-prizes-response-schema";
+import { type ConsolationPrizeDto, type CreateConsolationPrizePayload } from "./types";
 
 export async function createConsolationPrize(
   payload: CreateConsolationPrizePayload,
   signal?: AbortSignal
-): Promise<void> {
+): Promise<ConsolationPrizeDto> {
   const response = await fetch(getApiUrl("consolation-prizes/create"), {
     method: "POST",
     credentials: "include",
@@ -23,4 +24,12 @@ export async function createConsolationPrize(
       )
     );
   }
+
+  const parsedResponse = consolationPrizeDtoSchema.safeParse(await response.json());
+
+  if (!parsedResponse.success) {
+    throw parsedResponse.error;
+  }
+
+  return parsedResponse.data;
 }
