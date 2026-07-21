@@ -58,3 +58,9 @@
   border: 1px solid s.$admin-border;
   border-radius: base.$radius-sm;
 }
+
+.models-modal__button--highlighted {
+  color: s.$admin-warning;
+  background: rgba(s.$admin-warning, 0.12);
+  border-color: rgba(s.$admin-warning, 0.55);
+}

@@ -33,7 +33,8 @@ export function AdminPrizeDescriptionTranslateButton({
         text: description,
         targetLanguages: [...adminPrizeRequiredMetadataLanguageKeys],
         sourceLanguage: "en",
-        context: "Promo-code prize descriptions for a giveaway."
+        context:
+          "Promo-code prize descriptions for a giveaway. Translate the user-provided text so it is clear, natural, semantically correct, and orthographically correct for native speakers. Fix typos, grammar, spacing, and punctuation, including dangling punctuation at the end. Preserve emojis, numbers, and the intended meaning. Do not add details, examples, promo codes, prizes, amounts, or marketing copy."
       });
 
       adminPrizeRequiredMetadataLanguageKeys.forEach((key) => {
