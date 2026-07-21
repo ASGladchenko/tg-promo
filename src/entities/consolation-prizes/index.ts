@@ -6,7 +6,6 @@ export type {
 } from "./model/types";
 export type { AdminConsolationPrizeFormModalTriggerProps } from "./ui/types";
 export { AdminConsolationPrizeFormModalTrigger } from "./ui/admin-consolation-prize-form-modal-trigger";
-export { adminConsolationPrizeRequiredMetadataLanguageKeys } from "./model/admin-consolation-prize-form-schema";
 export { getAdminConsolationPrizeFormDefaultValues } from "./lib/get-admin-consolation-prize-form-default-values";
 export {
   mapAdminConsolationPrizeFormToCreatePayload,

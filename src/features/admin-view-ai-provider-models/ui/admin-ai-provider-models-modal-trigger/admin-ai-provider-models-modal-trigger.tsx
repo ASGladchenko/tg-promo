@@ -1,5 +1,7 @@
 import { useId, useState } from "react";
 
+import clsx from "clsx";
+
 import { useAiProviderModels, useUpdateAiProviderModel } from "@/entities/ai-providers";
 import { getErrorMessage } from "@/shared/lib/error";
 import { AdminModalFormRootError } from "@/shared/ui/admin-modal-form";
@@ -14,6 +16,19 @@ type AdminAiProviderModelsModalTriggerProps = {
   name: string;
   selectedModel: string | null;
 };
+
+const highlightedModels = [
+  "models/gemini-3-flash-preview",
+  "models/gemini-3.5-flash",
+  "models/gemini-3.1-flash-lite",
+  "models/gemini-flash-latest",
+  "models/gemini-flash-lite-latest",
+  "gpt-oss:120b",
+  "gpt-oss:20b",
+  "nemotron-3-super",
+  "nemotron-3-nano:30b",
+  "gemma4:31b"
+];
 
 export function AdminAiProviderModelsModalTrigger({
   code,
@@ -68,17 +83,23 @@ export function AdminAiProviderModelsModalTrigger({
   }
 
   if (modelsQuery.data && modelsQuery.data.length > 0) {
+    const models = [...modelsQuery.data].sort((firstModel, secondModel) =>
+      firstModel.localeCompare(secondModel)
+    );
+
     modalBody = (
       <ul className="models-modal__list">
-        {modelsQuery.data.map((model) => (
+        {models.map((model) => (
           <li key={model}>
             <ButtonLoading
               height={36}
               type="button"
-              className="models-modal__button"
               onClick={() => selectModel(model)}
               disabled={isUpdatePending || selectedModel === model}
               isLoading={isUpdatePending && updateModel.variables?.payload.model === model}
+              className={clsx("models-modal__button", {
+                "models-modal__button--highlighted": highlightedModels.includes(model)
+              })}
             >
               {model}
             </ButtonLoading>

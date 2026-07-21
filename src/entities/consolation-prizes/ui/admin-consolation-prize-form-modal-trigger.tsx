@@ -24,7 +24,6 @@ export function AdminConsolationPrizeFormModalTrigger({
   defaultValues,
   renderTrigger,
   closeAriaLabel,
-  descriptionLabelAction,
   failureMessage,
   modalAriaLabel,
   prizeOptions
@@ -81,11 +80,7 @@ export function AdminConsolationPrizeFormModalTrigger({
           isCloseDisabled={isFormPending}
           closeAriaLabel={closeAriaLabel}
         >
-          <AdminConsolationPrizeFormFields
-            disabled={isFormPending}
-            prizeOptions={prizeOptions}
-            descriptionLabelAction={descriptionLabelAction?.({ disabled: isFormPending })}
-          />
+          <AdminConsolationPrizeFormFields disabled={isFormPending} prizeOptions={prizeOptions} />
           <AdminModalFormRootError message={rootErrorMessage} />
           <div className="admin-modal-form__actions">
             <ButtonBase type="button" onClick={closeModal} disabled={isFormPending} variant="danger">

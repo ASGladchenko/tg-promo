@@ -64,6 +64,7 @@ export function AdminCrackSafeRuleRewardFields({
             disabled={disabled}
             placeholder="Select prize"
             name={`${fieldName}.prizeId`}
+            optionsCount={prizeOptions.length}
             getDisplayValue={(value) =>
               prizeOptions.find((prizeOption) => prizeOption.id === value)?.name ?? value
             }

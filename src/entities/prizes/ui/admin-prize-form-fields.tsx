@@ -25,7 +25,7 @@ export function AdminPrizeFormFields({ descriptionLabelAction, disabled }: Admin
         name="description"
         label="Description"
         disabled={disabled}
-        placeholder="Prize description"
+        placeholder="Describe the prize"
         labelAction={descriptionLabelAction}
       />
 
