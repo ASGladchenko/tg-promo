@@ -18,6 +18,11 @@ type AdminAiProviderModelsModalTriggerProps = {
 };
 
 const highlightedModels = [
+  "models/gemini-3-flash-preview",
+  "models/gemini-3.5-flash",
+  "models/gemini-3.1-flash-lite",
+  "models/gemini-flash-latest",
+  "models/gemini-flash-lite-latest",
   "gpt-oss:120b",
   "gpt-oss:20b",
   "nemotron-3-super",
