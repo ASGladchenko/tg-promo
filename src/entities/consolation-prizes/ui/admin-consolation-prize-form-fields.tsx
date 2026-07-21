@@ -26,6 +26,7 @@ export function AdminConsolationPrizeFormFields({
         disabled={disabled}
         placeholder="Select prize"
         getDisplayValue={getPrizeName}
+        optionsCount={prizeOptions.length}
         renderOptions={({ onSelect, value }) =>
           prizeOptions.map((prize) => (
             <SelectOption key={prize.id} value={prize.id} onSelect={onSelect} isSelected={prize.id === value}>

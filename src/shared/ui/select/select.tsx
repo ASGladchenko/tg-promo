@@ -16,9 +16,11 @@ export type SelectRenderOptionsProps = {
 };
 export interface SelectProps extends Omit<SelectBaseProps, "children" | "onChange" | "value"> {
   displayValue?: string;
+  emptyOptionsText?: string;
   error?: string;
   label?: string;
   onValueChange: (value: string) => void;
+  optionsCount?: number;
   placeholder?: string;
   renderOptions: (props: SelectRenderOptionsProps) => ReactNode;
   value: string;
@@ -30,15 +32,18 @@ export function Select({
   value,
   disabled,
   displayValue,
+  optionsCount,
   onValueChange,
-  placeholder = "Select",
   renderOptions,
+  placeholder = "Select",
+  emptyOptionsText = "No options available",
   ...props
 }: SelectProps) {
   const listboxId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
 
+  const hasOptions = optionsCount === undefined || optionsCount > 0;
   const selectedText = displayValue || placeholder;
 
   const close = () => setIsOpen(false);
@@ -89,14 +94,20 @@ export function Select({
 
         {isOpen ? (
           <div id={listboxId} className="select-field__options" role="listbox">
-            {renderOptions({
-              close,
-              value,
-              onSelect: (nextValue) => {
-                onValueChange(nextValue);
-                close();
-              }
-            })}
+            {hasOptions ? (
+              renderOptions({
+                close,
+                value,
+                onSelect: (nextValue) => {
+                  onValueChange(nextValue);
+                  close();
+                }
+              })
+            ) : (
+              <div className="select-field__empty-option" role="option" aria-disabled="true">
+                {emptyOptionsText}
+              </div>
+            )}
           </div>
         ) : null}
       </span>

@@ -98,6 +98,17 @@
   background: rgba(a.$admin-primary, 0.14);
 }
 
+.select-field__empty-option {
+  min-height: 36px;
+
+  padding: 8px 10px;
+
+  display: flex;
+  align-items: center;
+
+  color: a.$admin-text-muted;
+}
+
 .select-field__error {
   margin-top: 4px;
 

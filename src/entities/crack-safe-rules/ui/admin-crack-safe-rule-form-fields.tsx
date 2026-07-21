@@ -40,6 +40,7 @@ export function AdminCrackSafeRuleFormFields({
         fieldName="jackpotPrize"
         prizeOptions={prizeOptions}
       />
+
       <AdminCrackSafeRuleRewardFields
         disabled={disabled}
         title="Semi-Jackpot Prize"
