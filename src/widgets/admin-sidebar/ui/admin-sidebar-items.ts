@@ -19,7 +19,7 @@ export const adminSidebarItems: AdminSidebarItem[] = [
     end: true
   },
   {
-    title: "Crack Safe",
+    title: "Safe Crack",
     basePath: `${APP_ROUTES.admin}/${APP_ROUTES.adminCrackSafe}`,
     children: [
       {
