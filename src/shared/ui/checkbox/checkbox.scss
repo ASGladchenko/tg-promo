@@ -1,12 +1,17 @@
 @use "@/shared/styles/admin" as a;
 
 .checkbox {
+  width: fit-content;
+  max-width: 100%;
+
   display: grid;
   gap: 4px;
 
   color: a.$admin-text-secondary;
 
   cursor: pointer;
+
+  justify-self: start;
 }
 
 .checkbox__content {

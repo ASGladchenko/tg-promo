@@ -5,6 +5,8 @@
 
   padding: 20px;
 
+  direction: ltr;
+
   display: grid;
   gap: 18px;
   grid-template-rows: auto minmax(0, 1fr);
