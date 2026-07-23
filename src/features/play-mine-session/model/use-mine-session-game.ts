@@ -1,21 +1,24 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { type MineSceneCellClick } from "@/entities/mine";
+import { useQueryClient } from "@tanstack/react-query";
 
-import { createMineZone } from "../lib/create-mine-zone";
+import { setAttemptsWalletQueryData } from "@/entities/attempts";
 import {
-  createMineSessionJournalEntry,
-  EMPTY_MINE_SESSION_RISK_STATE,
-  evaluateMineSessionRisk,
-  MINE_SESSION_MAX_JOURNAL_ENTRIES
-} from "../lib/evaluate-mine-session-risk";
+  createMineSocketClient,
+  type MineClickSessionResult,
+  type MineSceneCellClick,
+  type MineServerSessionState,
+  type MineServerZone,
+  type MineSocketClient,
+  type MineSocketError,
+  type MineStartSessionResult
+} from "@/entities/mine";
+
 import { isMineZoneHit } from "../lib/is-mine-zone-hit";
 import {
   type MineCollectEffect,
   type MineGameZone,
   type MineMissEffect,
-  type MineSessionJournalEntry,
-  type MineSessionRiskState,
   type MineSessionCountdownStep,
   type MineSessionStatus
 } from "./types";
@@ -25,8 +28,14 @@ const MINE_START_COUNTDOWN_STEP_MS = 1_000;
 const MINE_START_COUNTDOWN_STEPS: readonly MineSessionCountdownStep[] = ["3", "2", "1", "go"];
 const MINE_MISS_PENALTY = 1;
 const MINE_CLOCK_TICK_MS = 100;
-const MINE_RUBY_MIN_SPAWN_DELAY_MS = 3000;
-const MINE_RUBY_MAX_SPAWN_DELAY_MS = 7000;
+const MINE_STATE_REFRESH_MIN_DELAY_MS = 80;
+const MINE_STATE_REFRESH_OFFSET_MS = 40;
+
+type MinePendingClick = {
+  cellClick: MineSceneCellClick;
+  clickedAt: number;
+  sequence: number;
+};
 
 function getCountdownStep(elapsedMs: number): MineSessionCountdownStep | null {
   const stepIndex = Math.floor(elapsedMs / MINE_START_COUNTDOWN_STEP_MS);
@@ -46,84 +55,280 @@ function getTimeLeftSeconds(status: MineSessionStatus, sessionEndsAt: number | n
   return Math.ceil(Math.max(0, sessionEndsAt - now) / 1000);
 }
 
-function getRandomNumber(min: number, max: number): number {
-  return min + Math.random() * (max - min);
+function parseServerDate(value: string): number | null {
+  const timestamp = Date.parse(value);
+
+  return Number.isFinite(timestamp) ? timestamp : null;
 }
 
-function getNextRubyZoneAt(now: number): number {
-  return now + getRandomNumber(MINE_RUBY_MIN_SPAWN_DELAY_MS, MINE_RUBY_MAX_SPAWN_DELAY_MS);
+function mapMineServerZoneToGameZone(zone: MineServerZone): MineGameZone {
+  return {
+    cellIndex: zone.cellIndex,
+    expiresAt: parseServerDate(zone.expiresAt) ?? Date.now(),
+    id: zone.id,
+    kind: zone.kind,
+    radius: zone.radius,
+    reward: zone.reward,
+    startsAt: parseServerDate(zone.startsAt) ?? Date.now(),
+    x: zone.x,
+    y: zone.y
+  };
 }
 
 function createMineCollectEffect(
-  hitZone: MineGameZone,
+  kind: MineCollectEffect["kind"],
   cellClick: MineSceneCellClick,
-  clickAt: number
+  id: string
 ): MineCollectEffect {
   return {
-    id: `${hitZone.id}-${clickAt}`,
-    kind: hitZone.kind,
+    id,
+    kind,
     sceneX: cellClick.sceneX,
     sceneY: cellClick.sceneY
   };
 }
 
-function createMineMissEffect(cellClick: MineSceneCellClick, clickAt: number): MineMissEffect {
+function createMineMissEffect(cellClick: MineSceneCellClick, penalty: number, id: string): MineMissEffect {
   return {
-    id: `miss-${clickAt}-${cellClick.cellIndex}-${Math.random().toString(16).slice(2)}`,
-    penalty: MINE_MISS_PENALTY,
+    id,
+    penalty,
     sceneX: cellClick.sceneX,
     sceneY: cellClick.sceneY
   };
 }
 
 function getHitMineZone(zones: readonly MineGameZone[], cellClick: MineSceneCellClick, clickAt: number) {
-  return zones
-    .filter((zone) => clickAt < zone.expiresAt && isMineZoneHit(zone, cellClick))
-    .sort((firstZone, secondZone) => secondZone.reward - firstZone.reward)[0] ?? null;
+  return (
+    zones
+      .filter((zone) => clickAt < zone.expiresAt && isMineZoneHit(zone, cellClick))
+      .sort((firstZone, secondZone) => secondZone.reward - firstZone.reward)[0] ?? null
+  );
+}
+
+function getPendingClickMaxSequence(pendingClicks: Iterable<MinePendingClick>): number | null {
+  let maxSequence: number | null = null;
+
+  for (const pendingClick of pendingClicks) {
+    maxSequence = maxSequence === null ? pendingClick.sequence : Math.max(maxSequence, pendingClick.sequence);
+  }
+
+  return maxSequence;
 }
 
 export function useMineSessionGame() {
+  const queryClient = useQueryClient();
+  const [activeZones, setActiveZones] = useState<readonly MineGameZone[]>([]);
   const [collectEffect, setCollectEffect] = useState<MineCollectEffect | null>(null);
   const [collectedGold, setCollectedGold] = useState(0);
   const [countdownStartedAt, setCountdownStartedAt] = useState<number | null>(null);
-  const [goldZone, setGoldZone] = useState<MineGameZone | null>(null);
-  const [now, setNow] = useState(() => Date.now());
-  const [nextRubyZoneAt, setNextRubyZoneAt] = useState<number | null>(null);
   const [missEffect, setMissEffect] = useState<MineMissEffect | null>(null);
-  const [riskState, setRiskState] = useState<MineSessionRiskState>(EMPTY_MINE_SESSION_RISK_STATE);
-  const [rubyZone, setRubyZone] = useState<MineGameZone | null>(null);
+  const [now, setNow] = useState(() => Date.now());
+  const [serverClockOffset, setServerClockOffset] = useState(0);
   const [sessionEndsAt, setSessionEndsAt] = useState<number | null>(null);
-  const [sessionJournal, setSessionJournal] = useState<readonly MineSessionJournalEntry[]>([]);
+  const [socketError, setSocketError] = useState<MineSocketError | null>(null);
   const [status, setStatus] = useState<MineSessionStatus>("idle");
-  const goldZoneRef = useRef<MineGameZone | null>(null);
-  const journalSequenceRef = useRef(0);
-  const nextRubyZoneAtRef = useRef<number | null>(null);
-  const riskStateRef = useRef<MineSessionRiskState>(EMPTY_MINE_SESSION_RISK_STATE);
-  const rubyZoneRef = useRef<MineGameZone | null>(null);
+  const activeZonesRef = useRef<readonly MineGameZone[]>([]);
+  const clickSequenceRef = useRef(0);
+  const pendingClicksRef = useRef(new Map<string, MinePendingClick>());
+  const serverClockOffsetRef = useRef(0);
   const sessionEndsAtRef = useRef<number | null>(null);
-  const sessionJournalRef = useRef<readonly MineSessionJournalEntry[]>([]);
-  const sessionStartedAtRef = useRef<number | null>(null);
+  const sessionIdRef = useRef<string | null>(null);
+  const socketClientRef = useRef<MineSocketClient | null>(null);
+  const startRequestIdRef = useRef<string | null>(null);
+  const stateRefreshTimeoutRef = useRef<number | null>(null);
   const statusRef = useRef<MineSessionStatus>("idle");
 
-  useEffect(() => {
-    goldZoneRef.current = goldZone;
-  }, [goldZone]);
+  const clearStateRefreshTimeout = useCallback(() => {
+    if (stateRefreshTimeoutRef.current === null) {
+      return;
+    }
+
+    window.clearTimeout(stateRefreshTimeoutRef.current);
+    stateRefreshTimeoutRef.current = null;
+  }, []);
+
+  const applySessionState = useCallback(
+    (sessionState: MineServerSessionState) => {
+      const serverTime = parseServerDate(sessionState.serverTime);
+      const nextServerClockOffset = serverTime === null ? serverClockOffsetRef.current : serverTime - Date.now();
+      const nextSessionEndsAt = parseServerDate(sessionState.endsAt);
+      const nextActiveZones =
+        sessionState.status === "running" ? sessionState.activeZones.map(mapMineServerZoneToGameZone) : [];
+      const nextStatus: MineSessionStatus = sessionState.status === "running" ? "running" : "finished";
+      const pendingClickMaxSequence = getPendingClickMaxSequence(pendingClicksRef.current.values());
+
+      activeZonesRef.current = nextActiveZones;
+      clickSequenceRef.current =
+        pendingClickMaxSequence === null
+          ? sessionState.clickSequence
+          : Math.max(sessionState.clickSequence, pendingClickMaxSequence);
+      serverClockOffsetRef.current = nextServerClockOffset;
+      sessionEndsAtRef.current = nextSessionEndsAt;
+      sessionIdRef.current = sessionState.id;
+      statusRef.current = nextStatus;
+
+      setActiveZones(nextActiveZones);
+      setCollectedGold(sessionState.score);
+      setServerClockOffset(nextServerClockOffset);
+      setSessionEndsAt(nextSessionEndsAt);
+      setStatus(nextStatus);
+
+      if (nextStatus === "finished") {
+        clearStateRefreshTimeout();
+      }
+    },
+    [clearStateRefreshTimeout]
+  );
+
+  const scheduleStateRefresh = useCallback(
+    (sessionState: MineServerSessionState) => {
+      clearStateRefreshTimeout();
+
+      if (sessionState.status !== "running") {
+        return;
+      }
+
+      const nextRefreshAt = parseServerDate(sessionState.nextRefreshAt);
+
+      if (nextRefreshAt === null) {
+        return;
+      }
+
+      const currentServerTime = Date.now() + serverClockOffsetRef.current;
+      const delayMs = Math.max(
+        MINE_STATE_REFRESH_MIN_DELAY_MS,
+        nextRefreshAt - currentServerTime + MINE_STATE_REFRESH_OFFSET_MS
+      );
+      const sessionId = sessionState.id;
+
+      stateRefreshTimeoutRef.current = window.setTimeout(() => {
+        if (statusRef.current !== "running" || sessionIdRef.current !== sessionId) {
+          return;
+        }
+
+        socketClientRef.current?.requestState(sessionId);
+      }, delayMs);
+    },
+    [clearStateRefreshTimeout]
+  );
+
+  const syncSessionState = useCallback(
+    (sessionState: MineServerSessionState) => {
+      applySessionState(sessionState);
+      scheduleStateRefresh(sessionState);
+    },
+    [applySessionState, scheduleStateRefresh]
+  );
+
+  const handleSocketError = useCallback(
+    (error: MineSocketError, requestId: string | null) => {
+      setSocketError(error);
+
+      if (requestId) {
+        pendingClicksRef.current.delete(requestId);
+      }
+
+      if (statusRef.current === "starting") {
+        statusRef.current = "finished";
+        startRequestIdRef.current = null;
+        setStatus("finished");
+        clearStateRefreshTimeout();
+      }
+
+      if (statusRef.current === "running" && sessionIdRef.current) {
+        socketClientRef.current?.requestState(sessionIdRef.current);
+      }
+    },
+    [clearStateRefreshTimeout]
+  );
+
+  const handleSessionStarted = useCallback(
+    (payload: MineStartSessionResult, requestId: string | null) => {
+      if (requestId && startRequestIdRef.current && requestId !== startRequestIdRef.current) {
+        return;
+      }
+
+      startRequestIdRef.current = null;
+      clickSequenceRef.current = 0;
+      setAttemptsWalletQueryData(queryClient, payload.wallet);
+      syncSessionState(payload);
+    },
+    [queryClient, syncSessionState]
+  );
+
+  const handleClickResult = useCallback(
+    (payload: MineClickSessionResult, requestId: string | null) => {
+      const pendingClick = requestId ? pendingClicksRef.current.get(requestId) ?? null : null;
+
+      if (requestId) {
+        pendingClicksRef.current.delete(requestId);
+      }
+
+      syncSessionState(payload);
+
+      if (!pendingClick) {
+        return;
+      }
+
+      const effectId = requestId ?? `mine-click-${pendingClick.clickedAt}`;
+
+      if (payload.click.outcome === "hit" && payload.click.targetKind) {
+        setCollectEffect(createMineCollectEffect(payload.click.targetKind, pendingClick.cellClick, effectId));
+        return;
+      }
+
+      setMissEffect(
+        createMineMissEffect(
+          pendingClick.cellClick,
+          Math.abs(payload.click.rewardDelta) || MINE_MISS_PENALTY,
+          effectId
+        )
+      );
+    },
+    [syncSessionState]
+  );
+
+  const handleSocketClose = useCallback(() => {
+    socketClientRef.current = null;
+    clearStateRefreshTimeout();
+
+    if (statusRef.current !== "starting" && statusRef.current !== "running") {
+      return;
+    }
+
+    activeZonesRef.current = [];
+    statusRef.current = "finished";
+    setActiveZones([]);
+    setStatus("finished");
+  }, [clearStateRefreshTimeout]);
+
+  const getSocketClient = useCallback(() => {
+    if (socketClientRef.current) {
+      return socketClientRef.current;
+    }
+
+    const socketClient = createMineSocketClient({
+      onClickResult: handleClickResult,
+      onClose: handleSocketClose,
+      onError: handleSocketError,
+      onStarted: handleSessionStarted,
+      onState: (payload) => {
+        syncSessionState(payload);
+      }
+    });
+
+    socketClientRef.current = socketClient;
+
+    return socketClient;
+  }, [handleClickResult, handleSessionStarted, handleSocketClose, handleSocketError, syncSessionState]);
 
   useEffect(() => {
-    nextRubyZoneAtRef.current = nextRubyZoneAt;
-  }, [nextRubyZoneAt]);
-
-  useEffect(() => {
-    rubyZoneRef.current = rubyZone;
-  }, [rubyZone]);
-
-  useEffect(() => {
-    sessionEndsAtRef.current = sessionEndsAt;
-  }, [sessionEndsAt]);
-
-  useEffect(() => {
-    statusRef.current = status;
-  }, [status]);
+    return () => {
+      clearStateRefreshTimeout();
+      socketClientRef.current?.close();
+      socketClientRef.current = null;
+    };
+  }, [clearStateRefreshTimeout]);
 
   useEffect(() => {
     if (status === "idle" || status === "finished") {
@@ -151,73 +356,27 @@ export function useMineSessionGame() {
       return;
     }
 
-    const sessionStartedAt = now;
-    const nextSessionEndsAt = sessionStartedAt + MINE_SESSION_DURATION_MS;
-    const nextGoldZone = createMineZone(sessionStartedAt, "gold");
-    const nextRubyZoneAt = getNextRubyZoneAt(sessionStartedAt);
-
-    goldZoneRef.current = nextGoldZone;
-    nextRubyZoneAtRef.current = nextRubyZoneAt;
-    rubyZoneRef.current = null;
-    sessionEndsAtRef.current = nextSessionEndsAt;
-    sessionStartedAtRef.current = sessionStartedAt;
-    statusRef.current = "running";
+    statusRef.current = "starting";
     setCountdownStartedAt(null);
-    setGoldZone(nextGoldZone);
-    setNextRubyZoneAt(nextRubyZoneAt);
-    setRubyZone(null);
-    setSessionEndsAt(nextSessionEndsAt);
-    setStatus("running");
-  }, [countdownStartedAt, now, status]);
+    setStatus("starting");
+    startRequestIdRef.current = getSocketClient().startSession();
+  }, [countdownStartedAt, getSocketClient, now, status]);
 
   useEffect(() => {
     if (status !== "running" || sessionEndsAt === null) {
       return;
     }
 
-    if (now >= sessionEndsAt) {
-      goldZoneRef.current = null;
-      nextRubyZoneAtRef.current = null;
-      rubyZoneRef.current = null;
-      statusRef.current = "finished";
-      setGoldZone(null);
-      setNextRubyZoneAt(null);
-      setRubyZone(null);
-      setStatus("finished");
+    if (now + serverClockOffset < sessionEndsAt) {
       return;
     }
 
-    const nextGoldZone =
-      goldZone && now < goldZone.expiresAt
-        ? goldZone
-        : createMineZone(now, "gold", rubyZone ? [rubyZone.cellIndex] : []);
-    let nextRubyZone = rubyZone && now < rubyZone.expiresAt ? rubyZone : null;
-    let nextRubyZoneAt = nextRubyZoneAtRef.current;
-
-    if (rubyZone && now >= rubyZone.expiresAt) {
-      nextRubyZoneAt = getNextRubyZoneAt(now);
-    }
-
-    if (!nextRubyZone && nextRubyZoneAt !== null && now >= nextRubyZoneAt) {
-      nextRubyZone = createMineZone(now, "ruby", [nextGoldZone.cellIndex]);
-      nextRubyZoneAt = null;
-    }
-
-    if (nextGoldZone !== goldZone) {
-      goldZoneRef.current = nextGoldZone;
-      setGoldZone(nextGoldZone);
-    }
-
-    if (nextRubyZone !== rubyZone) {
-      rubyZoneRef.current = nextRubyZone;
-      setRubyZone(nextRubyZone);
-    }
-
-    if (nextRubyZoneAt !== nextRubyZoneAtRef.current) {
-      nextRubyZoneAtRef.current = nextRubyZoneAt;
-      setNextRubyZoneAt(nextRubyZoneAt);
-    }
-  }, [goldZone, now, rubyZone, sessionEndsAt, status]);
+    activeZonesRef.current = [];
+    statusRef.current = "finished";
+    setActiveZones([]);
+    setStatus("finished");
+    clearStateRefreshTimeout();
+  }, [clearStateRefreshTimeout, now, serverClockOffset, sessionEndsAt, status]);
 
   const countdownStep = useMemo(() => {
     if (status !== "countdown" || countdownStartedAt === null) {
@@ -228,116 +387,67 @@ export function useMineSessionGame() {
   }, [countdownStartedAt, now, status]);
 
   const timeLeftSeconds = useMemo(() => {
-    return getTimeLeftSeconds(status, sessionEndsAt, now);
-  }, [now, sessionEndsAt, status]);
+    return getTimeLeftSeconds(status, sessionEndsAt, now + serverClockOffset);
+  }, [now, serverClockOffset, sessionEndsAt, status]);
 
   const startSession = useCallback(() => {
     const startedAt = Date.now();
 
-    goldZoneRef.current = null;
-    nextRubyZoneAtRef.current = null;
-    riskStateRef.current = EMPTY_MINE_SESSION_RISK_STATE;
-    rubyZoneRef.current = null;
+    activeZonesRef.current = [];
+    clickSequenceRef.current = 0;
+    pendingClicksRef.current.clear();
+    serverClockOffsetRef.current = 0;
     sessionEndsAtRef.current = null;
-    sessionJournalRef.current = [];
-    sessionStartedAtRef.current = null;
+    sessionIdRef.current = null;
+    startRequestIdRef.current = null;
     statusRef.current = "countdown";
-    journalSequenceRef.current = 0;
+    clearStateRefreshTimeout();
+    setActiveZones([]);
     setCollectEffect(null);
     setCollectedGold(0);
     setCountdownStartedAt(startedAt);
-    setGoldZone(null);
-    setNow(startedAt);
-    setNextRubyZoneAt(null);
     setMissEffect(null);
-    setRiskState(EMPTY_MINE_SESSION_RISK_STATE);
-    setRubyZone(null);
+    setNow(startedAt);
+    setServerClockOffset(0);
     setSessionEndsAt(null);
-    setSessionJournal([]);
+    setSocketError(null);
     setStatus("countdown");
-  }, []);
+  }, [clearStateRefreshTimeout]);
 
   const handleMineCellClick = useCallback((cellClick: MineSceneCellClick) => {
     const currentStatus = statusRef.current;
-    const currentGoldZone = goldZoneRef.current;
-    const currentRubyZone = rubyZoneRef.current;
+    const currentSessionId = sessionIdRef.current;
     const currentSessionEndsAt = sessionEndsAtRef.current;
-    const clickAt = Date.now();
+    const clickedAt = Date.now() + serverClockOffsetRef.current;
 
-    if (currentStatus !== "running" || !currentGoldZone || currentSessionEndsAt === null) {
+    if (currentStatus !== "running" || !currentSessionId || currentSessionEndsAt === null) {
       return;
     }
 
-    if (clickAt >= currentSessionEndsAt) {
+    if (clickedAt >= currentSessionEndsAt) {
       return;
     }
 
-    const zones = [currentRubyZone, currentGoldZone].filter((zone): zone is MineGameZone => Boolean(zone));
-    const hitZone = getHitMineZone(zones, cellClick, clickAt);
-    const currentSessionJournal = sessionJournalRef.current;
-    const nextRiskState = evaluateMineSessionRisk({
-      cellClick,
-      clickedAt: clickAt,
-      hitZone,
-      journal: currentSessionJournal,
-      previousRiskState: riskStateRef.current
-    });
-    const isRewardBlocked = Boolean(hitZone) && nextRiskState.level === "blocked";
-    const rewardDelta = hitZone && !isRewardBlocked ? hitZone.reward : -MINE_MISS_PENALTY;
-    const previousJournalEntry = currentSessionJournal[currentSessionJournal.length - 1] ?? null;
-    const sessionStartedAt = sessionStartedAtRef.current ?? clickAt;
-    const sequence = journalSequenceRef.current + 1;
-    const nextJournalEntry = createMineSessionJournalEntry({
-      cellClick,
-      clickedAt: clickAt,
-      hitZone,
-      isRewardBlocked,
-      previousEntry: previousJournalEntry,
-      rewardDelta,
-      riskState: nextRiskState,
+    const hitZone = getHitMineZone(activeZonesRef.current, cellClick, clickedAt);
+    const sequence = clickSequenceRef.current + 1;
+    const requestId = getSocketClient().submitClick(currentSessionId, {
+      cellIndex: cellClick.cellIndex,
+      cellX: cellClick.cellX,
+      cellY: cellClick.cellY,
+      clientClickedAt: new Date(clickedAt).toISOString(),
+      sceneX: cellClick.sceneX,
+      sceneY: cellClick.sceneY,
       sequence,
-      sessionStartedAt
+      zoneId: hitZone?.id ?? null
     });
-    const nextSessionJournal = [...currentSessionJournal, nextJournalEntry].slice(
-      -MINE_SESSION_MAX_JOURNAL_ENTRIES
-    );
 
-    journalSequenceRef.current = sequence;
-    riskStateRef.current = nextRiskState;
-    sessionJournalRef.current = nextSessionJournal;
-    setRiskState(nextRiskState);
-    setSessionJournal(nextSessionJournal);
-
-    setCollectedGold((currentGold) => Math.max(0, currentGold + rewardDelta));
-
-    if (hitZone && !isRewardBlocked) {
-      setCollectEffect(createMineCollectEffect(hitZone, cellClick, clickAt));
-    } else {
-      setMissEffect(createMineMissEffect(cellClick, clickAt));
-    }
-
-    if (hitZone?.kind === "gold" && !isRewardBlocked) {
-      const nextGoldZone = createMineZone(clickAt, "gold", currentRubyZone ? [currentRubyZone.cellIndex] : []);
-
-      goldZoneRef.current = nextGoldZone;
-      setGoldZone(nextGoldZone);
-    }
-
-    if (hitZone?.kind === "ruby" && !isRewardBlocked) {
-      const nextRubyZoneAt = getNextRubyZoneAt(clickAt);
-
-      nextRubyZoneAtRef.current = nextRubyZoneAt;
-      rubyZoneRef.current = null;
-      setNextRubyZoneAt(nextRubyZoneAt);
-      setRubyZone(null);
-    }
-
-    setNow(clickAt);
-  }, []);
-
-  const activeZones = useMemo(() => {
-    return [goldZone, rubyZone].filter((zone): zone is MineGameZone => Boolean(zone));
-  }, [goldZone, rubyZone]);
+    clickSequenceRef.current = sequence;
+    pendingClicksRef.current.set(requestId, {
+      cellClick,
+      clickedAt,
+      sequence
+    });
+  }, [getSocketClient]);
 
   return {
     activeZones,
@@ -346,8 +456,7 @@ export function useMineSessionGame() {
     countdownStep,
     handleMineCellClick,
     missEffect,
-    riskState,
-    sessionJournal,
+    socketError,
     startSession,
     status,
     timeLeftSeconds

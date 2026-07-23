@@ -1,5 +1,6 @@
 export const APP_ROUTES = {
   home: "/",
+  mine: "/mine",
   admin: "/admin",
   adminLogin: "/admin/login",
   adminCrackSafe: "crack-safe",

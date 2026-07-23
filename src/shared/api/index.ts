@@ -1,1 +1,1 @@
-export { getApiUrl } from "./http";
+export { getApiUrl, getWsUrl } from "./http";

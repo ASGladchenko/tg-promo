@@ -6,6 +6,7 @@ interface ImportMetaEnv {
   readonly VITE_TELEGRAM_BOT_USERNAME?: string;
   readonly VITE_TELEGRAM_CHANNEL_URL?: string;
   readonly VITE_TELEGRAM_SHARE_URL?: string;
+  readonly VITE_WS_BASE_URL?: string;
 }
 interface ImportMeta {
   readonly env: ImportMetaEnv;

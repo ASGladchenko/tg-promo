@@ -74,6 +74,17 @@ export const enTranslation = {
     changeLanguage: "Change language",
     menuLabel: "Choose a language"
   },
+  mine: {
+    cellLabel: "Mine cell {{position}}",
+    sceneLabel: "Mine scene",
+    session: {
+      countdownGo: "GO",
+      goldLabel: "Gold collected: {{count}}",
+      label: "Mine game",
+      restart: "Restart",
+      start: "Start"
+    }
+  },
   myPrizes: {
     close: "Close prizes",
     awardedModal: {

@@ -72,6 +72,17 @@ export const arTranslation = {
     changeLanguage: "تغيير اللغة",
     menuLabel: "اختر اللغة"
   },
+  mine: {
+    cellLabel: "خلية المنجم {{position}}",
+    sceneLabel: "مشهد المنجم",
+    session: {
+      countdownGo: "ابدأ",
+      goldLabel: "الذهب المجموع: {{count}}",
+      label: "لعبة المنجم",
+      restart: "إعادة البدء",
+      start: "ابدأ"
+    }
+  },
   myPrizes: {
     close: "إغلاق الجوائز",
     awardedModal: {

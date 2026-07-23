@@ -26,14 +26,14 @@ body {
   display: flex;
   justify-content: center;
 
-  background: #12100d;
+  background: s.$color-page-background;
 }
 
 body {
   font-family: s.$font-family-base;
 
   color: var(--foreground);
-  background: #12100d;
+  background: s.$color-page-background;
 }
 
 h1,

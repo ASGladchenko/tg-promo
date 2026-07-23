@@ -74,6 +74,17 @@ export const frTranslation = {
     changeLanguage: "Changer de langue",
     menuLabel: "Choisir une langue"
   },
+  mine: {
+    cellLabel: "Cellule de mine {{position}}",
+    sceneLabel: "Scène de mine",
+    session: {
+      countdownGo: "GO",
+      goldLabel: "Or collecté : {{count}}",
+      label: "Jeu de mine",
+      restart: "Recommencer",
+      start: "Démarrer"
+    }
+  },
   myPrizes: {
     close: "Fermer les prix",
     awardedModal: {
