@@ -1,0 +1,8 @@
+@use "@/shared/styles" as s;
+
+.mine-page__body {
+  position: relative;
+
+  display: grid;
+  gap: s.$space-2;
+}
