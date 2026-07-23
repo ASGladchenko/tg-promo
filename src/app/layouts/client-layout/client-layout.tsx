@@ -10,7 +10,7 @@ import "./client-layout.scss";
 export function ClientLayout() {
   return (
     <main className="client_layout">
-      <WidgetHeader siteUrl="/google.com" />
+      <WidgetHeader siteUrl="https://1mlnbet.com" />
       <div className="client_layout--subhead">
         <AttemptsWalletWidget />
         <MyPrizesTrigger className="client_layout-prize-button" />

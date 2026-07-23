@@ -18,7 +18,7 @@ export function WidgetHeader({ siteUrl }: WidgetHeaderProps) {
     }
 
     if (window.Telegram?.WebApp?.openLink) {
-      window.Telegram.WebApp.openLink(siteUrl, { try_browser: "chrome" });
+      window.Telegram.WebApp.openLink(siteUrl);
       return;
     }
 

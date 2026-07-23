@@ -19,6 +19,10 @@
     outline: 2px solid s.$focus-ring;
     outline-offset: 4px;
   }
+
+  & .logo {
+    max-height: 30px;
+  }
 }
 
 .logo__mark {

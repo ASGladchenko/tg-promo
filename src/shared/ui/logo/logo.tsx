@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
 
+import LogoSvg from "@/shared/svg/logo.svg?react";
+
 import "./logo.scss";
 
 type BaseLogoProps = {
@@ -33,7 +35,7 @@ export function Logo(props: LogoProps) {
         rel="noreferrer noopener"
         aria-label={ariaLabel}
       >
-        Abidas
+        <LogoSvg className="logo" />
       </a>
     );
   }
@@ -45,7 +47,7 @@ export function Logo(props: LogoProps) {
       onClick={props.onClick}
       aria-label={ariaLabel}
     >
-      Abidas
+      <LogoSvg className="logo" />
     </button>
   );
 }
