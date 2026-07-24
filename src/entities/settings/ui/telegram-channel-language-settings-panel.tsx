@@ -102,10 +102,6 @@ export function TelegramChannelLanguageSettingsPanel() {
     setIsModalOpen(false);
   };
 
-  const resetSelection = () => {
-    setSelectedLanguage(currentLanguage);
-  };
-
   const saveLanguage = async () => {
     if (!selectedLanguage || updateLanguage.isPending || !isDirty) {
       return;
@@ -252,24 +248,7 @@ export function TelegramChannelLanguageSettingsPanel() {
         </div>
 
         <div className="channel-language__footer">
-          <p
-            className={clsx("channel-language__status", {
-              "channel-language__status--dirty": isDirty
-            })}
-            aria-live="polite"
-          >
-            {isDirty ? "Unsaved change" : "Saved"}
-          </p>
-
           <div className="channel-language__actions">
-            <ButtonBase
-              type="button"
-              appearance="outline"
-              disabled={!isDirty || updateLanguage.isPending}
-              onClick={resetSelection}
-            >
-              Reset
-            </ButtonBase>
             <ButtonBase
               type="button"
               variant="danger"
