@@ -98,7 +98,7 @@ export const enTranslation = {
     open: "Open your prizes",
     outcomes: {
       jackpot: "Jackpot",
-      semiJackpot: "Combo jackpot",
+      semiJackpot: "Lucky Prize",
       consolationPrize: "Consolation prize"
     },
     title: "Your rewards"
@@ -145,7 +145,7 @@ export const enTranslation = {
         name: "Prize",
         promoCode: "Promo code"
       },
-      label: "Combo jackpot prize details",
+      label: "Lucky Prize details",
       noDetails: "Prize details will be available soon."
     },
     results: {
@@ -153,13 +153,13 @@ export const enTranslation = {
       jackpot: "Jackpot won.",
       jackpotAlreadyWon: "The jackpot has already been won. Your attempt was not spent.",
       jackpotWithPrize: "Jackpot won. Prize: {{prizeDetails}}",
-      duplicateSemiJackpotLose: "Jackpot not won. Combo jackpot is still active.",
+      duplicateSemiJackpotLose: "Jackpot not won. Lucky Prize is still active.",
       lose: "No luck this time.",
       noAttempts: "You have no attempts left. Open the attempts wallet to earn more.",
       noRules: "The safe is not available today.",
-      semiJackpot: "Combo jackpot won.",
-      semiJackpotAlreadyWon: "The combo jackpot has already been won. Your attempt was not spent.",
-      semiJackpotWithPrize: "Combo jackpot won. Prize: {{prizeDetails}}",
+      semiJackpot: "Lucky Prize won.",
+      semiJackpotAlreadyWon: "The Lucky Prize has already been won. Your attempt was not spent.",
+      semiJackpotWithPrize: "Lucky Prize won. Prize: {{prizeDetails}}",
       userJackpotAlreadyWon: "You have already won the jackpot today. Your attempt was not spent."
     },
     safeAlt: "Safe",

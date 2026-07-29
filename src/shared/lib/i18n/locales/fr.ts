@@ -98,7 +98,7 @@ export const frTranslation = {
     open: "Ouvrir vos prix",
     outcomes: {
       jackpot: "Jackpot",
-      semiJackpot: "Combo jackpot",
+      semiJackpot: "Lucky Prize",
       consolationPrize: "Prix de consolation"
     },
     title: "Vos récompenses"
@@ -145,7 +145,7 @@ export const frTranslation = {
         name: "Prix",
         promoCode: "Code promo"
       },
-      label: "Détails du prix du combo jackpot",
+      label: "Détails du Lucky Prize",
       noDetails: "Les détails du prix seront bientôt disponibles."
     },
     results: {
@@ -153,13 +153,13 @@ export const frTranslation = {
       jackpot: "Jackpot gagné.",
       jackpotAlreadyWon: "Le jackpot a déjà été gagné. Votre tentative n’a pas été dépensée.",
       jackpotWithPrize: "Jackpot gagné. Prix : {{prizeDetails}}",
-      duplicateSemiJackpotLose: "Jackpot non gagné. Le combo jackpot est toujours actif.",
+      duplicateSemiJackpotLose: "Jackpot non gagné. Le Lucky Prize est toujours actif.",
       lose: "Pas de chance cette fois.",
       noAttempts: "Vous n’avez plus de tentatives. Ouvrez le portefeuille pour en obtenir davantage.",
       noRules: "Le coffre n’est pas disponible aujourd’hui.",
-      semiJackpot: "Combo jackpot gagné.",
-      semiJackpotAlreadyWon: "Le combo jackpot a déjà été gagné. Votre tentative n’a pas été dépensée.",
-      semiJackpotWithPrize: "Combo jackpot gagné. Prix : {{prizeDetails}}",
+      semiJackpot: "Lucky Prize gagné.",
+      semiJackpotAlreadyWon: "Le Lucky Prize a déjà été gagné. Votre tentative n’a pas été dépensée.",
+      semiJackpotWithPrize: "Lucky Prize gagné. Prix : {{prizeDetails}}",
       userJackpotAlreadyWon:
         "Vous avez déjà gagné le jackpot aujourd’hui. Votre tentative n’a pas été dépensée."
     },

@@ -96,7 +96,7 @@ export const arTranslation = {
     open: "فتح جوائزك",
     outcomes: {
       jackpot: "الجائزة الكبرى",
-      semiJackpot: "الجائزة المركبة",
+      semiJackpot: "Lucky Prize",
       consolationPrize: "جائزة ترضية"
     },
     title: "مكافآتك"
@@ -143,7 +143,7 @@ export const arTranslation = {
         name: "الجائزة",
         promoCode: "رمز العرض"
       },
-      label: "تفاصيل جائزة الجائزة المركبة",
+      label: "تفاصيل Lucky Prize",
       noDetails: "ستتوفر تفاصيل الجائزة قريبًا."
     },
     results: {
@@ -151,13 +151,13 @@ export const arTranslation = {
       jackpot: "فزت بالجائزة الكبرى.",
       jackpotAlreadyWon: "تم الفوز بالجائزة الكبرى بالفعل. لم تُستخدم محاولتك.",
       jackpotWithPrize: "فزت بالجائزة الكبرى. الجائزة: {{prizeDetails}}",
-      duplicateSemiJackpotLose: "لم تفز بالجائزة الكبرى. الجائزة المركبة ما زالت نشطة.",
+      duplicateSemiJackpotLose: "لم تفز بالجائزة الكبرى. Lucky Prize ما زالت نشطة.",
       lose: "لا حظ هذه المرة.",
       noAttempts: "لم تعد لديك محاولات. افتح محفظة المحاولات للحصول على المزيد.",
       noRules: "الخزنة غير متاحة اليوم.",
-      semiJackpot: "فزت بالجائزة المركبة.",
-      semiJackpotAlreadyWon: "تم الفوز بالجائزة المركبة بالفعل. لم تُستخدم محاولتك.",
-      semiJackpotWithPrize: "فزت بالجائزة المركبة. الجائزة: {{prizeDetails}}",
+      semiJackpot: "فزت بـ Lucky Prize.",
+      semiJackpotAlreadyWon: "تم الفوز بـ Lucky Prize بالفعل. لم تُستخدم محاولتك.",
+      semiJackpotWithPrize: "فزت بـ Lucky Prize. الجائزة: {{prizeDetails}}",
       userJackpotAlreadyWon: "لقد فزت بالجائزة الكبرى اليوم بالفعل. لم تُستخدم محاولتك."
     },
     safeAlt: "خزنة",
