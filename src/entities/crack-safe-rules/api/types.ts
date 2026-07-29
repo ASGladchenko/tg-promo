@@ -16,17 +16,19 @@ export type CrackSafeRuleRewardPayload = {
 };
 export type CreateCrackSafeRulePayload = {
   codeLength: number;
-  gameDate: string;
+  endDate: string;
   jackpotPrize: CrackSafeRuleRewardPayload;
   semiJackpotPrize?: CrackSafeRuleRewardPayload;
+  startDate: string;
 };
 export type UpdateCrackSafeRulePayload = Partial<{
   codeLength: number;
-  gameDate: string;
+  endDate: string;
   jackpotPrize: CrackSafeRuleRewardPayload | null;
   semiJackpotPrize: CrackSafeRuleRewardPayload | null;
+  startDate: string;
 }>;
 export type UpdateCrackSafeRuleVariables = {
-  date: string;
   payload: UpdateCrackSafeRulePayload;
+  startDate: string;
 };

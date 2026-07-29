@@ -8,7 +8,8 @@ export function useUpdateCrackSafeRule() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ date, payload }: UpdateCrackSafeRuleVariables) => updateCrackSafeRule(date, payload),
+    mutationFn: ({ startDate, payload }: UpdateCrackSafeRuleVariables) =>
+      updateCrackSafeRule(startDate, payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: crackSafeRulesQueryKey });
     }

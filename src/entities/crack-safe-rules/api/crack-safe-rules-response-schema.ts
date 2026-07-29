@@ -8,12 +8,14 @@ export const crackSafeRuleRewardDtoSchema = z.object({
 export const crackSafeRuleDtoSchema = z.object({
   codeLength: z.number(),
   createdAt: z.string(),
-  gameDate: z.string(),
+  endDate: z.string(),
   id: z.uuid(),
-  jackpotPrize: crackSafeRuleRewardDtoSchema.nullable(),
+  jackpotPrize: crackSafeRuleRewardDtoSchema,
   jackpotWinsLimit: z.number(),
+  scheduleId: z.uuid(),
   semiJackpotPrize: crackSafeRuleRewardDtoSchema.nullable(),
   semiJackpotWinsLimit: z.number(),
+  startDate: z.string(),
   updatedAt: z.string()
 });
 

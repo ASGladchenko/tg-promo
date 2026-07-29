@@ -6,13 +6,11 @@ export function mapCrackSafeSnapshotsDtoToCrackSafeSnapshots(
 ): CrackSafeSnapshot[] {
   return dto.map((snapshot) => ({
     ...snapshot,
-    jackpotPrize: snapshot.jackpotPrize
-      ? {
-          ...snapshot.jackpotPrize,
-          metadata: { ...snapshot.jackpotPrize.metadata },
-          promoCodes: [...snapshot.jackpotPrize.promoCodes]
-        }
-      : null,
+    jackpotPrize: {
+      ...snapshot.jackpotPrize,
+      metadata: { ...snapshot.jackpotPrize.metadata },
+      promoCodes: [...snapshot.jackpotPrize.promoCodes]
+    },
     semiJackpotPrize: snapshot.semiJackpotPrize
       ? {
           ...snapshot.semiJackpotPrize,

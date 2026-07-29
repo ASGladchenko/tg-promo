@@ -34,8 +34,8 @@ export function AdminCrackSafeRuleUpdateTrigger({ rule }: AdminCrackSafeRuleUpda
       onSubmit={(data) => {
         const payload = mapAdminCrackSafeRuleFormToUpdatePayload(data, rule);
         const variables = {
-          date: rule.gameDate,
-          payload
+          payload,
+          startDate: rule.startDate
         };
 
         return updateCrackSafeRule.mutateAsync(variables);

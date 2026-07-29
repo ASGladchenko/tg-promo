@@ -19,11 +19,15 @@ export const crackSafeHistoryItemDtoSchema = z
   .object({
     attemptOrder: z.number(),
     createdAt: z.string(),
+    endDate: z.string(),
+    endsAt: z.string(),
     enteredCode: z.string(),
-    gameDate: z.string(),
     id: z.uuid(),
     outcome: crackSafeHistoryOutcomeDtoSchema,
     prize: crackSafeHistoryPrizeDtoSchema.optional(),
+    scheduleId: z.uuid(),
+    startDate: z.string(),
+    startsAt: z.string(),
     userId: z.uuid()
   })
   .passthrough();

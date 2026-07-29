@@ -5,16 +5,16 @@ export function mapCrackSafeRulesDtoToCrackSafeRules(dto: CrackSafeRulesResponse
   return dto.map((rule) => ({
     codeLength: rule.codeLength,
     createdAt: rule.createdAt,
-    gameDate: rule.gameDate,
+    endDate: rule.endDate,
     id: rule.id,
-    jackpotPrize: rule.jackpotPrize
-      ? { ...rule.jackpotPrize, promoCodes: [...rule.jackpotPrize.promoCodes] }
-      : null,
+    jackpotPrize: { ...rule.jackpotPrize, promoCodes: [...rule.jackpotPrize.promoCodes] },
     jackpotWinsLimit: rule.jackpotWinsLimit,
+    scheduleId: rule.scheduleId,
     semiJackpotPrize: rule.semiJackpotPrize
       ? { ...rule.semiJackpotPrize, promoCodes: [...rule.semiJackpotPrize.promoCodes] }
       : null,
     semiJackpotWinsLimit: rule.semiJackpotWinsLimit,
+    startDate: rule.startDate,
     updatedAt: rule.updatedAt
   }));
 }

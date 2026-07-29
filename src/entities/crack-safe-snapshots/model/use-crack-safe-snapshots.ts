@@ -5,7 +5,7 @@ import { isCrackSafeSnapshotActive } from "../lib/get-crack-safe-snapshot-status
 import { mapCrackSafeSnapshotsDtoToCrackSafeSnapshots } from "../lib/map-crack-safe-snapshots-dto-to-crack-safe-snapshots";
 import { crackSafeSnapshotsQueryKey } from "./crack-safe-snapshots-query";
 
-export function useCrackSafeSnapshots(activeGameDate?: string, activeSnapshotRefetchInterval?: number) {
+export function useCrackSafeSnapshots(activeStartDate?: string, activeSnapshotRefetchInterval?: number) {
   return useQuery({
     queryKey: crackSafeSnapshotsQueryKey,
     queryFn: ({ signal }) => getCrackSafeSnapshotsDto(signal),
@@ -13,7 +13,7 @@ export function useCrackSafeSnapshots(activeGameDate?: string, activeSnapshotRef
       const snapshots = query.state.data
         ? mapCrackSafeSnapshotsDtoToCrackSafeSnapshots(query.state.data)
         : [];
-      const snapshot = snapshots.find((item) => item.gameDate === activeGameDate);
+      const snapshot = snapshots.find((item) => item.startDate === activeStartDate);
 
       return snapshot && isCrackSafeSnapshotActive(snapshot.status) ? (activeSnapshotRefetchInterval ?? false) : false;
     },

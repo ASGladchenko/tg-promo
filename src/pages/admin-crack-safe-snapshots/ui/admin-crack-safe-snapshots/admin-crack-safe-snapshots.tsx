@@ -9,11 +9,12 @@ import { AdminCrackSafeSnapshotRow } from "./admin-crack-safe-snapshot-row";
 import "./admin-crack-safe-snapshots.scss";
 
 const crackSafeSnapshotsGridTemplateColumns =
-  "minmax(100px, 1fr) minmax(80px, 0.45fr) minmax(70px, 0.45fr) minmax(40px, 0.35fr) minmax(60px, 0.4fr) minmax(60px, 0.4fr) minmax(70px, 0.6fr) minmax(70px, 0.6fr) minmax(150px, 0.75fr) minmax(150px, 0.75fr) minmax(100px, 0.75fr)";
+  "minmax(100px, 1fr) minmax(80px, 0.45fr) minmax(80px, 0.45fr) minmax(70px, 0.45fr) minmax(40px, 0.35fr) minmax(60px, 0.4fr) minmax(60px, 0.4fr) minmax(70px, 0.6fr) minmax(70px, 0.6fr) minmax(150px, 0.75fr) minmax(150px, 0.75fr) minmax(100px, 0.75fr)";
 
 const crackSafeSnapshotsHeader = [
   "ID",
-  "Game Date",
+  "Start Date",
+  "End Date",
   "Status",
   "Code Length",
   "Jackpot",
@@ -65,7 +66,7 @@ export function AdminCrackSafeSnapshots() {
               gridTemplateColumns={crackSafeSnapshotsGridTemplateColumns}
               semiJackpotWinsCount={
                 historyQuery.data?.filter(
-                  (item) => item.gameDate === snapshot.gameDate && item.outcome === "semi_jackpot"
+                  (item) => item.startDate === snapshot.startDate && item.outcome === "semi_jackpot"
                 ).length ?? 0
               }
               snapshot={snapshot}

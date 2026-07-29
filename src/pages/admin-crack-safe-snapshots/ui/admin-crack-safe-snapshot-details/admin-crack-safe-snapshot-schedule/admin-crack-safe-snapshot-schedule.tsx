@@ -35,7 +35,7 @@ export function AdminCrackSafeSnapshotSchedule({ snapshot }: AdminCrackSafeSnaps
             "snapshot-details__schedule-date--finished": isFinished
           })}
         >
-          {snapshot.gameDate}
+          {snapshot.startDate} - {snapshot.endDate}
         </span>
       </div>
 

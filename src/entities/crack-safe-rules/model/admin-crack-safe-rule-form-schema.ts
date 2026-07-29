@@ -2,6 +2,11 @@ import * as z from "zod";
 
 export const ADMIN_CRACK_SAFE_RULE_DEFAULT_CODE_LENGTH = 3;
 
+const adminCrackSafeRulePeriodDateSchema = z
+  .string()
+  .trim()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must use YYYY-MM-DD format");
+
 function parsePromoCodes(value: string) {
   return value
     .split(",")
@@ -27,20 +32,27 @@ const adminCrackSafeRuleRewardSchema = z.object({
 
 export const adminCrackSafeRuleFormSchema = z
   .object({
-    gameDate: z
-      .string()
-      .trim()
-      .regex(/^\d{4}-\d{2}-\d{2}$/, "Game date must use YYYY-MM-DD format"),
     codeLength: z
       .string()
       .trim()
       .min(1, "Code length is required")
       .regex(/^\d+$/, "Code length must be an integer")
-      .refine((value) => Number(value) > 0, "Code length must be greater than 0"),
+      .refine((value) => Number(value) >= 3, "Code length must be at least 3")
+      .refine((value) => Number(value) <= 6, "Code length must be at most 6"),
+    endDate: adminCrackSafeRulePeriodDateSchema,
     jackpotPrize: adminCrackSafeRuleRewardSchema,
-    semiJackpotPrize: adminCrackSafeRuleRewardSchema.nullable()
+    semiJackpotPrize: adminCrackSafeRuleRewardSchema.nullable(),
+    startDate: adminCrackSafeRulePeriodDateSchema
   })
   .superRefine((data, context) => {
+    if (data.endDate < data.startDate) {
+      context.addIssue({
+        code: "custom",
+        message: "End date must be greater than or equal to start date",
+        path: ["endDate"]
+      });
+    }
+
     if (!data.semiJackpotPrize) {
       return;
     }
