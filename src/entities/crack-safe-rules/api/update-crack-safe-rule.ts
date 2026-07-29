@@ -4,11 +4,11 @@ import { readResponseErrorMessage } from "@/shared/lib/error";
 import { type UpdateCrackSafeRulePayload } from "./types";
 
 export async function updateCrackSafeRule(
-  date: string,
+  startDate: string,
   payload: UpdateCrackSafeRulePayload,
   signal?: AbortSignal
 ): Promise<void> {
-  const response = await fetch(getApiUrl(`crack-safe/rules/${encodeURIComponent(date)}`), {
+  const response = await fetch(getApiUrl(`crack-safe/rules/${encodeURIComponent(startDate)}`), {
     method: "PATCH",
     credentials: "include",
     headers: {
@@ -19,10 +19,6 @@ export async function updateCrackSafeRule(
   });
 
   if (!response.ok) {
-    if (response.status === 409) {
-      throw new Error("Today's Crack Safe rules cannot be edited.");
-    }
-
     throw new Error(
       await readResponseErrorMessage(
         response,

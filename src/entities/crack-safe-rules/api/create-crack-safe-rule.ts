@@ -18,10 +18,6 @@ export async function createCrackSafeRule(
   });
 
   if (!response.ok) {
-    if (response.status === 409) {
-      throw new Error("Crack Safe rules cannot be created for today.");
-    }
-
     throw new Error(
       await readResponseErrorMessage(
         response,

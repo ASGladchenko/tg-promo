@@ -22,8 +22,10 @@ export function AdminCrackSafeSnapshotOverview({
   return (
     <div className="snapshot-details__overview" aria-label="Snapshot summary">
       <div className="snapshot-details__summary-card">
-        <span>Game Date</span>
-        <strong>{snapshot.gameDate}</strong>
+        <span>Period</span>
+        <strong>
+          {snapshot.startDate} - {snapshot.endDate}
+        </strong>
       </div>
 
       <div className="snapshot-details__summary-card">

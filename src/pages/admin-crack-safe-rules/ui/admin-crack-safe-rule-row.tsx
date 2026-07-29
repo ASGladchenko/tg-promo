@@ -28,7 +28,11 @@ export function AdminCrackSafeRuleRow({ rule, gridTemplateColumns }: AdminCrackS
       </div>
 
       <div className="rule-row__cell" role="cell">
-        {rule.gameDate}
+        {rule.startDate}
+      </div>
+
+      <div className="rule-row__cell" role="cell">
+        {rule.endDate}
       </div>
 
       <div className="rule-row__cell" role="cell">

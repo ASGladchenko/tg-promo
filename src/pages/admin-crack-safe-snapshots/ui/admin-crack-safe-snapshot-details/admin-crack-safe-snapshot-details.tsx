@@ -21,16 +21,16 @@ import "./admin-crack-safe-snapshot-details.scss";
 const REFETCH_INTERVAL_ACTIVE_SNAPSHOT = 60_000;
 
 export function AdminCrackSafeSnapshotDetails() {
-  const { gameDate } = useParams();
-  const snapshotsQuery = useCrackSafeSnapshots(gameDate, REFETCH_INTERVAL_ACTIVE_SNAPSHOT);
+  const { startDate } = useParams();
+  const snapshotsQuery = useCrackSafeSnapshots(startDate, REFETCH_INTERVAL_ACTIVE_SNAPSHOT);
 
-  const snapshot = snapshotsQuery.data?.find((item) => item.gameDate === gameDate);
+  const snapshot = snapshotsQuery.data?.find((item) => item.startDate === startDate);
   const isSnapshotActive = snapshot ? isAdminCrackSafeSnapshotActive(snapshot.status) : false;
 
   const refetchInterval = isSnapshotActive ? REFETCH_INTERVAL_ACTIVE_SNAPSHOT : false;
 
   const historyQuery = useCrackSafeHistory(refetchInterval);
-  const snapshotCodesQuery = useCrackSafeSnapshotCodes(gameDate, refetchInterval);
+  const snapshotCodesQuery = useCrackSafeSnapshotCodes(startDate, refetchInterval);
 
   const usedPromoCodes = snapshot
     ? getAdminCrackSafeSnapshotUsedPromoCodes(snapshot, snapshotCodesQuery.data)
@@ -53,7 +53,7 @@ export function AdminCrackSafeSnapshotDetails() {
     : [];
 
   const semiJackpotWinsCount = (historyQuery.data ?? []).filter(
-    (item) => item.gameDate === snapshot?.gameDate && item.outcome === "semi_jackpot"
+    (item) => item.startDate === snapshot?.startDate && item.outcome === "semi_jackpot"
   ).length;
 
   const snapshotsErrorMessage = getErrorMessage(

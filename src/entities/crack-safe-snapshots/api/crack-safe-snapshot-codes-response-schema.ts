@@ -11,7 +11,7 @@ export const crackSafeSnapshotCodeDtoSchema = z.object({
   semiJackpotWinsLimit: z.number(),
   sequence: z.number(),
   snapshotId: z.uuid(),
-  status: z.string(),
+  status: z.enum(["active", "won"]),
   updatedAt: z.string(),
   winningWalletTransactionId: z.string().nullable()
 });

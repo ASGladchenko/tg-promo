@@ -33,7 +33,7 @@ export function AdminCrackSafeSnapshotRow({
   function openSnapshot() {
     navigate(
       `${APP_ROUTES.admin}/${generatePath(APP_ROUTES.adminCrackSafeSnapshot, {
-        gameDate: snapshot.gameDate
+        startDate: snapshot.startDate
       })}`
     );
   }
@@ -63,7 +63,11 @@ export function AdminCrackSafeSnapshotRow({
       </div>
 
       <div className="snapshot-row__cell" role="cell">
-        {snapshot.gameDate}
+        {snapshot.startDate}
+      </div>
+
+      <div className="snapshot-row__cell" role="cell">
+        {snapshot.endDate}
       </div>
 
       <div className="snapshot-row__cell" role="cell">

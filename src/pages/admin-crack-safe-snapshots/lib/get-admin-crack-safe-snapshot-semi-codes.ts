@@ -57,7 +57,7 @@ export function getAdminCrackSafeSnapshotSemiCodes(
   const semiPromoCodes = snapshot.semiJackpotPrize?.promoCodes ?? [];
   const isFinished = isAdminCrackSafeSnapshotFinished(snapshot.status);
   const semiWins = (history ?? []).filter(
-    (item) => item.gameDate === snapshot.gameDate && item.outcome === "semi_jackpot"
+    (item) => item.startDate === snapshot.startDate && item.outcome === "semi_jackpot"
   );
   const groupsCount = Math.max(jackpotCodes.length, jackpotPromoCodes.length);
   const semiPromoCodeGroups = splitCodesByGroups(semiPromoCodes, groupsCount);
@@ -110,7 +110,7 @@ export function getAdminCrackSafeSnapshotUnmatchedSemiWins(
 
   return (history ?? []).filter(
     (item) =>
-      item.gameDate === snapshot.gameDate &&
+      item.startDate === snapshot.startDate &&
       item.outcome === "semi_jackpot" &&
       !knownSemiCodes.has(item.enteredCode)
   );

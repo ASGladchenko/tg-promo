@@ -5,10 +5,10 @@ import { crackSafeSnapshotCodesResponseDtoSchema } from "./crack-safe-snapshot-c
 import { type CrackSafeSnapshotCodesResponseDto } from "./types";
 
 export async function getCrackSafeSnapshotCodesDto(
-  gameDate: string,
+  startDate: string,
   signal?: AbortSignal
 ): Promise<CrackSafeSnapshotCodesResponseDto> {
-  const response = await fetch(getApiUrl(`crack-safe/snapshots/${encodeURIComponent(gameDate)}/codes`), {
+  const response = await fetch(getApiUrl(`crack-safe/snapshots/${encodeURIComponent(startDate)}/codes`), {
     method: "GET",
     credentials: "include",
     signal

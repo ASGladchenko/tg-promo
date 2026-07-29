@@ -21,8 +21,14 @@ export function AdminCrackSafeRuleFormFields({
     <div className="admin-crack-safe-rule-form-fields">
       <InputField<AdminCrackSafeRuleFormState>
         type="date"
-        name="gameDate"
-        label="Game date"
+        name="startDate"
+        label="Start date"
+        disabled={disabled}
+      />
+      <InputField<AdminCrackSafeRuleFormState>
+        type="date"
+        name="endDate"
+        label="End date"
         disabled={disabled}
       />
       <InputField<AdminCrackSafeRuleFormState>

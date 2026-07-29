@@ -26,8 +26,8 @@ const adminRuleFormDefaultValuesSchema = z
   .transform((rule): AdminCrackSafeRuleFormInput => {
     if (!rule) {
       return {
-        gameDate: "",
         codeLength: String(ADMIN_CRACK_SAFE_RULE_DEFAULT_CODE_LENGTH),
+        endDate: "",
         jackpotPrize: {
           prizeId: "",
           promoCodes: ""
@@ -35,15 +35,17 @@ const adminRuleFormDefaultValuesSchema = z
         semiJackpotPrize: {
           prizeId: "",
           promoCodes: ""
-        }
+        },
+        startDate: ""
       };
     }
 
     return {
-      gameDate: rule.gameDate,
       codeLength: String(rule.codeLength),
+      endDate: rule.endDate,
       jackpotPrize: mapRewardToFormValue(rule.jackpotPrize),
-      semiJackpotPrize: mapRewardToFormValue(rule.semiJackpotPrize)
+      semiJackpotPrize: mapRewardToFormValue(rule.semiJackpotPrize),
+      startDate: rule.startDate
     };
   });
 

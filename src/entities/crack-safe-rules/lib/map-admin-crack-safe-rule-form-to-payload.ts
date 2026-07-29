@@ -41,9 +41,10 @@ export function mapAdminCrackSafeRuleFormToCreatePayload(
   data: AdminCrackSafeRuleFormState
 ): CreateCrackSafeRulePayload {
   const payload: CreateCrackSafeRulePayload = {
-    gameDate: data.gameDate.trim(),
     codeLength: Number(data.codeLength),
-    jackpotPrize: mapRewardFormToPayload(data.jackpotPrize)
+    endDate: data.endDate.trim(),
+    jackpotPrize: mapRewardFormToPayload(data.jackpotPrize),
+    startDate: data.startDate.trim()
   };
 
   if (data.semiJackpotPrize) {
@@ -60,15 +61,16 @@ export function mapAdminCrackSafeRuleFormToUpdatePayload(
   const payload: UpdateCrackSafeRulePayload = {};
   const jackpotPrize = mapRewardFormToPayload(data.jackpotPrize);
   const semiJackpotPrize = data.semiJackpotPrize ? mapRewardFormToPayload(data.semiJackpotPrize) : null;
-  const gameDate = data.gameDate.trim();
   const codeLength = Number(data.codeLength);
-
-  if (gameDate !== rule.gameDate) {
-    payload.gameDate = gameDate;
-  }
+  const endDate = data.endDate.trim();
+  const startDate = data.startDate.trim();
 
   if (codeLength !== rule.codeLength) {
     payload.codeLength = codeLength;
+  }
+
+  if (endDate !== rule.endDate) {
+    payload.endDate = endDate;
   }
 
   if (!areRewardPayloadsEqual(jackpotPrize, rule.jackpotPrize)) {
@@ -77,6 +79,10 @@ export function mapAdminCrackSafeRuleFormToUpdatePayload(
 
   if (!areRewardPayloadsEqual(semiJackpotPrize, rule.semiJackpotPrize)) {
     payload.semiJackpotPrize = semiJackpotPrize;
+  }
+
+  if (startDate !== rule.startDate) {
+    payload.startDate = startDate;
   }
 
   return payload;
