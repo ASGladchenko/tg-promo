@@ -1,0 +1,146 @@
+@use "@/shared/styles/admin" as s;
+
+.analytics-card {
+  min-width: 0;
+
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  overflow: hidden;
+
+  color: s.$admin-text;
+  background: s.$admin-surface;
+  border: 1px solid s.$admin-border;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+}
+
+.analytics-card__header {
+  min-width: 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.analytics-card__summary {
+  min-width: 0;
+}
+
+.analytics-card__title {
+  margin: 0 0 10px;
+
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+
+  color: s.$admin-text-secondary;
+}
+
+.analytics-card__value {
+  margin: 0;
+
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.analytics-card__meta {
+  margin: 10px 0 0;
+
+  font-size: 13px;
+  line-height: 1.35;
+
+  color: s.$admin-text-muted;
+}
+
+.analytics-card__actions {
+  width: min(150px, 44vw);
+  flex: 0 0 auto;
+}
+
+.analytics-card__body {
+  min-width: 0;
+}
+
+.analytics-card__chart {
+  width: 100%;
+  height: 190px;
+  min-height: 190px;
+}
+
+.analytics-card__chart-empty,
+.analytics-card__chart-loader,
+.analytics-card__loader,
+.analytics-card__state {
+  min-height: 46px;
+
+  margin: 0;
+  padding: 12px;
+
+  display: flex;
+  align-items: center;
+
+  font-size: 14px;
+  line-height: 1.35;
+
+  color: s.$admin-text-secondary;
+  background: s.$admin-surface-dark;
+  border: 1px solid s.$admin-border-soft;
+  border-radius: s.$admin-radius;
+}
+
+.analytics-card__chart-loader,
+.analytics-card__loader {
+  min-height: 190px;
+
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+.analytics-card__chart-loader {
+  height: 190px;
+}
+
+.analytics-card__chart-empty {
+  height: 190px;
+  justify-content: center;
+}
+
+.analytics-card__state--error {
+  color: s.$admin-danger;
+}
+
+.analytics-card .recharts-cartesian-grid-horizontal line,
+.analytics-card .recharts-cartesian-grid-vertical line {
+  stroke: s.$admin-border-soft;
+}
+
+.analytics-card .recharts-text,
+.analytics-card .recharts-legend-item-text {
+  fill: s.$admin-text-secondary;
+  color: s.$admin-text-secondary;
+}
+
+.analytics-card .recharts-default-tooltip {
+  color: s.$admin-text;
+  background: s.$admin-bg-soft !important;
+  border-color: s.$admin-border !important;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+}
+
+@media (max-width: 620px) {
+  .analytics-card__header {
+    flex-direction: column;
+  }
+
+  .analytics-card__actions {
+    width: 100%;
+  }
+}

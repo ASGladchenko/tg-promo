@@ -1,4 +1,26 @@
 @use "@/shared/styles/admin" as s;
 
-.page__body.admin {
+.admin-page {
+  min-width: 0;
+
+  color: s.$admin-text;
+}
+
+.admin-page__grid {
+  display: grid;
+  align-items: stretch;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+}
+
+@media (max-width: 1180px) {
+  .admin-page__grid {
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .admin-page__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
