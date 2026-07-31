@@ -14,6 +14,11 @@ export type AdminSidebarItem = AdminSidebarGroupItem | AdminSidebarLinkItem;
 
 export const adminSidebarItems: AdminSidebarItem[] = [
   {
+    title: "Dashboard",
+    to: APP_ROUTES.admin,
+    end: true
+  },
+  {
     title: "Prizes",
     to: `${APP_ROUTES.admin}/${APP_ROUTES.adminPrizes}`,
     end: true
