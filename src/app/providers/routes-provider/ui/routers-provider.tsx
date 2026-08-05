@@ -4,15 +4,16 @@ import { Route, Routes } from "react-router";
 
 import { ClientLayout } from "@/app/layouts";
 import { LotteryPage } from "@/pages/lottery-page";
+import { LuckyMeadowPage } from "@/pages/lucky-meadow-page";
 import { APP_ROUTES } from "@/shared/config";
 
 import {
-  LazyAdminAuthGate,
   LazyAdminAiSettings,
+  LazyAdminAuthGate,
   LazyAdminConsolationPrizes,
+  LazyAdminCrackSafeRules,
   LazyAdminCrackSafeSnapshotDetails,
   LazyAdminCrackSafeSnapshots,
-  LazyAdminCrackSafeRules,
   LazyAdminCssLayout,
   LazyAdminLayout,
   LazyAdminLogin,
@@ -28,7 +29,8 @@ export function ProviderRoutes() {
     <Routes>
       <Route element={<TelegramRoutesLayout />}>
         <Route element={<ClientLayout />}>
-          <Route path={APP_ROUTES.home} element={<LotteryPage />} />
+          <Route path={APP_ROUTES.luckyMeadow} element={<LotteryPage />} />
+          <Route path={APP_ROUTES.home} element={<LuckyMeadowPage />} />
         </Route>
       </Route>
 

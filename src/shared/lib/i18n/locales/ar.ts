@@ -72,6 +72,11 @@ export const arTranslation = {
     changeLanguage: "تغيير اللغة",
     menuLabel: "اختر اللغة"
   },
+  luckyMeadow: {
+    soundOff: "إيقاف الصوت",
+    soundOn: "تشغيل الصوت",
+    start: "ابدأ"
+  },
   myPrizes: {
     close: "إغلاق الجوائز",
     awardedModal: {

@@ -1,0 +1,178 @@
+.lucky-meadow-prize-stripes {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+
+  display: grid;
+  gap: 2% 0;
+  grid-template-rows: repeat(6, 1fr);
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  &__row {
+    position: relative;
+
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+    container-type: size;
+
+    &::before {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      opacity: 0;
+      background: #000000;
+      animation: lucky-meadow-prize-row-bg 1.9s cubic-bezier(0.22, 0.74, 0.28, 1) forwards;
+      animation-delay: var(--row-delay);
+    }
+
+    &:nth-child(even) .lucky-meadow-prize-stripes__word {
+      animation-name: lucky-meadow-prize-fly-rtl;
+    }
+  }
+
+  &__word {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+
+    width: 100%;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.02em;
+
+    font-size: min(8.6rem, 106cqh, calc((100cqw - 2px) / 6.18));
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+
+    opacity: 0;
+    animation: lucky-meadow-prize-fly-ltr 1.9s cubic-bezier(0.22, 0.74, 0.28, 1) forwards;
+    animation-delay: var(--row-delay);
+    transform: translate(-184%, -50%);
+    will-change: transform, opacity;
+  }
+
+  &__letter {
+    width: 0.58em;
+    height: 0.94em;
+
+    display: inline-flex;
+    justify-content: center;
+
+    overflow: hidden;
+
+    color: #ffbe35;
+    text-shadow: none;
+
+    &:nth-child(3n + 1) {
+      color: #ffffff;
+    }
+
+    &:nth-child(3n + 2) {
+      color: #d8b7ff;
+    }
+  }
+
+  &__letter-track {
+    display: flex;
+    flex-direction: column;
+
+    animation: lucky-meadow-prize-letter-roll 0.55s steps(7, end) forwards;
+    animation-delay: var(--letter-delay);
+    transform: translateY(-6.58em);
+    will-change: transform;
+  }
+
+  &__glyph {
+    flex: 0 0 0.94em;
+
+    height: 0.94em;
+
+    display: block;
+
+    line-height: 0.94;
+    text-align: center;
+  }
+
+  &__gap {
+    width: 0.18em;
+    height: 0.94em;
+
+    display: inline-block;
+  }
+}
+
+@keyframes lucky-meadow-prize-row-bg {
+  0% {
+    opacity: 0;
+  }
+
+  16%,
+  68% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes lucky-meadow-prize-fly-ltr {
+  0% {
+    opacity: 0;
+    transform: translate(-184%, -50%) scale(0.96);
+  }
+
+  16%,
+  68% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.94);
+  }
+}
+
+@keyframes lucky-meadow-prize-fly-rtl {
+  0% {
+    opacity: 0;
+    transform: translate(84%, -50%) scale(0.96);
+  }
+
+  16%,
+  68% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.94);
+  }
+}
+
+@keyframes lucky-meadow-prize-letter-roll {
+  0% {
+    transform: translateY(-6.58em);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,168 @@
+.lucky-meadow-jackpot-burst {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+
+  overflow: hidden;
+  pointer-events: none;
+  container-type: size;
+
+  &__flyer,
+  &__center {
+    position: absolute;
+    left: 50%;
+
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+  }
+
+  &__flyer {
+    top: var(--jackpot-from-y);
+
+    font-size: min(4.8rem, 14cqh, calc((100cqw - 8px) / 5.72));
+
+    color: var(--jackpot-color);
+    opacity: 0;
+    text-shadow:
+      0 0 8px var(--jackpot-glow),
+      0 0 18px rgb(155 61 255 / 46%),
+      0 2px 0 #2a0c53;
+
+    animation: lucky-meadow-jackpot-fly 1.18s cubic-bezier(0.2, 0.78, 0.22, 1) forwards;
+    animation-delay: var(--jackpot-delay);
+    transform: translate(-50%, -50%) scale(0.72);
+    will-change: top, transform, opacity;
+  }
+
+  &__center {
+    top: 50%;
+
+    font-size: min(7.8rem, 22cqh, calc((100cqw - 8px) / 5.6));
+
+    color: #ffbe35;
+    opacity: 0;
+    text-shadow:
+      0 0 8px rgb(255 190 53 / 92%),
+      0 0 18px rgb(255 190 53 / 58%),
+      0 0 30px rgb(155 61 255 / 54%);
+
+    animation:
+      lucky-meadow-jackpot-center 1.05s ease-out forwards,
+      lucky-meadow-jackpot-center-pulse 1.12s ease-in-out infinite;
+    animation-delay: var(--jackpot-center-delay), calc(var(--jackpot-center-delay) + 1.05s);
+    animation-fill-mode: forwards, none;
+    transform: translate(-50%, -50%) scale(0.72);
+    will-change: transform, opacity, color, text-shadow;
+  }
+}
+
+@keyframes lucky-meadow-jackpot-fly {
+  0% {
+    opacity: 0;
+    top: var(--jackpot-from-y);
+    transform: translate(-50%, -50%) scale(0.72);
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  72% {
+    opacity: 1;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.84);
+  }
+}
+
+@keyframes lucky-meadow-jackpot-center {
+  0% {
+    color: #ffbe35;
+    opacity: 0;
+    text-shadow:
+      0 0 8px rgb(255 190 53 / 90%),
+      0 0 18px rgb(255 190 53 / 58%),
+      0 0 30px rgb(155 61 255 / 50%);
+    transform: translate(-50%, -50%) scale(0.72);
+  }
+
+  18% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+
+  38% {
+    color: #ffffff;
+    text-shadow:
+      0 0 10px rgb(255 255 255 / 86%),
+      0 0 20px rgb(255 190 53 / 66%),
+      0 0 34px rgb(155 61 255 / 50%);
+  }
+
+  62% {
+    color: #d8b7ff;
+    text-shadow:
+      0 0 10px rgb(155 61 255 / 86%),
+      0 0 20px rgb(216 183 255 / 72%),
+      0 0 34px rgb(255 190 53 / 46%);
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  82% {
+    color: #ffbe35;
+    opacity: 1;
+    text-shadow:
+      0 0 10px rgb(255 190 53 / 92%),
+      0 0 22px rgb(255 190 53 / 68%),
+      0 0 36px rgb(155 61 255 / 56%);
+  }
+
+  100% {
+    color: #ffbe35;
+    opacity: 1;
+    text-shadow:
+      0 0 10px rgb(255 190 53 / 92%),
+      0 0 22px rgb(255 190 53 / 68%),
+      0 0 36px rgb(155 61 255 / 56%);
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes lucky-meadow-jackpot-center-pulse {
+  0%,
+  100% {
+    color: #ffbe35;
+    text-shadow:
+      0 0 10px rgb(255 190 53 / 92%),
+      0 0 22px rgb(255 190 53 / 68%),
+      0 0 36px rgb(155 61 255 / 56%);
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  38% {
+    color: #ffffff;
+    text-shadow:
+      0 0 12px rgb(255 255 255 / 92%),
+      0 0 24px rgb(255 190 53 / 72%),
+      0 0 42px rgb(155 61 255 / 58%);
+    transform: translate(-50%, -50%) scale(1.055);
+  }
+
+  68% {
+    color: #d8b7ff;
+    text-shadow:
+      0 0 12px rgb(216 183 255 / 92%),
+      0 0 26px rgb(155 61 255 / 72%),
+      0 0 44px rgb(255 190 53 / 52%);
+    transform: translate(-50%, -50%) scale(1.025);
+  }
+}

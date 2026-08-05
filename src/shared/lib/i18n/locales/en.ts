@@ -74,6 +74,11 @@ export const enTranslation = {
     changeLanguage: "Change language",
     menuLabel: "Choose a language"
   },
+  luckyMeadow: {
+    soundOff: "Turn sound off",
+    soundOn: "Turn sound on",
+    start: "Start"
+  },
   myPrizes: {
     close: "Close prizes",
     awardedModal: {
