@@ -1,5 +1,6 @@
 export const APP_ROUTES = {
   home: "/",
+  lionRoad: "/lion-road",
   admin: "/admin",
   adminLogin: "/admin/login",
   adminCrackSafe: "crack-safe",

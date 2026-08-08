@@ -3,16 +3,17 @@ import { Suspense } from "react";
 import { Route, Routes } from "react-router";
 
 import { ClientLayout } from "@/app/layouts";
+import { LionRoadPrototype } from "@/pages/lion-road-prototype";
 import { LotteryPage } from "@/pages/lottery-page";
 import { APP_ROUTES } from "@/shared/config";
 
 import {
-  LazyAdminAuthGate,
   LazyAdminAiSettings,
+  LazyAdminAuthGate,
   LazyAdminConsolationPrizes,
+  LazyAdminCrackSafeRules,
   LazyAdminCrackSafeSnapshotDetails,
   LazyAdminCrackSafeSnapshots,
-  LazyAdminCrackSafeRules,
   LazyAdminCssLayout,
   LazyAdminLayout,
   LazyAdminLogin,
@@ -26,9 +27,11 @@ import { TelegramRoutesLayout } from "./telegram-routes-layout";
 export function ProviderRoutes() {
   return (
     <Routes>
+      <Route path={APP_ROUTES.home} element={<LionRoadPrototype />} />
+
       <Route element={<TelegramRoutesLayout />}>
         <Route element={<ClientLayout />}>
-          <Route path={APP_ROUTES.home} element={<LotteryPage />} />
+          <Route path={APP_ROUTES.lionRoad} element={<LotteryPage />} />
         </Route>
       </Route>
 
