@@ -21,8 +21,8 @@
 
 .button-calendar:not(:disabled):hover,
 .button-calendar:not(:disabled):focus-visible {
-  background: a.$admin-surface-strong;
-  border-color: a.$admin-border-strong;
+  background: rgba(a.$admin-primary, 0.08);
+  border-color: a.$admin-primary;
 }
 
 .button-calendar:not(:disabled):focus-visible {
@@ -53,23 +53,51 @@
   box-shadow: 0 0 0 1px rgba(a.$admin-warning, 0.16);
 }
 
-.button-calendar--selected {
+.button-calendar--in-range {
   border-color: a.$admin-primary;
 }
 
-.button-calendar--selected:not(:disabled):is(:hover, :focus-visible, :active) {
+.button-calendar--range-start {
+  border-color: a.$admin-warning;
+  box-shadow: inset 3px 0 0 a.$admin-warning;
+}
+
+.button-calendar--range-end {
+  border-color: a.$admin-warning;
+  box-shadow: inset -3px 0 0 a.$admin-warning;
+}
+
+.button-calendar--range-start.button-calendar--range-end {
+  box-shadow:
+    inset 3px 0 0 a.$admin-warning,
+    inset -3px 0 0 a.$admin-warning;
+}
+
+.button-calendar--range-start:not(:disabled):is(:hover, :focus-visible, :active) {
   color: inherit;
-  background: a.$admin-surface-dark;
-  border-color: a.$admin-primary;
-  box-shadow:
-    inset 0 0 0 1px rgba(a.$admin-white, 0.24),
-    0 0 0 1px rgba(a.$admin-primary, 0.36);
+  background: rgba(a.$admin-warning, 0.1);
+  border-color: a.$admin-warning;
+  box-shadow: inset 3px 0 0 a.$admin-warning;
 }
 
-.button-calendar--today.button-calendar--selected:not(:disabled):is(:hover, :focus-visible, :active) {
-  background: rgba(a.$admin-warning, 0.14);
-  border-color: a.$admin-primary;
+.button-calendar--range-end:not(:disabled):is(:hover, :focus-visible, :active) {
+  color: inherit;
+  background: rgba(a.$admin-warning, 0.1);
+  border-color: a.$admin-warning;
+  box-shadow: inset -3px 0 0 a.$admin-warning;
+}
+
+.button-calendar--range-start.button-calendar--range-end:not(:disabled):is(:hover, :focus-visible, :active) {
   box-shadow:
-    inset 0 0 0 1px rgba(a.$admin-white, 0.24),
-    0 0 0 1px rgba(a.$admin-primary, 0.36);
+    inset 3px 0 0 a.$admin-warning,
+    inset -3px 0 0 a.$admin-warning;
+}
+
+.button-calendar--in-selecting-range:not(.button-calendar--range-start) {
+  border-color: a.$admin-primary;
+}
+
+.button-calendar--selecting-range-end:not(.button-calendar--range-start) {
+  border-color: a.$admin-primary;
+  box-shadow: 0 0 0 1px rgba(a.$admin-primary, 0.36);
 }

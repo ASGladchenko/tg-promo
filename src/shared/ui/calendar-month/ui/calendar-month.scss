@@ -16,15 +16,35 @@
   box-shadow: a.$admin-shadow;
 }
 
+.calendar-month__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .calendar-month__title {
   margin: 0;
 
-  font-size: 14px;
+  font-size: 24px;
   font-weight: 700;
-  line-height: 1;
+  // line-height: 1;
   text-transform: uppercase;
 
   color: a.$admin-text-secondary;
+}
+
+.calendar-month__navigation-group {
+  display: flex;
+  gap: 8px;
+}
+
+.calendar-month__navigation {
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
+
+  font-size: 18px;
 }
 
 .calendar-month__grid {
@@ -32,9 +52,9 @@
 
   display: grid;
   flex: 1 1 auto;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  grid-template-rows: minmax(36px, auto) repeat(6, minmax(0, 1fr));
   gap: 8px;
+  grid-template-rows: minmax(36px, auto) repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
 .calendar-month__week-day {
