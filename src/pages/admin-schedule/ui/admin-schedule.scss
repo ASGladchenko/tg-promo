@@ -1,0 +1,7 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-schedule {
+  min-width: 0;
+
+  color: s.$admin-text;
+}

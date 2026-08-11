@@ -19,6 +19,7 @@ import {
   LazyAdminLoginGate,
   LazyAdminPage,
   LazyAdminPrizes,
+  LazyAdminSchedule,
   LazyAdminSettings
 } from "./lazy-routes";
 import { TelegramRoutesLayout } from "./telegram-routes-layout";
@@ -48,6 +49,7 @@ export function ProviderRoutes() {
             <Route index element={<LazyAdminPage />} />
             <Route path={APP_ROUTES.adminPrizes} element={<LazyAdminPrizes />} />
 
+            <Route path={APP_ROUTES.adminSchedule} element={<LazyAdminSchedule />} />
             <Route path={APP_ROUTES.adminCrackSafeRules} element={<LazyAdminCrackSafeRules />} />
             <Route path={APP_ROUTES.adminCrackSafeSnapshots} element={<LazyAdminCrackSafeSnapshots />} />
             <Route path={APP_ROUTES.adminCrackSafeSnapshot} element={<LazyAdminCrackSafeSnapshotDetails />} />

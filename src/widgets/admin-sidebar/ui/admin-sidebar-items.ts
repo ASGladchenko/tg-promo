@@ -24,6 +24,11 @@ export const adminSidebarItems: AdminSidebarItem[] = [
     end: true
   },
   {
+    title: "Schedule",
+    to: `${APP_ROUTES.admin}/${APP_ROUTES.adminSchedule}`,
+    end: true
+  },
+  {
     title: "Safe Crack",
     basePath: `${APP_ROUTES.admin}/${APP_ROUTES.adminCrackSafe}`,
     children: [

@@ -28,6 +28,12 @@ export const LazyAdminPrizes = lazy(() =>
   import("@/pages/admin-prizes").then(({ AdminPrizes }) => ({ default: AdminPrizes }))
 );
 
+export const LazyAdminSchedule = lazy(() =>
+  import("@/pages/admin-schedule").then(({ AdminSchedule }) => ({
+    default: AdminSchedule
+  }))
+);
+
 export const LazyAdminCrackSafeRules = lazy(() =>
   import("@/pages/admin-crack-safe-rules").then(({ AdminCrackSafeRules }) => ({
     default: AdminCrackSafeRules
