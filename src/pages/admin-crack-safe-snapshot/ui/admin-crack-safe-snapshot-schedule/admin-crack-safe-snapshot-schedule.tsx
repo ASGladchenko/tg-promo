@@ -2,11 +2,11 @@ import clsx from "clsx";
 
 import { type CrackSafeSnapshot } from "@/entities/crack-safe-snapshots";
 
-import { formatAdminCrackSafeSnapshotDate } from "../../../lib/format-admin-crack-safe-snapshot-date";
+import { formatAdminCrackSafeSnapshotDate } from "../../lib/format-admin-crack-safe-snapshot-date";
 import {
   isAdminCrackSafeSnapshotActive,
   isAdminCrackSafeSnapshotFinished
-} from "../../../lib/get-admin-crack-safe-snapshot-status";
+} from "../../lib/get-admin-crack-safe-snapshot-status";
 
 import "./admin-crack-safe-snapshot-schedule.scss";
 

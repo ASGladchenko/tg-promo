@@ -1,11 +1,15 @@
 import { useState } from "react";
 
 import dayjs, { type Dayjs } from "dayjs";
+import { generatePath, useNavigate } from "react-router";
 
+import { type CrackSafeRule } from "@/entities/crack-safe-rules";
+import { AdminCrackSafeRuleUpdateModal } from "@/features/admin-update-crack-safe-rule";
+import { APP_ROUTES } from "@/shared/config";
 import { CalendarMonth } from "@/shared/ui/calendar-month";
 
 import { getGamesScheduledForDay } from "../../lib/get-games-scheduled-for-day";
-import { ADMIN_SCHEDULE_GAME_DETAILS } from "../../model/admin-schedule-game";
+import { ADMIN_SCHEDULE_GAME_DETAILS, AdminScheduleGameId } from "../../model/admin-schedule-game";
 import { useAdminScheduledGames } from "../../model/use-admin-scheduled-games";
 import { AdminGameScheduleDayEvents } from "../admin-game-schedule-day-events/admin-game-schedule-day-events";
 import { AdminGameScheduleModal } from "../admin-game-schedule-modal/admin-game-schedule-modal";
@@ -13,8 +17,10 @@ import { AdminGameScheduleModal } from "../admin-game-schedule-modal/admin-game-
 import "./admin-game-schedule.scss";
 
 export function AdminGameSchedule() {
+  const navigate = useNavigate();
   const [month, setMonth] = useState(() => dayjs());
   const [isPeriodModalOpen, setIsPeriodModalOpen] = useState(false);
+  const [selectedCrackSafeRule, setSelectedCrackSafeRule] = useState<CrackSafeRule>();
   const [selectedEndDay, setSelectedEndDay] = useState<Dayjs>();
   const [selectedStartDay, setSelectedStartDay] = useState<Dayjs>();
   const scheduledGamesQuery = useAdminScheduledGames();
@@ -34,6 +40,26 @@ export function AdminGameSchedule() {
   };
 
   const handleDayClick = (day: Dayjs) => {
+    const crackSafeRule = getScheduledGamesForDay(day).find(
+      (game) => game.gameId === AdminScheduleGameId.CrackSafe
+    )?.crackSafeRule;
+
+    if (day.isAfter(dayjs(), "day") && crackSafeRule) {
+      setSelectedCrackSafeRule(crackSafeRule);
+
+      return;
+    }
+
+    if (crackSafeRule) {
+      navigate(
+        `${APP_ROUTES.admin}/${generatePath(APP_ROUTES.adminCrackSafeSnapshot, {
+          startDate: crackSafeRule.startDate
+        })}`
+      );
+
+      return;
+    }
+
     if (day.isBefore(dayjs(), "day")) {
       return;
     }
@@ -57,6 +83,10 @@ export function AdminGameSchedule() {
     setIsPeriodModalOpen(false);
     setSelectedStartDay(undefined);
     setSelectedEndDay(undefined);
+  };
+
+  const closeCrackSafeRuleUpdateModal = () => {
+    setSelectedCrackSafeRule(undefined);
   };
 
   const selectedPeriodLabel =
@@ -84,7 +114,14 @@ export function AdminGameSchedule() {
         selectedStartDay={selectedStartDay}
         renderDayContent={(day) => <AdminGameScheduleDayEvents games={getScheduledGamesForDay(day)} />}
       />
+
       <AdminGameScheduleModal period={selectedPeriod} isOpen={isPeriodModalOpen} onClose={closePeriodModal} />
+
+      <AdminCrackSafeRuleUpdateModal
+        isOpen={selectedCrackSafeRule !== undefined}
+        onClose={closeCrackSafeRuleUpdateModal}
+        rule={selectedCrackSafeRule}
+      />
     </section>
   );
 }

@@ -16,6 +16,7 @@ export function useAdminScheduledGames() {
     }
 
     const crackSafeGames = crackSafeRulesQuery.data.map((rule) => ({
+      crackSafeRule: rule,
       endDate: rule.endDate,
       gameId: AdminScheduleGameId.CrackSafe,
       id: rule.scheduleId,

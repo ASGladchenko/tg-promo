@@ -34,20 +34,8 @@ export const LazyAdminSchedule = lazy(() =>
   }))
 );
 
-export const LazyAdminCrackSafeRules = lazy(() =>
-  import("@/pages/admin-crack-safe-rules").then(({ AdminCrackSafeRules }) => ({
-    default: AdminCrackSafeRules
-  }))
-);
-
-export const LazyAdminCrackSafeSnapshots = lazy(() =>
-  import("@/pages/admin-crack-safe-snapshots").then(({ AdminCrackSafeSnapshots }) => ({
-    default: AdminCrackSafeSnapshots
-  }))
-);
-
 export const LazyAdminCrackSafeSnapshotDetails = lazy(() =>
-  import("@/pages/admin-crack-safe-snapshots").then(({ AdminCrackSafeSnapshotDetails }) => ({
+  import("@/pages/admin-crack-safe-snapshot").then(({ AdminCrackSafeSnapshotDetails }) => ({
     default: AdminCrackSafeSnapshotDetails
   }))
 );

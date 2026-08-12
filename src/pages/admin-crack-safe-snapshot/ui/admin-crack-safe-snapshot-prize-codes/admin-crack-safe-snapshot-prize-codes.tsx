@@ -1,7 +1,7 @@
 import { type CrackSafeHistoryItem } from "@/entities/crack-safe-history";
 
-import { type getAdminCrackSafeSnapshotSemiCodes } from "../../../lib/get-admin-crack-safe-snapshot-semi-codes";
-import { type getAdminCrackSafeSnapshotUsedPromoCodes } from "../../../lib/get-admin-crack-safe-snapshot-used-promo-codes";
+import { type getAdminCrackSafeSnapshotSemiCodes } from "../../lib/get-admin-crack-safe-snapshot-semi-codes";
+import { type getAdminCrackSafeSnapshotUsedPromoCodes } from "../../lib/get-admin-crack-safe-snapshot-used-promo-codes";
 import { AdminCrackSafeSnapshotPrizeCodeGroup } from "../admin-crack-safe-snapshot-prize-code-group";
 
 import "./admin-crack-safe-snapshot-prize-codes.scss";

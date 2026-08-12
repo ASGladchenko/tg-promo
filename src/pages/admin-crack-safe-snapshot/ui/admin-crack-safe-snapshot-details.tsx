@@ -9,9 +9,9 @@ import { AdminPageHeader } from "@/shared/ui/admin-page-header";
 import {
   getAdminCrackSafeSnapshotSemiCodes,
   getAdminCrackSafeSnapshotUnmatchedSemiWins
-} from "../../lib/get-admin-crack-safe-snapshot-semi-codes";
-import { isAdminCrackSafeSnapshotActive } from "../../lib/get-admin-crack-safe-snapshot-status";
-import { getAdminCrackSafeSnapshotUsedPromoCodes } from "../../lib/get-admin-crack-safe-snapshot-used-promo-codes";
+} from "../lib/get-admin-crack-safe-snapshot-semi-codes";
+import { isAdminCrackSafeSnapshotActive } from "../lib/get-admin-crack-safe-snapshot-status";
+import { getAdminCrackSafeSnapshotUsedPromoCodes } from "../lib/get-admin-crack-safe-snapshot-used-promo-codes";
 import { AdminCrackSafeSnapshotOverview } from "./admin-crack-safe-snapshot-overview";
 import { AdminCrackSafeSnapshotPrizeCodes } from "./admin-crack-safe-snapshot-prize-codes";
 import { AdminCrackSafeSnapshotSchedule } from "./admin-crack-safe-snapshot-schedule";
@@ -69,7 +69,7 @@ export function AdminCrackSafeSnapshotDetails() {
   return (
     <section className="snapshot-details">
       <AdminPageHeader
-        backTo={`${APP_ROUTES.admin}/${APP_ROUTES.adminCrackSafeSnapshots}`}
+        backTo={`${APP_ROUTES.admin}/${APP_ROUTES.adminSchedule}`}
         title="Crack Safe Snapshot"
       />
 

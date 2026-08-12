@@ -3,8 +3,8 @@ import clsx from "clsx";
 import ChevronDownIcon from "@/shared/svg/chevron-down.svg?react";
 import { Badge, type BadgeVariant } from "@/shared/ui/badge";
 
-import { type AdminCrackSafeSnapshotSemiCodeGroup } from "../../../lib/get-admin-crack-safe-snapshot-semi-codes";
-import { type getAdminCrackSafeSnapshotUsedPromoCodes } from "../../../lib/get-admin-crack-safe-snapshot-used-promo-codes";
+import { type AdminCrackSafeSnapshotSemiCodeGroup } from "../../lib/get-admin-crack-safe-snapshot-semi-codes";
+import { type getAdminCrackSafeSnapshotUsedPromoCodes } from "../../lib/get-admin-crack-safe-snapshot-used-promo-codes";
 import { AdminCrackSafeSnapshotSemiWinningCodeRow } from "../admin-crack-safe-snapshot-semi-winning-code-row";
 
 import "./admin-crack-safe-snapshot-prize-code-group.scss";
@@ -32,6 +32,7 @@ export function AdminCrackSafeSnapshotPrizeCodeGroup({
   const safeCodeLabel = jackpotCode?.code ?? "Pending";
   const semiCodesLabel = jackpotCode ? `${semiCodes.length} semi codes` : "Semi pending";
   const semiPromoCodesLabel = `${semiPromoCodes.length} semi promo`;
+
   const issuedSemiPromoCodes = new Set(semiCodes.flatMap((semiCode) => semiCode.issuedPromoCodes));
   const expiredPromoCodes = [
     ...(hasExpiredJackpotPromo && jackpotPromoCode ? [jackpotPromoCode] : []),
@@ -61,8 +62,7 @@ export function AdminCrackSafeSnapshotPrizeCodeGroup({
         <span className="snapshot-details__jackpot-group-code">{safeCodeLabel}</span>
         <span
           className={clsx("snapshot-details__jackpot-code-status", {
-            "snapshot-details__jackpot-code-status--active":
-              jackpotCode?.status === "active",
+            "snapshot-details__jackpot-code-status--active": jackpotCode?.status === "active",
             "snapshot-details__jackpot-code-status--expired": hasExpiredJackpotPromo,
             "snapshot-details__jackpot-code-status--pending": !jackpotCode,
             "snapshot-details__jackpot-code-status--won": jackpotCode?.status === "won"
@@ -122,9 +122,7 @@ export function AdminCrackSafeSnapshotPrizeCodeGroup({
             ))}
           </div>
         ) : (
-          <p className="snapshot-details__pending-jackpot">
-            Safe code and semi codes are not activated yet.
-          </p>
+          <p className="snapshot-details__pending-jackpot">Safe code and semi codes are not activated yet.</p>
         )}
       </div>
 

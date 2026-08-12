@@ -1,1 +1,1 @@
-export { AdminCrackSafeRuleUpdateTrigger } from "./ui/admin-crack-safe-rule-update-trigger";
+export { AdminCrackSafeRuleUpdateModal } from "./ui/admin-crack-safe-rule-update-modal";

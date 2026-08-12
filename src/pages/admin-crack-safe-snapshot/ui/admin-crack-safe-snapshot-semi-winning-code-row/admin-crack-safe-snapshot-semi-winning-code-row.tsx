@@ -2,8 +2,8 @@ import clsx from "clsx";
 
 import { Badge } from "@/shared/ui/badge";
 
-import { type AdminCrackSafeSnapshotSemiWinningCode } from "../../../lib/get-admin-crack-safe-snapshot-semi-codes";
-import { type getAdminCrackSafeSnapshotUsedPromoCodes } from "../../../lib/get-admin-crack-safe-snapshot-used-promo-codes";
+import { type AdminCrackSafeSnapshotSemiWinningCode } from "../../lib/get-admin-crack-safe-snapshot-semi-codes";
+import { type getAdminCrackSafeSnapshotUsedPromoCodes } from "../../lib/get-admin-crack-safe-snapshot-used-promo-codes";
 
 import "./admin-crack-safe-snapshot-semi-winning-code-row.scss";
 

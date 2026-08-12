@@ -2,8 +2,8 @@ import clsx from "clsx";
 
 import { type CrackSafeSnapshot } from "@/entities/crack-safe-snapshots";
 
-import { formatAdminCrackSafeSnapshotWins } from "../../../lib/format-admin-crack-safe-snapshot-wins";
-import { isAdminCrackSafeSnapshotFinished } from "../../../lib/get-admin-crack-safe-snapshot-status";
+import { formatAdminCrackSafeSnapshotWins } from "../../lib/format-admin-crack-safe-snapshot-wins";
+import { isAdminCrackSafeSnapshotFinished } from "../../lib/get-admin-crack-safe-snapshot-status";
 
 import "./admin-crack-safe-snapshot-overview.scss";
 
@@ -23,7 +23,7 @@ export function AdminCrackSafeSnapshotOverview({
     <div className="snapshot-details__overview" aria-label="Snapshot summary">
       <div className="snapshot-details__summary-card">
         <span>Period</span>
-        <strong>
+        <strong className="snapshot-details__summary-period">
           {snapshot.startDate} - {snapshot.endDate}
         </strong>
       </div>

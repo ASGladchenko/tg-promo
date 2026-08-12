@@ -11,8 +11,6 @@ import {
   LazyAdminAiSettings,
   LazyAdminConsolationPrizes,
   LazyAdminCrackSafeSnapshotDetails,
-  LazyAdminCrackSafeSnapshots,
-  LazyAdminCrackSafeRules,
   LazyAdminCssLayout,
   LazyAdminLayout,
   LazyAdminLogin,
@@ -50,8 +48,6 @@ export function ProviderRoutes() {
             <Route path={APP_ROUTES.adminPrizes} element={<LazyAdminPrizes />} />
 
             <Route path={APP_ROUTES.adminSchedule} element={<LazyAdminSchedule />} />
-            <Route path={APP_ROUTES.adminCrackSafeRules} element={<LazyAdminCrackSafeRules />} />
-            <Route path={APP_ROUTES.adminCrackSafeSnapshots} element={<LazyAdminCrackSafeSnapshots />} />
             <Route path={APP_ROUTES.adminCrackSafeSnapshot} element={<LazyAdminCrackSafeSnapshotDetails />} />
 
             <Route path={APP_ROUTES.adminConsolation} element={<LazyAdminConsolationPrizes />} />

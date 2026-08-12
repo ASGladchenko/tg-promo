@@ -46,6 +46,11 @@
   white-space: nowrap;
 }
 
+.snapshot-details__summary-card strong.snapshot-details__summary-period {
+  font-size: 18px;
+  line-height: 28px;
+}
+
 .snapshot-details__summary-card mark {
   width: fit-content;
   max-width: 100%;
@@ -63,8 +68,7 @@
   background: transparent;
 }
 
-.snapshot-details__summary-card
-  mark.snapshot-details__summary-status--finished {
+.snapshot-details__summary-card mark.snapshot-details__summary-status--finished {
   color: s.$admin-danger;
 }
 
