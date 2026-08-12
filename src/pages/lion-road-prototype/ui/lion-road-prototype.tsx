@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   Application,
@@ -14,33 +14,34 @@ import {
   Texture
 } from "pixi.js";
 
-import environmentCastleUrl from "@/shared/images/lion-road/asd/castle.png";
-import rockUrl from "@/shared/images/lion-road/asd/rock.png";
-import skyUrl from "@/shared/images/lion-road/asd/sky.png";
-import voidUrl from "@/shared/images/lion-road/asd/void.png";
-import gridFrontUrl from "@/shared/images/lion-road/grid/grid-front.png";
-import gridTopUrl from "@/shared/images/lion-road/grid/grid-top.png";
-import spikeMetalUrl from "@/shared/images/lion-road/texture/spike-metal.png";
-import lionAirUrl from "@/shared/images/lion-road/lion-air.png";
-import lionExplosionFinalUrl from "@/shared/images/lion-road/lion-explosion/lion-explosion-final.png";
-import lionExplosionFrameUrl from "@/shared/images/lion-road/lion-explosion/lion-explosion-explosion.png";
-import lionExplosionMiddleUrl from "@/shared/images/lion-road/lion-explosion/lion-explosion-midle.png";
-import lionExplosionStartUrl from "@/shared/images/lion-road/lion-explosion/lion-explosion-start.png";
-import lionFallFlailLeftUrl from "@/shared/images/lion-road/lion-fall/lion_fall_flail_left.png";
-import lionFallFlailRightUrl from "@/shared/images/lion-road/lion-fall/lion_fall_flail_right.png";
-import lionFallStartUrl from "@/shared/images/lion-road/lion-fall/lion_fall_start.png";
-import lionFallStrongUrl from "@/shared/images/lion-road/lion-fall/lion_fall_strong.png";
-import lionIdleUrl from "@/shared/images/lion-road/lion-idle.png";
-import lionJoyJumpFinalUrl from "@/shared/images/lion-road/joy-jump/joy-jump-final.png";
-import lionJoyJumpMiddleUrl from "@/shared/images/lion-road/joy-jump/joy-jum-midle.png";
-import lionJoyJumpStartUrl from "@/shared/images/lion-road/joy-jump/joy-jump-start.png";
-import lionJoyJumpTopUrl from "@/shared/images/lion-road/joy-jump/joy-jump-top.png";
-import lionLandUrl from "@/shared/images/lion-road/lion-land.png";
-import lionPrepareUrl from "@/shared/images/lion-road/lion-prepare.png";
-import lionReversalFinalUrl from "@/shared/images/lion-road/lion-reversal/lion-reversal-final.png";
-import lionReversalMiddleUrl from "@/shared/images/lion-road/lion-reversal/lion-reversal-middle.png";
-import lionReversalStartUrl from "@/shared/images/lion-road/lion-reversal/lion-reversal-start.png";
-import lionTakeoffUrl from "@/shared/images/lion-road/lion-take_off.png";
+import environmentCastleUrl from "@/shared/images/lion-road/environment/castle.webp";
+import rockUrl from "@/shared/images/lion-road/environment/rock.webp";
+import skyUrl from "@/shared/images/lion-road/environment/sky.webp";
+import voidUrl from "@/shared/images/lion-road/environment/void.webp";
+import gridFrontUrl from "@/shared/images/lion-road/grid/grid-front.webp";
+import gridTopUrl from "@/shared/images/lion-road/grid/grid-top.webp";
+import lionAirUrl from "@/shared/images/lion-road/lion/air.webp";
+import lionExplosionFinalUrl from "@/shared/images/lion-road/lion/explosion/final.webp";
+import lionExplosionFrameUrl from "@/shared/images/lion-road/lion/explosion/explosion.webp";
+import lionExplosionMiddleUrl from "@/shared/images/lion-road/lion/explosion/middle.webp";
+import lionExplosionStartUrl from "@/shared/images/lion-road/lion/explosion/start.webp";
+import lionFallFlailLeftUrl from "@/shared/images/lion-road/lion/fall/flail-left.webp";
+import lionFallFlailRightUrl from "@/shared/images/lion-road/lion/fall/flail-right.webp";
+import lionFallStartUrl from "@/shared/images/lion-road/lion/fall/start.webp";
+import lionFallStrongUrl from "@/shared/images/lion-road/lion/fall/strong.webp";
+import lionIdleUrl from "@/shared/images/lion-road/lion/idle.webp";
+import lionJoyJumpFinalUrl from "@/shared/images/lion-road/lion/joy-jump/final.webp";
+import lionJoyJumpMiddleUrl from "@/shared/images/lion-road/lion/joy-jump/middle.webp";
+import lionJoyJumpStartUrl from "@/shared/images/lion-road/lion/joy-jump/start.webp";
+import lionJoyJumpTopUrl from "@/shared/images/lion-road/lion/joy-jump/top.webp";
+import lionLandUrl from "@/shared/images/lion-road/lion/land.webp";
+import lionPrepareUrl from "@/shared/images/lion-road/lion/prepare.webp";
+import lionReversalFinalUrl from "@/shared/images/lion-road/lion/reversal/final.webp";
+import lionReversalMiddleUrl from "@/shared/images/lion-road/lion/reversal/middle.webp";
+import lionReversalStartUrl from "@/shared/images/lion-road/lion/reversal/start.webp";
+import lionTakeoffUrl from "@/shared/images/lion-road/lion/take-off.webp";
+import spikeMetalUrl from "@/shared/images/lion-road/traps/spike-metal.webp";
+import { CircularProgressLoader } from "@/shared/ui/circular-progress-loader";
 
 import "./lion-road-prototype.scss";
 
@@ -118,9 +119,10 @@ type ViewportSize = {
   width: number;
 };
 
-const CANVAS = {
+// Базовая координатная сетка сцены, не фиксированный размер canvas.
+const SCENE_VIEWPORT = {
   width: 390,
-  height: 700
+  height: 780
 } as const;
 // Все координаты поля собраны здесь: менять размер, gap или положение можно без поиска по файлу.
 const BOARD = {
@@ -134,7 +136,7 @@ const BOARD = {
   gap: 4,
   floorY: 684,
   backRows: 1,
-  backY: CANVAS.height
+  backY: 700
 } as const;
 
 const START_CELL: Cell = {
@@ -268,6 +270,14 @@ const ENVIRONMENT_CONFIG = {
 
 const LION_HEIGHT = 180;
 const LION_ANCHOR_Y = 0.58;
+
+const lionRoadAssetUrls = Object.values(
+  import.meta.glob("../../../shared/images/lion-road/**/*.{avif,gif,jpg,jpeg,png,webp}", {
+    eager: true,
+    import: "default"
+  })
+) as string[];
+let lionRoadAssetsPreloadPromise: Promise<void> | null = null;
 
 const lionTextureUrls: Record<LionState, string> = {
   idle: lionIdleUrl,
@@ -889,19 +899,41 @@ class SpikeTrap {
 
 export function LionRoadPrototype() {
   const canvasRootRef = useRef<HTMLDivElement>(null);
+  const [hasSceneLoadError, setHasSceneLoadError] = useState(false);
+  const [isSceneLoading, setIsSceneLoading] = useState(true);
 
   useEffect(() => {
     let disposePixi = () => {};
     let isDisposed = false;
 
-    void initPixi(canvasRootRef.current, () => isDisposed).then((dispose) => {
-      if (isDisposed) {
-        dispose();
-        return;
-      }
+    setHasSceneLoadError(false);
+    setIsSceneLoading(true);
 
-      disposePixi = dispose;
-    });
+    void initPixi(
+      canvasRootRef.current,
+      () => isDisposed,
+      () => {
+        if (!isDisposed) {
+          setIsSceneLoading(false);
+        }
+      }
+    )
+      .then((dispose) => {
+        if (isDisposed) {
+          dispose();
+          return;
+        }
+
+        disposePixi = dispose;
+      })
+      .catch((error: unknown) => {
+        console.error("Failed to initialize Lion Road scene", error);
+
+        if (!isDisposed) {
+          setHasSceneLoadError(true);
+          setIsSceneLoading(false);
+        }
+      });
 
     return () => {
       isDisposed = true;
@@ -911,26 +943,46 @@ export function LionRoadPrototype() {
 
   return (
     <main className="lion-road">
-      <div className="lion-road__canvas" ref={canvasRootRef} />
+      <div className="lion-road__canvas" ref={canvasRootRef}>
+        {isSceneLoading ? (
+          <div className="lion-road__loader">
+            <CircularProgressLoader label="Loading Lion Road scene" size={46} />
+          </div>
+        ) : null}
+        {hasSceneLoadError ? (
+          <div className="lion-road__error" role="alert">
+            Scene failed to load
+          </div>
+        ) : null}
+      </div>
     </main>
   );
 }
 
-async function initPixi(host: HTMLDivElement | null, shouldStop: () => boolean) {
+async function initPixi(host: HTMLDivElement | null, shouldStop: () => boolean, onReady: () => void) {
   if (!host) {
     return () => {};
   }
 
-  const pixiHost = host;
+  const sceneContainer = host;
+
+  await preloadLionRoadAssets();
+
+  if (shouldStop()) {
+    return () => {};
+  }
+
   const app = new Application();
-  let viewportSize = getHostViewportSize(pixiHost);
+  let containerSize = getContainerSize(sceneContainer);
+  let viewportSize = getContainedSceneSize(containerSize);
   let isDestroyed = false;
   let landTimer: number | undefined;
   let lionExplosionTimer: number | undefined;
   let lionReversalTimer: number | undefined;
   let lionJoyJumpTimer: number | undefined;
   let gameOverUi: GameOverUi | null = null;
-  const resizeObserver = new ResizeObserver(() => handleResize());
+  let resizeFrame: number | undefined;
+  const resizeObserver = new ResizeObserver(() => queueContainerResize());
   let joyJumpBaseY = 0;
 
   const destroy = () => {
@@ -944,9 +996,12 @@ async function initPixi(host: HTMLDivElement | null, shouldStop: () => boolean) 
     clearFinalLionAnimation();
     app.ticker.remove(updateCellGlows);
     app.ticker.remove(updateSlowCameraDebug);
+    cancelQueuedResize();
     resizeObserver.disconnect();
     window.removeEventListener("keydown", handleResetKey);
-    window.removeEventListener("resize", handleResize);
+    window.removeEventListener("orientationchange", queueContainerResize);
+    window.removeEventListener("resize", queueContainerResize);
+    window.visualViewport?.removeEventListener("resize", queueContainerResize);
     app.destroy({ removeView: true }, { children: true });
   };
 
@@ -963,7 +1018,7 @@ async function initPixi(host: HTMLDivElement | null, shouldStop: () => boolean) 
     return destroy;
   }
 
-  pixiHost.append(app.canvas);
+  sceneContainer.append(app.canvas);
 
   const worldRoot = new Container();
   const skyLayer = new Container();
@@ -1022,8 +1077,11 @@ async function initPixi(host: HTMLDivElement | null, shouldStop: () => boolean) 
     app.ticker.add(updateSlowCameraDebug);
   }
   window.addEventListener("keydown", handleResetKey);
-  window.addEventListener("resize", handleResize);
-  resizeObserver.observe(pixiHost);
+  window.addEventListener("orientationchange", queueContainerResize);
+  window.addEventListener("resize", queueContainerResize);
+  window.visualViewport?.addEventListener("resize", queueContainerResize);
+  resizeObserver.observe(sceneContainer);
+  onReady();
 
   function createBoard(
     stage: Container,
@@ -1754,17 +1812,38 @@ async function initPixi(host: HTMLDivElement | null, shouldStop: () => boolean) 
   }
 
   function handleResize() {
-    const nextViewportSize = getHostViewportSize(pixiHost);
+    const nextContainerSize = getContainerSize(sceneContainer);
+    const nextViewportSize = getContainedSceneSize(nextContainerSize);
 
     if (nextViewportSize.width === viewportSize.width && nextViewportSize.height === viewportSize.height) {
+      containerSize = nextContainerSize;
       return;
     }
 
+    containerSize = nextContainerSize;
     viewportSize = nextViewportSize;
     app.renderer.resize(viewportSize.width, viewportSize.height);
     syncLionPositionToCell();
     renderBoard();
     gameOverUi?.updateLayout();
+  }
+
+  function queueContainerResize() {
+    cancelQueuedResize();
+
+    resizeFrame = window.requestAnimationFrame(() => {
+      resizeFrame = undefined;
+      handleResize();
+    });
+  }
+
+  function cancelQueuedResize() {
+    if (resizeFrame === undefined) {
+      return;
+    }
+
+    window.cancelAnimationFrame(resizeFrame);
+    resizeFrame = undefined;
   }
 
   function syncLionPositionToCell() {
@@ -1967,6 +2046,14 @@ function sleep(ms: number) {
   });
 }
 
+async function preloadLionRoadAssets() {
+  lionRoadAssetsPreloadPromise ??= Promise.all(lionRoadAssetUrls.map((url) => Assets.load<Texture>(url))).then(
+    () => undefined
+  );
+
+  await lionRoadAssetsPreloadPromise;
+}
+
 async function loadLionTextures(): Promise<LionTextures> {
   const entries = await Promise.all(
     Object.entries(lionTextureUrls).map(async ([state, url]) => {
@@ -2108,12 +2195,21 @@ function getLionCellOffsetY(row: number, viewportSize: ViewportSize) {
   return scaleViewportX(FINAL_LION.lastCellOffsetY, viewportSize);
 }
 
-function getHostViewportSize(host: HTMLDivElement): ViewportSize {
-  const rect = host.getBoundingClientRect();
+function getContainerSize(container: HTMLDivElement): ViewportSize {
+  const rect = container.getBoundingClientRect();
 
   return {
-    width: Math.max(Math.round(rect.width) || CANVAS.width, 1),
-    height: Math.max(Math.round(rect.height) || CANVAS.height, 1)
+    width: Math.max(Math.round(rect.width) || SCENE_VIEWPORT.width, 1),
+    height: Math.max(Math.round(rect.height) || SCENE_VIEWPORT.height, 1)
+  };
+}
+
+function getContainedSceneSize(containerSize: ViewportSize): ViewportSize {
+  const scale = getSceneScale(containerSize);
+
+  return {
+    width: Math.max(Math.round(SCENE_VIEWPORT.width * scale), 1),
+    height: Math.max(Math.round(SCENE_VIEWPORT.height * scale), 1)
   };
 }
 
@@ -2239,11 +2335,11 @@ function scaleViewportY(value: number, viewportSize: ViewportSize) {
 }
 
 function getSceneScale(viewportSize: ViewportSize) {
-  return Math.min(viewportSize.width / CANVAS.width, viewportSize.height / CANVAS.height);
+  return Math.min(viewportSize.width / SCENE_VIEWPORT.width, viewportSize.height / SCENE_VIEWPORT.height);
 }
 
 function getSceneOffsetY(viewportSize: ViewportSize) {
-  return Math.max((viewportSize.height - CANVAS.height * getSceneScale(viewportSize)) / 2, 0);
+  return Math.max((viewportSize.height - SCENE_VIEWPORT.height * getSceneScale(viewportSize)) / 2, 0);
 }
 
 function getBoardGap(viewportSize: ViewportSize) {
