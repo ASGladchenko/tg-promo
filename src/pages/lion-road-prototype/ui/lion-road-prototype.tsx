@@ -10,37 +10,22 @@ import {
   Polygon,
   Rectangle,
   Sprite,
+  Spritesheet,
+  type SpritesheetData,
   Text,
   Texture
 } from "pixi.js";
 
-import environmentCastleUrl from "@/shared/images/lion-road/environment/castle.webp";
-import rockUrl from "@/shared/images/lion-road/environment/rock.webp";
-import skyUrl from "@/shared/images/lion-road/environment/sky.webp";
-import voidUrl from "@/shared/images/lion-road/environment/void.webp";
-import gridFrontUrl from "@/shared/images/lion-road/grid/grid-front.webp";
-import gridTopUrl from "@/shared/images/lion-road/grid/grid-top.webp";
-import lionAirUrl from "@/shared/images/lion-road/lion/air.webp";
-import lionExplosionFinalUrl from "@/shared/images/lion-road/lion/explosion/final.webp";
-import lionExplosionFrameUrl from "@/shared/images/lion-road/lion/explosion/explosion.webp";
-import lionExplosionMiddleUrl from "@/shared/images/lion-road/lion/explosion/middle.webp";
-import lionExplosionStartUrl from "@/shared/images/lion-road/lion/explosion/start.webp";
-import lionFallFlailLeftUrl from "@/shared/images/lion-road/lion/fall/flail-left.webp";
-import lionFallFlailRightUrl from "@/shared/images/lion-road/lion/fall/flail-right.webp";
-import lionFallStartUrl from "@/shared/images/lion-road/lion/fall/start.webp";
-import lionFallStrongUrl from "@/shared/images/lion-road/lion/fall/strong.webp";
-import lionIdleUrl from "@/shared/images/lion-road/lion/idle.webp";
-import lionJoyJumpFinalUrl from "@/shared/images/lion-road/lion/joy-jump/final.webp";
-import lionJoyJumpMiddleUrl from "@/shared/images/lion-road/lion/joy-jump/middle.webp";
-import lionJoyJumpStartUrl from "@/shared/images/lion-road/lion/joy-jump/start.webp";
-import lionJoyJumpTopUrl from "@/shared/images/lion-road/lion/joy-jump/top.webp";
-import lionLandUrl from "@/shared/images/lion-road/lion/land.webp";
-import lionPrepareUrl from "@/shared/images/lion-road/lion/prepare.webp";
-import lionReversalFinalUrl from "@/shared/images/lion-road/lion/reversal/final.webp";
-import lionReversalMiddleUrl from "@/shared/images/lion-road/lion/reversal/middle.webp";
-import lionReversalStartUrl from "@/shared/images/lion-road/lion/reversal/start.webp";
-import lionTakeoffUrl from "@/shared/images/lion-road/lion/take-off.webp";
-import spikeMetalUrl from "@/shared/images/lion-road/traps/spike-metal.webp";
+import environmentAtlasData from "@/shared/images/lion-road/environment/environment-atlas.json";
+import environmentAtlasImageUrl from "@/shared/images/lion-road/environment/environment-atlas.webp";
+import gridAtlasData from "@/shared/images/lion-road/grid/grid-atlas.json";
+import gridAtlasImageUrl from "@/shared/images/lion-road/grid/grid-atlas.webp";
+import lionAtlas0Data from "@/shared/images/lion-road/lion/lion-atlas-0.json";
+import lionAtlas0ImageUrl from "@/shared/images/lion-road/lion/lion-atlas-0.webp";
+import lionAtlas1Data from "@/shared/images/lion-road/lion/lion-atlas-1.json";
+import lionAtlas1ImageUrl from "@/shared/images/lion-road/lion/lion-atlas-1.webp";
+import trapsAtlasData from "@/shared/images/lion-road/traps/traps-atlas.json";
+import trapsAtlasImageUrl from "@/shared/images/lion-road/traps/traps-atlas.webp";
 import { CircularProgressLoader } from "@/shared/ui/circular-progress-loader";
 
 import "./lion-road-prototype.scss";
@@ -271,35 +256,27 @@ const ENVIRONMENT_CONFIG = {
 const LION_HEIGHT = 180;
 const LION_ANCHOR_Y = 0.58;
 
-const lionRoadAssetUrls = Object.values(
-  import.meta.glob("../../../shared/images/lion-road/**/*.{avif,gif,jpg,jpeg,png,webp}", {
-    eager: true,
-    import: "default"
-  })
-) as string[];
-let lionRoadAssetsPreloadPromise: Promise<void> | null = null;
-
-const lionTextureUrls: Record<LionState, string> = {
-  idle: lionIdleUrl,
-  prepare: lionPrepareUrl,
-  takeoff: lionTakeoffUrl,
-  air: lionAirUrl,
-  land: lionLandUrl,
-  explosionStart: lionExplosionStartUrl,
-  explosionMiddle: lionExplosionMiddleUrl,
-  explosionFrame: lionExplosionFrameUrl,
-  explosionFinal: lionExplosionFinalUrl,
-  fallFlailLeft: lionFallFlailLeftUrl,
-  fallFlailRight: lionFallFlailRightUrl,
-  fallStart: lionFallStartUrl,
-  fallStrong: lionFallStrongUrl,
-  reversalStart: lionReversalStartUrl,
-  reversalMiddle: lionReversalMiddleUrl,
-  reversalFinal: lionReversalFinalUrl,
-  joyJumpStart: lionJoyJumpStartUrl,
-  joyJumpMiddle: lionJoyJumpMiddleUrl,
-  joyJumpTop: lionJoyJumpTopUrl,
-  joyJumpFinal: lionJoyJumpFinalUrl
+const lionTextureFrameKeys: Record<LionState, string> = {
+  idle: "idle.webp",
+  prepare: "prepare.webp",
+  takeoff: "take-off.webp",
+  air: "air.webp",
+  land: "land.webp",
+  explosionStart: "explosion/explosion-start.webp",
+  explosionMiddle: "explosion/explosion-middle.webp",
+  explosionFrame: "explosion/explosion-explosion.webp",
+  explosionFinal: "explosion/explosion-final.webp",
+  fallFlailLeft: "fall/fall-fall.webp",
+  fallFlailRight: "fall/flail-right.webp",
+  fallStart: "fall/fall-start.webp",
+  fallStrong: "fall/fall-strong.webp",
+  reversalStart: "reversal/reversal-start.webp",
+  reversalMiddle: "reversal/reversal-middle.webp",
+  reversalFinal: "reversal/reversal-final.webp",
+  joyJumpStart: "joy-jump/joy-jump-start.webp",
+  joyJumpMiddle: "joy-jump/joy-jump-middle.webp",
+  joyJumpTop: "joy-jump/joy-jump-top.webp",
+  joyJumpFinal: "joy-jump/joy-jump-final.webp"
 };
 
 const lionExplosionStates = [
@@ -649,7 +626,7 @@ class PerspectiveGridTile {
         color: CELL_GLOW.currentColor,
         join: "round",
         width: this.getGlowSize(CELL_GLOW.currentStrokeWidth)
-    });
+      });
   }
 
   private renderActionGlow() {
@@ -758,7 +735,10 @@ class SpikeTrap {
   private readonly outline = new Graphics();
   private readonly shadow = new Graphics();
 
-  constructor(stage: Container, private readonly faceTexture: Texture) {
+  constructor(
+    stage: Container,
+    private readonly faceTexture: Texture
+  ) {
     this.view.eventMode = "none";
     this.view.visible = false;
     this.faces.eventMode = "none";
@@ -842,9 +822,21 @@ class SpikeTrap {
         .poly(toLocalPolygon([baseLeft, baseBack, baseRight, baseFront]), true)
         .fill({ alpha: 0.24, color: 0x070604 });
 
-      meshIndex = this.renderFace(meshIndex, toLocalVertices([apex, baseBack, baseLeft]), SPIKE_FACE_TINT.backLeft);
-      meshIndex = this.renderFace(meshIndex, toLocalVertices([apex, baseRight, baseBack]), SPIKE_FACE_TINT.backRight);
-      meshIndex = this.renderFace(meshIndex, toLocalVertices([apex, baseLeft, baseFront]), SPIKE_FACE_TINT.frontLeft);
+      meshIndex = this.renderFace(
+        meshIndex,
+        toLocalVertices([apex, baseBack, baseLeft]),
+        SPIKE_FACE_TINT.backLeft
+      );
+      meshIndex = this.renderFace(
+        meshIndex,
+        toLocalVertices([apex, baseRight, baseBack]),
+        SPIKE_FACE_TINT.backRight
+      );
+      meshIndex = this.renderFace(
+        meshIndex,
+        toLocalVertices([apex, baseLeft, baseFront]),
+        SPIKE_FACE_TINT.frontLeft
+      );
       meshIndex = this.renderFace(
         meshIndex,
         toLocalVertices([apex, baseFront, baseRight]),
@@ -965,12 +957,6 @@ async function initPixi(host: HTMLDivElement | null, shouldStop: () => boolean, 
   }
 
   const sceneContainer = host;
-
-  await preloadLionRoadAssets();
-
-  if (shouldStop()) {
-    return () => {};
-  }
 
   const app = new Application();
   let containerSize = getContainerSize(sceneContainer);
@@ -1618,12 +1604,16 @@ async function initPixi(host: HTMLDivElement | null, shouldStop: () => boolean, 
     }
 
     await animateWithTicker(FALL.lionFallMs, (progress) => {
-      const frameIndex = Math.floor((progress * FALL.lionFallMs) / FALL.lionFrameMs) % lionFallLoopStates.length;
+      const frameIndex =
+        Math.floor((progress * FALL.lionFallMs) / FALL.lionFrameMs) % lionFallLoopStates.length;
       const fallProgress = progress * progress;
 
       setLionState(lionFallLoopStates[frameIndex]);
       lion.position.set(
-        startX + Math.sin(progress * Math.PI * 1.4) * scaleViewportX(FALL.lionFallDriftPx, viewportSize) * lionDirection,
+        startX +
+          Math.sin(progress * Math.PI * 1.4) *
+            scaleViewportX(FALL.lionFallDriftPx, viewportSize) *
+            lionDirection,
         startY + fallDistance * fallProgress
       );
       lion.rotation = lionDirection * 0.14 * easeInOut(progress);
@@ -2046,47 +2036,34 @@ function sleep(ms: number) {
   });
 }
 
-async function preloadLionRoadAssets() {
-  lionRoadAssetsPreloadPromise ??= Promise.all(lionRoadAssetUrls.map((url) => Assets.load<Texture>(url))).then(
-    () => undefined
-  );
-
-  await lionRoadAssetsPreloadPromise;
-}
-
 async function loadLionTextures(): Promise<LionTextures> {
-  const entries = await Promise.all(
-    Object.entries(lionTextureUrls).map(async ([state, url]) => {
-      const texture = await Assets.load<Texture>(url);
-
-      return [state, texture] as const;
-    })
-  );
+  const sheets = await Promise.all([
+    loadAtlas(lionAtlas0Data, lionAtlas0ImageUrl),
+    loadAtlas(lionAtlas1Data, lionAtlas1ImageUrl)
+  ]);
+  const entries = Object.entries(lionTextureFrameKeys).map(([state, frameKey]) => [
+    state,
+    getAtlasTexture(sheets, frameKey)
+  ]);
 
   return Object.fromEntries(entries) as LionTextures;
 }
 
 async function loadEnvironmentTextures(): Promise<EnvironmentTextures> {
-  const [sky, voidTexture, castle, rock] = await Promise.all([
-    Assets.load<Texture>(skyUrl),
-    Assets.load<Texture>(voidUrl),
-    Assets.load<Texture>(environmentCastleUrl),
-    Assets.load<Texture>(rockUrl)
-  ]);
+  const atlas = await loadAtlas(environmentAtlasData, environmentAtlasImageUrl);
 
   return {
-    castle,
-    rock,
-    sky,
-    void: voidTexture
+    castle: getAtlasTexture(atlas, "castle.webp"),
+    rock: getAtlasTexture(atlas, "rock.webp"),
+    sky: getAtlasTexture(atlas, "sky.webp"),
+    void: getAtlasTexture(atlas, "void.webp")
   };
 }
 
 async function loadGridTextures(): Promise<GridTextures> {
-  const [top, front] = await Promise.all([
-    Assets.load<Texture>(gridTopUrl),
-    Assets.load<Texture>(gridFrontUrl)
-  ]);
+  const atlas = await loadAtlas(gridAtlasData, gridAtlasImageUrl);
+  const top = getAtlasTexture(atlas, "grid-top.webp");
+  const front = getAtlasTexture(atlas, "grid-front.webp");
 
   configureGridTexture(top);
   configureGridTexture(front);
@@ -2098,11 +2075,38 @@ async function loadGridTextures(): Promise<GridTextures> {
 }
 
 async function loadSpikeTexture() {
-  const texture = await Assets.load<Texture>(spikeMetalUrl);
+  const atlas = await loadAtlas(trapsAtlasData, trapsAtlasImageUrl);
+  const texture = getAtlasTexture(atlas, "spike-metal.webp");
 
   configureGridTexture(texture);
 
   return texture;
+}
+
+async function loadAtlas(data: SpritesheetData, imageSrc: string) {
+  const texture = await Assets.load<Texture>(imageSrc);
+  const sheet = new Spritesheet({
+    data,
+    texture: texture.source
+  });
+
+  await sheet.parse();
+
+  return sheet;
+}
+
+function getAtlasTexture(atlas: Spritesheet | Spritesheet[], frameKey: string) {
+  const atlases = Array.isArray(atlas) ? atlas : [atlas];
+
+  for (const item of atlases) {
+    const texture = item.textures[frameKey];
+
+    if (texture) {
+      return texture;
+    }
+  }
+
+  throw new Error(`Missing Lion Road atlas frame: ${frameKey}`);
 }
 
 function configureGridTexture(texture: Texture) {

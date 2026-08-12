@@ -1,0 +1,27 @@
+{
+  "frames": {
+    "grid-front.webp": {
+      "frame": { "x": 0, "y": 0, "w": 388, "h": 113 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 388, "h": 113 },
+      "sourceSize": { "w": 388, "h": 113 }
+    },
+    "grid-top.webp": {
+      "frame": { "x": 0, "y": 113, "w": 276, "h": 269 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 276, "h": 269 },
+      "sourceSize": { "w": 276, "h": 269 }
+    }
+  },
+  "meta": {
+    "app": "https://www.codeandweb.com/texturepacker",
+    "version": "1.1",
+    "image": "grid-atlas.webp",
+    "format": "BGRA8888",
+    "size": { "w": 388, "h": 382 },
+    "scale": "0.333333",
+    "smartupdate": "$TexturePacker:SmartUpdate:ddaa59fda7ab391c38f5276d95eecced:2229a5a75e9f974945f7387af6c3c6fa:22ac5421178cbce5983ea5287fcc2d20$"
+  }
+}

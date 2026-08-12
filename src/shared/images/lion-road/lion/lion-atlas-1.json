@@ -1,0 +1,56 @@
+{
+  "frames": {
+    "air.webp": {
+      "frame": { "x": 0, "y": 0, "w": 284, "h": 246 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 41, "y": 103, "w": 284, "h": 246 },
+      "sourceSize": { "w": 341, "h": 512 }
+    },
+    "fall/fall-fall.webp": {
+      "frame": { "x": 561, "y": 0, "w": 253, "h": 272 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 60, "y": 108, "w": 253, "h": 272 },
+      "sourceSize": { "w": 341, "h": 512 }
+    },
+    "fall/fall-start.webp": {
+      "frame": { "x": 279, "y": 272, "w": 310, "h": 506 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 1, "y": 6, "w": 310, "h": 506 },
+      "sourceSize": { "w": 341, "h": 512 }
+    },
+    "fall/flail-right.webp": {
+      "frame": { "x": 0, "y": 272, "w": 279, "h": 283 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 33, "y": 92, "w": 279, "h": 283 },
+      "sourceSize": { "w": 341, "h": 512 }
+    },
+    "prepare.webp": {
+      "frame": { "x": 589, "y": 272, "w": 281, "h": 512 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 1, "y": 0, "w": 281, "h": 512 },
+      "sourceSize": { "w": 341, "h": 512 }
+    },
+    "take-off.webp": {
+      "frame": { "x": 284, "y": 0, "w": 277, "h": 264 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 46, "y": 97, "w": 277, "h": 264 },
+      "sourceSize": { "w": 341, "h": 512 }
+    }
+  },
+  "meta": {
+    "app": "https://www.codeandweb.com/texturepacker",
+    "version": "1.1",
+    "image": "lion-atlas-1.webp",
+    "format": "BGRA8888",
+    "size": { "w": 870, "h": 784 },
+    "scale": "0.333333",
+    "related_multi_packs": ["lion-atlas-0.json"],
+    "smartupdate": "$TexturePacker:SmartUpdate:c0651f2de8923cf15dd100d77b5a2acc:942f1533a3f095f1790b0f2c75281b2c:7f8652e271de8c99a4c50c4b5a40dcaa$"
+  }
+}

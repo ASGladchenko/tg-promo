@@ -1,0 +1,20 @@
+{
+  "frames": {
+    "spike-metal.webp": {
+      "frame": { "x": 0, "y": 0, "w": 274, "h": 275 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 33, "y": 34, "w": 274, "h": 275 },
+      "sourceSize": { "w": 341, "h": 341 }
+    }
+  },
+  "meta": {
+    "app": "https://www.codeandweb.com/texturepacker",
+    "version": "1.1",
+    "image": "traps-atlas.webp",
+    "format": "BGRA8888",
+    "size": { "w": 274, "h": 275 },
+    "scale": "0.333333",
+    "smartupdate": "$TexturePacker:SmartUpdate:e0a4f20bc75babcd3486399d3777d289:788caf10a33c0fda8b60d99753f0dd25:22ac5421178cbce5983ea5287fcc2d20$"
+  }
+}
