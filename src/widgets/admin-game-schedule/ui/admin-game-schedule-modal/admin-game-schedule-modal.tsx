@@ -4,23 +4,31 @@ import { AdminCrackSafeRuleCreateForm } from "@/features/admin-create-crack-safe
 import { Modal } from "@/shared/ui/modal";
 
 import { AdminScheduleGameId } from "../../model/admin-schedule-game";
+import { type AdminSchedulePeriod, type AdminSchedulePeriodConflict } from "../../model/types";
 import { ScheduleGamePicker } from "../schedule-game-picker/schedule-game-picker";
+import { SchedulePeriodConflict } from "../schedule-period-conflict/schedule-period-conflict";
 
 import "./admin-game-schedule-modal.scss";
 
 type ScheduleModalView = "game-picker" | AdminScheduleGameId;
 
 type AdminGameScheduleModalProps = {
+  availablePeriods?: AdminSchedulePeriod[];
+  conflicts?: AdminSchedulePeriodConflict[];
   isOpen: boolean;
   onClose: () => void;
-  period?: {
-    endDate: string;
-    label: string;
-    startDate: string;
-  };
+  onPeriodSelect: (period: AdminSchedulePeriod) => void;
+  period?: AdminSchedulePeriod;
 };
 
-export function AdminGameScheduleModal({ isOpen, onClose, period }: AdminGameScheduleModalProps) {
+export function AdminGameScheduleModal({
+  availablePeriods = [],
+  conflicts = [],
+  isOpen,
+  onClose,
+  onPeriodSelect,
+  period
+}: AdminGameScheduleModalProps) {
   const [modalView, setModalView] = useState<ScheduleModalView>("game-picker");
 
   useEffect(() => {
@@ -43,10 +51,20 @@ export function AdminGameScheduleModal({ isOpen, onClose, period }: AdminGameSch
     onClose();
   };
 
-  let ariaLabel = "Schedule period";
-  let content = (
-    <ScheduleGamePicker periodLabel={period?.label} onClose={onClose} onGameClick={setModalView} />
-  );
+  const hasConflicts = conflicts.length > 0;
+  let ariaLabel = hasConflicts ? "Schedule conflict" : "Schedule period";
+  let content =
+    hasConflicts && period ? (
+      <SchedulePeriodConflict
+        availablePeriods={availablePeriods}
+        conflicts={conflicts}
+        onClose={onClose}
+        onPeriodSelect={onPeriodSelect}
+        period={period}
+      />
+    ) : (
+      <ScheduleGamePicker periodLabel={period?.label} onClose={onClose} onGameClick={setModalView} />
+    );
 
   if (modalView === AdminScheduleGameId.CrackSafe) {
     ariaLabel = "Add Crack Safe rule";

@@ -11,6 +11,7 @@ import { CalendarMonth } from "@/shared/ui/calendar-month";
 import { getGamesScheduledForDay } from "../../lib/get-games-scheduled-for-day";
 import { ADMIN_SCHEDULE_GAME_DETAILS, AdminScheduleGameId } from "../../model/admin-schedule-game";
 import { useAdminScheduledGames } from "../../model/use-admin-scheduled-games";
+import { useSchedulePeriodSelection } from "../../model/use-schedule-period-selection";
 import { AdminGameScheduleDayEvents } from "../admin-game-schedule-day-events/admin-game-schedule-day-events";
 import { AdminGameScheduleModal } from "../admin-game-schedule-modal/admin-game-schedule-modal";
 
@@ -19,12 +20,19 @@ import "./admin-game-schedule.scss";
 export function AdminGameSchedule() {
   const navigate = useNavigate();
   const [month, setMonth] = useState(() => dayjs());
-  const [isPeriodModalOpen, setIsPeriodModalOpen] = useState(false);
   const [selectedCrackSafeRule, setSelectedCrackSafeRule] = useState<CrackSafeRule>();
-  const [selectedEndDay, setSelectedEndDay] = useState<Dayjs>();
-  const [selectedStartDay, setSelectedStartDay] = useState<Dayjs>();
   const scheduledGamesQuery = useAdminScheduledGames();
   const scheduledGames = scheduledGamesQuery.data ?? [];
+  const {
+    closePeriodModal,
+    isPeriodModalOpen,
+    selectAvailablePeriod,
+    selectDay,
+    selectedEndDay,
+    selectedPeriod,
+    selectedPeriodAvailability,
+    selectedStartDay
+  } = useSchedulePeriodSelection(scheduledGames);
 
   const getScheduledGamesForDay = (day: Dayjs) => getGamesScheduledForDay(scheduledGames, day);
 
@@ -64,44 +72,12 @@ export function AdminGameSchedule() {
       return;
     }
 
-    if (
-      selectedStartDay === undefined ||
-      selectedEndDay !== undefined ||
-      day.isBefore(selectedStartDay, "day")
-    ) {
-      setSelectedStartDay(day);
-      setSelectedEndDay(undefined);
-
-      return;
-    }
-
-    setSelectedEndDay(day);
-    setIsPeriodModalOpen(true);
-  };
-
-  const closePeriodModal = () => {
-    setIsPeriodModalOpen(false);
-    setSelectedStartDay(undefined);
-    setSelectedEndDay(undefined);
+    selectDay(day);
   };
 
   const closeCrackSafeRuleUpdateModal = () => {
     setSelectedCrackSafeRule(undefined);
   };
-
-  const selectedPeriodLabel =
-    selectedStartDay && selectedEndDay
-      ? `${selectedStartDay.format("D MMM YYYY")} — ${selectedEndDay.format("D MMM YYYY")}`
-      : undefined;
-
-  const selectedPeriod =
-    selectedStartDay && selectedEndDay && selectedPeriodLabel
-      ? {
-          endDate: selectedEndDay.format("YYYY-MM-DD"),
-          label: selectedPeriodLabel,
-          startDate: selectedStartDay.format("YYYY-MM-DD")
-        }
-      : undefined;
 
   return (
     <section className="admin-game-schedule">
@@ -115,7 +91,14 @@ export function AdminGameSchedule() {
         renderDayContent={(day) => <AdminGameScheduleDayEvents games={getScheduledGamesForDay(day)} />}
       />
 
-      <AdminGameScheduleModal period={selectedPeriod} isOpen={isPeriodModalOpen} onClose={closePeriodModal} />
+      <AdminGameScheduleModal
+        availablePeriods={selectedPeriodAvailability?.availablePeriods}
+        conflicts={selectedPeriodAvailability?.conflicts}
+        isOpen={isPeriodModalOpen}
+        onClose={closePeriodModal}
+        onPeriodSelect={selectAvailablePeriod}
+        period={selectedPeriod}
+      />
 
       <AdminCrackSafeRuleUpdateModal
         isOpen={selectedCrackSafeRule !== undefined}
