@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 
 import { AdminCrackSafeRuleCreateForm } from "@/features/admin-create-crack-safe-rule";
+import { GameScheduleId } from "@/entities/game-schedule";
 import { Modal } from "@/shared/ui/modal";
 
-import { AdminScheduleGameId } from "../../model/admin-schedule-game";
 import { type AdminSchedulePeriod, type AdminSchedulePeriodConflict } from "../../model/types";
 import { ScheduleGamePicker } from "../schedule-game-picker/schedule-game-picker";
 import { SchedulePeriodConflict } from "../schedule-period-conflict/schedule-period-conflict";
 
 import "./admin-game-schedule-modal.scss";
 
-type ScheduleModalView = "game-picker" | AdminScheduleGameId;
+type ScheduleModalView = "game-picker" | GameScheduleId;
 
 type AdminGameScheduleModalProps = {
   availablePeriods?: AdminSchedulePeriod[];
@@ -66,7 +66,7 @@ export function AdminGameScheduleModal({
       <ScheduleGamePicker periodLabel={period?.label} onClose={onClose} onGameClick={setModalView} />
     );
 
-  if (modalView === AdminScheduleGameId.CrackSafe) {
+  if (modalView === GameScheduleId.CrackSafe) {
     ariaLabel = "Add Crack Safe rule";
     content = (
       <AdminCrackSafeRuleCreateForm

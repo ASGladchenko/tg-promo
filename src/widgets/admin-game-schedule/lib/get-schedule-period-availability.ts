@@ -1,12 +1,11 @@
 import { type Dayjs } from "dayjs";
 
-import { AdminScheduleGameId } from "../model/admin-schedule-game";
 import {
   type AdminSchedulePeriod,
   type AdminSchedulePeriodAvailability,
   type AdminScheduledGame
 } from "../model/types";
-import { getGamesScheduledForDay } from "./get-games-scheduled-for-day";
+import { getScheduledGameForDay } from "./get-games-scheduled-for-day";
 
 function createPeriod(startDay: Dayjs, endDay: Dayjs): AdminSchedulePeriod {
   const startDate = startDay.format("YYYY-MM-DD");
@@ -31,9 +30,9 @@ export function getSchedulePeriodAvailability(
   let availablePeriodStartDay: Dayjs | undefined;
 
   for (let day = startDay; !day.isAfter(endDay, "day"); day = day.add(1, "day")) {
-    const scheduledGames = getGamesScheduledForDay(games, day);
+    const scheduledGame = getScheduledGameForDay(games, day);
 
-    if (scheduledGames.length === 0) {
+    if (scheduledGame === undefined) {
       availablePeriodStartDay ??= day;
 
       continue;
@@ -46,7 +45,7 @@ export function getSchedulePeriodAvailability(
 
     conflicts.push({
       dateLabel: day.format("D MMMM"),
-      gameIds: [...new Set(scheduledGames.map((game) => game.gameId))] as AdminScheduleGameId[]
+      gameName: scheduledGame.name
     });
   }
 

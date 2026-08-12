@@ -1,14 +1,6 @@
-import { type CrackSafeRule } from "@/entities/crack-safe-rules";
+import { type ScheduledGame } from "@/entities/game-schedule";
 
-import { type AdminScheduleGameId } from "./admin-schedule-game";
-
-export type AdminScheduledGame = {
-  crackSafeRule?: CrackSafeRule;
-  endDate: string;
-  gameId: AdminScheduleGameId;
-  id: string;
-  startDate: string;
-};
+export type AdminScheduledGame = ScheduledGame;
 
 export type AdminSchedulePeriod = {
   endDate: string;
@@ -18,7 +10,7 @@ export type AdminSchedulePeriod = {
 
 export type AdminSchedulePeriodConflict = {
   dateLabel: string;
-  gameIds: AdminScheduleGameId[];
+  gameName: string;
 };
 
 export type AdminSchedulePeriodAvailability = {

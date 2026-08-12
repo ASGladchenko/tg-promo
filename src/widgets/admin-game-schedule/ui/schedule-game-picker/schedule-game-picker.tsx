@@ -1,25 +1,29 @@
 import { useId } from "react";
 
-import { ADMIN_SCHEDULE_GAME_DETAILS, AdminScheduleGameId } from "../../model/admin-schedule-game";
+import { GameScheduleId } from "@/entities/game-schedule";
 
 import "./schedule-game-picker.scss";
 
 const SCHEDULE_GAME_OPTIONS = [
   {
     description: "Open rule settings for this period.",
-    id: AdminScheduleGameId.CrackSafe,
-    isAvailable: true
+    id: GameScheduleId.CrackSafe,
+    isAvailable: true,
+    mark: "CS",
+    name: "Crack Safe"
   },
   {
     description: "Rule settings will be available soon.",
-    id: AdminScheduleGameId.LuckyMeadow,
-    isAvailable: false
+    id: GameScheduleId.LuckyMeadow,
+    isAvailable: false,
+    mark: "LM",
+    name: "Lucky Meadow"
   }
 ] as const;
 
 type ScheduleGamePickerProps = {
   onClose: () => void;
-  onGameClick: (gameId: AdminScheduleGameId) => void;
+  onGameClick: (gameId: GameScheduleId) => void;
   periodLabel?: string;
 };
 
@@ -54,8 +58,6 @@ export function ScheduleGamePicker({ onClose, onGameClick, periodLabel }: Schedu
 
           <div className="schedule-game-picker__options" role="group" aria-label="Available games">
             {SCHEDULE_GAME_OPTIONS.map((game) => {
-              const gameDetails = ADMIN_SCHEDULE_GAME_DETAILS[game.id];
-
               return (
                 <button
                   key={game.id}
@@ -65,11 +67,11 @@ export function ScheduleGamePicker({ onClose, onGameClick, periodLabel }: Schedu
                   onClick={game.isAvailable ? () => onGameClick(game.id) : undefined}
                 >
                   <span className="schedule-game-picker__mark" aria-hidden="true">
-                    {gameDetails.mark}
+                    {game.mark}
                   </span>
 
                   <span className="schedule-game-picker__copy">
-                    <strong className="schedule-game-picker__name">{gameDetails.name}</strong>
+                    <strong className="schedule-game-picker__name">{game.name}</strong>
                     <span className="schedule-game-picker__description">{game.description}</span>
                   </span>
                 </button>
