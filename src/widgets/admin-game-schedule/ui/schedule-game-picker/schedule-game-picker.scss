@@ -1,0 +1,118 @@
+@use "@/shared/styles/admin" as s;
+
+.schedule-game-picker__content {
+  display: grid;
+  gap: 16px;
+}
+
+.schedule-game-picker__period {
+  margin: 0;
+  padding: 10px 12px;
+
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  line-height: 1.4;
+
+  color: s.$admin-warning;
+  background: rgba(s.$admin-warning, 0.1);
+  border: 1px solid rgba(s.$admin-warning, 0.32);
+  border-radius: s.$admin-radius;
+}
+
+.schedule-game-picker__options {
+  display: grid;
+  gap: 10px;
+}
+
+.schedule-game-picker__option {
+  width: 100%;
+  padding: 14px;
+
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+
+  font: inherit;
+  text-align: left;
+
+  color: s.$admin-text;
+  background: s.$admin-surface;
+  border: 1px solid s.$admin-border;
+  border-radius: s.$admin-radius;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+
+  &:hover {
+    background: s.$admin-surface-strong;
+    border-color: s.$admin-border-strong;
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid s.$admin-primary;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    color: s.$admin-text-disabled;
+
+    cursor: default;
+    opacity: 0.58;
+  }
+
+  &:disabled:hover {
+    background: s.$admin-surface;
+    border-color: s.$admin-border;
+    transform: none;
+  }
+}
+
+.schedule-game-picker__mark {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+
+  color: s.$admin-warning;
+  background: rgba(s.$admin-warning, 0.12);
+  border: 1px solid rgba(s.$admin-warning, 0.34);
+  border-radius: 50%;
+}
+
+.schedule-game-picker__copy {
+  min-width: 0;
+
+  display: grid;
+  gap: 4px;
+}
+
+.schedule-game-picker__name {
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.schedule-game-picker__description,
+.schedule-game-picker__hint {
+  font-size: 13px;
+  line-height: 1.4;
+
+  color: s.$admin-text-secondary;
+}
+
+.schedule-game-picker__hint {
+  margin: 0;
+
+  color: s.$admin-text-muted;
+}

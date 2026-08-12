@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 
 import dayjs, { type Dayjs } from "dayjs";
 
@@ -8,11 +8,13 @@ import { ButtonCalendar } from "@/shared/ui/button-calendar";
 import "./calendar-month.scss";
 
 type CalendarMonthProps = {
+  getDayAriaLabel?: (day: Dayjs) => string;
   month: Dayjs;
   onDayClick?: (day: Dayjs) => void;
   onMonthChange: (month: Dayjs) => void;
   selectedEndDay?: Dayjs;
   selectedStartDay?: Dayjs;
+  renderDayContent?: (day: Dayjs) => ReactNode;
   weekStart?: 0 | 1;
 };
 
@@ -21,11 +23,13 @@ const CALENDAR_WEEKS_COUNT = 6;
 const DAYS_IN_WEEK = 7;
 
 export function CalendarMonth({
+  getDayAriaLabel,
   month,
   onDayClick,
   onMonthChange,
   selectedEndDay,
   selectedStartDay,
+  renderDayContent,
   weekStart = 1
 }: CalendarMonthProps) {
   const today = dayjs();
@@ -107,7 +111,10 @@ export function CalendarMonth({
               isSelectingRangeEnd={isSelectingRangeEnd}
               onClick={onDayClick ? () => onDayClick(day) : undefined}
               onMouseEnter={onDayClick && isCurrentMonth ? () => setSelectingDay(day) : undefined}
-            />
+              ariaLabel={getDayAriaLabel?.(day)}
+            >
+              {isCurrentMonth ? renderDayContent?.(day) : null}
+            </ButtonCalendar>
           );
         })}
       </div>

@@ -1,0 +1,16 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-crack-safe-rule-form__period {
+  margin: 0;
+  padding: 10px 12px;
+
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  line-height: 1.4;
+
+  color: s.$admin-warning;
+  background: rgba(s.$admin-warning, 0.1);
+  border: 1px solid rgba(s.$admin-warning, 0.32);
+  border-radius: s.$admin-radius;
+}

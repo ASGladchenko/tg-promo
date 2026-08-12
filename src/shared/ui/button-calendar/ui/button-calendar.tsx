@@ -7,6 +7,8 @@ import { ButtonCalendarProps } from "./types";
 import "./button-calendar.scss";
 
 export function ButtonCalendar({
+  ariaLabel,
+  children,
   day,
   isToday,
   onClick,
@@ -37,11 +39,12 @@ export function ButtonCalendar({
       disabled={!canSelectDay}
       onMouseEnter={onMouseEnter}
       className={buttonClassName}
-      aria-label={day.format("D MMMM YYYY")}
+      aria-label={ariaLabel ?? day.format("D MMMM YYYY")}
       aria-current={isToday ? "date" : undefined}
       aria-pressed={canSelectDay ? isRangeStart || isRangeEnd : undefined}
     >
       <time dateTime={day.format("YYYY-MM-DD")}>{day.format("D")}</time>
+      {children}
     </ButtonBase>
   );
 }

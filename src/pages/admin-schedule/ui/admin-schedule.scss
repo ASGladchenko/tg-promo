@@ -1,11 +1,7 @@
-@use "@/shared/styles/admin" as s;
-
 .admin-schedule {
   min-width: 0;
   min-height: 100%;
 
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
-
-  color: s.$admin-text;
 }
