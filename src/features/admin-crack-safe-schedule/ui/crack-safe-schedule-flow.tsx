@@ -11,6 +11,7 @@ import { APP_ROUTES } from "@/shared/config";
 type CrackSafeScheduleFlowProps = {
   getGameName: (gameId: GameScheduleId) => string;
   onClose: () => void;
+  onRulesChange: () => void;
   renderScheduledGameDay: (gameId: GameScheduleId) => ReactNode;
   rule: CrackSafeRule;
   selectedDay: Dayjs;
@@ -21,6 +22,7 @@ type CrackSafeScheduleFlowProps = {
 export function CrackSafeScheduleFlow({
   getGameName,
   onClose,
+  onRulesChange,
   renderScheduledGameDay,
   rule,
   selectedDay,
@@ -43,6 +45,7 @@ export function CrackSafeScheduleFlow({
       getGameName={getGameName}
       isOpen
       onClose={onClose}
+      onSuccess={onRulesChange}
       renderScheduledGameDay={renderScheduledGameDay}
       rule={rule}
       scheduledGames={scheduledGames}

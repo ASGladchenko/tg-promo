@@ -11,6 +11,7 @@ import { LuckyMeadowScheduleFlow } from "./lucky-meadow-schedule-flow";
 type AdminGameScheduleGameFlowProps = {
   game: AdminScheduledGame;
   onClose: () => void;
+  onRulesChange: () => void;
   selectedDay: Dayjs;
   scheduledGames: readonly ScheduledGame[];
 };
@@ -22,6 +23,7 @@ function renderScheduledGameDay(gameId: GameScheduleId) {
 export function AdminGameScheduleGameFlow({
   game,
   onClose,
+  onRulesChange,
   selectedDay,
   scheduledGames
 }: AdminGameScheduleGameFlowProps) {
@@ -30,6 +32,7 @@ export function AdminGameScheduleGameFlow({
       <CrackSafeScheduleFlow
         getGameName={getScheduleGameTitle}
         onClose={onClose}
+        onRulesChange={onRulesChange}
         renderScheduledGameDay={renderScheduledGameDay}
         rule={game.rule}
         selectedDay={selectedDay}
@@ -44,6 +47,7 @@ export function AdminGameScheduleGameFlow({
       <LuckyMeadowScheduleFlow
         getGameName={getScheduleGameTitle}
         onClose={onClose}
+        onRulesChange={onRulesChange}
         renderScheduledGameDay={renderScheduledGameDay}
         rule={game.rule}
         selectedDay={selectedDay}

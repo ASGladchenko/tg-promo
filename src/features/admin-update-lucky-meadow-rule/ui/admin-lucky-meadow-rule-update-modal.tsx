@@ -19,6 +19,7 @@ type AdminLuckyMeadowRuleUpdateModalProps = {
   getGameName: (gameId: GameScheduleId) => string;
   isOpen: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
   renderScheduledGameDay: (gameId: GameScheduleId) => ReactNode;
   rule?: LuckyMeadowRule;
   scheduledGames: readonly ScheduledGame[];
@@ -28,6 +29,7 @@ export function AdminLuckyMeadowRuleUpdateModal({
   getGameName,
   isOpen,
   onClose,
+  onSuccess,
   renderScheduledGameDay,
   rule,
   scheduledGames
@@ -60,7 +62,10 @@ export function AdminLuckyMeadowRuleUpdateModal({
         onClose={closeModal}
         onReset={updateLuckyMeadowRule.reset}
         onSubmit={(data) => updateLuckyMeadowRule.mutateAsync(mapAdminLuckyMeadowRuleFormToPayload(data))}
-        onSuccess={closeModal}
+        onSuccess={() => {
+          onSuccess?.();
+          onClose();
+        }}
         periodContent={
           <RulePeriodEditor
             currentScheduleId={rule.scheduleId}

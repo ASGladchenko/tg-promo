@@ -1,21 +1,24 @@
 import { useMemo } from "react";
 
-import { useCrackSafeRules } from "@/entities/crack-safe-rules";
 import { GameScheduleId } from "@/entities/game-schedule";
-import { useLuckyMeadowRules } from "@/entities/lucky-meadow";
+import { useQuery } from "@tanstack/react-query";
 
+import { getGamesCalendarRulesDto } from "../api/get-games-calendar-rules";
 import { type AdminScheduledGame } from "./types";
+import { gamesCalendarRulesQueryKey } from "./games-calendar-rules-query";
 
 export function useAdminScheduledGames() {
-  const crackSafeRulesQuery = useCrackSafeRules();
-  const luckyMeadowRulesQuery = useLuckyMeadowRules();
+  const gamesCalendarRulesQuery = useQuery({
+    queryKey: gamesCalendarRulesQueryKey,
+    queryFn: ({ signal }) => getGamesCalendarRulesDto(signal)
+  });
 
   const data = useMemo<AdminScheduledGame[] | undefined>(() => {
-    if (crackSafeRulesQuery.data === undefined || luckyMeadowRulesQuery.data === undefined) {
+    if (gamesCalendarRulesQuery.data === undefined) {
       return undefined;
     }
 
-    const crackSafeGames = crackSafeRulesQuery.data.map(
+    const crackSafeGames = gamesCalendarRulesQuery.data.crackSafe.map(
       (rule): AdminScheduledGame => ({
         endDate: rule.endDate,
         gameId: GameScheduleId.CrackSafe,
@@ -25,7 +28,7 @@ export function useAdminScheduledGames() {
       })
     );
 
-    const luckyMeadowGames = luckyMeadowRulesQuery.data.map(
+    const luckyMeadowGames = gamesCalendarRulesQuery.data.luckyMeadow.map(
       (rule): AdminScheduledGame => ({
         endDate: rule.endDate,
         gameId: GameScheduleId.LuckyMeadow,
@@ -37,12 +40,13 @@ export function useAdminScheduledGames() {
     const games = [...crackSafeGames, ...luckyMeadowGames];
 
     return games.sort((left, right) => left.startDate.localeCompare(right.startDate));
-  }, [crackSafeRulesQuery.data, luckyMeadowRulesQuery.data]);
+  }, [gamesCalendarRulesQuery.data]);
 
   return {
     data,
-    error: crackSafeRulesQuery.error ?? luckyMeadowRulesQuery.error,
-    isError: crackSafeRulesQuery.isError || luckyMeadowRulesQuery.isError,
-    isLoading: crackSafeRulesQuery.isLoading || luckyMeadowRulesQuery.isLoading
+    error: gamesCalendarRulesQuery.error,
+    isError: gamesCalendarRulesQuery.isError,
+    isLoading: gamesCalendarRulesQuery.isLoading,
+    refetch: gamesCalendarRulesQuery.refetch
   };
 }

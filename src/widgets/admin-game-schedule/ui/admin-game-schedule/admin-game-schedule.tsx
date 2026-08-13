@@ -24,6 +24,10 @@ export function AdminGameSchedule() {
   const scheduledGamesQuery = useAdminScheduledGames();
   const scheduledGames = scheduledGamesQuery.data ?? [];
 
+  const refetchScheduledGames = () => {
+    void scheduledGamesQuery.refetch();
+  };
+
   const {
     closePeriodModal,
     isPeriodModalOpen,
@@ -92,6 +96,7 @@ export function AdminGameSchedule() {
         isOpen={isPeriodModalOpen}
         onClose={closePeriodModal}
         onPeriodSelect={selectAvailablePeriod}
+        onRulesChange={refetchScheduledGames}
         period={selectedPeriod}
       />
 
@@ -99,6 +104,7 @@ export function AdminGameSchedule() {
         <AdminGameScheduleGameFlow
           game={selectedScheduledGame.game}
           onClose={closeScheduledGame}
+          onRulesChange={refetchScheduledGames}
           selectedDay={selectedScheduledGame.day}
           scheduledGames={scheduledGames}
         />

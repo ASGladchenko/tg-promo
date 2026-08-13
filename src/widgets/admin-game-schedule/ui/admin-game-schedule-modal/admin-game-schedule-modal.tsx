@@ -19,6 +19,7 @@ type AdminGameScheduleModalProps = {
   isOpen: boolean;
   onClose: () => void;
   onPeriodSelect: (period: AdminSchedulePeriod) => void;
+  onRulesChange: () => void;
   period?: AdminSchedulePeriod;
 };
 
@@ -28,6 +29,7 @@ export function AdminGameScheduleModal({
   isOpen,
   onClose,
   onPeriodSelect,
+  onRulesChange,
   period
 }: AdminGameScheduleModalProps) {
   const [modalView, setModalView] = useState<ScheduleModalView>("game-picker");
@@ -74,13 +76,27 @@ export function AdminGameScheduleModal({
 
   if (modalView === GameScheduleId.CrackSafe) {
     content = (
-      <AdminCrackSafeRuleCreateForm onClose={returnToGamePicker} onSuccess={onClose} period={period} />
+      <AdminCrackSafeRuleCreateForm
+        onClose={returnToGamePicker}
+        onSuccess={() => {
+          onRulesChange();
+          onClose();
+        }}
+        period={period}
+      />
     );
   }
 
   if (modalView === GameScheduleId.LuckyMeadow) {
     content = (
-      <AdminLuckyMeadowRuleCreateForm onClose={returnToGamePicker} onSuccess={onClose} period={period} />
+      <AdminLuckyMeadowRuleCreateForm
+        onClose={returnToGamePicker}
+        onSuccess={() => {
+          onRulesChange();
+          onClose();
+        }}
+        period={period}
+      />
     );
   }
 

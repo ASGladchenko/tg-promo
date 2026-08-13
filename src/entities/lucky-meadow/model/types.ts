@@ -1,4 +1,3 @@
-import { type LuckyMeadowRuleDto, type LuckyMeadowRulesResponseDto } from "../api/types";
+import { type LuckyMeadowRuleDto } from "../api/types";
 
 export type LuckyMeadowRule = LuckyMeadowRuleDto;
-export type LuckyMeadowRules = LuckyMeadowRulesResponseDto;

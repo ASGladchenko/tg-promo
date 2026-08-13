@@ -15,5 +15,3 @@ export const luckyMeadowRuleDtoSchema = z.object({
   startDate: z.string(),
   updatedAt: z.string()
 });
-
-export const luckyMeadowRulesResponseDtoSchema = z.array(luckyMeadowRuleDtoSchema);

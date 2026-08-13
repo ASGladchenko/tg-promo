@@ -18,5 +18,3 @@ export const crackSafeRuleDtoSchema = z.object({
   startDate: z.string(),
   updatedAt: z.string()
 });
-
-export const crackSafeRulesResponseDtoSchema = z.array(crackSafeRuleDtoSchema);
