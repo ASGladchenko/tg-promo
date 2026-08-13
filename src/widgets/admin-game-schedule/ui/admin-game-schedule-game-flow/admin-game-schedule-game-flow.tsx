@@ -26,7 +26,17 @@ export function AdminGameScheduleGameFlow({
   scheduledGames
 }: AdminGameScheduleGameFlowProps) {
   if (game.gameId === GameScheduleId.CrackSafe) {
-    return <CrackSafeScheduleFlow game={game} onClose={onClose} rule={game.rule} selectedDay={selectedDay} />;
+    return (
+      <CrackSafeScheduleFlow
+        game={game}
+        getGameName={getScheduleGameTitle}
+        onClose={onClose}
+        renderScheduledGameDay={renderScheduledGameDay}
+        rule={game.rule}
+        selectedDay={selectedDay}
+        scheduledGames={scheduledGames}
+      />
+    );
   }
 
   if (game.gameId === GameScheduleId.LuckyMeadow) {

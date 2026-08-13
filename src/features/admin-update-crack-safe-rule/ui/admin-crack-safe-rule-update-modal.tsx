@@ -1,3 +1,5 @@
+import { type ReactNode } from "react";
+
 import {
   AdminCrackSafeRuleForm,
   type CrackSafeRule,
@@ -6,23 +8,31 @@ import {
   mapAdminCrackSafeRulePrizesToOptions,
   useUpdateCrackSafeRule
 } from "@/entities/crack-safe-rules";
+import { GameScheduleId, type ScheduledGame } from "@/entities/game-schedule";
 import { usePrizes } from "@/entities/prizes";
 import { Modal } from "@/shared/ui/modal";
 
+import { RulePeriodEditor } from "./rule-period-editor";
 import "./admin-crack-safe-rule-update-modal.scss";
 
 type AdminCrackSafeRuleUpdateModalProps = {
+  getGameName: (gameId: GameScheduleId) => string;
   isOpen: boolean;
   onClose: () => void;
   onSuccess?: () => void;
+  renderScheduledGameDay: (gameId: GameScheduleId) => ReactNode;
   rule?: CrackSafeRule;
+  scheduledGames: readonly ScheduledGame[];
 };
 
 export function AdminCrackSafeRuleUpdateModal({
+  getGameName,
   isOpen,
   onClose,
   onSuccess,
-  rule
+  renderScheduledGameDay,
+  rule,
+  scheduledGames
 }: AdminCrackSafeRuleUpdateModalProps) {
   const updateCrackSafeRule = useUpdateCrackSafeRule();
   const prizesQuery = usePrizes();
@@ -65,7 +75,17 @@ export function AdminCrackSafeRuleUpdateModal({
           return updateCrackSafeRule.mutateAsync({ payload, startDate: rule.startDate });
         }}
         onSuccess={handleSuccess}
+        periodContent={
+          <RulePeriodEditor
+            currentScheduleId={rule.scheduleId}
+            disabled={isPending}
+            getGameName={getGameName}
+            renderScheduledGameDay={renderScheduledGameDay}
+            scheduledGames={scheduledGames}
+          />
+        }
         prizeOptions={prizeOptions}
+        shouldShowPeriodFields={false}
         submitLabel="Save"
         title="Edit Rule"
       />

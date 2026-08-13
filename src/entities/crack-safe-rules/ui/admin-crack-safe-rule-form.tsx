@@ -1,3 +1,5 @@
+import { type ReactNode } from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -22,6 +24,7 @@ type AdminCrackSafeRuleFormProps = {
   onReset: () => void;
   onSubmit: (data: AdminCrackSafeRuleFormState) => Promise<void>;
   onSuccess: () => void;
+  periodContent?: ReactNode;
   periodLabel?: string;
   prizeOptions: AdminCrackSafeRulePrizeOption[];
   shouldShowPeriodFields?: boolean;
@@ -35,6 +38,7 @@ export function AdminCrackSafeRuleForm({
   onReset,
   onSubmit,
   onSuccess,
+  periodContent,
   isPending,
   submitLabel,
   defaultValues,
@@ -94,6 +98,8 @@ export function AdminCrackSafeRuleForm({
       title={title}
     >
       {periodLabel ? <p className="admin-crack-safe-rule-form__period">{periodLabel}</p> : null}
+
+      {periodContent}
 
       <AdminCrackSafeRuleFormFields
         disabled={isFormPending}

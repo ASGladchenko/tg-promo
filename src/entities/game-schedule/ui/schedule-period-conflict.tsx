@@ -1,34 +1,34 @@
 import { useId } from "react";
 
-import { GameScheduleId } from "@/entities/game-schedule";
 import { ButtonBase } from "@/shared/ui/button-base";
 
-import { type ScheduledGameConflict, type ScheduledGamePeriod } from "../lib/get-scheduled-game-conflicts";
+import { type SchedulePeriod, type SchedulePeriodConflict } from "../lib/get-schedule-period-availability";
+import { GameScheduleId } from "../model/types";
 
-import "./admin-lucky-meadow-rule-period-conflict.scss";
+import "./schedule-period-conflict.scss";
 
-type AdminLuckyMeadowRulePeriodConflictProps = {
-  availablePeriods: readonly ScheduledGamePeriod[];
-  conflicts: readonly ScheduledGameConflict[];
+type SchedulePeriodConflictProps = {
+  availablePeriods: readonly SchedulePeriod[];
+  conflicts: readonly SchedulePeriodConflict[];
   getGameName: (gameId: GameScheduleId) => string;
   onClose: () => void;
-  onPeriodSelect: (period: ScheduledGamePeriod) => void;
-  period: ScheduledGamePeriod;
+  onPeriodSelect: (period: SchedulePeriod) => void;
+  period: SchedulePeriod;
 };
 
-export function AdminLuckyMeadowRulePeriodConflict({
+export function SchedulePeriodConflict({
   availablePeriods,
   conflicts,
   getGameName,
   onClose,
   onPeriodSelect,
   period
-}: AdminLuckyMeadowRulePeriodConflictProps) {
+}: SchedulePeriodConflictProps) {
   const titleId = useId();
   const hasAvailablePeriods = availablePeriods.length > 0;
 
   return (
-    <section className="admin-modal-form admin-lucky-meadow-rule-period-conflict" aria-labelledby={titleId}>
+    <section className="admin-modal-form schedule-period-conflict" aria-labelledby={titleId}>
       <div className="admin-modal-form__header">
         <div>
           <p className="admin-modal-form__eyebrow">Schedule conflict</p>
@@ -47,20 +47,20 @@ export function AdminLuckyMeadowRulePeriodConflict({
         </button>
       </div>
 
-      <div className="admin-modal-form__content admin-lucky-meadow-rule-period-conflict__content">
-        <div className="admin-lucky-meadow-rule-period-conflict__notice" role="alert">
-          <span className="admin-lucky-meadow-rule-period-conflict__icon" aria-hidden="true">
+      <div className="admin-modal-form__content schedule-period-conflict__content">
+        <div className="schedule-period-conflict__notice" role="alert">
+          <span className="schedule-period-conflict__icon" aria-hidden="true">
             !
           </span>
           <div>
-            <p className="admin-lucky-meadow-rule-period-conflict__period">{period.label}</p>
-            <p className="admin-lucky-meadow-rule-period-conflict__message">
+            <p className="schedule-period-conflict__period">{period.label}</p>
+            <p className="schedule-period-conflict__message">
               An existing rule splits this period into unavailable dates.
             </p>
           </div>
         </div>
 
-        <ul className="admin-lucky-meadow-rule-period-conflict__conflicts" aria-label="Unavailable dates">
+        <ul className="schedule-period-conflict__conflicts" aria-label="Unavailable dates">
           {conflicts.map((conflict) => (
             <li key={conflict.dateLabel}>
               <time>{conflict.dateLabel}</time>
@@ -70,16 +70,12 @@ export function AdminLuckyMeadowRulePeriodConflict({
         </ul>
 
         {hasAvailablePeriods ? (
-          <div
-            className="admin-lucky-meadow-rule-period-conflict__options"
-            role="group"
-            aria-label="Available periods"
-          >
+          <div className="schedule-period-conflict__options" role="group" aria-label="Available periods">
             {availablePeriods.map((availablePeriod) => (
               <ButtonBase
                 key={availablePeriod.startDate}
                 type="button"
-                className="admin-lucky-meadow-rule-period-conflict__option"
+                className="schedule-period-conflict__option"
                 onClick={() => onPeriodSelect(availablePeriod)}
               >
                 {availablePeriod.label}

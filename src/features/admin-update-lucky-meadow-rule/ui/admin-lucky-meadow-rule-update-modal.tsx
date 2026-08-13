@@ -1,4 +1,4 @@
-import { type ReactNode, useState } from "react";
+import { type ReactNode } from "react";
 
 import { GameScheduleId, type ScheduledGame } from "@/entities/game-schedule";
 import {
@@ -11,7 +11,7 @@ import {
 import { usePrizes } from "@/entities/prizes";
 import { Modal } from "@/shared/ui/modal";
 
-import { AdminLuckyMeadowRulePeriodCalendar } from "./admin-lucky-meadow-rule-period-calendar";
+import { RulePeriodEditor } from "./rule-period-editor";
 
 import "./admin-lucky-meadow-rule-update-modal.scss";
 
@@ -33,13 +33,10 @@ export function AdminLuckyMeadowRuleUpdateModal({
   scheduledGames
 }: AdminLuckyMeadowRuleUpdateModalProps) {
   const updateLuckyMeadowRule = useUpdateLuckyMeadowRule();
-  const [hasPeriodConflicts, setHasPeriodConflicts] = useState(false);
-  const [isPeriodEditorOpen, setIsPeriodEditorOpen] = useState(false);
   const prizesQuery = usePrizes();
 
   const closeModal = () => {
     updateLuckyMeadowRule.reset();
-    setIsPeriodEditorOpen(false);
     onClose();
   };
 
@@ -60,20 +57,15 @@ export function AdminLuckyMeadowRuleUpdateModal({
         defaultValues={getAdminLuckyMeadowRuleFormDefaultValues(rule)}
         failureMessage="Failed to update Lucky Meadow rule"
         isPending={updateLuckyMeadowRule.isPending || prizesQuery.isLoading}
-        isPeriodEditorOpen={isPeriodEditorOpen}
-        isSubmitDisabled={hasPeriodConflicts}
         onClose={closeModal}
-        onPeriodEditorToggle={() => setIsPeriodEditorOpen((isOpen) => !isOpen)}
         onReset={updateLuckyMeadowRule.reset}
         onSubmit={(data) => updateLuckyMeadowRule.mutateAsync(mapAdminLuckyMeadowRuleFormToPayload(data))}
         onSuccess={closeModal}
         periodContent={
-          <AdminLuckyMeadowRulePeriodCalendar
+          <RulePeriodEditor
             currentScheduleId={rule.scheduleId}
             disabled={updateLuckyMeadowRule.isPending}
             getGameName={getGameName}
-            onPeriodConflictsChange={setHasPeriodConflicts}
-            onPeriodSelect={() => setIsPeriodEditorOpen(false)}
             renderScheduledGameDay={renderScheduledGameDay}
             scheduledGames={scheduledGames}
           />
