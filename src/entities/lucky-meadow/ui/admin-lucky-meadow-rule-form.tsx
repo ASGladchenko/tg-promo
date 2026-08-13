@@ -1,4 +1,4 @@
-import { type ChangeEvent } from "react";
+import { type ChangeEvent, type ReactNode } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -7,7 +7,6 @@ import { AdminModalForm, AdminModalFormRootError } from "@/shared/ui/admin-modal
 import { ButtonBase } from "@/shared/ui/button-base";
 import { ButtonLoading } from "@/shared/ui/button-loading";
 import { Checkbox } from "@/shared/ui/checkbox";
-import { InputField } from "@/shared/ui/input-field";
 import { SelectField } from "@/shared/ui/select-field";
 import { SelectOption } from "@/shared/ui/select-option";
 import { TextareaField } from "@/shared/ui/textarea-field";
@@ -21,27 +20,22 @@ type AdminLuckyMeadowRulePrizeOption = {
   id: string;
   name: string;
 };
-
 type AdminLuckyMeadowRuleFormProps = {
   closeAriaLabel: string;
   defaultValues: AdminLuckyMeadowRuleFormState;
   failureMessage: string;
   isPending: boolean;
+  isSubmitDisabled?: boolean;
   onClose: () => void;
   onReset: () => void;
   onSubmit: (data: AdminLuckyMeadowRuleFormState) => Promise<unknown>;
   onSuccess: () => void;
+  periodContent?: ReactNode;
   periodLabel?: string;
   prizeOptions: AdminLuckyMeadowRulePrizeOption[];
-  shouldShowPeriodFields?: boolean;
   submitLabel: string;
   title: string;
 };
-
-const PRIZE_FIELDS = [
-  { name: "jackpotPrize", placeholder: "LUCKY-JACKPOT-001, LUCKY-JACKPOT-002", title: "Jackpot Prize" },
-  { name: "semiJackpotPrize", placeholder: "LUCKY-SEMI-001, LUCKY-SEMI-002", title: "Semi-Jackpot Prize" }
-] as const;
 
 const emptyPrizeValue = {
   prizeId: "",
@@ -57,9 +51,10 @@ export function AdminLuckyMeadowRuleForm({
   onReset,
   onSubmit,
   onSuccess,
+  periodContent,
   periodLabel,
   prizeOptions,
-  shouldShowPeriodFields = true,
+  isSubmitDisabled = false,
   submitLabel,
   title
 }: AdminLuckyMeadowRuleFormProps) {
@@ -74,9 +69,12 @@ export function AdminLuckyMeadowRuleForm({
     watch,
     formState: { errors, isSubmitting }
   } = form;
+
   const isFormPending = isSubmitting || isPending;
+
   const rootErrorMessage =
     typeof errors.root?.server?.message === "string" ? errors.root.server.message : undefined;
+
   const isSemiJackpotPrizeEnabled = watch("semiJackpotPrize") !== null;
 
   const resetForm = () => {
@@ -123,77 +121,90 @@ export function AdminLuckyMeadowRuleForm({
       {periodLabel ? <p className="admin-lucky-meadow-rule-form__period">{periodLabel}</p> : null}
 
       <div className="admin-lucky-meadow-rule-form__fields">
-        {shouldShowPeriodFields ? (
-          <>
-            <InputField<AdminLuckyMeadowRuleFormState>
+        {periodContent}
+
+        <fieldset className="admin-lucky-meadow-rule-form__prize">
+          <legend className="admin-lucky-meadow-rule-form__prize-title">Jackpot Prize</legend>
+
+          <div className="admin-lucky-meadow-rule-form__prize-fields">
+            <SelectField<AdminLuckyMeadowRuleFormState>
               disabled={isFormPending}
-              type="date"
-              name="startDate"
-              label="Start date"
+              getDisplayValue={(value) =>
+                prizeOptions.find((prizeOption) => prizeOption.id === value)?.name ?? value
+              }
+              label="Prize"
+              name="jackpotPrize.prizeId"
+              optionsCount={prizeOptions.length}
+              placeholder="Select prize"
+              renderOptions={({ onSelect, value }) =>
+                prizeOptions.map((prizeOption) => (
+                  <SelectOption
+                    key={prizeOption.id}
+                    isSelected={prizeOption.id === value}
+                    onSelect={onSelect}
+                    value={prizeOption.id}
+                  >
+                    {prizeOption.name}
+                  </SelectOption>
+                ))
+              }
             />
-            <InputField<AdminLuckyMeadowRuleFormState>
+
+            <TextareaField<AdminLuckyMeadowRuleFormState>
               disabled={isFormPending}
-              type="date"
-              name="endDate"
-              label="End date"
+              label="Promo codes"
+              name="jackpotPrize.promoCodes"
+              placeholder="LUCKY-JACKPOT-001, LUCKY-JACKPOT-002"
+              rows={4}
             />
-          </>
-        ) : null}
+          </div>
+        </fieldset>
 
-        {PRIZE_FIELDS.map((prizeField) => {
-          const isSemiJackpotPrize = prizeField.name === "semiJackpotPrize";
-          const isPrizeEnabled = !isSemiJackpotPrize || isSemiJackpotPrizeEnabled;
+        <fieldset className="admin-lucky-meadow-rule-form__prize">
+          <legend className="admin-lucky-meadow-rule-form__prize-title">Semi-Jackpot Prize</legend>
 
-          return (
-            <fieldset key={prizeField.name} className="admin-lucky-meadow-rule-form__prize">
-              <legend className="admin-lucky-meadow-rule-form__prize-title">{prizeField.title}</legend>
+          <Checkbox
+            checked={isSemiJackpotPrizeEnabled}
+            disabled={isFormPending}
+            label="Enable Semi-Jackpot Prize"
+            onChange={handleSemiJackpotPrizeEnabledChange}
+          />
 
-              {isSemiJackpotPrize ? (
-                <Checkbox
-                  checked={isSemiJackpotPrizeEnabled}
-                  disabled={isFormPending}
-                  label="Enable Semi-Jackpot Prize"
-                  onChange={handleSemiJackpotPrizeEnabledChange}
-                />
-              ) : null}
+          {isSemiJackpotPrizeEnabled ? (
+            <div className="admin-lucky-meadow-rule-form__prize-fields">
+              <SelectField<AdminLuckyMeadowRuleFormState>
+                disabled={isFormPending}
+                getDisplayValue={(value) =>
+                  prizeOptions.find((prizeOption) => prizeOption.id === value)?.name ?? value
+                }
+                label="Prize"
+                name="semiJackpotPrize.prizeId"
+                optionsCount={prizeOptions.length}
+                placeholder="Select prize"
+                renderOptions={({ onSelect, value }) =>
+                  prizeOptions.map((prizeOption) => (
+                    <SelectOption
+                      key={prizeOption.id}
+                      isSelected={prizeOption.id === value}
+                      onSelect={onSelect}
+                      value={prizeOption.id}
+                    >
+                      {prizeOption.name}
+                    </SelectOption>
+                  ))
+                }
+              />
 
-              {isPrizeEnabled ? (
-                <div className="admin-lucky-meadow-rule-form__prize-fields">
-                  <SelectField<AdminLuckyMeadowRuleFormState>
-                    disabled={isFormPending}
-                    getDisplayValue={(value) =>
-                      prizeOptions.find((prizeOption) => prizeOption.id === value)?.name ?? value
-                    }
-                    label="Prize"
-                    name={`${prizeField.name}.prizeId`}
-                    optionsCount={prizeOptions.length}
-                    placeholder="Select prize"
-                    renderOptions={({ onSelect, value }) =>
-                      prizeOptions.map((prizeOption) => (
-                        <SelectOption
-                          key={prizeOption.id}
-                          isSelected={prizeOption.id === value}
-                          onSelect={onSelect}
-                          value={prizeOption.id}
-                        >
-                          {prizeOption.name}
-                        </SelectOption>
-                      ))
-                    }
-                  />
-
-                  <TextareaField<AdminLuckyMeadowRuleFormState>
-                    disabled={isFormPending}
-                    label="Promo codes"
-                    name={`${prizeField.name}.promoCodes`}
-                    placeholder={prizeField.placeholder}
-                    rows={4}
-                  />
-                </div>
-              ) : null}
-            </fieldset>
-          );
-        })}
+              <TextareaField<AdminLuckyMeadowRuleFormState>
+                disabled={isFormPending}
+                label="Promo codes"
+                name="semiJackpotPrize.promoCodes"
+                placeholder="LUCKY-SEMI-001, LUCKY-SEMI-002"
+                rows={4}
+              />
+            </div>
+          ) : null}
+        </fieldset>
       </div>
 
       <AdminModalFormRootError message={rootErrorMessage} />
@@ -203,7 +214,12 @@ export function AdminLuckyMeadowRuleForm({
           Cancel
         </ButtonBase>
 
-        <ButtonLoading type="submit" disabled={isFormPending} isLoading={isFormPending} variant="primary">
+        <ButtonLoading
+          type="submit"
+          disabled={isFormPending || isSubmitDisabled}
+          isLoading={isFormPending}
+          variant="primary"
+        >
           <span>{submitLabel}</span>
         </ButtonLoading>
       </div>

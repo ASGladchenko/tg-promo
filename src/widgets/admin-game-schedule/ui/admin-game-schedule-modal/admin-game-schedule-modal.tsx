@@ -5,6 +5,7 @@ import { AdminCrackSafeRuleCreateForm } from "@/features/admin-create-crack-safe
 import { AdminLuckyMeadowRuleCreateForm } from "@/features/admin-create-lucky-meadow-rule";
 import { Modal } from "@/shared/ui/modal";
 
+import { getScheduleGameTitle } from "../../model/schedule-game-metadata";
 import { type AdminSchedulePeriod, type AdminSchedulePeriodConflict } from "../../model/types";
 import { ScheduleGamePicker } from "../schedule-game-picker/schedule-game-picker";
 import { SchedulePeriodConflict } from "../schedule-period-conflict/schedule-period-conflict";
@@ -53,6 +54,7 @@ export function AdminGameScheduleModal({
 
   const hasConflicts = conflicts.length > 0;
   let ariaLabel = hasConflicts ? "Schedule conflict" : "Schedule period";
+
   let content =
     hasConflicts && period ? (
       <SchedulePeriodConflict
@@ -66,8 +68,11 @@ export function AdminGameScheduleModal({
       <ScheduleGamePicker periodLabel={period?.label} onClose={onClose} onGameClick={setModalView} />
     );
 
+  if (modalView !== "game-picker") {
+    ariaLabel = `Add ${getScheduleGameTitle(modalView)} rule`;
+  }
+
   if (modalView === GameScheduleId.CrackSafe) {
-    ariaLabel = "Add Crack Safe rule";
     content = (
       <AdminCrackSafeRuleCreateForm
         onClose={returnToGamePicker}
@@ -79,7 +84,6 @@ export function AdminGameScheduleModal({
   }
 
   if (modalView === GameScheduleId.LuckyMeadow) {
-    ariaLabel = "Add Lucky Meadow rule";
     content = (
       <AdminLuckyMeadowRuleCreateForm onClose={returnToGamePicker} onSuccess={onClose} period={period} />
     );

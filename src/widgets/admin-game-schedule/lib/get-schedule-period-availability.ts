@@ -45,7 +45,7 @@ export function getSchedulePeriodAvailability(
 
     conflicts.push({
       dateLabel: day.format("D MMMM"),
-      gameName: scheduledGame.name
+      gameId: scheduledGame.gameId
     });
   }
 

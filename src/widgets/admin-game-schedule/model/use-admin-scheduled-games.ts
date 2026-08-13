@@ -1,28 +1,48 @@
 import { useMemo } from "react";
 
-import { useCrackSafeScheduledGames } from "@/features/admin-crack-safe-schedule";
-import { useLuckyMeadowScheduledGames } from "@/features/admin-lucky-meadow-schedule";
+import { useCrackSafeRules } from "@/entities/crack-safe-rules";
+import { GameScheduleId } from "@/entities/game-schedule";
+import { useLuckyMeadowRules } from "@/entities/lucky-meadow";
 
 import { type AdminScheduledGame } from "./types";
 
 export function useAdminScheduledGames() {
-  const crackSafeGamesQuery = useCrackSafeScheduledGames();
-  const luckyMeadowGamesQuery = useLuckyMeadowScheduledGames();
+  const crackSafeRulesQuery = useCrackSafeRules();
+  const luckyMeadowRulesQuery = useLuckyMeadowRules();
 
   const data = useMemo<AdminScheduledGame[] | undefined>(() => {
-    if (crackSafeGamesQuery.data === undefined || luckyMeadowGamesQuery.data === undefined) {
+    if (crackSafeRulesQuery.data === undefined || luckyMeadowRulesQuery.data === undefined) {
       return undefined;
     }
 
-    const games: AdminScheduledGame[] = [...crackSafeGamesQuery.data, ...luckyMeadowGamesQuery.data];
+    const crackSafeGames = crackSafeRulesQuery.data.map(
+      (rule): AdminScheduledGame => ({
+        endDate: rule.endDate,
+        gameId: GameScheduleId.CrackSafe,
+        id: rule.scheduleId,
+        rule,
+        startDate: rule.startDate
+      })
+    );
+
+    const luckyMeadowGames = luckyMeadowRulesQuery.data.map(
+      (rule): AdminScheduledGame => ({
+        endDate: rule.endDate,
+        gameId: GameScheduleId.LuckyMeadow,
+        id: rule.scheduleId,
+        rule,
+        startDate: rule.startDate
+      })
+    );
+    const games = [...crackSafeGames, ...luckyMeadowGames];
 
     return games.sort((left, right) => left.startDate.localeCompare(right.startDate));
-  }, [crackSafeGamesQuery.data, luckyMeadowGamesQuery.data]);
+  }, [crackSafeRulesQuery.data, luckyMeadowRulesQuery.data]);
 
   return {
     data,
-    error: crackSafeGamesQuery.error ?? luckyMeadowGamesQuery.error,
-    isError: crackSafeGamesQuery.isError || luckyMeadowGamesQuery.isError,
-    isLoading: crackSafeGamesQuery.isLoading || luckyMeadowGamesQuery.isLoading
+    error: crackSafeRulesQuery.error ?? luckyMeadowRulesQuery.error,
+    isError: crackSafeRulesQuery.isError || luckyMeadowRulesQuery.isError,
+    isLoading: crackSafeRulesQuery.isLoading || luckyMeadowRulesQuery.isLoading
   };
 }

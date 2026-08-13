@@ -2,21 +2,45 @@ import { type Dayjs } from "dayjs";
 
 import { GameScheduleId, type ScheduledGame } from "@/entities/game-schedule";
 import { CrackSafeScheduleFlow } from "@/features/admin-crack-safe-schedule";
-import { LuckyMeadowScheduleFlow } from "@/features/admin-lucky-meadow-schedule";
+import { AdminLuckyMeadowRuleUpdateModal } from "@/features/admin-update-lucky-meadow-rule";
 
-const SCHEDULE_GAME_FLOW_COMPONENTS = {
-  [GameScheduleId.CrackSafe]: CrackSafeScheduleFlow,
-  [GameScheduleId.LuckyMeadow]: LuckyMeadowScheduleFlow
-} as const;
+import { type AdminScheduledGame } from "../../model/types";
+import { getScheduleGameTitle } from "../../model/schedule-game-metadata";
+import { AdminGameScheduleGameDay } from "../admin-game-schedule-game-day/admin-game-schedule-game-day";
 
 type AdminGameScheduleGameFlowProps = {
-  game: ScheduledGame;
+  game: AdminScheduledGame;
   onClose: () => void;
   selectedDay: Dayjs;
+  scheduledGames: readonly ScheduledGame[];
 };
 
-export function AdminGameScheduleGameFlow({ game, onClose, selectedDay }: AdminGameScheduleGameFlowProps) {
-  const ScheduleGameFlow = SCHEDULE_GAME_FLOW_COMPONENTS[game.gameId];
+function renderScheduledGameDay(game: ScheduledGame) {
+  return <AdminGameScheduleGameDay gameId={game.gameId} />;
+}
 
-  return <ScheduleGameFlow game={game} onClose={onClose} selectedDay={selectedDay} />;
+export function AdminGameScheduleGameFlow({
+  game,
+  onClose,
+  selectedDay,
+  scheduledGames
+}: AdminGameScheduleGameFlowProps) {
+  if (game.gameId === GameScheduleId.CrackSafe) {
+    return <CrackSafeScheduleFlow game={game} onClose={onClose} rule={game.rule} selectedDay={selectedDay} />;
+  }
+
+  if (game.gameId === GameScheduleId.LuckyMeadow) {
+    return (
+      <AdminLuckyMeadowRuleUpdateModal
+        getGameName={getScheduleGameTitle}
+        isOpen
+        onClose={onClose}
+        renderScheduledGameDay={renderScheduledGameDay}
+        rule={game.rule}
+        scheduledGames={scheduledGames}
+      />
+    );
+  }
+
+  return null;
 }

@@ -44,15 +44,15 @@
 
 .button-calendar--today {
   color: a.$admin-white;
-  background: rgba(a.$admin-warning, 0.08);
-  border-color: a.$admin-warning;
-  box-shadow: 0 0 0 1px rgba(a.$admin-warning, 0.08);
+  background: rgba(a.$admin-success, 0.08);
+  border-color: a.$admin-success;
+  box-shadow: 0 0 0 1px rgba(a.$admin-success, 0.08);
 }
 
 .button-calendar--today:not(:disabled):is(:hover, :focus-visible, :active) {
-  background: rgba(a.$admin-warning, 0.14);
-  border-color: a.$admin-warning;
-  box-shadow: 0 0 0 1px rgba(a.$admin-warning, 0.16);
+  background: rgba(a.$admin-success, 0.14);
+  border-color: a.$admin-success;
+  box-shadow: 0 0 0 1px rgba(a.$admin-success, 0.16);
 }
 
 .button-calendar--in-range {

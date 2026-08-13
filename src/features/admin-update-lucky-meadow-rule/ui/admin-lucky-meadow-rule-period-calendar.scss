@@ -1,0 +1,23 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-lucky-meadow-rule-period-calendar {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-lucky-meadow-rule-period-calendar .calendar-month {
+  min-height: 420px;
+}
+
+.admin-lucky-meadow-rule-period-calendar__conflict-modal {
+  width: min(640px, 100%);
+}
+
+.admin-lucky-meadow-rule-period-calendar__instruction {
+  margin: 0;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: s.$admin-text-secondary;
+}

@@ -44,7 +44,6 @@ export function AdminLuckyMeadowRuleCreateForm({
       onSuccess={onSuccess}
       periodLabel={period?.label}
       prizeOptions={prizeOptions}
-      shouldShowPeriodFields={false}
       submitLabel="Create"
       title="Add Rule"
     />

@@ -5,6 +5,7 @@ import dayjs, { type Dayjs } from "dayjs";
 import { CalendarMonth } from "@/shared/ui/calendar-month";
 
 import { getScheduledGameForDay as findScheduledGameForDay } from "../../lib/get-games-scheduled-for-day";
+import { getScheduleGameTitle } from "../../model/schedule-game-metadata";
 import { type AdminScheduledGame } from "../../model/types";
 import { useAdminScheduledGames } from "../../model/use-admin-scheduled-games";
 import { useSchedulePeriodSelection } from "../../model/use-schedule-period-selection";
@@ -43,7 +44,7 @@ export function AdminGameSchedule() {
       return day.format("D MMMM YYYY");
     }
 
-    return `${day.format("D MMMM YYYY")}. Scheduled game: ${game.name}`;
+    return `${day.format("D MMMM YYYY")}. Scheduled game: ${getScheduleGameTitle(game.gameId)}`;
   };
 
   const handleDayClick = (day: Dayjs) => {
@@ -96,6 +97,7 @@ export function AdminGameSchedule() {
           game={selectedScheduledGame.game}
           onClose={closeScheduledGame}
           selectedDay={selectedScheduledGame.day}
+          scheduledGames={scheduledGames}
         />
       ) : null}
     </section>

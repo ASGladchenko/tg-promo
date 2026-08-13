@@ -7,6 +7,5 @@ export type ScheduledGame = {
   endDate: string;
   gameId: GameScheduleId;
   id: string;
-  name: string;
   startDate: string;
 };

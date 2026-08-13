@@ -1,0 +1,120 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-lucky-meadow-rule-period-conflict__content {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-lucky-meadow-rule-period-conflict__notice {
+  padding: 14px;
+
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+
+  background: rgba(s.$admin-warning, 0.1);
+  border: 1px solid rgba(s.$admin-warning, 0.34);
+  border-radius: s.$admin-radius;
+}
+
+.admin-lucky-meadow-rule-period-conflict__icon {
+  width: 24px;
+  height: 24px;
+
+  display: grid;
+  place-items: center;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  color: s.$admin-black;
+  background: s.$admin-warning;
+  border-radius: 50%;
+}
+
+.admin-lucky-meadow-rule-period-conflict__period,
+.admin-lucky-meadow-rule-period-conflict__message {
+  margin: 0;
+}
+
+.admin-lucky-meadow-rule-period-conflict__period {
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  line-height: 1.35;
+
+  color: s.$admin-warning;
+}
+
+.admin-lucky-meadow-rule-period-conflict__message {
+  margin-top: 3px;
+
+  font-size: 13px;
+  line-height: 1.4;
+
+  color: s.$admin-text-secondary;
+}
+
+.admin-lucky-meadow-rule-period-conflict__conflicts {
+  margin: 0;
+  padding: 0;
+
+  display: grid;
+  gap: 8px;
+
+  list-style: none;
+}
+
+.admin-lucky-meadow-rule-period-conflict__conflicts li {
+  padding: 9px 10px;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+
+  font-size: 13px;
+  line-height: 1.35;
+
+  color: s.$admin-text-secondary;
+  background: s.$admin-surface;
+  border-left: 3px solid s.$admin-danger;
+  border-radius: s.$admin-radius;
+}
+
+.admin-lucky-meadow-rule-period-conflict__conflicts time {
+  flex: 0 0 auto;
+
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+
+  color: s.$admin-text;
+}
+
+.admin-lucky-meadow-rule-period-conflict__options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+}
+
+.admin-lucky-meadow-rule-period-conflict__option.button-base {
+  width: 100%;
+  min-height: 54px;
+
+  color: s.$admin-text;
+  background: rgba(s.$admin-warning, 0.06);
+  border-color: rgba(s.$admin-warning, 0.42);
+  box-shadow: inset 3px 0 0 s.$admin-warning;
+
+  white-space: normal;
+}
+
+.admin-lucky-meadow-rule-period-conflict__option.button-base:not(:disabled):is(:hover, :focus-visible) {
+  color: s.$admin-text;
+  background: rgba(s.$admin-warning, 0.14);
+  border-color: s.$admin-warning;
+  box-shadow: inset 3px 0 0 s.$admin-warning;
+}
+
+.admin-lucky-meadow-rule-period-conflict__option.button-base:not(:disabled):hover {
+  transform: translateY(-1px);
+}

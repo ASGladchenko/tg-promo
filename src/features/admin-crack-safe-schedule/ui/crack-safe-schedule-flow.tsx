@@ -1,7 +1,7 @@
 import dayjs, { type Dayjs } from "dayjs";
 import { generatePath, Navigate } from "react-router";
 
-import { useCrackSafeRules } from "@/entities/crack-safe-rules";
+import { type CrackSafeRule } from "@/entities/crack-safe-rules";
 import { type ScheduledGame } from "@/entities/game-schedule";
 import { AdminCrackSafeRuleUpdateModal } from "@/features/admin-update-crack-safe-rule";
 import { APP_ROUTES } from "@/shared/config";
@@ -9,12 +9,11 @@ import { APP_ROUTES } from "@/shared/config";
 type CrackSafeScheduleFlowProps = {
   game: ScheduledGame;
   onClose: () => void;
+  rule: CrackSafeRule;
   selectedDay: Dayjs;
 };
 
-export function CrackSafeScheduleFlow({ game, onClose, selectedDay }: CrackSafeScheduleFlowProps) {
-  const crackSafeRulesQuery = useCrackSafeRules();
-
+export function CrackSafeScheduleFlow({ game, onClose, rule, selectedDay }: CrackSafeScheduleFlowProps) {
   if (!selectedDay.isAfter(dayjs(), "day")) {
     return (
       <Navigate
@@ -26,7 +25,5 @@ export function CrackSafeScheduleFlow({ game, onClose, selectedDay }: CrackSafeS
     );
   }
 
-  const rule = crackSafeRulesQuery.data?.find((item) => item.scheduleId === game.id);
-
-  return <AdminCrackSafeRuleUpdateModal isOpen={rule !== undefined} onClose={onClose} rule={rule} />;
+  return <AdminCrackSafeRuleUpdateModal isOpen onClose={onClose} rule={rule} />;
 }
