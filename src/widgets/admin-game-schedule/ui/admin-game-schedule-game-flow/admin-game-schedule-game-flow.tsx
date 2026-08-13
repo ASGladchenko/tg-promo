@@ -2,11 +2,11 @@ import { type Dayjs } from "dayjs";
 
 import { GameScheduleId, type ScheduledGame } from "@/entities/game-schedule";
 import { CrackSafeScheduleFlow } from "@/features/admin-crack-safe-schedule";
-import { AdminLuckyMeadowRuleUpdateModal } from "@/features/admin-update-lucky-meadow-rule";
 
 import { type AdminScheduledGame } from "../../model/types";
 import { getScheduleGameTitle } from "../../model/schedule-game-metadata";
 import { AdminGameScheduleGameDay } from "../admin-game-schedule-game-day/admin-game-schedule-game-day";
+import { LuckyMeadowScheduleFlow } from "./lucky-meadow-schedule-flow";
 
 type AdminGameScheduleGameFlowProps = {
   game: AdminScheduledGame;
@@ -28,26 +28,27 @@ export function AdminGameScheduleGameFlow({
   if (game.gameId === GameScheduleId.CrackSafe) {
     return (
       <CrackSafeScheduleFlow
-        game={game}
         getGameName={getScheduleGameTitle}
         onClose={onClose}
         renderScheduledGameDay={renderScheduledGameDay}
         rule={game.rule}
         selectedDay={selectedDay}
         scheduledGames={scheduledGames}
+        startDate={game.startDate}
       />
     );
   }
 
   if (game.gameId === GameScheduleId.LuckyMeadow) {
     return (
-      <AdminLuckyMeadowRuleUpdateModal
+      <LuckyMeadowScheduleFlow
         getGameName={getScheduleGameTitle}
-        isOpen
         onClose={onClose}
         renderScheduledGameDay={renderScheduledGameDay}
         rule={game.rule}
+        selectedDay={selectedDay}
         scheduledGames={scheduledGames}
+        startDate={game.startDate}
       />
     );
   }

@@ -10,34 +10,15 @@ type AdminCrackSafeRuleFormFieldsProps = {
   canClearSemiJackpotPrize: boolean;
   disabled: boolean;
   prizeOptions: AdminCrackSafeRulePrizeOption[];
-  shouldShowPeriodFields?: boolean;
 };
 
 export function AdminCrackSafeRuleFormFields({
   canClearSemiJackpotPrize,
   disabled,
-  prizeOptions,
-  shouldShowPeriodFields = true
+  prizeOptions
 }: AdminCrackSafeRuleFormFieldsProps) {
   return (
     <div className="admin-crack-safe-rule-form-fields">
-      {shouldShowPeriodFields ? (
-        <>
-          <InputField<AdminCrackSafeRuleFormState>
-            type="date"
-            name="startDate"
-            label="Start date"
-            disabled={disabled}
-          />
-          <InputField<AdminCrackSafeRuleFormState>
-            type="date"
-            name="endDate"
-            label="End date"
-            disabled={disabled}
-          />
-        </>
-      ) : null}
-
       <InputField<AdminCrackSafeRuleFormState>
         min={1}
         step={1}

@@ -9,14 +9,15 @@ import { ButtonCalendar } from "@/shared/ui/button-calendar";
 import "./calendar-month.scss";
 
 type CalendarMonthProps = {
-  isCompact?: boolean;
+  canInteractWithDay?: (day: Dayjs) => boolean;
   getDayAriaLabel?: (day: Dayjs) => string;
+  isCompact?: boolean;
   month: Dayjs;
   onDayClick?: (day: Dayjs) => void;
   onMonthChange: (month: Dayjs) => void;
+  renderDayContent?: (day: Dayjs) => ReactNode;
   selectedEndDay?: Dayjs;
   selectedStartDay?: Dayjs;
-  renderDayContent?: (day: Dayjs) => ReactNode;
   weekStart?: 0 | 1;
 };
 
@@ -27,6 +28,7 @@ const DAYS_IN_WEEK = 7;
 export function CalendarMonth({
   isCompact = false,
   getDayAriaLabel,
+  canInteractWithDay,
   month,
   onDayClick,
   onMonthChange,
@@ -87,14 +89,18 @@ export function CalendarMonth({
 
         {days.map((day) => {
           const isCurrentMonth = day.isSame(month, "month");
+          const isInteractive =
+            isCurrentMonth && onDayClick !== undefined && (canInteractWithDay?.(day) ?? true);
           const isToday = day.isSame(today, "day");
           const isRangeStart = selectedStartDay?.isSame(day, "day") ?? false;
           const isRangeEnd = selectedEndDay?.isSame(day, "day") ?? false;
+
           const isInRange =
             selectedStartDay !== undefined &&
             selectedEndDay !== undefined &&
             day.isAfter(selectedStartDay, "day") &&
             day.isBefore(selectedEndDay, "day");
+
           const isInSelectingRange =
             selectedStartDay !== undefined &&
             selectedEndDay === undefined &&
@@ -113,10 +119,11 @@ export function CalendarMonth({
               isRangeEnd={isRangeEnd}
               isRangeStart={isRangeStart}
               isCurrentMonth={isCurrentMonth}
+              isInteractive={isInteractive}
               isInSelectingRange={isInSelectingRange}
               isSelectingRangeEnd={isSelectingRangeEnd}
-              onClick={onDayClick ? () => onDayClick(day) : undefined}
-              onMouseEnter={onDayClick && isCurrentMonth ? () => setSelectingDay(day) : undefined}
+              onClick={isInteractive ? () => onDayClick(day) : undefined}
+              onMouseEnter={isInteractive ? () => setSelectingDay(day) : undefined}
               ariaLabel={getDayAriaLabel?.(day)}
             >
               {isCurrentMonth ? renderDayContent?.(day) : null}

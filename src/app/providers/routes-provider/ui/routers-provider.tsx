@@ -15,6 +15,7 @@ import {
   LazyAdminLayout,
   LazyAdminLogin,
   LazyAdminLoginGate,
+  LazyAdminLuckyMeadowSnapshot,
   LazyAdminPage,
   LazyAdminPrizes,
   LazyAdminSchedule,
@@ -49,6 +50,7 @@ export function ProviderRoutes() {
 
             <Route path={APP_ROUTES.adminSchedule} element={<LazyAdminSchedule />} />
             <Route path={APP_ROUTES.adminCrackSafeSnapshot} element={<LazyAdminCrackSafeSnapshotDetails />} />
+            <Route path={APP_ROUTES.adminLuckyMeadowSnapshot} element={<LazyAdminLuckyMeadowSnapshot />} />
 
             <Route path={APP_ROUTES.adminConsolation} element={<LazyAdminConsolationPrizes />} />
             <Route path={APP_ROUTES.adminSettings} element={<LazyAdminSettings />} />

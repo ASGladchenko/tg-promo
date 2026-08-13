@@ -4,6 +4,7 @@ export const APP_ROUTES = {
   adminLogin: "/admin/login",
   adminSchedule: "schedule",
   adminCrackSafeSnapshot: "crack-safe/snapshot/:startDate",
+  adminLuckyMeadowSnapshot: "lucky-meadow/snapshot/:startDate",
   adminPrizes: "prizes",
   adminConsolation: "consolation",
   adminSettings: "settings",

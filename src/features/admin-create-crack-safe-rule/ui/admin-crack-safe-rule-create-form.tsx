@@ -15,14 +15,12 @@ type AdminCrackSafeRuleCreateFormProps = {
     label: string;
     startDate: string;
   };
-  shouldShowPeriodFields?: boolean;
 };
 
 export function AdminCrackSafeRuleCreateForm({
   onClose,
   onSuccess,
-  period,
-  shouldShowPeriodFields = true
+  period
 }: AdminCrackSafeRuleCreateFormProps) {
   const createCrackSafeRule = useCreateCrackSafeRule();
   const prizesQuery = usePrizes();
@@ -47,7 +45,6 @@ export function AdminCrackSafeRuleCreateForm({
       onSuccess={onSuccess}
       periodLabel={period?.label}
       prizeOptions={prizeOptions}
-      shouldShowPeriodFields={shouldShowPeriodFields}
       submitLabel="Create"
       title="Add Rule"
     />

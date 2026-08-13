@@ -74,12 +74,7 @@ export function AdminGameScheduleModal({
 
   if (modalView === GameScheduleId.CrackSafe) {
     content = (
-      <AdminCrackSafeRuleCreateForm
-        onClose={returnToGamePicker}
-        onSuccess={onClose}
-        period={period}
-        shouldShowPeriodFields={false}
-      />
+      <AdminCrackSafeRuleCreateForm onClose={returnToGamePicker} onSuccess={onClose} period={period} />
     );
   }
 

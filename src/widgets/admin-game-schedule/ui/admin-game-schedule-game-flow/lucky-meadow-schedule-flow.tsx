@@ -3,22 +3,22 @@ import { type ReactNode } from "react";
 import dayjs, { type Dayjs } from "dayjs";
 import { generatePath, Navigate } from "react-router";
 
-import { type CrackSafeRule } from "@/entities/crack-safe-rules";
 import { GameScheduleId, type ScheduledGame } from "@/entities/game-schedule";
-import { AdminCrackSafeRuleUpdateModal } from "@/features/admin-update-crack-safe-rule";
+import { type LuckyMeadowRule } from "@/entities/lucky-meadow";
+import { AdminLuckyMeadowRuleUpdateModal } from "@/features/admin-update-lucky-meadow-rule";
 import { APP_ROUTES } from "@/shared/config";
 
-type CrackSafeScheduleFlowProps = {
+type LuckyMeadowScheduleFlowProps = {
   getGameName: (gameId: GameScheduleId) => string;
   onClose: () => void;
   renderScheduledGameDay: (gameId: GameScheduleId) => ReactNode;
-  rule: CrackSafeRule;
+  rule: LuckyMeadowRule;
   selectedDay: Dayjs;
   scheduledGames: readonly ScheduledGame[];
   startDate: string;
 };
 
-export function CrackSafeScheduleFlow({
+export function LuckyMeadowScheduleFlow({
   getGameName,
   onClose,
   renderScheduledGameDay,
@@ -26,12 +26,12 @@ export function CrackSafeScheduleFlow({
   selectedDay,
   scheduledGames,
   startDate
-}: CrackSafeScheduleFlowProps) {
+}: LuckyMeadowScheduleFlowProps) {
   if (!selectedDay.isAfter(dayjs(), "day")) {
     return (
       <Navigate
         replace
-        to={`${APP_ROUTES.admin}/${generatePath(APP_ROUTES.adminCrackSafeSnapshot, {
+        to={`${APP_ROUTES.admin}/${generatePath(APP_ROUTES.adminLuckyMeadowSnapshot, {
           startDate
         })}`}
       />
@@ -39,7 +39,7 @@ export function CrackSafeScheduleFlow({
   }
 
   return (
-    <AdminCrackSafeRuleUpdateModal
+    <AdminLuckyMeadowRuleUpdateModal
       getGameName={getGameName}
       isOpen
       onClose={onClose}

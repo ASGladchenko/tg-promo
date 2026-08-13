@@ -22,7 +22,6 @@ export function AdminCrackSafeRuleFormModalTrigger({
   failureMessage,
   closeAriaLabel,
   modalAriaLabel,
-  shouldShowPeriodFields,
   canClearSemiJackpotPrize = true
 }: AdminCrackSafeRuleFormModalTriggerProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -64,7 +63,6 @@ export function AdminCrackSafeRuleFormModalTrigger({
           onSuccess={closeAfterSuccess}
           periodLabel={periodLabel}
           prizeOptions={prizeOptions}
-          shouldShowPeriodFields={shouldShowPeriodFields}
           submitLabel={submitLabel}
           title={title}
         />

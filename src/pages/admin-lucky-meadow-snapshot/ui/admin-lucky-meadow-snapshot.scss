@@ -1,0 +1,9 @@
+@use "@/shared/styles/admin" as a;
+
+.lucky-meadow-snapshot {
+  min-width: 0;
+}
+
+.lucky-meadow-snapshot__message {
+  color: a.$admin-text-muted;
+}

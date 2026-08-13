@@ -27,7 +27,6 @@ type AdminCrackSafeRuleFormProps = {
   periodContent?: ReactNode;
   periodLabel?: string;
   prizeOptions: AdminCrackSafeRulePrizeOption[];
-  shouldShowPeriodFields?: boolean;
   submitLabel: string;
   title: string;
 };
@@ -46,7 +45,6 @@ export function AdminCrackSafeRuleForm({
   prizeOptions,
   closeAriaLabel,
   periodLabel,
-  shouldShowPeriodFields,
   canClearSemiJackpotPrize = true
 }: AdminCrackSafeRuleFormProps) {
   const form = useForm<AdminCrackSafeRuleFormState>({
@@ -105,7 +103,6 @@ export function AdminCrackSafeRuleForm({
         disabled={isFormPending}
         prizeOptions={prizeOptions}
         canClearSemiJackpotPrize={canClearSemiJackpotPrize}
-        shouldShowPeriodFields={shouldShowPeriodFields}
       />
 
       <AdminModalFormRootError message={rootErrorMessage} />

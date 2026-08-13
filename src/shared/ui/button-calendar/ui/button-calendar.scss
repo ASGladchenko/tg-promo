@@ -32,6 +32,15 @@
   outline-offset: 2px;
 }
 
+.button-calendar--static.button-base:not(:disabled):is(:hover, :focus-visible, :active) {
+  color: inherit;
+  background: a.$admin-surface-dark;
+  border-color: a.$admin-border;
+  box-shadow: none;
+
+  cursor: default;
+}
+
 .button-calendar:disabled {
   opacity: 0.5;
 
@@ -89,7 +98,11 @@
   box-shadow: inset -3px 0 0 a.$admin-warning;
 }
 
-.button-calendar--range-start.button-calendar--range-end:not(:disabled):is(:hover, :focus-visible, :active) {
+.button-calendar--range-start.button-calendar--range-end:not(:disabled):is(
+  :hover,
+  :focus-visible,
+  :active
+) {
   box-shadow:
     inset 3px 0 0 a.$admin-warning,
     inset -3px 0 0 a.$admin-warning;

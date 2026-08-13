@@ -71,6 +71,9 @@ export function AdminGameSchedule() {
     <section className="admin-game-schedule">
       <CalendarMonth
         getDayAriaLabel={getDayAriaLabel}
+        canInteractWithDay={(day) =>
+          !day.isBefore(dayjs(), "day") || getScheduledGameForDay(day) !== undefined
+        }
         month={month}
         onMonthChange={setMonth}
         onDayClick={handleDayClick}

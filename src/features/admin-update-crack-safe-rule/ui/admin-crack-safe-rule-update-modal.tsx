@@ -85,7 +85,6 @@ export function AdminCrackSafeRuleUpdateModal({
           />
         }
         prizeOptions={prizeOptions}
-        shouldShowPeriodFields={false}
         submitLabel="Save"
         title="Edit Rule"
       />
