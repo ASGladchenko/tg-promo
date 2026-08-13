@@ -53,17 +53,25 @@
   left: 0;
   z-index: 20;
 
-  max-height: 220px;
+  max-height: 190px;
 
-  padding: 4px;
+  padding: 4px 1px 4px 4px;
 
-  overflow-y: auto;
+  display: flex;
+
+  overflow: hidden;
 
   color: a.$admin-text;
   background: a.$admin-bg-soft;
   border: 1px solid a.$admin-border;
   border-radius: 8px;
   box-shadow: a.$admin-shadow;
+}
+
+.select-field__options-scroll {
+  min-height: 0;
+
+  flex: 1 1 auto;
 }
 
 .select-field__option {

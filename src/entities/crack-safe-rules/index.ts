@@ -7,6 +7,7 @@ export type {
 export type { AdminCrackSafeRulePrizeOption } from "./ui/types";
 
 export { AdminCrackSafeRuleFormFields } from "./ui/admin-crack-safe-rule-form-fields";
+export { AdminCrackSafeRuleForm } from "./ui/admin-crack-safe-rule-form";
 export { AdminCrackSafeRuleFormModalTrigger } from "./ui/admin-crack-safe-rule-form-modal-trigger";
 export {
   adminCrackSafeRuleFormSchema,

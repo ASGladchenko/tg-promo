@@ -68,7 +68,7 @@ export function Select({
     >
       {label && <span className="select-field__label">{label}</span>}
 
-      <span className="select-field__control">
+      <span className="select-field__control admin-hover-scrollbar-container">
         <SelectBase
           {...props}
           aria-label={label}
@@ -93,21 +93,23 @@ export function Select({
         />
 
         {isOpen ? (
-          <div id={listboxId} className="select-field__options" role="listbox">
-            {hasOptions ? (
-              renderOptions({
-                close,
-                value,
-                onSelect: (nextValue) => {
-                  onValueChange(nextValue);
-                  close();
-                }
-              })
-            ) : (
-              <div className="select-field__empty-option" role="option" aria-disabled="true">
-                {emptyOptionsText}
-              </div>
-            )}
+          <div className="select-field__options">
+            <div id={listboxId} className="select-field__options-scroll admin-hover-scrollbar" role="listbox">
+              {hasOptions ? (
+                renderOptions({
+                  close,
+                  value,
+                  onSelect: (nextValue) => {
+                    onValueChange(nextValue);
+                    close();
+                  }
+                })
+              ) : (
+                <div className="select-field__empty-option" role="option" aria-disabled="true">
+                  {emptyOptionsText}
+                </div>
+              )}
+            </div>
           </div>
         ) : null}
       </span>

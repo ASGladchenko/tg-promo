@@ -1,0 +1,10 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-game-schedule {
+  min-width: 0;
+  min-height: 0;
+
+  display: grid;
+
+  color: s.$admin-text;
+}

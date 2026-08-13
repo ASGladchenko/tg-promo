@@ -1,0 +1,74 @@
+@use "@/shared/styles/admin" as a;
+
+.calendar-month {
+  min-height: 0;
+
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  color: a.$admin-text;
+  background: a.$admin-surface;
+  border: 1px solid a.$admin-border;
+  border-radius: a.$admin-radius;
+  box-shadow: a.$admin-shadow;
+}
+
+.calendar-month__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar-month__title {
+  margin: 0;
+
+  font-size: 24px;
+  font-weight: 700;
+  // line-height: 1;
+  text-transform: uppercase;
+
+  color: a.$admin-text-secondary;
+}
+
+.calendar-month__navigation-group {
+  display: flex;
+  gap: 8px;
+}
+
+.calendar-month__navigation {
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
+
+  font-size: 18px;
+}
+
+.calendar-month__grid {
+  min-height: 0;
+
+  display: grid;
+  flex: 1 1 auto;
+  gap: 8px;
+  grid-template-rows: minmax(36px, auto) repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.calendar-month__week-day {
+  min-width: 0;
+  min-height: 36px;
+
+  display: grid;
+  place-items: center;
+
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  color: a.$admin-text-secondary;
+  background: a.$admin-surface-strong;
+  border-radius: a.$admin-radius;
+}
