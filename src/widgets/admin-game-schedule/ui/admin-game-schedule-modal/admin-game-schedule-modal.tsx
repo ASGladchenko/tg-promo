@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
+import { GameScheduleId } from "@/entities/game-schedule";
 import { AdminCrackSafeRuleCreateForm } from "@/features/admin-create-crack-safe-rule";
 import { AdminLuckyMeadowRuleCreateForm } from "@/features/admin-create-lucky-meadow-rule";
-import { GameScheduleId } from "@/entities/game-schedule";
 import { Modal } from "@/shared/ui/modal";
 
 import { type AdminSchedulePeriod, type AdminSchedulePeriodConflict } from "../../model/types";
@@ -12,7 +12,6 @@ import { SchedulePeriodConflict } from "../schedule-period-conflict/schedule-per
 import "./admin-game-schedule-modal.scss";
 
 type ScheduleModalView = "game-picker" | GameScheduleId;
-
 type AdminGameScheduleModalProps = {
   availablePeriods?: AdminSchedulePeriod[];
   conflicts?: AdminSchedulePeriodConflict[];
