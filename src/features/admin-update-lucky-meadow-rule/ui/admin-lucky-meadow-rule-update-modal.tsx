@@ -19,7 +19,7 @@ type AdminLuckyMeadowRuleUpdateModalProps = {
   getGameName: (gameId: GameScheduleId) => string;
   isOpen: boolean;
   onClose: () => void;
-  renderScheduledGameDay: (game: ScheduledGame) => ReactNode;
+  renderScheduledGameDay: (gameId: GameScheduleId) => ReactNode;
   rule?: LuckyMeadowRule;
   scheduledGames: readonly ScheduledGame[];
 };
@@ -34,10 +34,12 @@ export function AdminLuckyMeadowRuleUpdateModal({
 }: AdminLuckyMeadowRuleUpdateModalProps) {
   const updateLuckyMeadowRule = useUpdateLuckyMeadowRule();
   const [hasPeriodConflicts, setHasPeriodConflicts] = useState(false);
+  const [isPeriodEditorOpen, setIsPeriodEditorOpen] = useState(false);
   const prizesQuery = usePrizes();
 
   const closeModal = () => {
     updateLuckyMeadowRule.reset();
+    setIsPeriodEditorOpen(false);
     onClose();
   };
 
@@ -58,8 +60,10 @@ export function AdminLuckyMeadowRuleUpdateModal({
         defaultValues={getAdminLuckyMeadowRuleFormDefaultValues(rule)}
         failureMessage="Failed to update Lucky Meadow rule"
         isPending={updateLuckyMeadowRule.isPending || prizesQuery.isLoading}
+        isPeriodEditorOpen={isPeriodEditorOpen}
         isSubmitDisabled={hasPeriodConflicts}
         onClose={closeModal}
+        onPeriodEditorToggle={() => setIsPeriodEditorOpen((isOpen) => !isOpen)}
         onReset={updateLuckyMeadowRule.reset}
         onSubmit={(data) => updateLuckyMeadowRule.mutateAsync(mapAdminLuckyMeadowRuleFormToPayload(data))}
         onSuccess={closeModal}
@@ -69,6 +73,7 @@ export function AdminLuckyMeadowRuleUpdateModal({
             disabled={updateLuckyMeadowRule.isPending}
             getGameName={getGameName}
             onPeriodConflictsChange={setHasPeriodConflicts}
+            onPeriodSelect={() => setIsPeriodEditorOpen(false)}
             renderScheduledGameDay={renderScheduledGameDay}
             scheduledGames={scheduledGames}
           />

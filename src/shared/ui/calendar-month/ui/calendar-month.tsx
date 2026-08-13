@@ -1,5 +1,6 @@
 import { type ReactNode, useState } from "react";
 
+import clsx from "clsx";
 import dayjs, { type Dayjs } from "dayjs";
 
 import { ButtonBase } from "@/shared/ui/button-base";
@@ -8,6 +9,7 @@ import { ButtonCalendar } from "@/shared/ui/button-calendar";
 import "./calendar-month.scss";
 
 type CalendarMonthProps = {
+  isCompact?: boolean;
   getDayAriaLabel?: (day: Dayjs) => string;
   month: Dayjs;
   onDayClick?: (day: Dayjs) => void;
@@ -23,6 +25,7 @@ const CALENDAR_WEEKS_COUNT = 6;
 const DAYS_IN_WEEK = 7;
 
 export function CalendarMonth({
+  isCompact = false,
   getDayAriaLabel,
   month,
   onDayClick,
@@ -47,7 +50,10 @@ export function CalendarMonth({
   const monthLabel = month.format("MMMM YYYY");
 
   return (
-    <section className="calendar-month" aria-label={monthLabel}>
+    <section
+      className={clsx("calendar-month", { "calendar-month--compact": isCompact })}
+      aria-label={monthLabel}
+    >
       <header className="calendar-month__header">
         <h2 className="calendar-month__title">{monthLabel}</h2>
 

@@ -71,7 +71,7 @@ export function useAdminLuckyMeadowRulePeriodSelection({
       setSelectionStep("end");
       onPeriodConflictsChange(false);
 
-      return;
+      return false;
     }
 
     if (day.isBefore(startDay, "day")) {
@@ -80,7 +80,7 @@ export function useAdminLuckyMeadowRulePeriodSelection({
       setMonth(day);
       onPeriodConflictsChange(false);
 
-      return;
+      return false;
     }
 
     setValue("endDate", day.format("YYYY-MM-DD"), {
@@ -96,6 +96,8 @@ export function useAdminLuckyMeadowRulePeriodSelection({
 
     onPeriodConflictsChange(hasConflicts);
     setIsConflictOpen(hasConflicts);
+
+    return !hasConflicts;
   };
 
   const selectAvailablePeriod = (startDate: string, endDate: string) => {

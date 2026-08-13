@@ -1,6 +1,7 @@
 import { type ChangeEvent, type ReactNode } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
 
 import { AdminModalForm, AdminModalFormRootError } from "@/shared/ui/admin-modal-form";
@@ -25,8 +26,10 @@ type AdminLuckyMeadowRuleFormProps = {
   defaultValues: AdminLuckyMeadowRuleFormState;
   failureMessage: string;
   isPending: boolean;
+  isPeriodEditorOpen?: boolean;
   isSubmitDisabled?: boolean;
   onClose: () => void;
+  onPeriodEditorToggle?: () => void;
   onReset: () => void;
   onSubmit: (data: AdminLuckyMeadowRuleFormState) => Promise<unknown>;
   onSuccess: () => void;
@@ -47,7 +50,9 @@ export function AdminLuckyMeadowRuleForm({
   defaultValues,
   failureMessage,
   isPending,
+  isPeriodEditorOpen = false,
   onClose,
+  onPeriodEditorToggle,
   onReset,
   onSubmit,
   onSuccess,
@@ -76,6 +81,18 @@ export function AdminLuckyMeadowRuleForm({
     typeof errors.root?.server?.message === "string" ? errors.root.server.message : undefined;
 
   const isSemiJackpotPrizeEnabled = watch("semiJackpotPrize") !== null;
+
+  const startDate = watch("startDate");
+
+  const endDate = watch("endDate");
+
+  const editablePeriodLabel =
+    periodContent && startDate
+      ? `${dayjs(startDate).format("D MMM YYYY")} — ${endDate ? dayjs(endDate).format("D MMM YYYY") : "Choose end date"}`
+      : undefined;
+
+  const displayedPeriodLabel = editablePeriodLabel ?? periodLabel;
+  const canEditPeriod = periodContent !== undefined && onPeriodEditorToggle !== undefined;
 
   const resetForm = () => {
     onReset();
@@ -118,10 +135,27 @@ export function AdminLuckyMeadowRuleForm({
       onSubmit={handleSubmit}
       title={title}
     >
-      {periodLabel ? <p className="admin-lucky-meadow-rule-form__period">{periodLabel}</p> : null}
+      {displayedPeriodLabel && !canEditPeriod ? (
+        <p className="admin-lucky-meadow-rule-form__period">{displayedPeriodLabel}</p>
+      ) : null}
+
+      {displayedPeriodLabel && canEditPeriod ? (
+        <ButtonBase
+          type="button"
+          aria-expanded={isPeriodEditorOpen}
+          className="admin-lucky-meadow-rule-form__period-button"
+          disabled={isFormPending}
+          onClick={onPeriodEditorToggle}
+        >
+          <span>{displayedPeriodLabel}</span>
+          <span className="admin-lucky-meadow-rule-form__period-action">
+            {isPeriodEditorOpen ? "Hide calendar" : "Edit period"}
+          </span>
+        </ButtonBase>
+      ) : null}
 
       <div className="admin-lucky-meadow-rule-form__fields">
-        {periodContent}
+        {isPeriodEditorOpen ? periodContent : null}
 
         <fieldset className="admin-lucky-meadow-rule-form__prize">
           <legend className="admin-lucky-meadow-rule-form__prize-title">Jackpot Prize</legend>

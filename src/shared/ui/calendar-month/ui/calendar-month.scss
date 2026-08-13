@@ -72,3 +72,18 @@
   background: a.$admin-surface-strong;
   border-radius: a.$admin-radius;
 }
+
+.calendar-month--compact {
+  gap: 12px;
+}
+
+.calendar-month--compact .calendar-month__grid {
+  flex: 0 0 auto;
+  grid-template-rows: minmax(36px, auto) repeat(6, 72px);
+}
+
+.calendar-month--compact .button-calendar {
+  min-height: 0;
+  padding: 8px;
+  gap: 4px;
+}

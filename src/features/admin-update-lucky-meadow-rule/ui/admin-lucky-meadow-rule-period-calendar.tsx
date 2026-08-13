@@ -17,7 +17,8 @@ type AdminLuckyMeadowRulePeriodCalendarProps = {
   disabled: boolean;
   getGameName: (gameId: GameScheduleId) => string;
   onPeriodConflictsChange: (hasConflicts: boolean) => void;
-  renderScheduledGameDay: (game: ScheduledGame) => ReactNode;
+  onPeriodSelect: () => void;
+  renderScheduledGameDay: (gameId: GameScheduleId) => ReactNode;
   scheduledGames: readonly ScheduledGame[];
 };
 
@@ -26,6 +27,7 @@ export function AdminLuckyMeadowRulePeriodCalendar({
   disabled,
   getGameName,
   onPeriodConflictsChange,
+  onPeriodSelect,
   renderScheduledGameDay,
   scheduledGames
 }: AdminLuckyMeadowRulePeriodCalendarProps) {
@@ -58,14 +60,26 @@ export function AdminLuckyMeadowRulePeriodCalendar({
       return null;
     }
 
-    return renderScheduledGameDay(game);
+    return renderScheduledGameDay(game.gameId);
+  };
+
+  const handleDayClick = (day: Dayjs) => {
+    if (selectDay(day)) {
+      onPeriodSelect();
+    }
+  };
+
+  const handleAvailablePeriodSelect = (startDate: string, endDate: string) => {
+    selectAvailablePeriod(startDate, endDate);
+    onPeriodSelect();
   };
 
   return (
     <section className="admin-lucky-meadow-rule-period-calendar" aria-label="Rule period">
       <CalendarMonth
+        isCompact
         month={month}
-        onDayClick={disabled ? undefined : selectDay}
+        onDayClick={disabled ? undefined : handleDayClick}
         onMonthChange={setMonth}
         renderDayContent={renderDayContent}
         selectedEndDay={endDay}
@@ -89,7 +103,7 @@ export function AdminLuckyMeadowRulePeriodCalendar({
             conflicts={conflicts}
             getGameName={getGameName}
             onClose={closeConflict}
-            onPeriodSelect={(period) => selectAvailablePeriod(period.startDate, period.endDate)}
+            onPeriodSelect={(period) => handleAvailablePeriodSelect(period.startDate, period.endDate)}
             period={selectedPeriod}
           />
         </Modal>

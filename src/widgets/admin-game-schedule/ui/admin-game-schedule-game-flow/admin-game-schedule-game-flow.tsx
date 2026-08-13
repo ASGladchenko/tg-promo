@@ -15,8 +15,8 @@ type AdminGameScheduleGameFlowProps = {
   scheduledGames: readonly ScheduledGame[];
 };
 
-function renderScheduledGameDay(game: ScheduledGame) {
-  return <AdminGameScheduleGameDay gameId={game.gameId} />;
+function renderScheduledGameDay(gameId: GameScheduleId) {
+  return <AdminGameScheduleGameDay gameId={gameId} isCompact />;
 }
 
 export function AdminGameScheduleGameFlow({

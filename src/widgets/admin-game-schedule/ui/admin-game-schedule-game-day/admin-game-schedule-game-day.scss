@@ -26,6 +26,18 @@
   border-left-color: s.$admin-warning;
 }
 
+.admin-game-schedule-game-day--compact {
+  width: fit-content;
+  min-height: 28px;
+  padding: 6px 8px;
+
+  flex: 0 0 auto;
+  align-self: flex-start;
+
+  border-left-width: 3px;
+  border-radius: 6px;
+}
+
 .admin-game-schedule-game-day__mark {
   flex: 0 0 auto;
 
@@ -39,6 +51,10 @@
 
 .admin-game-schedule-game-day--warning .admin-game-schedule-game-day__mark {
   color: s.$admin-warning;
+}
+
+.admin-game-schedule-game-day--compact .admin-game-schedule-game-day__name {
+  display: none;
 }
 
 .admin-game-schedule-game-day__name {
