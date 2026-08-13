@@ -13,9 +13,9 @@ const SCHEDULE_GAME_OPTIONS = [
     name: "Crack Safe"
   },
   {
-    description: "Rule settings will be available soon.",
+    description: "Open rule settings for this period.",
     id: GameScheduleId.LuckyMeadow,
-    isAvailable: false,
+    isAvailable: true,
     mark: "LM",
     name: "Lucky Meadow"
   }

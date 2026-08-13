@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-const luckyMeadowRulePrizeDtoSchema = z.object({
+export const luckyMeadowRulePrizeDtoSchema = z.object({
   prizeId: z.uuid(),
   promoCodes: z.array(z.string())
 });

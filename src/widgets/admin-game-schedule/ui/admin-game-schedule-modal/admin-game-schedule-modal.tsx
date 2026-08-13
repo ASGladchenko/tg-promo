@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { AdminCrackSafeRuleCreateForm } from "@/features/admin-create-crack-safe-rule";
+import { AdminLuckyMeadowRuleCreateForm } from "@/features/admin-create-lucky-meadow-rule";
 import { GameScheduleId } from "@/entities/game-schedule";
 import { Modal } from "@/shared/ui/modal";
 
@@ -75,6 +76,13 @@ export function AdminGameScheduleModal({
         period={period}
         shouldShowPeriodFields={false}
       />
+    );
+  }
+
+  if (modalView === GameScheduleId.LuckyMeadow) {
+    ariaLabel = "Add Lucky Meadow rule";
+    content = (
+      <AdminLuckyMeadowRuleCreateForm onClose={returnToGamePicker} onSuccess={onClose} period={period} />
     );
   }
 

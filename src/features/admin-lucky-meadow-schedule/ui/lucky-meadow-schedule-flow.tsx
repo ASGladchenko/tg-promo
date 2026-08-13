@@ -1,6 +1,8 @@
 import { type Dayjs } from "dayjs";
 
 import { type ScheduledGame } from "@/entities/game-schedule";
+import { useLuckyMeadowRules } from "@/entities/lucky-meadow";
+import { AdminLuckyMeadowRuleUpdateModal } from "@/features/admin-update-lucky-meadow-rule";
 
 type LuckyMeadowScheduleFlowProps = {
   game: ScheduledGame;
@@ -9,9 +11,11 @@ type LuckyMeadowScheduleFlowProps = {
 };
 
 export function LuckyMeadowScheduleFlow({ game, onClose, selectedDay }: LuckyMeadowScheduleFlowProps) {
-  void game;
-  void onClose;
+  const luckyMeadowRulesQuery = useLuckyMeadowRules();
+
+  const rule = luckyMeadowRulesQuery.data?.find((item) => item.scheduleId === game.id);
+
   void selectedDay;
 
-  return null;
+  return <AdminLuckyMeadowRuleUpdateModal isOpen={rule !== undefined} onClose={onClose} rule={rule} />;
 }
