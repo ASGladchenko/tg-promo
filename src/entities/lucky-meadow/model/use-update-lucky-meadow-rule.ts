@@ -1,10 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { type UpdateLuckyMeadowRulePayload } from "../api/types";
+import { type UpdateLuckyMeadowRuleVariables } from "../api/types";
 import { updateLuckyMeadowRule } from "../api/update-lucky-meadow-rule";
 
 export function useUpdateLuckyMeadowRule() {
   return useMutation({
-    mutationFn: (payload: UpdateLuckyMeadowRulePayload) => updateLuckyMeadowRule(payload)
+    mutationFn: ({ startDate, payload }: UpdateLuckyMeadowRuleVariables) =>
+      updateLuckyMeadowRule(startDate, payload)
   });
 }

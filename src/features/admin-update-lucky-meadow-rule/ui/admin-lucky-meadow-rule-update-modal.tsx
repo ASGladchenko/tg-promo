@@ -59,7 +59,12 @@ export function AdminLuckyMeadowRuleUpdateModal({
         isPending={updateLuckyMeadowRule.isPending || prizesQuery.isLoading}
         onClose={closeModal}
         onReset={updateLuckyMeadowRule.reset}
-        onSubmit={(data) => updateLuckyMeadowRule.mutateAsync(mapAdminLuckyMeadowRuleFormToPayload(data))}
+        onSubmit={(data) =>
+          updateLuckyMeadowRule.mutateAsync({
+            payload: mapAdminLuckyMeadowRuleFormToPayload(data),
+            startDate: rule.startDate
+          })
+        }
         onSuccess={() => {
           onSuccess?.();
           onClose();

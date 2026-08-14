@@ -14,3 +14,7 @@ export type CreateLuckyMeadowRulePayload = {
   startDate: string;
 };
 export type UpdateLuckyMeadowRulePayload = Partial<CreateLuckyMeadowRulePayload>;
+export type UpdateLuckyMeadowRuleVariables = {
+  payload: UpdateLuckyMeadowRulePayload;
+  startDate: string;
+};

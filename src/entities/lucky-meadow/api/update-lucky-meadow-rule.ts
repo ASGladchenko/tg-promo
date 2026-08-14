@@ -5,10 +5,11 @@ import { luckyMeadowRuleDtoSchema } from "./lucky-meadow-rules-response-schema";
 import { type LuckyMeadowRuleDto, type UpdateLuckyMeadowRulePayload } from "./types";
 
 export async function updateLuckyMeadowRule(
+  startDate: string,
   payload: UpdateLuckyMeadowRulePayload,
   signal?: AbortSignal
 ): Promise<LuckyMeadowRuleDto> {
-  const response = await fetch(getApiUrl("lucky-meadow/rules"), {
+  const response = await fetch(getApiUrl(`lucky-meadow/rules/${encodeURIComponent(startDate)}`), {
     method: "PATCH",
     credentials: "include",
     headers: {
