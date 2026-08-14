@@ -66,6 +66,16 @@
   gap: 10px;
 }
 
+.admin-modal-form__actions--split {
+  justify-content: space-between;
+}
+
+.admin-modal-form__primary-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
 .admin-modal-form__close {
   width: 28px;
   height: 28px;

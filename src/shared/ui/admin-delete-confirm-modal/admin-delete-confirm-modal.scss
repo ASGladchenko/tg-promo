@@ -1,0 +1,54 @@
+@use "@/shared/styles/admin" as s;
+
+.delete-confirm {
+  width: min(420px, 100%);
+}
+
+.delete-confirm__content {
+  padding: 20px;
+
+  display: grid;
+  gap: 18px;
+
+  direction: ltr;
+
+  color: s.$admin-text;
+  background: s.$admin-bg-soft;
+  border: 1px solid s.$admin-border;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+}
+
+.delete-confirm__header {
+  display: grid;
+  gap: 4px;
+}
+
+.delete-confirm__eyebrow,
+.delete-confirm__description {
+  margin: 0;
+}
+
+.delete-confirm__eyebrow {
+  font-size: 13px;
+
+  color: s.$admin-text-muted;
+}
+
+.delete-confirm__title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.delete-confirm__description {
+  font-size: 15px;
+  line-height: 1.5;
+
+  color: s.$admin-text-secondary;
+}
+
+.delete-confirm__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

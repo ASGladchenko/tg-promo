@@ -20,5 +20,6 @@ export {
   mapAdminCrackSafeRuleFormToUpdatePayload
 } from "./lib/map-admin-crack-safe-rule-form-to-payload";
 export { useCreateCrackSafeRule } from "./model/use-create-crack-safe-rule";
+export { useDeleteCrackSafeRule } from "./model/use-delete-crack-safe-rule";
 export { useCrackSafeRule } from "./model/use-crack-safe-rule";
 export { useUpdateCrackSafeRule } from "./model/use-update-crack-safe-rule";

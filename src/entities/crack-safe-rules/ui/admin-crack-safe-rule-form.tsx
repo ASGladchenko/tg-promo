@@ -1,6 +1,7 @@
 import { type ReactNode } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import clsx from "clsx";
 import { useForm } from "react-hook-form";
 
 import { AdminModalForm, AdminModalFormRootError } from "@/shared/ui/admin-modal-form";
@@ -18,6 +19,12 @@ type AdminCrackSafeRuleFormProps = {
   canClearSemiJackpotPrize?: boolean;
   closeAriaLabel: string;
   defaultValues: AdminCrackSafeRuleFormState;
+  deleteAction?: {
+    isPending: boolean;
+    label: string;
+    onClick: () => void;
+  };
+  errorMessage?: string;
   failureMessage: string;
   isPending: boolean;
   onClose: () => void;
@@ -41,6 +48,8 @@ export function AdminCrackSafeRuleForm({
   isPending,
   submitLabel,
   defaultValues,
+  deleteAction,
+  errorMessage,
   failureMessage,
   prizeOptions,
   closeAriaLabel,
@@ -59,8 +68,9 @@ export function AdminCrackSafeRuleForm({
   } = form;
 
   const isFormPending = isSubmitting || isPending;
-  const rootErrorMessage =
+  const formRootErrorMessage =
     typeof errors.root?.server?.message === "string" ? errors.root.server.message : undefined;
+  const rootErrorMessage = errorMessage ?? formRootErrorMessage;
 
   const resetForm = () => {
     onReset();
@@ -107,14 +117,33 @@ export function AdminCrackSafeRuleForm({
 
       <AdminModalFormRootError message={rootErrorMessage} />
 
-      <div className="admin-modal-form__actions">
-        <ButtonBase type="button" onClick={closeForm} disabled={isFormPending} variant="danger">
-          Cancel
-        </ButtonBase>
+      <div
+        className={clsx("admin-modal-form__actions", {
+          "admin-modal-form__actions--split": deleteAction
+        })}
+      >
+        {deleteAction ? (
+          <ButtonLoading
+            type="button"
+            appearance="outline"
+            disabled={isFormPending}
+            isLoading={deleteAction.isPending}
+            onClick={deleteAction.onClick}
+            variant="danger"
+          >
+            <span>{deleteAction.label}</span>
+          </ButtonLoading>
+        ) : null}
 
-        <ButtonLoading type="submit" variant="primary" disabled={isFormPending} isLoading={isFormPending}>
-          <span>{submitLabel}</span>
-        </ButtonLoading>
+        <div className="admin-modal-form__primary-actions">
+          <ButtonBase type="button" onClick={closeForm} disabled={isFormPending} variant="danger">
+            Cancel
+          </ButtonBase>
+
+          <ButtonLoading type="submit" variant="primary" disabled={isFormPending} isLoading={isFormPending}>
+            <span>{submitLabel}</span>
+          </ButtonLoading>
+        </div>
       </div>
     </AdminModalForm>
   );

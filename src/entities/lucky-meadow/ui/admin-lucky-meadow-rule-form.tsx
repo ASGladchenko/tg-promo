@@ -1,6 +1,7 @@
 import { type ChangeEvent, type ReactNode } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import clsx from "clsx";
 import { useForm } from "react-hook-form";
 
 import { AdminModalForm, AdminModalFormRootError } from "@/shared/ui/admin-modal-form";
@@ -23,6 +24,12 @@ type AdminLuckyMeadowRulePrizeOption = {
 type AdminLuckyMeadowRuleFormProps = {
   closeAriaLabel: string;
   defaultValues: AdminLuckyMeadowRuleFormState;
+  deleteAction?: {
+    isPending: boolean;
+    label: string;
+    onClick: () => void;
+  };
+  errorMessage?: string;
   failureMessage: string;
   isPending: boolean;
   isSubmitDisabled?: boolean;
@@ -45,6 +52,8 @@ const emptyPrizeValue = {
 export function AdminLuckyMeadowRuleForm({
   closeAriaLabel,
   defaultValues,
+  deleteAction,
+  errorMessage,
   failureMessage,
   isPending,
   onClose,
@@ -72,8 +81,9 @@ export function AdminLuckyMeadowRuleForm({
 
   const isFormPending = isSubmitting || isPending;
 
-  const rootErrorMessage =
+  const formRootErrorMessage =
     typeof errors.root?.server?.message === "string" ? errors.root.server.message : undefined;
+  const rootErrorMessage = errorMessage ?? formRootErrorMessage;
 
   const isSemiJackpotPrizeEnabled = watch("semiJackpotPrize") !== null;
 
@@ -209,19 +219,38 @@ export function AdminLuckyMeadowRuleForm({
 
       <AdminModalFormRootError message={rootErrorMessage} />
 
-      <div className="admin-modal-form__actions">
-        <ButtonBase type="button" disabled={isFormPending} onClick={closeForm} variant="danger">
-          Cancel
-        </ButtonBase>
+      <div
+        className={clsx("admin-modal-form__actions", {
+          "admin-modal-form__actions--split": deleteAction
+        })}
+      >
+        {deleteAction ? (
+          <ButtonLoading
+            type="button"
+            appearance="outline"
+            disabled={isFormPending}
+            isLoading={deleteAction.isPending}
+            onClick={deleteAction.onClick}
+            variant="danger"
+          >
+            <span>{deleteAction.label}</span>
+          </ButtonLoading>
+        ) : null}
 
-        <ButtonLoading
-          type="submit"
-          disabled={isFormPending || isSubmitDisabled}
-          isLoading={isFormPending}
-          variant="primary"
-        >
-          <span>{submitLabel}</span>
-        </ButtonLoading>
+        <div className="admin-modal-form__primary-actions">
+          <ButtonBase type="button" disabled={isFormPending} onClick={closeForm} variant="danger">
+            Cancel
+          </ButtonBase>
+
+          <ButtonLoading
+            type="submit"
+            disabled={isFormPending || isSubmitDisabled}
+            isLoading={isFormPending}
+            variant="primary"
+          >
+            <span>{submitLabel}</span>
+          </ButtonLoading>
+        </div>
       </div>
     </AdminModalForm>
   );

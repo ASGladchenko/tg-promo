@@ -12,6 +12,8 @@ export { mapAdminLuckyMeadowRuleFormToPayload } from "./lib/map-admin-lucky-mead
 
 export { useCreateLuckyMeadowRule } from "./model/use-create-lucky-meadow-rule";
 
+export { useDeleteLuckyMeadowRule } from "./model/use-delete-lucky-meadow-rule";
+
 export { useLuckyMeadowRule } from "./model/use-lucky-meadow-rule";
 
 export { useUpdateLuckyMeadowRule } from "./model/use-update-lucky-meadow-rule";
