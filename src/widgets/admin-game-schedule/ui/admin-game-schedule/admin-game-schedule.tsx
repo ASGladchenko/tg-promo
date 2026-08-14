@@ -2,12 +2,11 @@ import { useState } from "react";
 
 import dayjs, { type Dayjs } from "dayjs";
 
+import { type ScheduledGame, useGameSchedules } from "@/entities/game-schedule";
 import { CalendarMonth } from "@/shared/ui/calendar-month";
 
 import { getScheduledGameForDay as findScheduledGameForDay } from "../../lib/get-games-scheduled-for-day";
 import { getScheduleGameTitle } from "../../model/schedule-game-metadata";
-import { type AdminScheduledGame } from "../../model/types";
-import { useAdminScheduledGames } from "../../model/use-admin-scheduled-games";
 import { useSchedulePeriodSelection } from "../../model/use-schedule-period-selection";
 import { AdminGameScheduleGameDay } from "../admin-game-schedule-game-day/admin-game-schedule-game-day";
 import { AdminGameScheduleGameFlow } from "../admin-game-schedule-game-flow/admin-game-schedule-game-flow";
@@ -19,9 +18,9 @@ export function AdminGameSchedule() {
   const [month, setMonth] = useState(() => dayjs());
   const [selectedScheduledGame, setSelectedScheduledGame] = useState<{
     day: Dayjs;
-    game: AdminScheduledGame;
+    game: ScheduledGame;
   }>();
-  const scheduledGamesQuery = useAdminScheduledGames();
+  const scheduledGamesQuery = useGameSchedules(month.format("YYYY-MM"));
   const scheduledGames = scheduledGamesQuery.data ?? [];
 
   const refetchScheduledGames = () => {
@@ -37,7 +36,7 @@ export function AdminGameSchedule() {
     selectedPeriod,
     selectedPeriodAvailability,
     selectedStartDay
-  } = useSchedulePeriodSelection(scheduledGames);
+  } = useSchedulePeriodSelection(month);
 
   const getScheduledGameForDay = (day: Dayjs) => findScheduledGameForDay(scheduledGames, day);
 
@@ -106,7 +105,6 @@ export function AdminGameSchedule() {
           onClose={closeScheduledGame}
           onRulesChange={refetchScheduledGames}
           selectedDay={selectedScheduledGame.day}
-          scheduledGames={scheduledGames}
         />
       ) : null}
     </section>

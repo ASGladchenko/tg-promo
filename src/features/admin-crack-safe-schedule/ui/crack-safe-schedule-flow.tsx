@@ -3,8 +3,8 @@ import { type ReactNode } from "react";
 import dayjs, { type Dayjs } from "dayjs";
 import { generatePath, Navigate } from "react-router";
 
-import { type CrackSafeRule } from "@/entities/crack-safe-rules";
-import { GameScheduleId, type ScheduledGame } from "@/entities/game-schedule";
+import { useCrackSafeRule } from "@/entities/crack-safe-rules";
+import { GameScheduleId } from "@/entities/game-schedule";
 import { AdminCrackSafeRuleUpdateModal } from "@/features/admin-update-crack-safe-rule";
 import { APP_ROUTES } from "@/shared/config";
 
@@ -13,9 +13,7 @@ type CrackSafeScheduleFlowProps = {
   onClose: () => void;
   onRulesChange: () => void;
   renderScheduledGameDay: (gameId: GameScheduleId) => ReactNode;
-  rule: CrackSafeRule;
   selectedDay: Dayjs;
-  scheduledGames: readonly ScheduledGame[];
   startDate: string;
 };
 
@@ -24,12 +22,13 @@ export function CrackSafeScheduleFlow({
   onClose,
   onRulesChange,
   renderScheduledGameDay,
-  rule,
   selectedDay,
-  scheduledGames,
   startDate
 }: CrackSafeScheduleFlowProps) {
-  if (!selectedDay.isAfter(dayjs(), "day")) {
+  const isEditable = selectedDay.isAfter(dayjs(), "day");
+  const crackSafeRuleQuery = useCrackSafeRule(startDate, isEditable);
+
+  if (!isEditable) {
     return (
       <Navigate
         replace
@@ -47,8 +46,7 @@ export function CrackSafeScheduleFlow({
       onClose={onClose}
       onSuccess={onRulesChange}
       renderScheduledGameDay={renderScheduledGameDay}
-      rule={rule}
-      scheduledGames={scheduledGames}
+      rule={crackSafeRuleQuery.data}
     />
   );
 }

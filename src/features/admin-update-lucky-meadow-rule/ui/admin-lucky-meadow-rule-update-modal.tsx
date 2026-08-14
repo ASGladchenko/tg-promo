@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 
-import { GameScheduleId, type ScheduledGame } from "@/entities/game-schedule";
+import { GameScheduleId } from "@/entities/game-schedule";
 import {
   AdminLuckyMeadowRuleForm,
   getAdminLuckyMeadowRuleFormDefaultValues,
@@ -22,7 +22,6 @@ type AdminLuckyMeadowRuleUpdateModalProps = {
   onSuccess?: () => void;
   renderScheduledGameDay: (gameId: GameScheduleId) => ReactNode;
   rule?: LuckyMeadowRule;
-  scheduledGames: readonly ScheduledGame[];
 };
 
 export function AdminLuckyMeadowRuleUpdateModal({
@@ -31,8 +30,7 @@ export function AdminLuckyMeadowRuleUpdateModal({
   onClose,
   onSuccess,
   renderScheduledGameDay,
-  rule,
-  scheduledGames
+  rule
 }: AdminLuckyMeadowRuleUpdateModalProps) {
   const updateLuckyMeadowRule = useUpdateLuckyMeadowRule();
   const prizesQuery = usePrizes();
@@ -68,11 +66,10 @@ export function AdminLuckyMeadowRuleUpdateModal({
         }}
         periodContent={
           <RulePeriodEditor
-            currentScheduleId={rule.scheduleId}
+            currentStartDate={rule.startDate}
             disabled={updateLuckyMeadowRule.isPending}
             getGameName={getGameName}
             renderScheduledGameDay={renderScheduledGameDay}
-            scheduledGames={scheduledGames}
           />
         }
         prizeOptions={prizesQuery.data ?? []}

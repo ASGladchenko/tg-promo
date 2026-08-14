@@ -2,29 +2,27 @@ import { type ReactNode } from "react";
 
 import { useFormContext } from "react-hook-form";
 
-import { GameScheduleId, SchedulePeriodEditor, type ScheduledGame } from "@/entities/game-schedule";
+import { GameScheduleId, SchedulePeriodEditor } from "@/entities/game-schedule";
 import { type AdminLuckyMeadowRuleFormState } from "@/entities/lucky-meadow";
 
 type RulePeriodEditorProps = {
-  currentScheduleId: string;
+  currentStartDate: string;
   disabled: boolean;
   getGameName: (gameId: GameScheduleId) => string;
   renderScheduledGameDay: (gameId: GameScheduleId) => ReactNode;
-  scheduledGames: readonly ScheduledGame[];
 };
 
 export function RulePeriodEditor({
-  currentScheduleId,
+  currentStartDate,
   disabled,
   getGameName,
-  renderScheduledGameDay,
-  scheduledGames
+  renderScheduledGameDay
 }: RulePeriodEditorProps) {
   const { setValue, watch } = useFormContext<AdminLuckyMeadowRuleFormState>();
 
   return (
     <SchedulePeriodEditor
-      currentScheduleId={currentScheduleId}
+      currentStartDate={currentStartDate}
       disabled={disabled}
       endDate={watch("endDate")}
       getGameName={getGameName}
@@ -33,7 +31,6 @@ export function RulePeriodEditor({
         setValue("endDate", endDate, { shouldDirty: true, shouldTouch: true, shouldValidate: true });
       }}
       renderScheduledGameDay={renderScheduledGameDay}
-      scheduledGames={scheduledGames}
       startDate={watch("startDate")}
     />
   );

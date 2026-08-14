@@ -3,17 +3,15 @@ import { type Dayjs } from "dayjs";
 import { GameScheduleId, type ScheduledGame } from "@/entities/game-schedule";
 import { CrackSafeScheduleFlow } from "@/features/admin-crack-safe-schedule";
 
-import { type AdminScheduledGame } from "../../model/types";
 import { getScheduleGameTitle } from "../../model/schedule-game-metadata";
 import { AdminGameScheduleGameDay } from "../admin-game-schedule-game-day/admin-game-schedule-game-day";
 import { LuckyMeadowScheduleFlow } from "./lucky-meadow-schedule-flow";
 
 type AdminGameScheduleGameFlowProps = {
-  game: AdminScheduledGame;
+  game: ScheduledGame;
   onClose: () => void;
   onRulesChange: () => void;
   selectedDay: Dayjs;
-  scheduledGames: readonly ScheduledGame[];
 };
 
 function renderScheduledGameDay(gameId: GameScheduleId) {
@@ -24,8 +22,7 @@ export function AdminGameScheduleGameFlow({
   game,
   onClose,
   onRulesChange,
-  selectedDay,
-  scheduledGames
+  selectedDay
 }: AdminGameScheduleGameFlowProps) {
   if (game.gameId === GameScheduleId.CrackSafe) {
     return (
@@ -34,9 +31,7 @@ export function AdminGameScheduleGameFlow({
         onClose={onClose}
         onRulesChange={onRulesChange}
         renderScheduledGameDay={renderScheduledGameDay}
-        rule={game.rule}
         selectedDay={selectedDay}
-        scheduledGames={scheduledGames}
         startDate={game.startDate}
       />
     );
@@ -49,9 +44,7 @@ export function AdminGameScheduleGameFlow({
         onClose={onClose}
         onRulesChange={onRulesChange}
         renderScheduledGameDay={renderScheduledGameDay}
-        rule={game.rule}
         selectedDay={selectedDay}
-        scheduledGames={scheduledGames}
         startDate={game.startDate}
       />
     );

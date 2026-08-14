@@ -1,16 +1,4 @@
-import { type CrackSafeRule } from "@/entities/crack-safe-rules";
-import { GameScheduleId, type ScheduledGame } from "@/entities/game-schedule";
-import { type LuckyMeadowRule } from "@/entities/lucky-meadow";
-
-export type AdminScheduledGame =
-  | (ScheduledGame & {
-      gameId: GameScheduleId.CrackSafe;
-      rule: CrackSafeRule;
-    })
-  | (ScheduledGame & {
-      gameId: GameScheduleId.LuckyMeadow;
-      rule: LuckyMeadowRule;
-    });
+import { GameScheduleId } from "@/entities/game-schedule";
 
 export type AdminSchedulePeriod = {
   endDate: string;
