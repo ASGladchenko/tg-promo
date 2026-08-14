@@ -1,17 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import dayjs, { type Dayjs } from "dayjs";
 
-import { getSchedulePeriodAvailability } from "../lib/get-schedule-period-availability";
-import { type AdminScheduledGame, type AdminSchedulePeriod } from "./types";
+import { useGameSchedulesForPeriod } from "@/entities/game-schedule";
 
-export function useSchedulePeriodSelection(scheduledGames: readonly AdminScheduledGame[]) {
+import { getSchedulePeriodAvailability } from "../lib/get-schedule-period-availability";
+import { type AdminSchedulePeriod } from "./types";
+
+export function useSchedulePeriodSelection(month: Dayjs) {
   const [isPeriodModalOpen, setIsPeriodModalOpen] = useState(false);
   const [selectedEndDay, setSelectedEndDay] = useState<Dayjs>();
   const [selectedStartDay, setSelectedStartDay] = useState<Dayjs>();
+  const scheduledGamesQuery = useGameSchedulesForPeriod(
+    selectedStartDay?.format("YYYY-MM-DD") ?? "",
+    selectedEndDay?.format("YYYY-MM-DD") ?? "",
+    month.format("YYYY-MM")
+  );
+  const scheduledGames = scheduledGamesQuery.data;
+
+  useEffect(() => {
+    if (selectedStartDay && selectedEndDay && !scheduledGamesQuery.isLoading) {
+      setIsPeriodModalOpen(true);
+    }
+  }, [scheduledGamesQuery.isLoading, selectedEndDay, selectedStartDay]);
 
   const selectedPeriodAvailability =
-    selectedStartDay && selectedEndDay
+    selectedStartDay && selectedEndDay && !scheduledGamesQuery.isLoading
       ? getSchedulePeriodAvailability(scheduledGames, selectedStartDay, selectedEndDay)
       : undefined;
 
@@ -42,7 +56,6 @@ export function useSchedulePeriodSelection(scheduledGames: readonly AdminSchedul
     }
 
     setSelectedEndDay(day);
-    setIsPeriodModalOpen(true);
   };
 
   const closePeriodModal = () => {

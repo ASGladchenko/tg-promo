@@ -1,0 +1,44 @@
+@use "@/shared/styles/admin" as s;
+
+.schedule-period-editor {
+  display: grid;
+  gap: 12px;
+}
+.schedule-period-editor__summary.button-base {
+  width: 100%;
+  padding: 10px 12px;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: left;
+  color: s.$admin-warning;
+  background: rgba(s.$admin-warning, 0.1);
+  border-color: rgba(s.$admin-warning, 0.32);
+  border-radius: s.$admin-radius;
+}
+.schedule-period-editor__summary.button-base:not(:disabled):is(:hover, :focus-visible) {
+  background: rgba(s.$admin-warning, 0.16);
+  border-color: s.$admin-warning;
+}
+.schedule-period-editor__action {
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 700;
+  color: s.$admin-text;
+}
+.schedule-period-editor__calendar {
+  display: grid;
+  gap: 12px;
+}
+.schedule-period-editor__instruction {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: s.$admin-text-secondary;
+}
+.schedule-period-editor__conflict-modal {
+  width: min(640px, 100%);
+}

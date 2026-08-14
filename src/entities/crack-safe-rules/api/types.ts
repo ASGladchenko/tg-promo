@@ -1,14 +1,9 @@
 import { type z } from "zod";
 
-import {
-  crackSafeRuleDtoSchema,
-  crackSafeRuleRewardDtoSchema,
-  crackSafeRulesResponseDtoSchema
-} from "./crack-safe-rules-response-schema";
+import { crackSafeRuleDtoSchema, crackSafeRuleRewardDtoSchema } from "./crack-safe-rules-response-schema";
 
 export type CrackSafeRuleRewardDto = z.output<typeof crackSafeRuleRewardDtoSchema>;
 export type CrackSafeRuleDto = z.output<typeof crackSafeRuleDtoSchema>;
-export type CrackSafeRulesResponseDto = z.output<typeof crackSafeRulesResponseDtoSchema>;
 type PrizeId = CrackSafeRuleRewardDto["prizeId"];
 export type CrackSafeRuleRewardPayload = {
   prizeId: PrizeId;

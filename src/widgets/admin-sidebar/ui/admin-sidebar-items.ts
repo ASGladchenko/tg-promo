@@ -24,7 +24,7 @@ export const adminSidebarItems: AdminSidebarItem[] = [
     end: true
   },
   {
-    title: "Schedule",
+    title: "Game Schedule",
     to: `${APP_ROUTES.admin}/${APP_ROUTES.adminSchedule}`,
     end: true
   },

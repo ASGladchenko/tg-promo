@@ -11,6 +11,7 @@ export function ButtonCalendar({
   children,
   day,
   isToday,
+  isInteractive,
   onClick,
   isInRange,
   isRangeEnd,
@@ -20,7 +21,7 @@ export function ButtonCalendar({
   isInSelectingRange,
   isSelectingRangeEnd
 }: ButtonCalendarProps) {
-  const canSelectDay = isCurrentMonth && onClick !== undefined;
+  const canSelectDay = isCurrentMonth && isInteractive && onClick !== undefined;
 
   const buttonClassName = clsx("button-calendar", {
     "button-calendar--outside-month": !isCurrentMonth,
@@ -29,16 +30,19 @@ export function ButtonCalendar({
     "button-calendar--range-end": isRangeEnd,
     "button-calendar--range-start": isRangeStart,
     "button-calendar--selecting-range-end": isSelectingRangeEnd,
-    "button-calendar--today": isToday
+    "button-calendar--static": !isInteractive,
+    "button-calendar--today": isToday,
+    "button-calendar--interactive": isInteractive
   });
 
   return (
     <ButtonBase
       type="button"
-      onClick={onClick}
-      disabled={!canSelectDay}
+      onClick={isInteractive ? onClick : undefined}
+      disabled={!isCurrentMonth}
       onMouseEnter={onMouseEnter}
       className={buttonClassName}
+      tabIndex={isInteractive ? undefined : -1}
       aria-label={ariaLabel ?? day.format("D MMMM YYYY")}
       aria-current={isToday ? "date" : undefined}
       aria-pressed={canSelectDay ? isRangeStart || isRangeEnd : undefined}

@@ -1,6 +1,4 @@
-import { type ScheduledGame } from "@/entities/game-schedule";
-
-export type AdminScheduledGame = ScheduledGame;
+import { GameScheduleId } from "@/entities/game-schedule";
 
 export type AdminSchedulePeriod = {
   endDate: string;
@@ -10,7 +8,7 @@ export type AdminSchedulePeriod = {
 
 export type AdminSchedulePeriodConflict = {
   dateLabel: string;
-  gameName: string;
+  gameId: GameScheduleId;
 };
 
 export type AdminSchedulePeriodAvailability = {

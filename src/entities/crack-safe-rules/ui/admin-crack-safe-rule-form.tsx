@@ -1,4 +1,7 @@
+import { type ReactNode } from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+import clsx from "clsx";
 import { useForm } from "react-hook-form";
 
 import { AdminModalForm, AdminModalFormRootError } from "@/shared/ui/admin-modal-form";
@@ -16,15 +19,21 @@ type AdminCrackSafeRuleFormProps = {
   canClearSemiJackpotPrize?: boolean;
   closeAriaLabel: string;
   defaultValues: AdminCrackSafeRuleFormState;
+  deleteAction?: {
+    isPending: boolean;
+    label: string;
+    onClick: () => void;
+  };
+  errorMessage?: string;
   failureMessage: string;
   isPending: boolean;
   onClose: () => void;
   onReset: () => void;
   onSubmit: (data: AdminCrackSafeRuleFormState) => Promise<void>;
   onSuccess: () => void;
+  periodContent?: ReactNode;
   periodLabel?: string;
   prizeOptions: AdminCrackSafeRulePrizeOption[];
-  shouldShowPeriodFields?: boolean;
   submitLabel: string;
   title: string;
 };
@@ -35,14 +44,16 @@ export function AdminCrackSafeRuleForm({
   onReset,
   onSubmit,
   onSuccess,
+  periodContent,
   isPending,
   submitLabel,
   defaultValues,
+  deleteAction,
+  errorMessage,
   failureMessage,
   prizeOptions,
   closeAriaLabel,
   periodLabel,
-  shouldShowPeriodFields,
   canClearSemiJackpotPrize = true
 }: AdminCrackSafeRuleFormProps) {
   const form = useForm<AdminCrackSafeRuleFormState>({
@@ -57,8 +68,9 @@ export function AdminCrackSafeRuleForm({
   } = form;
 
   const isFormPending = isSubmitting || isPending;
-  const rootErrorMessage =
+  const formRootErrorMessage =
     typeof errors.root?.server?.message === "string" ? errors.root.server.message : undefined;
+  const rootErrorMessage = errorMessage ?? formRootErrorMessage;
 
   const resetForm = () => {
     onReset();
@@ -95,23 +107,43 @@ export function AdminCrackSafeRuleForm({
     >
       {periodLabel ? <p className="admin-crack-safe-rule-form__period">{periodLabel}</p> : null}
 
+      {periodContent}
+
       <AdminCrackSafeRuleFormFields
         disabled={isFormPending}
         prizeOptions={prizeOptions}
         canClearSemiJackpotPrize={canClearSemiJackpotPrize}
-        shouldShowPeriodFields={shouldShowPeriodFields}
       />
 
       <AdminModalFormRootError message={rootErrorMessage} />
 
-      <div className="admin-modal-form__actions">
-        <ButtonBase type="button" onClick={closeForm} disabled={isFormPending} variant="danger">
-          Cancel
-        </ButtonBase>
+      <div
+        className={clsx("admin-modal-form__actions", {
+          "admin-modal-form__actions--split": deleteAction
+        })}
+      >
+        {deleteAction ? (
+          <ButtonLoading
+            type="button"
+            appearance="outline"
+            disabled={isFormPending}
+            isLoading={deleteAction.isPending}
+            onClick={deleteAction.onClick}
+            variant="danger"
+          >
+            <span>{deleteAction.label}</span>
+          </ButtonLoading>
+        ) : null}
 
-        <ButtonLoading type="submit" variant="primary" disabled={isFormPending} isLoading={isFormPending}>
-          <span>{submitLabel}</span>
-        </ButtonLoading>
+        <div className="admin-modal-form__primary-actions">
+          <ButtonBase type="button" onClick={closeForm} disabled={isFormPending} variant="danger">
+            Cancel
+          </ButtonBase>
+
+          <ButtonLoading type="submit" variant="primary" disabled={isFormPending} isLoading={isFormPending}>
+            <span>{submitLabel}</span>
+          </ButtonLoading>
+        </div>
       </div>
     </AdminModalForm>
   );

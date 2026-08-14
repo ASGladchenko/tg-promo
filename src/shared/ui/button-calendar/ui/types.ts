@@ -7,6 +7,7 @@ export type ButtonCalendarProps = {
   children?: ReactNode;
   day: Dayjs;
   isCurrentMonth: boolean;
+  isInteractive: boolean;
   isInRange: boolean;
   isInSelectingRange: boolean;
   isRangeEnd: boolean;

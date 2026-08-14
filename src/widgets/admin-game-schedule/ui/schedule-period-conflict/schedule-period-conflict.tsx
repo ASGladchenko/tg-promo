@@ -2,6 +2,7 @@ import { useId } from "react";
 
 import { ButtonBase } from "@/shared/ui/button-base";
 
+import { getScheduleGameTitle } from "../../model/schedule-game-metadata";
 import { type AdminSchedulePeriod, type AdminSchedulePeriodConflict } from "../../model/types";
 
 import "./schedule-period-conflict.scss";
@@ -61,7 +62,7 @@ export function SchedulePeriodConflict({
           {conflicts.map((conflict) => (
             <li key={conflict.dateLabel}>
               <time>{conflict.dateLabel}</time>
-              <span>{conflict.gameName}</span>
+              <span>{getScheduleGameTitle(conflict.gameId)}</span>
             </li>
           ))}
         </ul>

@@ -16,15 +16,13 @@ type AdminCrackSafeRuleCreateTriggerProps = {
     startDate: string;
   };
   renderTrigger?: (props: { isPending: boolean; openModal: () => void }) => ReactNode;
-  shouldShowPeriodFields?: boolean;
 };
 
 export function AdminCrackSafeRuleCreateTrigger({
   onCancel,
   onOpen,
   period,
-  renderTrigger,
-  shouldShowPeriodFields = true
+  renderTrigger
 }: AdminCrackSafeRuleCreateTriggerProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -47,13 +45,9 @@ export function AdminCrackSafeRuleCreateTrigger({
       {renderTrigger ? (
         renderTrigger({ isPending: false, openModal })
       ) : (
-          <ButtonBase
-            type="button"
-            onClick={openModal}
-            aria-haspopup="dialog"
-          >
-            Add Rule
-          </ButtonBase>
+        <ButtonBase type="button" onClick={openModal} aria-haspopup="dialog">
+          Add Rule
+        </ButtonBase>
       )}
 
       <Modal
@@ -63,12 +57,7 @@ export function AdminCrackSafeRuleCreateTrigger({
         hasOverlay
         className="admin-crack-safe-rule-create-trigger__modal"
       >
-        <AdminCrackSafeRuleCreateForm
-          onClose={closeModal}
-          onSuccess={closeAfterSuccess}
-          period={period}
-          shouldShowPeriodFields={shouldShowPeriodFields}
-        />
+        <AdminCrackSafeRuleCreateForm onClose={closeModal} onSuccess={closeAfterSuccess} period={period} />
       </Modal>
     </>
   );

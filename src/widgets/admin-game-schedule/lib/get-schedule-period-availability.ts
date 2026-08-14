@@ -1,9 +1,10 @@
 import { type Dayjs } from "dayjs";
 
+import { type ScheduledGame } from "@/entities/game-schedule";
+
 import {
   type AdminSchedulePeriod,
-  type AdminSchedulePeriodAvailability,
-  type AdminScheduledGame
+  type AdminSchedulePeriodAvailability
 } from "../model/types";
 import { getScheduledGameForDay } from "./get-games-scheduled-for-day";
 
@@ -21,7 +22,7 @@ function createPeriod(startDay: Dayjs, endDay: Dayjs): AdminSchedulePeriod {
 }
 
 export function getSchedulePeriodAvailability(
-  games: readonly AdminScheduledGame[],
+  games: readonly ScheduledGame[],
   startDay: Dayjs,
   endDay: Dayjs
 ): AdminSchedulePeriodAvailability {
@@ -45,7 +46,7 @@ export function getSchedulePeriodAvailability(
 
     conflicts.push({
       dateLabel: day.format("D MMMM"),
-      gameName: scheduledGame.name
+      gameId: scheduledGame.gameId
     });
   }
 

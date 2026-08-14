@@ -1,0 +1,67 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-game-schedule-game-day {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 10px;
+
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.1;
+
+  color: s.$admin-white;
+  background: rgba(s.$admin-primary, 0.22);
+  border-left: 4px solid s.$admin-primary;
+  border-radius: 8px;
+}
+
+.admin-game-schedule-game-day--warning {
+  background: rgba(s.$admin-warning, 0.22);
+  border-left-color: s.$admin-warning;
+}
+
+.admin-game-schedule-game-day--compact {
+  width: fit-content;
+  min-height: 28px;
+  padding: 6px 8px;
+
+  flex: 0 0 auto;
+  align-self: flex-start;
+
+  border-left-width: 3px;
+  border-radius: 6px;
+}
+
+.admin-game-schedule-game-day__mark {
+  flex: 0 0 auto;
+
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+
+  color: s.$admin-primary;
+}
+
+.admin-game-schedule-game-day--warning .admin-game-schedule-game-day__mark {
+  color: s.$admin-warning;
+}
+
+.admin-game-schedule-game-day--compact .admin-game-schedule-game-day__name {
+  display: none;
+}
+
+.admin-game-schedule-game-day__name {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

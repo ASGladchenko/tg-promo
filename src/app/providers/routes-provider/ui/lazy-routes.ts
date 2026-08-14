@@ -40,6 +40,12 @@ export const LazyAdminCrackSafeSnapshotDetails = lazy(() =>
   }))
 );
 
+export const LazyAdminLuckyMeadowSnapshot = lazy(() =>
+  import("@/pages/admin-lucky-meadow-snapshot").then(({ AdminLuckyMeadowSnapshot }) => ({
+    default: AdminLuckyMeadowSnapshot
+  }))
+);
+
 export const LazyAdminConsolationPrizes = lazy(() =>
   import("@/pages/admin-consolation-prizes").then(({ AdminConsolationPrizes }) => ({
     default: AdminConsolationPrizes

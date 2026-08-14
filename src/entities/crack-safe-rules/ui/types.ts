@@ -24,7 +24,6 @@ export type AdminCrackSafeRuleFormModalTriggerProps = {
   periodLabel?: string;
   prizeOptions: AdminCrackSafeRulePrizeOption[];
   renderTrigger: (props: AdminCrackSafeRuleFormModalTriggerRenderProps) => ReactNode;
-  shouldShowPeriodFields?: boolean;
   submitLabel: string;
   title: string;
 };

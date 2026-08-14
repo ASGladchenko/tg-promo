@@ -2,24 +2,9 @@ import { useId } from "react";
 
 import { GameScheduleId } from "@/entities/game-schedule";
 
-import "./schedule-game-picker.scss";
+import { scheduleGameMetadata } from "../../model/schedule-game-metadata";
 
-const SCHEDULE_GAME_OPTIONS = [
-  {
-    description: "Open rule settings for this period.",
-    id: GameScheduleId.CrackSafe,
-    isAvailable: true,
-    mark: "CS",
-    name: "Crack Safe"
-  },
-  {
-    description: "Rule settings will be available soon.",
-    id: GameScheduleId.LuckyMeadow,
-    isAvailable: false,
-    mark: "LM",
-    name: "Lucky Meadow"
-  }
-] as const;
+import "./schedule-game-picker.scss";
 
 type ScheduleGamePickerProps = {
   onClose: () => void;
@@ -57,21 +42,22 @@ export function ScheduleGamePicker({ onClose, onGameClick, periodLabel }: Schedu
           </p>
 
           <div className="schedule-game-picker__options" role="group" aria-label="Available games">
-            {SCHEDULE_GAME_OPTIONS.map((game) => {
+            {Object.entries(scheduleGameMetadata).map(([id, game]) => {
+              const gameId = id as GameScheduleId;
+
               return (
                 <button
-                  key={game.id}
+                  key={gameId}
                   type="button"
                   className="schedule-game-picker__option"
-                  disabled={!game.isAvailable}
-                  onClick={game.isAvailable ? () => onGameClick(game.id) : undefined}
+                  onClick={() => onGameClick(gameId)}
                 >
                   <span className="schedule-game-picker__mark" aria-hidden="true">
                     {game.mark}
                   </span>
 
                   <span className="schedule-game-picker__copy">
-                    <strong className="schedule-game-picker__name">{game.name}</strong>
+                    <strong className="schedule-game-picker__name">{game.title}</strong>
                     <span className="schedule-game-picker__description">{game.description}</span>
                   </span>
                 </button>
