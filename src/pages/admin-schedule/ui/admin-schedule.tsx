@@ -6,7 +6,7 @@ import "./admin-schedule.scss";
 export function AdminSchedule() {
   return (
     <section className="admin-schedule">
-      <AdminPageHeader title="Schedule" />
+      <AdminPageHeader title="Game Schedule" />
       <AdminGameSchedule />
     </section>
   );
