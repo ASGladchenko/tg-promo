@@ -75,9 +75,23 @@ export const frTranslation = {
     menuLabel: "Choisir une langue"
   },
   luckyMeadow: {
+    errors: {
+      dailyLimitReached: "Lucky Meadow n’est pas disponible pour vous aujourd’hui.",
+      missingSession: "Impossible de restaurer la session Lucky Meadow. Veuillez recommencer.",
+      noAttempts: "Vous n’avez plus de tentatives. Ouvrez le portefeuille pour en obtenir davantage.",
+      openCell: "Impossible d’ouvrir cette case. Veuillez réessayer.",
+      start: "Impossible de démarrer Lucky Meadow. Veuillez réessayer.",
+      unavailable: "Lucky Meadow n’est pas disponible pour le moment."
+    },
+    results: {
+      jackpot: "Jackpot gagné.",
+      jackpotUnavailable: "Le prix Jackpot n’est pas disponible. Continuez pour le Lucky Prize.",
+      lucky: "Lucky Prize gagné."
+    },
     soundOff: "Couper le son",
     soundOn: "Activer le son",
-    start: "Démarrer"
+    start: "Démarrer",
+    starting: "Démarrage..."
   },
   myPrizes: {
     close: "Fermer les prix",

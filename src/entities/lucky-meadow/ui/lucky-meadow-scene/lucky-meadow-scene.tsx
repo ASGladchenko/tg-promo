@@ -1,9 +1,9 @@
-import { type CSSProperties, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
 import { useLuckyMeadowStore } from "../../model/lucky-meadow-store";
-import { mockOpenLuckyMeadowCell } from "../../model/mock-open-lucky-meadow-cell";
+import { type LuckyMeadowOpenCellResult } from "../../model/types";
 import {
   createLuckyMeadowSkullEffect,
   type LuckyMeadowSkullEffectState
@@ -27,14 +27,16 @@ type LuckyMeadowRewardFlyEffectStyle = CSSProperties & {
   "--reward-start-x": string;
   "--reward-start-y": string;
 };
-type LuckyMeadowSceneAnimationTrigger = () => void;
 type LuckyMeadowSceneProps = {
   audioToggle?: ReactNode;
+  canShowStartButton?: boolean;
   isGameOverAudioEnabled?: boolean;
+  isStartPending?: boolean;
+  onGameFinished?: (result: LuckyMeadowOpenCellResult) => void;
   onGameOverAudioEnd?: () => void;
   onGameOverAudioStart?: () => void;
-  onJackpotBurstTriggerReady?: (triggerJackpotBurst: LuckyMeadowSceneAnimationTrigger) => void;
-  onPrizeStripesTriggerReady?: (triggerPrizeStripes: LuckyMeadowSceneAnimationTrigger) => void;
+  onOpenCell: (cellIndex: number) => Promise<LuckyMeadowOpenCellResult | null>;
+  onStartGame: () => Promise<boolean>;
 };
 type LuckyMeadowRewardOutcome = "jackpot" | "lucky";
 type LuckyMeadowRewardFlyEffectState = {
@@ -51,6 +53,7 @@ const PANEL_CELL_COUNT = 24;
 const REWARD_TARGET_COUNT = 2;
 
 const GAME_OVER_AUDIO_SRC = "/audio/lucky-meadow-game-over.ogg";
+const GAME_OVER_PRESENTATION_DELAY_MS = 2300;
 
 const luckyMeadowSceneStyle: LuckyMeadowSceneStyle = {
   "--lucky-meadow-bg": `url(${luckyMeadowBgImage})`
@@ -85,31 +88,39 @@ function getLuckyMeadowRewardFlyEffectStyle(
 
 export const LuckyMeadowScene = ({
   audioToggle,
+  canShowStartButton = true,
   isGameOverAudioEnabled = true,
-  onJackpotBurstTriggerReady,
+  isStartPending = false,
+  onGameFinished,
   onGameOverAudioEnd,
   onGameOverAudioStart,
-  onPrizeStripesTriggerReady
+  onOpenCell,
+  onStartGame
 }: LuckyMeadowSceneProps) => {
   const { t } = useTranslation();
   const gameOverAudioRef = useRef<HTMLAudioElement | null>(null);
   const jackpotMeterIconRef = useRef<HTMLImageElement | null>(null);
   const luckyMeterIconRef = useRef<HTMLImageElement | null>(null);
+  const finishGameTimeoutRef = useRef<number | null>(null);
+  const isStartingGameRef = useRef(false);
   const rewardFlyEffectIdRef = useRef(0);
   const isGameActive = useLuckyMeadowStore((state) => state.isGameActive);
   const openedCells = useLuckyMeadowStore((state) => state.openedCells);
   const openingCellIndex = useLuckyMeadowStore((state) => state.openingCellIndex);
+  const cancelOpeningCell = useLuckyMeadowStore((state) => state.cancelOpeningCell);
   const startOpeningCell = useLuckyMeadowStore((state) => state.startOpeningCell);
   const openCell = useLuckyMeadowStore((state) => state.openCell);
+  const finishGame = useLuckyMeadowStore((state) => state.finishGame);
   const startGame = useLuckyMeadowStore((state) => state.startGame);
   const closedCells = useMemo(() => {
     return getRandomClosedCellImages(PANEL_CELL_COUNT);
   }, []);
   const [jackpotBurstAnimationKey, setJackpotBurstAnimationKey] = useState(0);
+  const [isFinishingGame, setIsFinishingGame] = useState(false);
   const [prizeStripesAnimationKey, setPrizeStripesAnimationKey] = useState(0);
   const [rewardFlyEffects, setRewardFlyEffects] = useState<LuckyMeadowRewardFlyEffectState[]>([]);
   const [skullEffect, setSkullEffect] = useState<LuckyMeadowSkullEffectState | null>(null);
-  const areCellsLocked = !isGameActive || openingCellIndex !== null;
+  const areCellsLocked = !isGameActive || openingCellIndex !== null || isFinishingGame;
   const openedOutcomes = Object.values(openedCells);
   const luckyCount = Math.min(
     openedOutcomes.filter((openedOutcome) => openedOutcome === "lucky").length,
@@ -120,24 +131,71 @@ export const LuckyMeadowScene = ({
     REWARD_TARGET_COUNT
   );
 
-  const triggerJackpotBurst = useCallback(() => {
+  function triggerJackpotBurst() {
     setJackpotBurstAnimationKey((currentKey) => currentKey + 1);
-  }, []);
+  }
 
-  const triggerPrizeStripes = useCallback(() => {
+  function triggerPrizeStripes() {
     setPrizeStripesAnimationKey((currentKey) => currentKey + 1);
+  }
+
+  function clearFinishGameTimeout() {
+    if (finishGameTimeoutRef.current === null) {
+      return;
+    }
+
+    window.clearTimeout(finishGameTimeoutRef.current);
+    finishGameTimeoutRef.current = null;
+  }
+
+  function completeGame(result: LuckyMeadowOpenCellResult) {
+    clearFinishGameTimeout();
+    setIsFinishingGame(false);
+    finishGame();
+    onGameFinished?.(result);
+  }
+
+  function scheduleGameFinish(result: LuckyMeadowOpenCellResult) {
+    setIsFinishingGame(true);
+
+    if (!result.prize && result.outcome === "skull") {
+      finishGameTimeoutRef.current = window.setTimeout(() => {
+        completeGame(result);
+      }, GAME_OVER_PRESENTATION_DELAY_MS);
+
+      return;
+    }
+
+    completeGame(result);
+  }
+
+  useEffect(() => {
+    return () => {
+      if (finishGameTimeoutRef.current !== null) {
+        window.clearTimeout(finishGameTimeoutRef.current);
+      }
+    };
   }, []);
 
-  useEffect(() => {
-    onJackpotBurstTriggerReady?.(triggerJackpotBurst);
-  }, [onJackpotBurstTriggerReady, triggerJackpotBurst]);
+  async function handleStartButtonClick() {
+    if (isStartPending || isStartingGameRef.current) {
+      return;
+    }
 
-  useEffect(() => {
-    onPrizeStripesTriggerReady?.(triggerPrizeStripes);
-  }, [onPrizeStripesTriggerReady, triggerPrizeStripes]);
+    isStartingGameRef.current = true;
 
-  function handleStartButtonClick() {
-    startGame();
+    try {
+      const didStartGame = await onStartGame();
+
+      if (!didStartGame) {
+        return;
+      }
+
+      startGame();
+      setIsFinishingGame(false);
+    } finally {
+      isStartingGameRef.current = false;
+    }
   }
 
   function addRewardFlyEffect(outcome: LuckyMeadowRewardOutcome, cellRect: DOMRect, targetRect: DOMRect) {
@@ -165,7 +223,20 @@ export const LuckyMeadowScene = ({
     }
 
     const cellRect = cellElement.getBoundingClientRect();
-    const outcome = await mockOpenLuckyMeadowCell();
+    let result: LuckyMeadowOpenCellResult | null = null;
+
+    try {
+      result = await onOpenCell(cellIndex);
+    } catch {
+      result = null;
+    }
+
+    if (!result) {
+      cancelOpeningCell(cellIndex);
+      return;
+    }
+
+    const outcome = result.outcome;
     const didOpenCell = openCell(cellIndex, outcome);
 
     if (didOpenCell && (outcome === "lucky" || outcome === "jackpot")) {
@@ -189,6 +260,18 @@ export const LuckyMeadowScene = ({
 
       setSkullEffect(createLuckyMeadowSkullEffect(cellRect));
     }
+
+    if (didOpenCell && result.prize === "lucky") {
+      triggerPrizeStripes();
+    }
+
+    if (didOpenCell && result.prize === "jackpot") {
+      triggerJackpotBurst();
+    }
+
+    if (didOpenCell && result.status === "finished") {
+      scheduleGameFinish(result);
+    }
   }
 
   return (
@@ -196,7 +279,10 @@ export const LuckyMeadowScene = ({
       <audio ref={gameOverAudioRef} src={GAME_OVER_AUDIO_SRC} preload="none" onEnded={onGameOverAudioEnd} />
 
       <div className="lucky-meadow-scene__hud">
-        <div className="lucky-meadow-scene__meter" aria-label={`Lucky prizes ${luckyCount} of ${REWARD_TARGET_COUNT}`}>
+        <div
+          className="lucky-meadow-scene__meter"
+          aria-label={`Lucky prizes ${luckyCount} of ${REWARD_TARGET_COUNT}`}
+        >
           <span className="lucky-meadow-scene__meter-count">
             {luckyCount}/{REWARD_TARGET_COUNT}
           </span>
@@ -266,9 +352,14 @@ export const LuckyMeadowScene = ({
           }}
         />
       ))}
-      {!isGameActive && (
-        <button className="lucky-meadow-scene__start-button" type="button" onClick={handleStartButtonClick}>
-          {t("luckyMeadow.start")}
+      {!isGameActive && canShowStartButton && (
+        <button
+          className="lucky-meadow-scene__start-button"
+          type="button"
+          disabled={isStartPending}
+          onClick={() => void handleStartButtonClick()}
+        >
+          {isStartPending ? t("luckyMeadow.starting") : t("luckyMeadow.start")}
         </button>
       )}
       {audioToggle}

@@ -73,9 +73,23 @@ export const arTranslation = {
     menuLabel: "اختر اللغة"
   },
   luckyMeadow: {
+    errors: {
+      dailyLimitReached: "Lucky Meadow غير متاحة لك اليوم.",
+      missingSession: "تعذرت استعادة جلسة Lucky Meadow. ابدأ من جديد.",
+      noAttempts: "لم تعد لديك محاولات. افتح محفظة المحاولات للحصول على المزيد.",
+      openCell: "تعذر فتح هذه الخانة. حاول مرة أخرى.",
+      start: "تعذر بدء Lucky Meadow. حاول مرة أخرى.",
+      unavailable: "Lucky Meadow غير متاحة الآن."
+    },
+    results: {
+      jackpot: "فزت بالجائزة الكبرى.",
+      jackpotUnavailable: "جائزة Jackpot غير متاحة. واصل اللعب من أجل Lucky Prize.",
+      lucky: "فزت بـ Lucky Prize."
+    },
     soundOff: "إيقاف الصوت",
     soundOn: "تشغيل الصوت",
-    start: "ابدأ"
+    start: "ابدأ",
+    starting: "جارٍ البدء..."
   },
   myPrizes: {
     close: "إغلاق الجوائز",

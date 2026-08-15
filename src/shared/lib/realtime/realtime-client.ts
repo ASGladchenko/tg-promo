@@ -1,6 +1,7 @@
 export const CLIENT_EVENT_TYPES = {
   clientEventsPing: "client-events.ping",
   consolationPrizeAwarded: "consolation-prize.awarded",
+  luckyMeadowSessionFinished: "lucky-meadow.session.finished",
   userUpdated: "user.updated",
   walletUpdated: "wallet.updated"
 } as const;

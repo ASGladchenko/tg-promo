@@ -9,7 +9,7 @@ import openJackpotImage from "@/shared/images/lucky-meadow/lucky-meadow-open-jac
 import openLuckyImage from "@/shared/images/lucky-meadow/lucky-meadow-open-lucky.webp";
 import openSkullImage from "@/shared/images/lucky-meadow/lucky-meadow-open-skull.webp";
 
-import type { LuckyMeadowCellOutcome } from "../../model/lucky-meadow-store";
+import type { LuckyMeadowCellOutcome } from "../../model/types";
 
 export const luckyMeadowBgImage = bgImage;
 

@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import type { LuckyMeadowCellOutcome } from "../../model/lucky-meadow-store";
+import type { LuckyMeadowCellOutcome } from "../../model/types";
 import { luckyMeadowOpenedCellImages } from "./lucky-meadow-scene-assets";
 import "./lucky-meadow-panel-cell.scss";
 

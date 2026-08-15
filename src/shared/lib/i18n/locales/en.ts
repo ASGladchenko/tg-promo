@@ -75,9 +75,23 @@ export const enTranslation = {
     menuLabel: "Choose a language"
   },
   luckyMeadow: {
+    errors: {
+      dailyLimitReached: "Lucky Meadow is unavailable for you today.",
+      missingSession: "Could not restore the Lucky Meadow session. Please start again.",
+      noAttempts: "You have no attempts left. Open the attempts wallet to earn more.",
+      openCell: "Could not open this cell. Please try again.",
+      start: "Could not start Lucky Meadow. Please try again.",
+      unavailable: "Lucky Meadow is not available right now."
+    },
+    results: {
+      jackpot: "Jackpot won.",
+      jackpotUnavailable: "Jackpot prize is unavailable. Keep playing for Lucky Prize.",
+      lucky: "Lucky Prize won."
+    },
     soundOff: "Turn sound off",
     soundOn: "Turn sound on",
-    start: "Start"
+    start: "Start",
+    starting: "Starting..."
   },
   myPrizes: {
     close: "Close prizes",
