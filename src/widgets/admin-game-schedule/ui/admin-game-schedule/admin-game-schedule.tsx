@@ -1,0 +1,112 @@
+import { useState } from "react";
+
+import dayjs, { type Dayjs } from "dayjs";
+
+import { type ScheduledGame, useGameSchedules } from "@/entities/game-schedule";
+import { CalendarMonth } from "@/shared/ui/calendar-month";
+
+import { getScheduledGameForDay as findScheduledGameForDay } from "../../lib/get-games-scheduled-for-day";
+import { getScheduleGameTitle } from "../../model/schedule-game-metadata";
+import { useSchedulePeriodSelection } from "../../model/use-schedule-period-selection";
+import { AdminGameScheduleGameDay } from "../admin-game-schedule-game-day/admin-game-schedule-game-day";
+import { AdminGameScheduleGameFlow } from "../admin-game-schedule-game-flow/admin-game-schedule-game-flow";
+import { AdminGameScheduleModal } from "../admin-game-schedule-modal/admin-game-schedule-modal";
+
+import "./admin-game-schedule.scss";
+
+export function AdminGameSchedule() {
+  const [month, setMonth] = useState(() => dayjs());
+  const [selectedScheduledGame, setSelectedScheduledGame] = useState<{
+    day: Dayjs;
+    game: ScheduledGame;
+  }>();
+  const scheduledGamesQuery = useGameSchedules(month.format("YYYY-MM"));
+  const scheduledGames = scheduledGamesQuery.data ?? [];
+
+  const refetchScheduledGames = () => {
+    void scheduledGamesQuery.refetch();
+  };
+
+  const {
+    closePeriodModal,
+    isPeriodModalOpen,
+    selectAvailablePeriod,
+    selectDay,
+    selectedEndDay,
+    selectedPeriod,
+    selectedPeriodAvailability,
+    selectedStartDay
+  } = useSchedulePeriodSelection(month);
+
+  const getScheduledGameForDay = (day: Dayjs) => findScheduledGameForDay(scheduledGames, day);
+
+  const getDayAriaLabel = (day: Dayjs) => {
+    const game = getScheduledGameForDay(day);
+
+    if (game === undefined) {
+      return day.format("D MMMM YYYY");
+    }
+
+    return `${day.format("D MMMM YYYY")}. Scheduled game: ${getScheduleGameTitle(game.gameId)}`;
+  };
+
+  const handleDayClick = (day: Dayjs) => {
+    const game = getScheduledGameForDay(day);
+
+    if (game) {
+      setSelectedScheduledGame({ day, game });
+
+      return;
+    }
+
+    if (day.isBefore(dayjs(), "day")) {
+      return;
+    }
+
+    selectDay(day);
+  };
+
+  const closeScheduledGame = () => {
+    setSelectedScheduledGame(undefined);
+  };
+
+  return (
+    <section className="admin-game-schedule">
+      <CalendarMonth
+        getDayAriaLabel={getDayAriaLabel}
+        canInteractWithDay={(day) =>
+          !day.isBefore(dayjs(), "day") || getScheduledGameForDay(day) !== undefined
+        }
+        month={month}
+        onMonthChange={setMonth}
+        onDayClick={handleDayClick}
+        selectedEndDay={selectedEndDay}
+        selectedStartDay={selectedStartDay}
+        renderDayContent={(day) => {
+          const game = getScheduledGameForDay(day);
+
+          return game ? <AdminGameScheduleGameDay gameId={game.gameId} /> : null;
+        }}
+      />
+
+      <AdminGameScheduleModal
+        availablePeriods={selectedPeriodAvailability?.availablePeriods}
+        conflicts={selectedPeriodAvailability?.conflicts}
+        isOpen={isPeriodModalOpen}
+        onClose={closePeriodModal}
+        onPeriodSelect={selectAvailablePeriod}
+        onRulesChange={refetchScheduledGames}
+        period={selectedPeriod}
+      />
+
+      {selectedScheduledGame ? (
+        <AdminGameScheduleGameFlow
+          game={selectedScheduledGame.game}
+          onClose={closeScheduledGame}
+          onRulesChange={refetchScheduledGames}
+          selectedDay={selectedScheduledGame.day}
+        />
+      ) : null}
+    </section>
+  );
+}

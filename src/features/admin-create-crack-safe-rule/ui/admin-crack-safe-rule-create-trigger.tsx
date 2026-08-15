@@ -1,47 +1,64 @@
-import {
-  AdminCrackSafeRuleFormModalTrigger,
-  getAdminCrackSafeRuleFormDefaultValues,
-  mapAdminCrackSafeRuleFormToCreatePayload,
-  mapAdminCrackSafeRulePrizesToOptions,
-  useCreateCrackSafeRule
-} from "@/entities/crack-safe-rules";
-import { usePrizes } from "@/entities/prizes";
+import { type ReactNode, useState } from "react";
+
 import { ButtonBase } from "@/shared/ui/button-base";
+import { Modal } from "@/shared/ui/modal";
 
-export function AdminCrackSafeRuleCreateTrigger() {
-  const createCrackSafeRule = useCreateCrackSafeRule();
-  const prizesQuery = usePrizes();
+import { AdminCrackSafeRuleCreateForm } from "./admin-crack-safe-rule-create-form";
 
-  const prizeOptions = mapAdminCrackSafeRulePrizesToOptions(prizesQuery.data);
+import "./admin-crack-safe-rule-create-trigger.scss";
 
-  const isPending = createCrackSafeRule.isPending || prizesQuery.isLoading;
+type AdminCrackSafeRuleCreateTriggerProps = {
+  onCancel?: () => void;
+  onOpen?: () => void;
+  period?: {
+    endDate: string;
+    label: string;
+    startDate: string;
+  };
+  renderTrigger?: (props: { isPending: boolean; openModal: () => void }) => ReactNode;
+};
+
+export function AdminCrackSafeRuleCreateTrigger({
+  onCancel,
+  onOpen,
+  period,
+  renderTrigger
+}: AdminCrackSafeRuleCreateTriggerProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    onCancel?.();
+  };
+
+  const closeAfterSuccess = () => {
+    setIsModalOpen(false);
+  };
+
+  const openModal = () => {
+    onOpen?.();
+    setIsModalOpen(true);
+  };
 
   return (
-    <AdminCrackSafeRuleFormModalTrigger
-      title="Add Rule"
-      submitLabel="Create"
-      isPending={isPending}
-      modalAriaLabel="Add Crack Safe rule"
-      onReset={createCrackSafeRule.reset}
-      prizeOptions={prizeOptions}
-      closeAriaLabel="Close add Crack Safe rule modal"
-      failureMessage="Failed to create Crack Safe rule"
-      defaultValues={getAdminCrackSafeRuleFormDefaultValues()}
-      onSubmit={(data) => {
-        const payload = mapAdminCrackSafeRuleFormToCreatePayload(data);
-
-        return createCrackSafeRule.mutateAsync(payload);
-      }}
-      renderTrigger={({ isPending: isTriggerPending, openModal }) => (
-        <ButtonBase
-          type="button"
-          onClick={openModal}
-          aria-haspopup="dialog"
-          disabled={isTriggerPending || prizesQuery.isError}
-        >
+    <>
+      {renderTrigger ? (
+        renderTrigger({ isPending: false, openModal })
+      ) : (
+        <ButtonBase type="button" onClick={openModal} aria-haspopup="dialog">
           Add Rule
         </ButtonBase>
       )}
-    />
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        ariaLabel="Add Crack Safe rule"
+        hasOverlay
+        className="admin-crack-safe-rule-create-trigger__modal"
+      >
+        <AdminCrackSafeRuleCreateForm onClose={closeModal} onSuccess={closeAfterSuccess} period={period} />
+      </Modal>
+    </>
   );
 }

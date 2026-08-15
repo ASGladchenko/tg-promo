@@ -17,8 +17,11 @@ export type AdminCrackSafeRuleFormModalTriggerProps = {
   failureMessage: string;
   isPending: boolean;
   modalAriaLabel: string;
+  onCancel?: () => void;
+  onOpen?: () => void;
   onReset: () => void;
   onSubmit: (data: AdminCrackSafeRuleFormState) => Promise<void>;
+  periodLabel?: string;
   prizeOptions: AdminCrackSafeRulePrizeOption[];
   renderTrigger: (props: AdminCrackSafeRuleFormModalTriggerRenderProps) => ReactNode;
   submitLabel: string;

@@ -1,0 +1,42 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-lucky-meadow-rule-form__period {
+  margin: 0;
+  padding: 10px 12px;
+
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  line-height: 1.4;
+
+  color: s.$admin-warning;
+  background: rgba(s.$admin-warning, 0.1);
+  border: 1px solid rgba(s.$admin-warning, 0.32);
+  border-radius: s.$admin-radius;
+}
+
+.admin-lucky-meadow-rule-form__fields,
+.admin-lucky-meadow-rule-form__prize,
+.admin-lucky-meadow-rule-form__prize-fields {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-lucky-meadow-rule-form__prize {
+  min-width: 0;
+  margin: 0;
+  padding: 14px;
+
+  border: 1px solid s.$admin-border;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+}
+
+.admin-lucky-meadow-rule-form__prize-title {
+  padding: 0 6px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  color: s.$admin-text-secondary;
+}
