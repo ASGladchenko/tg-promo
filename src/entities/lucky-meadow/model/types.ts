@@ -4,7 +4,19 @@ export type LuckyMeadowCellOutcome = "empty" | "jackpot" | "lucky" | "skull";
 export type LuckyMeadowOpenedCells = Partial<Record<number, LuckyMeadowCellOutcome>>;
 export type LuckyMeadowSnapshotStatus = "active" | "finished" | "refundPending" | "refunded";
 export type LuckyMeadowPrize = "jackpot" | "lucky";
-export type LuckyMeadowUnavailableReason = "dailyLimitReached";
+export type LuckyMeadowPrizeStatus =
+  | "jackpotUnavailable"
+  | "semiDeclined"
+  | "semiFallbackAwarded"
+  | "semiUnavailable";
+export type LuckyMeadowActionStatus = "active" | "finished" | "semiChoiceRequired";
+export type LuckyMeadowSemiChoiceAction = "claim" | "continue";
+export type LuckyMeadowUnavailableReason = "dailyLimitReached" | "jackpotWin";
+export type LuckyMeadowAwardPrize = {
+  outcome: LuckyMeadowPrize;
+  prizeData: Record<string, unknown>;
+  promoCode: string | null;
+};
 export type LuckyMeadowGame = {
   endDate: string;
   snapshotId: string;
@@ -14,6 +26,7 @@ export type LuckyMeadowGame = {
 export type LuckyMeadowUserSnapshot = {
   id: string;
   openedCells: LuckyMeadowOpenedCells;
+  semiChoiceRequired: boolean;
   status: LuckyMeadowSnapshotStatus;
 };
 export type LuckyMeadowState = {
@@ -25,13 +38,20 @@ export type LuckyMeadowStartResult = {
   id: string;
   resumed: boolean;
 };
-export type LuckyMeadowOpenCellResult = {
+export type LuckyMeadowGameResult = {
+  fallbackAttemptsGranted?: number;
   jackpotCount?: number;
   luckyCount?: number;
+  outcome?: LuckyMeadowCellOutcome;
+  position?: number;
+  prize?: LuckyMeadowPrize;
+  prizeInfo?: unknown;
+  prizeStatus?: LuckyMeadowPrizeStatus;
+  status: LuckyMeadowActionStatus;
+};
+export type LuckyMeadowOpenCellResult = LuckyMeadowGameResult & {
   outcome: LuckyMeadowCellOutcome;
   position: number;
-  prize?: LuckyMeadowPrize;
-  prizeStatus?: "jackpotUnavailable";
-  status: "active" | "finished";
 };
+export type LuckyMeadowSemiChoiceResult = LuckyMeadowGameResult;
 export type LuckyMeadowRule = LuckyMeadowRuleDto;

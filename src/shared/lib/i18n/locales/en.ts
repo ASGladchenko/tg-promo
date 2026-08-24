@@ -75,23 +75,50 @@ export const enTranslation = {
     menuLabel: "Choose a language"
   },
   luckyMeadow: {
+    availability: {
+      preparingNewGame: "A new Lucky Meadow game is being prepared. Wait for an announcement in the channel."
+    },
+    awardModal: {
+      close: "Close prize dialog",
+      jackpot: {
+        eyebrow: "Jackpot",
+        title: "Jackpot won"
+      },
+      label: "Lucky Meadow prize",
+      lucky: {
+        eyebrow: "Lucky Prize",
+        title: "Lucky Prize won"
+      }
+    },
     errors: {
       dailyLimitReached: "Lucky Meadow is unavailable for you today.",
+      jackpotWin: "You have already won the Jackpot today.",
       missingSession: "Could not restore the Lucky Meadow session. Please start again.",
       noAttempts: "You have no attempts left. Open the attempts wallet to earn more.",
       openCell: "Could not open this cell. Please try again.",
+      resolveSemiChoice: "Could not resolve this Lucky Prize choice. Please try again.",
       start: "Could not start Lucky Meadow. Please try again.",
       unavailable: "Lucky Meadow is not available right now."
     },
     results: {
       jackpot: "Jackpot won.",
       jackpotUnavailable: "Jackpot prize is unavailable. Keep playing for Lucky Prize.",
-      lucky: "Lucky Prize won."
+      lucky: "Lucky Prize won.",
+      semiDeclined: "Lucky Prize burned. Keep playing for Jackpot.",
+      semiFallbackAwarded: "Lucky Prize is unavailable. Attempts were credited instead.",
+      semiUnavailable: "Lucky Prize is unavailable."
+    },
+    semiChoice: {
+      body: "Claim Lucky Prize now or burn it and keep playing for Jackpot.",
+      claim: "Claim",
+      continue: "Keep playing",
+      title: "Lucky Prize ready"
     },
     soundOff: "Turn sound off",
     soundOn: "Turn sound on",
     start: "Start",
-    starting: "Starting..."
+    starting: "Starting...",
+    widgetLabel: "Lucky Meadow"
   },
   myPrizes: {
     close: "Close prizes",

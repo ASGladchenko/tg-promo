@@ -1,16 +1,23 @@
 import {
   type LuckyMeadowCellOutcomeDto,
+  type LuckyMeadowActionStatusDto,
   type LuckyMeadowPrizeDto,
+  type LuckyMeadowPrizeStatusDto,
   type LuckyMeadowSnapshotStatusDto,
   type LuckyMeadowStateResponseDto,
   type LuckyMeadowUnavailableReasonDto,
-  type OpenLuckyMeadowCellResponseDto
+  type OpenLuckyMeadowCellResponseDto,
+  type ResolveLuckyMeadowSemiChoiceResponseDto
 } from "../api/types";
 import {
   type LuckyMeadowCellOutcome,
+  type LuckyMeadowActionStatus,
+  type LuckyMeadowGameResult,
   type LuckyMeadowOpenCellResult,
   type LuckyMeadowOpenedCells,
   type LuckyMeadowPrize,
+  type LuckyMeadowPrizeStatus,
+  type LuckyMeadowSemiChoiceResult,
   type LuckyMeadowSnapshotStatus,
   type LuckyMeadowState,
   type LuckyMeadowUnavailableReason
@@ -28,6 +35,19 @@ const prizeMap: Record<LuckyMeadowPrizeDto, LuckyMeadowPrize> = {
   semi_jackpot: "lucky"
 };
 
+const prizeStatusMap: Record<LuckyMeadowPrizeStatusDto, LuckyMeadowPrizeStatus> = {
+  jackpot_unavailable: "jackpotUnavailable",
+  semi_declined: "semiDeclined",
+  semi_fallback_awarded: "semiFallbackAwarded",
+  semi_unavailable: "semiUnavailable"
+};
+
+const actionStatusMap: Record<LuckyMeadowActionStatusDto, LuckyMeadowActionStatus> = {
+  active: "active",
+  finished: "finished",
+  semi_choice_required: "semiChoiceRequired"
+};
+
 const statusMap: Record<LuckyMeadowSnapshotStatusDto, LuckyMeadowSnapshotStatus> = {
   active: "active",
   finished: "finished",
@@ -36,7 +56,8 @@ const statusMap: Record<LuckyMeadowSnapshotStatusDto, LuckyMeadowSnapshotStatus>
 };
 
 const unavailableReasonMap: Record<LuckyMeadowUnavailableReasonDto, LuckyMeadowUnavailableReason> = {
-  daily_limit_reached: "dailyLimitReached"
+  daily_limit_reached: "dailyLimitReached",
+  jackpot_win: "jackpotWin"
 };
 
 function mapOpenedCells(dto: LuckyMeadowStateResponseDto["mySnapshot"]): LuckyMeadowOpenedCells {
@@ -64,6 +85,7 @@ export function mapLuckyMeadowStateDtoToLuckyMeadowState(dto: LuckyMeadowStateRe
       ? {
           id: dto.mySnapshot.id,
           openedCells: mapOpenedCells(dto.mySnapshot),
+          semiChoiceRequired: dto.mySnapshot.semiChoiceRequired,
           status: statusMap[dto.mySnapshot.status]
         }
       : null,
@@ -71,16 +93,34 @@ export function mapLuckyMeadowStateDtoToLuckyMeadowState(dto: LuckyMeadowStateRe
   };
 }
 
+function mapLuckyMeadowGameResultDto(
+  dto: OpenLuckyMeadowCellResponseDto | ResolveLuckyMeadowSemiChoiceResponseDto
+): LuckyMeadowGameResult {
+  return {
+    fallbackAttemptsGranted: dto.fallbackAttemptsGranted,
+    jackpotCount: dto.jackpotCount,
+    luckyCount: dto.semiJackpotCount,
+    outcome: dto.outcome ? outcomeMap[dto.outcome] : undefined,
+    position: dto.position,
+    prize: dto.prize ? prizeMap[dto.prize] : undefined,
+    prizeInfo: dto.prizeInfo,
+    prizeStatus: dto.prizeStatus ? prizeStatusMap[dto.prizeStatus] : undefined,
+    status: actionStatusMap[dto.status]
+  };
+}
+
 export function mapOpenLuckyMeadowCellDtoToOpenLuckyMeadowCellResult(
   dto: OpenLuckyMeadowCellResponseDto
 ): LuckyMeadowOpenCellResult {
   return {
-    jackpotCount: dto.jackpotCount,
-    luckyCount: dto.semiJackpotCount,
+    ...mapLuckyMeadowGameResultDto(dto),
     outcome: outcomeMap[dto.outcome],
     position: dto.position,
-    prize: dto.prize ? prizeMap[dto.prize] : undefined,
-    prizeStatus: dto.prizeStatus === "jackpot_unavailable" ? "jackpotUnavailable" : undefined,
-    status: dto.status
   };
+}
+
+export function mapResolveLuckyMeadowSemiChoiceDtoToLuckyMeadowSemiChoiceResult(
+  dto: ResolveLuckyMeadowSemiChoiceResponseDto
+): LuckyMeadowSemiChoiceResult {
+  return mapLuckyMeadowGameResultDto(dto);
 }

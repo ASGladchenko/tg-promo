@@ -8,11 +8,18 @@ import { AdminModalForm, AdminModalFormRootError } from "@/shared/ui/admin-modal
 import { ButtonBase } from "@/shared/ui/button-base";
 import { ButtonLoading } from "@/shared/ui/button-loading";
 import { Checkbox } from "@/shared/ui/checkbox";
+import { InputField } from "@/shared/ui/input-field";
 import { SelectField } from "@/shared/ui/select-field";
 import { SelectOption } from "@/shared/ui/select-option";
 import { TextareaField } from "@/shared/ui/textarea-field";
 
-import { adminLuckyMeadowRuleFormSchema } from "../model/admin-lucky-meadow-rule-form-schema";
+import {
+  ADMIN_LUCKY_MEADOW_RULE_MAX_SEMI_FALLBACK_ATTEMPTS,
+  ADMIN_LUCKY_MEADOW_RULE_MAX_TRAP_COUNT,
+  ADMIN_LUCKY_MEADOW_RULE_MIN_SEMI_FALLBACK_ATTEMPTS,
+  ADMIN_LUCKY_MEADOW_RULE_MIN_TRAP_COUNT,
+  adminLuckyMeadowRuleFormSchema
+} from "../model/admin-lucky-meadow-rule-form-schema";
 import { type AdminLuckyMeadowRuleFormState } from "../model/form-types";
 
 import "./admin-lucky-meadow-rule-form.scss";
@@ -132,6 +139,26 @@ export function AdminLuckyMeadowRuleForm({
 
       <div className="admin-lucky-meadow-rule-form__fields">
         {periodContent}
+
+        <InputField<AdminLuckyMeadowRuleFormState>
+          disabled={isFormPending}
+          label="Trap count"
+          max={ADMIN_LUCKY_MEADOW_RULE_MAX_TRAP_COUNT}
+          min={ADMIN_LUCKY_MEADOW_RULE_MIN_TRAP_COUNT}
+          name="trapCount"
+          step={1}
+          type="number"
+        />
+
+        <InputField<AdminLuckyMeadowRuleFormState>
+          disabled={isFormPending}
+          label="Semi fallback attempts"
+          max={ADMIN_LUCKY_MEADOW_RULE_MAX_SEMI_FALLBACK_ATTEMPTS}
+          min={ADMIN_LUCKY_MEADOW_RULE_MIN_SEMI_FALLBACK_ATTEMPTS}
+          name="semiFallbackAttempts"
+          step={1}
+          type="number"
+        />
 
         <fieldset className="admin-lucky-meadow-rule-form__prize">
           <legend className="admin-lucky-meadow-rule-form__prize-title">Jackpot Prize</legend>

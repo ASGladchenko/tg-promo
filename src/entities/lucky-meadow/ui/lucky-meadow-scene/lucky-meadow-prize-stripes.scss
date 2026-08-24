@@ -114,6 +114,20 @@
 
     display: inline-block;
   }
+
+  &--hold {
+    .lucky-meadow-prize-stripes__row::before {
+      animation-name: lucky-meadow-prize-row-bg-hold;
+    }
+
+    .lucky-meadow-prize-stripes__word {
+      animation-name: lucky-meadow-prize-fly-ltr-hold;
+    }
+
+    .lucky-meadow-prize-stripes__row:nth-child(even) .lucky-meadow-prize-stripes__word {
+      animation-name: lucky-meadow-prize-fly-rtl-hold;
+    }
+  }
 }
 
 @keyframes lucky-meadow-prize-row-bg {
@@ -128,6 +142,17 @@
 
   100% {
     opacity: 0;
+  }
+}
+
+@keyframes lucky-meadow-prize-row-bg-hold {
+  0% {
+    opacity: 0;
+  }
+
+  16%,
+  100% {
+    opacity: 1;
   }
 }
 
@@ -149,6 +174,19 @@
   }
 }
 
+@keyframes lucky-meadow-prize-fly-ltr-hold {
+  0% {
+    opacity: 0;
+    transform: translate(-184%, -50%) scale(0.96);
+  }
+
+  16%,
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
 @keyframes lucky-meadow-prize-fly-rtl {
   0% {
     opacity: 0;
@@ -164,6 +202,19 @@
   100% {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.94);
+  }
+}
+
+@keyframes lucky-meadow-prize-fly-rtl-hold {
+  0% {
+    opacity: 0;
+    transform: translate(84%, -50%) scale(0.96);
+  }
+
+  16%,
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 

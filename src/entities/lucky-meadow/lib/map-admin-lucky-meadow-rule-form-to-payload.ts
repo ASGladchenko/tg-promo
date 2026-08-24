@@ -17,7 +17,9 @@ export function mapAdminLuckyMeadowRuleFormToPayload(
   const payload: CreateLuckyMeadowRulePayload = {
     endDate: data.endDate.trim(),
     jackpotPrize: mapPrizeToPayload(data.jackpotPrize),
-    startDate: data.startDate.trim()
+    semiFallbackAttempts: Number(data.semiFallbackAttempts),
+    startDate: data.startDate.trim(),
+    trapCount: Number(data.trapCount)
   };
 
   if (data.semiJackpotPrize) {

@@ -1,5 +1,6 @@
 import { Outlet } from "react-router";
 
+import { LuckyMeadowAwardModal } from "@/entities/lucky-meadow";
 import { AwardedUserPrizeModal } from "@/entities/prizes";
 import { MyPrizesTrigger } from "@/features/view-my-prizes";
 import { AttemptsWalletWidget } from "@/widgets/attempts-wallet-widget";
@@ -21,6 +22,7 @@ export function ClientLayout() {
       </div>
 
       <AwardedUserPrizeModal />
+      <LuckyMeadowAwardModal />
     </main>
   );
 }

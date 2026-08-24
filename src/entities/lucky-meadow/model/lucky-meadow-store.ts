@@ -6,29 +6,41 @@ type LuckyMeadowStoreState = {
   cancelOpeningCell: (cellIndex: number) => void;
   finishGame: () => void;
   isGameActive: boolean;
+  isSemiChoicePending: boolean;
   openCell: (cellIndex: number, outcome: LuckyMeadowCellOutcome) => boolean;
   openingCellIndex: number | null;
   openedCells: LuckyMeadowOpenedCells;
   resetGame: () => void;
-  setGameState: (isGameActive: boolean, openedCells: LuckyMeadowOpenedCells) => void;
+  setGameState: (
+    isGameActive: boolean,
+    openedCells: LuckyMeadowOpenedCells,
+    isSemiChoicePending?: boolean
+  ) => void;
+  setSemiChoicePending: (isSemiChoicePending: boolean) => void;
   startOpeningCell: (cellIndex: number) => boolean;
   startGame: () => void;
 };
 
 export const useLuckyMeadowStore = create<LuckyMeadowStoreState>((set, get) => ({
   isGameActive: false,
+  isSemiChoicePending: false,
   openingCellIndex: null,
   openedCells: {},
-  setGameState: (isGameActive, openedCells) => {
+  setGameState: (isGameActive, openedCells, isSemiChoicePending = false) => {
     set({
       isGameActive,
+      isSemiChoicePending,
       openingCellIndex: null,
       openedCells
     });
   },
+  setSemiChoicePending: (isSemiChoicePending) => {
+    set({ isSemiChoicePending });
+  },
   startGame: () => {
     set({
       isGameActive: true,
+      isSemiChoicePending: false,
       openingCellIndex: null,
       openedCells: {}
     });
@@ -36,12 +48,14 @@ export const useLuckyMeadowStore = create<LuckyMeadowStoreState>((set, get) => (
   finishGame: () => {
     set({
       isGameActive: false,
+      isSemiChoicePending: false,
       openingCellIndex: null
     });
   },
   resetGame: () => {
     set({
       isGameActive: false,
+      isSemiChoicePending: false,
       openingCellIndex: null,
       openedCells: {}
     });
@@ -49,7 +63,12 @@ export const useLuckyMeadowStore = create<LuckyMeadowStoreState>((set, get) => (
   startOpeningCell: (cellIndex) => {
     const state = get();
 
-    if (!state.isGameActive || state.openingCellIndex !== null || state.openedCells[cellIndex]) {
+    if (
+      !state.isGameActive ||
+      state.isSemiChoicePending ||
+      state.openingCellIndex !== null ||
+      state.openedCells[cellIndex]
+    ) {
       return false;
     }
 

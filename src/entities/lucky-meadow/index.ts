@@ -1,16 +1,22 @@
 export * from "./ui";
 export { useLuckyMeadowStore } from "./model/lucky-meadow-store";
 export type {
+  LuckyMeadowAwardPrize,
   LuckyMeadowCellOutcome,
+  LuckyMeadowGameResult,
   LuckyMeadowOpenCellResult,
   LuckyMeadowOpenedCells,
   LuckyMeadowPrize,
+  LuckyMeadowSemiChoiceAction,
+  LuckyMeadowSemiChoiceResult,
   LuckyMeadowState
 } from "./model/types";
 export { luckyMeadowStateQueryKey } from "./model/lucky-meadow-query";
+export { useLuckyMeadowAwardModalStore } from "./model/use-lucky-meadow-award-modal-store";
 export { useLuckyMeadowState } from "./model/use-lucky-meadow-state";
 export { useLuckyMeadowRealtimeSync } from "./model/use-lucky-meadow-realtime-sync";
 export { useOpenLuckyMeadowCell } from "./model/use-open-lucky-meadow-cell";
+export { useResolveLuckyMeadowSemiChoice } from "./model/use-resolve-lucky-meadow-semi-choice";
 export { useStartLuckyMeadowSnapshot } from "./model/use-start-lucky-meadow-snapshot";
 export type { CreateLuckyMeadowRulePayload, UpdateLuckyMeadowRulePayload } from "./api/types";
 export type { AdminLuckyMeadowRuleFormInput, AdminLuckyMeadowRuleFormState } from "./model/form-types";

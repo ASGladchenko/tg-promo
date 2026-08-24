@@ -73,23 +73,50 @@ export const arTranslation = {
     menuLabel: "اختر اللغة"
   },
   luckyMeadow: {
+    availability: {
+      preparingNewGame: "يتم تجهيز لعبة Lucky Meadow جديدة. انتظروا الإعلان في القناة."
+    },
+    awardModal: {
+      close: "إغلاق نافذة الجائزة",
+      jackpot: {
+        eyebrow: "Jackpot",
+        title: "فزت بجائزة Jackpot"
+      },
+      label: "جائزة Lucky Meadow",
+      lucky: {
+        eyebrow: "Lucky Prize",
+        title: "فزت بـ Lucky Prize"
+      }
+    },
     errors: {
       dailyLimitReached: "Lucky Meadow غير متاحة لك اليوم.",
+      jackpotWin: "لقد فزت بالفعل بجائزة Jackpot اليوم.",
       missingSession: "تعذرت استعادة جلسة Lucky Meadow. ابدأ من جديد.",
       noAttempts: "لم تعد لديك محاولات. افتح محفظة المحاولات للحصول على المزيد.",
       openCell: "تعذر فتح هذه الخانة. حاول مرة أخرى.",
+      resolveSemiChoice: "تعذر تنفيذ اختيار Lucky Prize. حاول مرة أخرى.",
       start: "تعذر بدء Lucky Meadow. حاول مرة أخرى.",
       unavailable: "Lucky Meadow غير متاحة الآن."
     },
     results: {
       jackpot: "فزت بالجائزة الكبرى.",
       jackpotUnavailable: "جائزة Jackpot غير متاحة. واصل اللعب من أجل Lucky Prize.",
-      lucky: "فزت بـ Lucky Prize."
+      lucky: "فزت بـ Lucky Prize.",
+      semiDeclined: "تم استخدام Lucky Prize. واصل اللعب من أجل Jackpot.",
+      semiFallbackAwarded: "Lucky Prize غير متاحة. تمت إضافة محاولات بدلاً منها.",
+      semiUnavailable: "Lucky Prize غير متاحة."
+    },
+    semiChoice: {
+      body: "احصل على Lucky Prize الآن أو استخدمها لمواصلة اللعب من أجل Jackpot.",
+      claim: "Claim",
+      continue: "متابعة اللعب",
+      title: "Lucky Prize جاهزة"
     },
     soundOff: "إيقاف الصوت",
     soundOn: "تشغيل الصوت",
     start: "ابدأ",
-    starting: "جارٍ البدء..."
+    starting: "جارٍ البدء...",
+    widgetLabel: "Lucky Meadow"
   },
   myPrizes: {
     close: "إغلاق الجوائز",

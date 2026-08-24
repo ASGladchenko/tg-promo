@@ -11,7 +11,9 @@ export const luckyMeadowRuleDtoSchema = z.object({
   id: z.uuid(),
   jackpotPrize: luckyMeadowRulePrizeDtoSchema,
   scheduleId: z.uuid(),
+  semiFallbackAttempts: z.number(),
   semiJackpotPrize: luckyMeadowRulePrizeDtoSchema.nullable(),
   startDate: z.string(),
+  trapCount: z.number(),
   updatedAt: z.string()
 });

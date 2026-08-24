@@ -75,23 +75,50 @@ export const frTranslation = {
     menuLabel: "Choisir une langue"
   },
   luckyMeadow: {
+    availability: {
+      preparingNewGame: "Une nouvelle partie Lucky Meadow est en préparation. Attendez notre annonce sur la chaîne."
+    },
+    awardModal: {
+      close: "Fermer la fenêtre du prix",
+      jackpot: {
+        eyebrow: "Jackpot",
+        title: "Jackpot gagné"
+      },
+      label: "Prix Lucky Meadow",
+      lucky: {
+        eyebrow: "Lucky Prize",
+        title: "Lucky Prize gagné"
+      }
+    },
     errors: {
       dailyLimitReached: "Lucky Meadow n’est pas disponible pour vous aujourd’hui.",
+      jackpotWin: "Vous avez déjà gagné le Jackpot aujourd’hui.",
       missingSession: "Impossible de restaurer la session Lucky Meadow. Veuillez recommencer.",
       noAttempts: "Vous n’avez plus de tentatives. Ouvrez le portefeuille pour en obtenir davantage.",
       openCell: "Impossible d’ouvrir cette case. Veuillez réessayer.",
+      resolveSemiChoice: "Impossible de valider ce choix Lucky Prize. Veuillez réessayer.",
       start: "Impossible de démarrer Lucky Meadow. Veuillez réessayer.",
       unavailable: "Lucky Meadow n’est pas disponible pour le moment."
     },
     results: {
       jackpot: "Jackpot gagné.",
       jackpotUnavailable: "Le prix Jackpot n’est pas disponible. Continuez pour le Lucky Prize.",
-      lucky: "Lucky Prize gagné."
+      lucky: "Lucky Prize gagné.",
+      semiDeclined: "Lucky Prize utilisée. Continuez pour le Jackpot.",
+      semiFallbackAwarded: "Lucky Prize n’est pas disponible. Des tentatives ont été créditées.",
+      semiUnavailable: "Lucky Prize n’est pas disponible."
+    },
+    semiChoice: {
+      body: "Réclamez Lucky Prize maintenant ou utilisez-la pour continuer vers le Jackpot.",
+      claim: "Claim",
+      continue: "Continuer",
+      title: "Lucky Prize prête"
     },
     soundOff: "Couper le son",
     soundOn: "Activer le son",
     start: "Démarrer",
-    starting: "Démarrage..."
+    starting: "Démarrage...",
+    widgetLabel: "Lucky Meadow"
   },
   myPrizes: {
     close: "Fermer les prix",

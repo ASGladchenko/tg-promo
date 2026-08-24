@@ -113,6 +113,82 @@
       cursor: default;
     }
   }
+
+  &__choice {
+    position: absolute;
+    right: 18px;
+    bottom: 28px;
+    left: 18px;
+    z-index: 3;
+
+    padding: 14px;
+
+    display: grid;
+    gap: 10px;
+
+    text-align: center;
+
+    color: #ffffff;
+    background: rgb(25 10 46 / 88%);
+    border: 2px solid #ffbe35;
+    border-radius: 8px;
+    box-shadow: 0 6px 0 #2a0c53;
+  }
+
+  &__choice-title,
+  &__choice-body {
+    margin: 0;
+  }
+
+  &__choice-title {
+    font-size: 1rem;
+    font-weight: 900;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  &__choice-body {
+    font-size: 0.84rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  &__choice-actions {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  &__choice-button {
+    min-width: 0;
+    padding: 10px 8px;
+
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 900;
+    line-height: 1.15;
+    text-transform: uppercase;
+
+    color: #2a0c53;
+    background: linear-gradient(180deg, #ffdf72 0%, #ffbe35 100%);
+    border: 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 0 #8f4f00;
+
+    cursor: pointer;
+
+    &--secondary {
+      color: #ffffff;
+      background: linear-gradient(180deg, #9b3dff 0%, #4f1797 100%);
+      box-shadow: 0 4px 0 #2a0c53;
+    }
+
+    &:disabled {
+      opacity: 0.72;
+
+      cursor: default;
+    }
+  }
 }
 
 @keyframes lucky-meadow-reward-fly {
