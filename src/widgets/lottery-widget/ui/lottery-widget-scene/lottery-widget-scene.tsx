@@ -10,6 +10,7 @@ import {
   useLotteryStore
 } from "@/entities/lottery";
 import { useLotteryCodeCheckFlow } from "@/features/check-lottery-combination";
+import { SceneAudioToggle } from "@/features/toggle-scene-audio";
 
 import { LotteryDuplicateCodeModal } from "../lottery-duplicate-code-modal";
 import { LotteryEnteredCodesModal } from "../lottery-entered-codes-modal";
@@ -28,6 +29,8 @@ type LotterySafeResultState = {
   outcome: "jackpot";
   prize?: LotteryAttemptPrize;
 };
+
+const LOTTERY_AUDIO_SRC = "/audio/16s.ogg";
 
 export function LotteryWidgetScene({ enteredCodes, onAssetsReady, initialPrize }: LotteryWidgetSceneProps) {
   const { t } = useTranslation();
@@ -225,6 +228,13 @@ export function LotteryWidgetScene({ enteredCodes, onAssetsReady, initialPrize }
   return (
     <>
       <LotteryScene
+        audioToggle={
+          <SceneAudioToggle
+            src={LOTTERY_AUDIO_SRC}
+            playLabel={t("lottery.soundOn")}
+            pauseLabel={t("lottery.soundOff")}
+          />
+        }
         codePanel={codePanel}
         doorState={doorState}
         isDoorOpen={isReady}

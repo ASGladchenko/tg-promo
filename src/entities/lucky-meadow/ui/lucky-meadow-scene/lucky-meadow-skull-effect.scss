@@ -1,0 +1,45 @@
+.lucky-meadow-skull-effect {
+  position: fixed;
+  top: var(--skull-start-y);
+  left: var(--skull-start-x);
+  z-index: 10;
+
+  width: var(--skull-start-size);
+  height: auto;
+
+  pointer-events: none;
+  opacity: 0;
+  filter: drop-shadow(0 0 18px rgb(167 88 255 / 70%));
+
+  transform: translate(-50%, -50%);
+  animation: lucky-meadow-skull-to-center 1s ease-in 1.1s forwards;
+}
+
+@keyframes lucky-meadow-skull-to-center {
+  0% {
+    width: var(--skull-start-size);
+
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  12% {
+    opacity: 0.55;
+  }
+
+  72% {
+    width: min(46vw, 320px);
+
+    opacity: 0.42;
+    transform: translate(calc(50vw - var(--skull-start-x)), calc(50vh - var(--skull-start-y)))
+      translate(-50%, -50%) rotate(18deg);
+  }
+
+  100% {
+    width: min(46vw, 320px);
+
+    opacity: 0;
+    transform: translate(calc(50vw - var(--skull-start-x)), calc(50vh - var(--skull-start-y)))
+      translate(-50%, -50%) rotate(18deg) scale(1.08);
+  }
+}

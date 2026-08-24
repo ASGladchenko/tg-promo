@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 
 import { useLotteryAvailability } from "@/entities/lottery";
+import { GameUnavailablePlaceholder } from "@/shared/ui/game-unavailable-placeholder";
 
 import { LotteryWidgetLoader } from "../lottery-widget-loader";
 
@@ -58,11 +59,10 @@ export function LotteryWidget() {
 
   if (isGameUnavailable) {
     return (
-      <section className="lottery-widget lottery-widget--unavailable" aria-label={t("lottery.widgetLabel")}>
-        <div className="lottery-widget__unavailable" role="status">
-          <p className="lottery-widget__unavailable-message">{unavailableMessage}</p>
-        </div>
-      </section>
+      <GameUnavailablePlaceholder
+        ariaLabel={t("lottery.widgetLabel")}
+        message={unavailableMessage}
+      />
     );
   }
 

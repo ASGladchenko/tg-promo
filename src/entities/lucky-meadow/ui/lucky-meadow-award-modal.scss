@@ -1,0 +1,117 @@
+@use "../../../shared/styles/index" as s;
+
+.lucky-meadow-award-modal {
+  width: min(380px, 100%);
+
+  padding: 18px;
+
+  color: s.$color-warm-strong;
+  background: rgba(13, 11, 9, 0.95);
+  border: 1px solid rgba(s.$color-accent-gold, 0.26);
+  border-radius: s.$radius-md;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.42);
+}
+
+.lucky-meadow-award-modal--lucky {
+  border-color: rgba(99, 228, 155, 0.34);
+
+  .lucky-meadow-award-modal__eyebrow,
+  .lucky-meadow-award-modal__title {
+    color: #88f0b2;
+  }
+
+  .lucky-meadow-award-modal__code {
+    text-shadow:
+      0 0 18px rgba(93, 237, 151, 0.44),
+      0 2px 0 rgba(0, 0, 0, 0.64);
+  }
+}
+
+.lucky-meadow-award-modal--jackpot {
+  .lucky-meadow-award-modal__eyebrow {
+    color: rgba(s.$color-accent-gold, 0.76);
+  }
+
+  .lucky-meadow-award-modal__title {
+    color: s.$color-accent-gold-soft;
+  }
+}
+
+.lucky-meadow-award-modal__header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.lucky-meadow-award-modal__eyebrow {
+  margin: 0 0 4px;
+
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lucky-meadow-award-modal__title {
+  margin: 0;
+
+  font-size: 1.35rem;
+  line-height: 1.12;
+}
+
+.lucky-meadow-award-modal__close {
+  width: 32px;
+  height: 32px;
+
+  padding: 0;
+
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+
+  font-size: 1.35rem;
+  line-height: 1;
+
+  color: rgba(s.$color-warm-strong, 0.74);
+  background: rgba(s.$color-accent-gold-soft, 0.045);
+  border: 1px solid rgba(s.$color-warm-strong, 0.12);
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid s.$focus-ring;
+    outline-offset: 2px;
+  }
+}
+
+.lucky-meadow-award-modal__result {
+  margin: 22px 0 0;
+
+  display: grid;
+  gap: 10px;
+
+  text-align: center;
+}
+
+.lucky-meadow-award-modal__code {
+  overflow-wrap: anywhere;
+
+  font-size: clamp(1.6rem, 10vw, 2.5rem);
+  font-weight: 900;
+  line-height: 1;
+
+  color: #fff;
+}
+
+.lucky-meadow-award-modal__description {
+  margin: 0;
+
+  overflow-wrap: anywhere;
+
+  font-size: 0.98rem;
+  line-height: 1.35;
+
+  color: rgba(s.$color-warm-strong, 0.78);
+}

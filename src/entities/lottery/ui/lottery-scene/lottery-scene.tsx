@@ -1,4 +1,4 @@
-import { type AnimationEvent, type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
+import { type AnimationEvent, type KeyboardEvent, type ReactNode, useEffect, useRef } from "react";
 
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
@@ -6,8 +6,6 @@ import { useTranslation } from "react-i18next";
 import safeDoorBackfaceImage from "@/shared/images/back_face_safe.webp";
 import safeDoorImage from "@/shared/images/safe_door.webp";
 import safeImage from "@/shared/images/safe.webp";
-import MuteIcon from "@/shared/svg/mute.svg?react";
-import VolumeIcon from "@/shared/svg/volume.svg?react";
 
 import { useLotteryStore } from "../../model/lottery-store";
 import { SafeWheel } from "../safe-wheel";
@@ -16,6 +14,7 @@ import { waitForImageReady } from "./wait-for-image-ready";
 import "./lottery-scene.scss";
 
 type LotterySceneProps = {
+  audioToggle?: ReactNode;
   codePanel: ReactNode;
   doorState?: LotterySceneDoorState;
   isDoorDisabled?: boolean;
@@ -32,11 +31,8 @@ export type LotterySceneDoorState =
   | "open"
   | "peekTwice";
 
-const LOOP_AUDIO_SRC = "/audio/16s.ogg";
-
-const AUDIO_START_EVENTS = ["pointerdown", "click", "touchstart", "keydown"] as const;
-
 export function LotteryScene({
+  audioToggle,
   codePanel,
   doorState = "idle",
   isDoorDisabled = false,
@@ -46,106 +42,11 @@ export function LotteryScene({
   safeContent
 }: LotterySceneProps) {
   const { t } = useTranslation();
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const sceneRef = useRef<HTMLElement | null>(null);
-  const shouldResumeAudioRef = useRef(false);
   const hasReportedReadyRef = useRef(false);
-  const [isPlaying, setIsPlaying] = useState(false);
   const isCodeLocked = useLotteryStore((state) => state.isCodeLocked);
   const openCodePicker = useLotteryStore((state) => state.openCodePicker);
   const isDoorInteractionDisabled = isCodeLocked || isDoorDisabled;
-
-  async function playAudio(audio: HTMLAudioElement) {
-    try {
-      await audio.play();
-      setIsPlaying(true);
-      return true;
-    } catch {
-      setIsPlaying(false);
-      return false;
-    }
-  }
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) {
-      return;
-    }
-
-    const audioElement = audio;
-    audioElement.volume = 0.01;
-
-    function removeStartListeners() {
-      AUDIO_START_EVENTS.forEach((eventName) => {
-        document.removeEventListener(eventName, startAudioAfterInteraction);
-      });
-    }
-
-    function startAudioAfterInteraction(event: Event) {
-      const target = event.target;
-
-      if (target instanceof Element && target.closest(".lottery-scene__audio-toggle")) {
-        return;
-      }
-
-      void playAudio(audioElement).then((started) => {
-        if (started) {
-          removeStartListeners();
-        }
-      });
-    }
-
-    AUDIO_START_EVENTS.forEach((eventName) => {
-      document.addEventListener(eventName, startAudioAfterInteraction);
-    });
-
-    function pauseAudioForBackground() {
-      if (audioElement.paused) {
-        return;
-      }
-
-      shouldResumeAudioRef.current = true;
-      audioElement.pause();
-      setIsPlaying(false);
-    }
-
-    function resumeAudioAfterBackground() {
-      if (!shouldResumeAudioRef.current || document.visibilityState === "hidden") {
-        return;
-      }
-
-      void playAudio(audioElement).then((started) => {
-        if (started) {
-          shouldResumeAudioRef.current = false;
-        }
-      });
-    }
-
-    function handleVisibilityChange() {
-      if (document.visibilityState === "hidden") {
-        pauseAudioForBackground();
-        return;
-      }
-
-      resumeAudioAfterBackground();
-    }
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    window.addEventListener("pagehide", pauseAudioForBackground);
-    window.addEventListener("blur", pauseAudioForBackground);
-    window.addEventListener("pageshow", resumeAudioAfterBackground);
-    window.addEventListener("focus", resumeAudioAfterBackground);
-
-    return () => {
-      removeStartListeners();
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("pagehide", pauseAudioForBackground);
-      window.removeEventListener("blur", pauseAudioForBackground);
-      window.removeEventListener("pageshow", resumeAudioAfterBackground);
-      window.removeEventListener("focus", resumeAudioAfterBackground);
-      audioElement.pause();
-    };
-  }, []);
 
   useEffect(() => {
     if (!onAssetsReady || hasReportedReadyRef.current) {
@@ -175,22 +76,6 @@ export function LotteryScene({
       isCancelled = true;
     };
   }, [onAssetsReady]);
-
-  async function toggleAudio() {
-    const audio = audioRef.current;
-    if (!audio) {
-      return;
-    }
-
-    if (audio.paused) {
-      await playAudio(audio);
-      return;
-    }
-
-    audio.pause();
-    shouldResumeAudioRef.current = false;
-    setIsPlaying(false);
-  }
 
   function triggerDoorHapticFeedback() {
     window.Telegram?.WebApp?.HapticFeedback?.impactOccurred?.("soft");
@@ -227,7 +112,6 @@ export function LotteryScene({
 
   return (
     <section ref={sceneRef} className="lottery-scene" aria-label={t("lottery.sceneLabel")}>
-      <audio ref={audioRef} src={LOOP_AUDIO_SRC} loop preload="none" />
       <div className="lottery-scene__stage">
         <img
           className="lottery-scene__safe"
@@ -294,19 +178,7 @@ export function LotteryScene({
 
       {codePanel}
 
-      <button
-        className="lottery-scene__audio-toggle"
-        type="button"
-        onClick={() => void toggleAudio()}
-        aria-label={isPlaying ? t("lottery.soundOff") : t("lottery.soundOn")}
-        title={isPlaying ? t("lottery.soundOff") : t("lottery.soundOn")}
-      >
-        {isPlaying ? (
-          <VolumeIcon className="lottery-scene__audio-icon" aria-hidden="true" focusable="false" />
-        ) : (
-          <MuteIcon className="lottery-scene__audio-icon" aria-hidden="true" focusable="false" />
-        )}
-      </button>
+      {audioToggle}
     </section>
   );
 }
