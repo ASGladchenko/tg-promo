@@ -68,6 +68,15 @@ export const arTranslation = {
   brand: {
     logoLabel: "فتح موقع العلامة التجارية"
   },
+  game: {
+    errors: {
+      activeSchedule: "تعذر تحميل اللعبة الحالية. حاول مرة أخرى لاحقًا."
+    },
+    loading: "جارٍ تحميل اللعبة",
+    pageLabel: "اللعبة",
+    unavailableLabel: "لا توجد لعبة نشطة",
+    unavailableMessage: "لا توجد لعبة نشطة الآن. انتظروا الإعلان في القناة."
+  },
   languageSwitcher: {
     changeLanguage: "تغيير اللغة",
     menuLabel: "اختر اللغة"

@@ -8,6 +8,5 @@ export const APP_ROUTES = {
   adminPrizes: "prizes",
   adminConsolation: "consolation",
   adminSettings: "settings",
-  adminSettingsAi: "settings/ai",
-  luckyMeadow: "lucky-meadow"
+  adminSettingsAi: "settings/ai"
 } as const;

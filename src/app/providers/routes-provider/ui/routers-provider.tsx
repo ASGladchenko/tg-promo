@@ -3,8 +3,7 @@ import { Suspense } from "react";
 import { Route, Routes } from "react-router";
 
 import { ClientLayout } from "@/app/layouts";
-import { LotteryPage } from "@/pages/lottery-page";
-import { LuckyMeadowPage } from "@/pages/lucky-meadow-page";
+import { GamePage } from "@/pages/game-page";
 import { APP_ROUTES } from "@/shared/config";
 
 import {
@@ -29,8 +28,7 @@ export function ProviderRoutes() {
     <Routes>
       <Route element={<TelegramRoutesLayout />}>
         <Route element={<ClientLayout />}>
-          <Route path={APP_ROUTES.luckyMeadow} element={<LotteryPage />} />
-          <Route path={APP_ROUTES.home} element={<LuckyMeadowPage />} />
+          <Route path={APP_ROUTES.home} element={<GamePage />} />
         </Route>
       </Route>
 

@@ -70,6 +70,15 @@ export const enTranslation = {
   brand: {
     logoLabel: "Open brand website"
   },
+  game: {
+    errors: {
+      activeSchedule: "Could not load the current game. Please try again later."
+    },
+    loading: "Loading game",
+    pageLabel: "Game",
+    unavailableLabel: "No active game",
+    unavailableMessage: "No game is active right now. Wait for an announcement in the channel."
+  },
   languageSwitcher: {
     changeLanguage: "Change language",
     menuLabel: "Choose a language"

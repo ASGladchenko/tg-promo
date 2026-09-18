@@ -1,0 +1,13 @@
+@use "@/shared/styles" as s;
+
+.game-page-loader {
+  width: 100%;
+  min-height: 320px;
+
+  display: grid;
+  align-self: stretch;
+  place-items: center;
+
+  --circular-progress-loader-fill: #{s.$color-accent-gold-soft};
+  --circular-progress-loader-track: #{rgba(s.$color-accent-gold, 0.18)};
+}

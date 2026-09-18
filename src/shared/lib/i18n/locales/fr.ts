@@ -70,6 +70,15 @@ export const frTranslation = {
   brand: {
     logoLabel: "Ouvrir le site de la marque"
   },
+  game: {
+    errors: {
+      activeSchedule: "Impossible de charger le jeu actuel. Veuillez réessayer plus tard."
+    },
+    loading: "Chargement du jeu",
+    pageLabel: "Jeu",
+    unavailableLabel: "Aucun jeu actif",
+    unavailableMessage: "Aucun jeu n’est actif pour le moment. Attendez notre annonce sur la chaîne."
+  },
   languageSwitcher: {
     changeLanguage: "Changer de langue",
     menuLabel: "Choisir une langue"
