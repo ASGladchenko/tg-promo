@@ -46,6 +46,12 @@ export const LazyAdminLuckyMeadowSnapshot = lazy(() =>
   }))
 );
 
+export const LazyAdminLuckyMeadowUserSessions = lazy(() =>
+  import("@/pages/admin-lucky-meadow-user-sessions").then(({ AdminLuckyMeadowUserSessions }) => ({
+    default: AdminLuckyMeadowUserSessions
+  }))
+);
+
 export const LazyAdminConsolationPrizes = lazy(() =>
   import("@/pages/admin-consolation-prizes").then(({ AdminConsolationPrizes }) => ({
     default: AdminConsolationPrizes
@@ -58,4 +64,10 @@ export const LazyAdminSettings = lazy(() =>
 
 export const LazyAdminAiSettings = lazy(() =>
   import("@/pages/admin-ai-settings").then(({ AdminAiSettings }) => ({ default: AdminAiSettings }))
+);
+
+export const LazyAdminAttemptRewards = lazy(() =>
+  import("@/pages/admin-attempt-rewards").then(({ AdminAttemptRewards }) => ({
+    default: AdminAttemptRewards
+  }))
 );

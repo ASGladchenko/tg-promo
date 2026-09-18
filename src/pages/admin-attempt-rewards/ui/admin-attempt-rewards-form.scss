@@ -1,0 +1,54 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-attempt-rewards-form {
+  width: min(720px, 100%);
+  min-width: 0;
+  padding: 20px;
+
+  display: grid;
+  gap: 20px;
+
+  color: s.$admin-text;
+  background: s.$admin-surface;
+  border: 1px solid s.$admin-border;
+  border-radius: s.$admin-radius;
+  box-shadow: s.$admin-shadow;
+}
+
+.admin-attempt-rewards-form__heading {
+  display: grid;
+  gap: 6px;
+}
+
+.admin-attempt-rewards-form__title,
+.admin-attempt-rewards-form__description {
+  margin: 0;
+}
+
+.admin-attempt-rewards-form__title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.admin-attempt-rewards-form__description {
+  line-height: 1.45;
+
+  color: s.$admin-text-secondary;
+}
+
+.admin-attempt-rewards-form__fields {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.admin-attempt-rewards-form__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 600px) {
+  .admin-attempt-rewards-form__fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,47 @@
+@use "@/shared/styles/admin" as s;
+
+.admin-attempt-rewards {
+  min-width: 0;
+
+  color: s.$admin-text;
+}
+
+.admin-attempt-rewards__state {
+  margin: 0;
+  padding: 20px;
+
+  font-size: 18px;
+  font-weight: 500;
+
+  color: s.$admin-text-secondary;
+  background: s.$admin-surface;
+  border-radius: s.$admin-radius;
+}
+
+.admin-attempt-rewards__error {
+  max-width: 720px;
+  padding: 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+
+  color: s.$admin-danger;
+  background: rgba(s.$admin-danger, 0.1);
+  border: 1px solid rgba(s.$admin-danger, 0.38);
+  border-radius: s.$admin-radius;
+}
+
+.admin-attempt-rewards__error-text {
+  margin: 0;
+
+  line-height: 1.45;
+}
+
+@media (max-width: 600px) {
+  .admin-attempt-rewards__error {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

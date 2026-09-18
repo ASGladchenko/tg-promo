@@ -1,0 +1,90 @@
+@use "@/shared/styles/admin" as a;
+
+.lucky-meadow-overview {
+  margin-bottom: 22px;
+
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.lucky-meadow-overview__card {
+  min-width: 0;
+  min-height: 110px;
+
+  padding: 20px;
+
+  display: grid;
+  align-content: center;
+  gap: 12px;
+
+  background: a.$admin-surface-dark;
+  border: 1px solid a.$admin-border-soft;
+  border-radius: a.$admin-radius;
+  box-shadow: a.$admin-shadow;
+}
+
+.lucky-meadow-overview__card span {
+  display: block;
+
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+
+  color: a.$admin-text-muted;
+}
+
+.lucky-meadow-overview__card strong {
+  min-width: 0;
+
+  overflow: hidden;
+
+  font-size: 28px;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lucky-meadow-overview__card strong.lucky-meadow-overview__period {
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.lucky-meadow-overview__card mark {
+  width: fit-content;
+  max-width: 100%;
+
+  overflow: hidden;
+
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: a.$admin-success;
+  background: transparent;
+}
+
+.lucky-meadow-overview__card mark.lucky-meadow-overview__status--finished {
+  color: a.$admin-danger;
+}
+
+@media (max-width: 1100px) {
+  .lucky-meadow-overview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .lucky-meadow-overview {
+    gap: 14px;
+    grid-template-columns: 1fr;
+  }
+
+  .lucky-meadow-overview__card {
+    min-height: 96px;
+  }
+}

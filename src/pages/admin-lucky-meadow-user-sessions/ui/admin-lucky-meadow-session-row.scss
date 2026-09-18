@@ -1,0 +1,94 @@
+@use "@/shared/styles/admin" as a;
+
+.session-row {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.session-row__button {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+
+  padding: 0;
+
+  display: grid;
+  align-items: center;
+  column-gap: 18px;
+  grid-template-columns: var(--sessions-list-columns);
+
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid a.$admin-border;
+
+  transition: background 0.15s ease-in-out;
+}
+
+.session-row__button:hover {
+  background: a.$admin-surface;
+}
+
+.session-row__button:focus-visible {
+  background: a.$admin-surface;
+  outline: 2px solid a.$admin-primary;
+  outline-offset: -2px;
+}
+
+.session-row__cell {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.session-row__id {
+  font-size: 13px;
+}
+
+.session-row__status {
+  font-weight: 700;
+}
+
+.session-row__status--active {
+  color: a.$admin-success;
+}
+
+.session-row__status--pending {
+  color: a.$admin-warning;
+}
+
+.session-row__status--finished,
+.session-row__status--refunded {
+  color: a.$admin-text-secondary;
+}
+
+.session-row--load-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: a.$admin-text-secondary;
+}
+
+.session-row__retry {
+  padding: 8px 12px;
+
+  font: inherit;
+  font-weight: 700;
+
+  color: a.$admin-white;
+  cursor: pointer;
+  background: a.$admin-primary;
+  border: 0;
+  border-radius: a.$admin-radius;
+}
+
+.session-row__retry:focus-visible {
+  outline: 2px solid a.$admin-white;
+  outline-offset: 2px;
+}

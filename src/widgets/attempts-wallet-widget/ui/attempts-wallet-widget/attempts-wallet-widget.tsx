@@ -3,7 +3,6 @@ import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
-  ATTEMPT_REWARDS_CONFIG,
   AttemptRewardActionButton,
   AttemptRewardCard,
   AttemptsWalletModal,
@@ -12,9 +11,13 @@ import {
   useAttemptsWalletStore
 } from "@/entities/attempts";
 import { useMe } from "@/entities/me";
+import { useWalletAttemptRewardsSettings } from "@/entities/settings";
 import { CheckChannelSubscriptionButton } from "@/features/check-channel-subscription";
 import { InviteFriendButton } from "@/features/invite-friend";
 import { RequestTelegramContactButton } from "@/features/request-telegram-contact";
+import { ButtonBase } from "@/shared/ui/button-base";
+
+import { getAttemptRewards } from "../../lib/get-attempt-rewards";
 
 import "./attempts-wallet-widget.scss";
 
@@ -31,9 +34,11 @@ export function AttemptsWalletWidget() {
   const closeWallet = useAttemptsWalletStore((state) => state.closeWallet);
   const { data: me } = useMe({ enabled: false });
   const { data: wallet } = useAttemptsWallet({ enabled: false });
+  const attemptRewardsQuery = useWalletAttemptRewardsSettings();
 
   const hasPhone = Boolean(me?.phone);
   const isChannelBonusGranted = wallet?.isChannelBonusGranted === true;
+  const attemptRewards = attemptRewardsQuery.data ? getAttemptRewards(attemptRewardsQuery.data) : [];
 
   function handleOpenWallet() {
     setStatusMessage("");
@@ -98,13 +103,31 @@ export function AttemptsWalletWidget() {
         isOpen={isWalletOpen}
         onClose={handleCloseWallet}
         statusMessage={
-          contactStatusMessage ||
-          channelSubscriptionStatusMessage ||
-          inviteStatusMessage ||
-          statusMessage
+          contactStatusMessage || channelSubscriptionStatusMessage || inviteStatusMessage || statusMessage
         }
       >
-        {ATTEMPT_REWARDS_CONFIG.map((reward) => {
+        {attemptRewardsQuery.isLoading ? (
+          <li className="attempts-wallet-widget__rewards-state" aria-live="polite">
+            {t("attempts.rewardsLoading")}
+          </li>
+        ) : null}
+
+        {attemptRewardsQuery.isError && !attemptRewardsQuery.data ? (
+          <li className="attempts-wallet-widget__rewards-state" role="alert">
+            <span>{t("attempts.rewardsError")}</span>
+            <ButtonBase
+              type="button"
+              appearance="outline"
+              className="attempts-wallet-widget__retry"
+              disabled={attemptRewardsQuery.isFetching}
+              onClick={() => void attemptRewardsQuery.refetch()}
+            >
+              {t("attempts.retry")}
+            </ButtonBase>
+          </li>
+        ) : null}
+
+        {attemptRewards.map((reward) => {
           const rewardCard = {
             ...reward,
             status:

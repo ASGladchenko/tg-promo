@@ -1,0 +1,92 @@
+@use "@/shared/styles/admin" as a;
+
+.session-modal {
+  box-sizing: border-box;
+  width: min(760px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+
+  padding: 22px;
+
+  overflow-y: auto;
+
+  color: a.$admin-text;
+  background: a.$admin-sidebar;
+  border: 1px solid a.$admin-border;
+  border-radius: 12px;
+  box-shadow: a.$admin-shadow;
+}
+
+.session-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.session-modal__eyebrow {
+  margin: 0 0 4px;
+
+  color: a.$admin-text-muted;
+  text-transform: uppercase;
+}
+
+.session-modal__title {
+  margin: 0;
+}
+
+.session-modal__id {
+  max-width: 100%;
+
+  margin: 14px 0;
+
+  display: block;
+  overflow: hidden;
+
+  color: a.$admin-text-secondary;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.session-modal__meta {
+  margin-bottom: 18px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+
+  color: a.$admin-text-secondary;
+}
+
+.session-modal__state {
+  margin: 18px 0 0;
+  padding: 18px;
+
+  color: a.$admin-text-secondary;
+  background: a.$admin-surface-dark;
+  border-radius: a.$admin-radius;
+}
+
+.session-modal__state--error {
+  color: a.$admin-danger;
+}
+
+.session-modal__state--error p {
+  margin: 0 0 12px;
+}
+
+.session-modal .snapshot-board {
+  width: min(100%, 38dvh, 320px);
+
+  gap: 6px;
+}
+
+@media (max-width: 520px) {
+  .session-modal {
+    padding: 16px;
+  }
+
+  .session-modal__header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

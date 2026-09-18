@@ -1,0 +1,83 @@
+@use "@/shared/styles/admin" as a;
+
+.snapshot-board {
+  width: min(100%, 520px);
+
+  margin: 0 auto;
+
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.snapshot-board__cell {
+  position: relative;
+
+  min-width: 0;
+
+  overflow: hidden;
+
+  background: a.$admin-surface-strong;
+  border: 2px solid a.$admin-border;
+  border-radius: 10px;
+
+  aspect-ratio: 1;
+}
+
+.snapshot-board__cell--opened {
+  border-color: rgba(a.$admin-success, 0.7);
+}
+
+.snapshot-board__cell--closed {
+  border-style: dashed;
+  border-color: rgba(a.$admin-warning, 0.7);
+}
+
+.snapshot-board__cell--closed img {
+  opacity: 0.58;
+  filter: grayscale(0.45);
+}
+
+.snapshot-board__cell img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: contain;
+}
+
+.snapshot-board__position,
+.snapshot-board__state {
+  position: absolute;
+
+  padding: 2px 5px;
+
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+
+  color: a.$admin-white;
+  background: rgba(a.$admin-black, 0.72);
+  border-radius: 4px;
+}
+
+.snapshot-board__position {
+  top: 5px;
+  left: 5px;
+}
+
+.snapshot-board__state {
+  right: 5px;
+  bottom: 5px;
+}
+
+@media (max-width: 520px) {
+  .snapshot-board {
+    gap: 6px;
+  }
+
+  .snapshot-board__state {
+    font-size: 9px;
+  }
+}

@@ -1,9 +1,19 @@
 import { type z } from "zod";
 
 import {
+  type luckyMeadowPeriodUserDtoSchema,
+  type luckyMeadowPeriodUsersResponseDtoSchema
+} from "./lucky-meadow-period-users-response-schema";
+import {
   type luckyMeadowRuleDtoSchema,
   type luckyMeadowRulePrizeDtoSchema
 } from "./lucky-meadow-rules-response-schema";
+import { type luckyMeadowSnapshotStatsResponseDtoSchema } from "./lucky-meadow-snapshot-stats-response-schema";
+import {
+  type luckyMeadowUserSessionDetailsDtoSchema,
+  type luckyMeadowUserSessionDtoSchema,
+  type luckyMeadowUserSessionsResponseDtoSchema
+} from "./lucky-meadow-user-sessions-response-schema";
 
 export type LuckyMeadowCellOutcomeDto = "empty" | "jackpot" | "semi_jackpot" | "trap";
 export type LuckyMeadowPrizeDto = "jackpot" | "semi_jackpot";
@@ -83,4 +93,29 @@ export type UpdateLuckyMeadowRulePayload = Partial<CreateLuckyMeadowRulePayload>
 export type UpdateLuckyMeadowRuleVariables = {
   payload: UpdateLuckyMeadowRulePayload;
   startDate: string;
+};
+
+export type LuckyMeadowPeriodUserDto = z.output<typeof luckyMeadowPeriodUserDtoSchema>;
+export type LuckyMeadowPeriodUsersResponseDto = z.output<typeof luckyMeadowPeriodUsersResponseDtoSchema>;
+export type LuckyMeadowSnapshotStatsDto = z.output<typeof luckyMeadowSnapshotStatsResponseDtoSchema>;
+export type GetLuckyMeadowPeriodUsersParams = {
+  limit: number;
+  offset: number;
+  search: string;
+  startDate: string;
+};
+
+export type LuckyMeadowUserSessionDto = z.output<typeof luckyMeadowUserSessionDtoSchema>;
+export type LuckyMeadowUserSessionsResponseDto = z.output<typeof luckyMeadowUserSessionsResponseDtoSchema>;
+export type LuckyMeadowUserSessionDetailsDto = z.output<typeof luckyMeadowUserSessionDetailsDtoSchema>;
+export type GetLuckyMeadowUserSessionsParams = {
+  limit: number;
+  offset: number;
+  startDate: string;
+  userId: string;
+};
+export type GetLuckyMeadowUserSessionParams = {
+  startDate: string;
+  userId: string;
+  userSnapshotId: string;
 };

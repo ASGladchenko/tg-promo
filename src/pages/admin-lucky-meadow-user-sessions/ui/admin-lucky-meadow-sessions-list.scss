@@ -1,0 +1,80 @@
+@use "@/shared/styles/admin" as a;
+
+.sessions-list {
+  min-width: 0;
+
+  padding: 20px;
+
+  background: a.$admin-surface-dark;
+  border-radius: a.$admin-radius;
+  box-shadow: a.$admin-shadow;
+}
+
+.sessions-list__scroll {
+  min-width: 0;
+
+  overflow-x: auto;
+  outline: none;
+}
+
+.sessions-list__content {
+  --sessions-list-columns: minmax(280px, 1.35fr) minmax(120px, 0.6fr) minmax(130px, 0.65fr)
+    minmax(140px, 0.65fr) minmax(130px, 0.65fr) minmax(180px, 0.9fr) minmax(180px, 0.9fr);
+
+  min-width: 1280px;
+}
+
+.sessions-list__header {
+  display: grid;
+  align-items: center;
+  column-gap: 18px;
+  grid-template-columns: var(--sessions-list-columns);
+
+  border-bottom: 1px solid a.$admin-border;
+}
+
+.sessions-list__header > * {
+  min-width: 0;
+
+  padding: 10px 0;
+
+  overflow: hidden;
+
+  font-size: 17px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sessions-list__viewport {
+  height: min(64vh, 620px);
+  min-height: 304px;
+
+  outline: none;
+}
+
+.sessions-list__empty {
+  margin: 0;
+  padding: 28px 0;
+
+  color: a.$admin-text-secondary;
+}
+
+.sessions-list__total {
+  margin-top: 10px;
+
+  display: block;
+
+  color: a.$admin-text-muted;
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  .sessions-list {
+    padding: 14px;
+  }
+
+  .sessions-list__viewport {
+    height: 58vh;
+  }
+}

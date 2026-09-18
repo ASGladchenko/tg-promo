@@ -17,16 +17,30 @@ export function AdminSettings() {
       <div className="admin-settings__grid">
         <TelegramChannelLanguageSettingsPanel />
 
-        <div className="admin-settings__card" aria-label="AI settings">
-          <h2 className="admin-settings__card-title">AI settings</h2>
-          <p className="admin-settings__card-description">API and model setup.</p>
-          <ButtonBase
-            type="button"
-            className="admin-settings__card-action"
-            onClick={() => navigate(`${APP_ROUTES.admin}/${APP_ROUTES.adminSettingsAi}`)}
-          >
-            Open AI settings
-          </ButtonBase>
+        <div className="admin-settings__links">
+          <div className="admin-settings__card" aria-label="AI settings">
+            <h2 className="admin-settings__card-title">AI settings</h2>
+            <p className="admin-settings__card-description">API and model setup.</p>
+            <ButtonBase
+              type="button"
+              className="admin-settings__card-action"
+              onClick={() => navigate(`${APP_ROUTES.admin}/${APP_ROUTES.adminSettingsAi}`)}
+            >
+              Open AI settings
+            </ButtonBase>
+          </div>
+
+          <div className="admin-settings__card" aria-label="Attempt rewards">
+            <h2 className="admin-settings__card-title">Attempt rewards</h2>
+            <p className="admin-settings__card-description">Configure daily grants and action rewards.</p>
+            <ButtonBase
+              type="button"
+              className="admin-settings__card-action"
+              onClick={() => navigate(`${APP_ROUTES.admin}/${APP_ROUTES.adminSettingsAttemptRewards}`)}
+            >
+              Open attempt rewards
+            </ButtonBase>
+          </div>
         </div>
       </div>
     </section>

@@ -16,10 +16,10 @@ export const enTranslation = {
       },
       opened: "Invite opened. Choose a chat to send it.",
       shareText:
-        "🔐 Help me crack the safe. Open this invitation, play the game, and we will both get one extra attempt as a reward."
+        "🔐 Help me crack the safe. Open this invitation, play the game, and we will both get extra attempts as a reward."
     },
     channelSubscription: {
-      bonusGranted: "Channel subscription confirmed. Daily attempt added.",
+      bonusGranted: "Channel subscription confirmed. Daily reward added.",
       confirmed: "Channel subscription confirmed.",
       opened: "Channel opened. Return here after subscribing."
     },
@@ -41,7 +41,7 @@ export const enTranslation = {
       },
       inviteFriend: {
         description:
-          "Invite a friend to crack the safe. You both get one attempt when they join through your link.",
+          "Invite a friend to crack the safe. You both receive the reward when they join through your link.",
         title: "Invite a friend"
       },
       subscribeChannel: {
@@ -49,6 +49,9 @@ export const enTranslation = {
         title: "Subscribe to the channel"
       }
     },
+    retry: "Retry",
+    rewardsError: "Could not load attempt rewards.",
+    rewardsLoading: "Loading attempt rewards...",
     rewardsText: "Complete simple tasks to receive more attempts.",
     rewardsTitle: "Get more attempts",
     shortUnit: "tries",
