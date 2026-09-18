@@ -5,9 +5,10 @@ export const APP_ROUTES = {
   adminSchedule: "schedule",
   adminCrackSafeSnapshot: "crack-safe/snapshot/:startDate",
   adminLuckyMeadowSnapshot: "lucky-meadow/snapshot/:startDate",
+  adminLuckyMeadowUserSessions: "lucky-meadow/snapshot/:startDate/:id",
   adminPrizes: "prizes",
   adminConsolation: "consolation",
   adminSettings: "settings",
   adminSettingsAi: "settings/ai",
-  luckyMeadow: "lucky-meadow"
+  adminSettingsAttemptRewards: "settings/attempt-rewards"
 } as const;

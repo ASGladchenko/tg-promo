@@ -3,11 +3,11 @@ import { Suspense } from "react";
 import { Route, Routes } from "react-router";
 
 import { ClientLayout } from "@/app/layouts";
-import { LotteryPage } from "@/pages/lottery-page";
-import { LuckyMeadowPage } from "@/pages/lucky-meadow-page";
+import { GamePage } from "@/pages/game-page";
 import { APP_ROUTES } from "@/shared/config";
 
 import {
+  LazyAdminAttemptRewards,
   LazyAdminAiSettings,
   LazyAdminAuthGate,
   LazyAdminConsolationPrizes,
@@ -17,6 +17,7 @@ import {
   LazyAdminLogin,
   LazyAdminLoginGate,
   LazyAdminLuckyMeadowSnapshot,
+  LazyAdminLuckyMeadowUserSessions,
   LazyAdminPage,
   LazyAdminPrizes,
   LazyAdminSchedule,
@@ -29,8 +30,7 @@ export function ProviderRoutes() {
     <Routes>
       <Route element={<TelegramRoutesLayout />}>
         <Route element={<ClientLayout />}>
-          <Route path={APP_ROUTES.luckyMeadow} element={<LotteryPage />} />
-          <Route path={APP_ROUTES.home} element={<LuckyMeadowPage />} />
+          <Route path={APP_ROUTES.home} element={<GamePage />} />
         </Route>
       </Route>
 
@@ -53,10 +53,15 @@ export function ProviderRoutes() {
             <Route path={APP_ROUTES.adminSchedule} element={<LazyAdminSchedule />} />
             <Route path={APP_ROUTES.adminCrackSafeSnapshot} element={<LazyAdminCrackSafeSnapshotDetails />} />
             <Route path={APP_ROUTES.adminLuckyMeadowSnapshot} element={<LazyAdminLuckyMeadowSnapshot />} />
+            <Route
+              path={APP_ROUTES.adminLuckyMeadowUserSessions}
+              element={<LazyAdminLuckyMeadowUserSessions />}
+            />
 
             <Route path={APP_ROUTES.adminConsolation} element={<LazyAdminConsolationPrizes />} />
             <Route path={APP_ROUTES.adminSettings} element={<LazyAdminSettings />} />
             <Route path={APP_ROUTES.adminSettingsAi} element={<LazyAdminAiSettings />} />
+            <Route path={APP_ROUTES.adminSettingsAttemptRewards} element={<LazyAdminAttemptRewards />} />
           </Route>
         </Route>
       </Route>

@@ -1,4 +1,10 @@
-import { type LuckyMeadowRuleDto } from "../api/types";
+import {
+  type LuckyMeadowPeriodUserDto,
+  type LuckyMeadowRuleDto,
+  type LuckyMeadowSnapshotStatsDto,
+  type LuckyMeadowUserSessionDetailsDto,
+  type LuckyMeadowUserSessionDto
+} from "../api/types";
 
 export type LuckyMeadowCellOutcome = "empty" | "jackpot" | "lucky" | "skull";
 export type LuckyMeadowOpenedCells = Partial<Record<number, LuckyMeadowCellOutcome>>;
@@ -55,3 +61,8 @@ export type LuckyMeadowOpenCellResult = LuckyMeadowGameResult & {
 };
 export type LuckyMeadowSemiChoiceResult = LuckyMeadowGameResult;
 export type LuckyMeadowRule = LuckyMeadowRuleDto;
+export type LuckyMeadowPeriodUser = LuckyMeadowPeriodUserDto;
+export type LuckyMeadowSnapshotStats = LuckyMeadowSnapshotStatsDto;
+export type LuckyMeadowUserSession = LuckyMeadowUserSessionDto;
+export type LuckyMeadowUserSessionDetails = LuckyMeadowUserSessionDetailsDto;
+export type LuckyMeadowUserSessionCell = LuckyMeadowUserSessionDetails["cells"][number];

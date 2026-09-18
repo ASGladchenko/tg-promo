@@ -1,9 +1,0 @@
-@use "@/shared/styles" as s;
-
-.lottery-page__body {
-  position: relative;
-
-  display: grid;
-  flex-grow: 1;
-  gap: s.$space-2;
-}

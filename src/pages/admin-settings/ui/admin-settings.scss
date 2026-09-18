@@ -8,10 +8,20 @@
 
 .admin-settings__grid {
   display: grid;
+  align-items: start;
+  justify-content: start;
+  gap: 18px;
+  grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+}
+
+.admin-settings__links {
+  min-width: 0;
+
+  display: grid;
   align-items: stretch;
   justify-content: start;
   gap: 18px;
-  grid-template-columns: minmax(320px, 420px) minmax(260px, 340px);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 340px));
 }
 
 .admin-settings__card {

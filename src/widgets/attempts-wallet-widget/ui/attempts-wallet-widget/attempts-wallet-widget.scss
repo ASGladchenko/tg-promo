@@ -3,3 +3,23 @@
 .attempts-wallet-widget__trigger {
   margin-inline: auto;
 }
+
+.attempts-wallet-widget__rewards-state {
+  padding: 18px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+
+  font-size: 14px;
+  line-height: 1.4;
+
+  color: s.$color-warm-strong;
+  background: rgba(s.$color-surface-deep, 0.86);
+  border-radius: 14px;
+}
+
+.attempts-wallet-widget__retry {
+  flex: 0 0 auto;
+}

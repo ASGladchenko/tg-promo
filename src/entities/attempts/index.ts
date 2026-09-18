@@ -16,8 +16,6 @@ export {
 
 export { getAttemptsWalletDto } from "./api/get-attempts-wallet";
 
-export { ATTEMPT_REWARDS_CONFIG } from "./model/attempt-rewards-config";
-
 export { attemptsWalletQueryKey, setAttemptsWalletQueryData } from "./model/attempts-wallet-query";
 
 export { useAttemptsWallet } from "./model/use-attempts-wallet";

@@ -1,0 +1,141 @@
+@use "@/shared/styles/admin" as a;
+
+.user-row {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+
+  display: grid;
+  align-items: center;
+  column-gap: 20px;
+  grid-template-columns: var(--users-table-columns);
+
+  border-bottom: 1px solid a.$admin-border;
+}
+
+.user-row:not(.user-row--load-more):hover,
+.user-row:focus-within {
+  background: a.$admin-surface;
+}
+
+.user-row__link {
+  position: absolute;
+  z-index: 1;
+  inset: 3px 0;
+
+  border-radius: a.$admin-radius;
+}
+
+.user-row__link:focus-visible {
+  outline: 2px solid a.$admin-primary;
+  outline-offset: -2px;
+}
+
+.user-row__cell {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-row__user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-row__avatar {
+  width: 38px;
+  height: 38px;
+
+  flex: 0 0 38px;
+  display: grid;
+  place-items: center;
+
+  overflow: hidden;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: a.$admin-text;
+  background: a.$admin-surface-strong;
+  border-radius: 50%;
+}
+
+.user-row__avatar img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.user-row__identity {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.user-row__identity > * {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-row__identity small {
+  color: a.$admin-text-muted;
+}
+
+.user-row__id {
+  font-size: 13px;
+}
+
+.user-row__status {
+  font-weight: 700;
+}
+
+.user-row__status--active {
+  color: a.$admin-success;
+}
+
+.user-row__status--pending {
+  color: a.$admin-warning;
+}
+
+.user-row__status--finished,
+.user-row__status--refunded {
+  color: a.$admin-text-secondary;
+}
+
+.user-row--load-more {
+  display: flex;
+  justify-content: center;
+}
+
+.user-row__load-more {
+  color: a.$admin-text-secondary;
+}
+
+.user-row__retry {
+  position: relative;
+  z-index: 2;
+
+  padding: 8px 12px;
+
+  font: inherit;
+  font-weight: 700;
+
+  color: a.$admin-text;
+  cursor: pointer;
+  background: a.$admin-primary;
+  border: 0;
+  border-radius: a.$admin-radius;
+}
+
+.user-row__retry:focus-visible {
+  outline: 2px solid a.$admin-text;
+  outline-offset: 2px;
+}

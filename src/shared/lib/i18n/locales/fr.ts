@@ -16,10 +16,10 @@ export const frTranslation = {
       },
       opened: "Invitation ouverte. Choisissez un chat pour l’envoyer.",
       shareText:
-        "🔐 Aide-moi à ouvrir le coffre. Ouvre cette invitation, joue, et nous recevrons chacun une tentative supplémentaire en récompense."
+        "🔐 Aide-moi à ouvrir le coffre. Ouvre cette invitation, joue, et nous recevrons chacun des tentatives supplémentaires en récompense."
     },
     channelSubscription: {
-      bonusGranted: "Abonnement à la chaîne confirmé. Tentative quotidienne ajoutée.",
+      bonusGranted: "Abonnement à la chaîne confirmé. Récompense quotidienne ajoutée.",
       confirmed: "Abonnement à la chaîne confirmé.",
       opened: "Chaîne ouverte. Revenez ici après vous être abonné."
     },
@@ -41,7 +41,7 @@ export const frTranslation = {
       },
       inviteFriend: {
         description:
-          "Invitez un ami à ouvrir le coffre. Vous recevez chacun une tentative quand il rejoint via votre lien.",
+          "Invitez un ami à ouvrir le coffre. Vous recevez chacun la récompense quand il rejoint via votre lien.",
         title: "Inviter un ami"
       },
       subscribeChannel: {
@@ -49,6 +49,9 @@ export const frTranslation = {
         title: "S’abonner à la chaîne"
       }
     },
+    retry: "Réessayer",
+    rewardsError: "Impossible de charger les récompenses de tentatives.",
+    rewardsLoading: "Chargement des récompenses de tentatives...",
     rewardsText: "Effectuez des tâches simples pour recevoir plus de tentatives.",
     rewardsTitle: "Obtenir plus de tentatives",
     shortUnit: "essais",
@@ -69,6 +72,15 @@ export const frTranslation = {
   },
   brand: {
     logoLabel: "Ouvrir le site de la marque"
+  },
+  game: {
+    errors: {
+      activeSchedule: "Impossible de charger le jeu actuel. Veuillez réessayer plus tard."
+    },
+    loading: "Chargement du jeu",
+    pageLabel: "Jeu",
+    unavailableLabel: "Aucun jeu actif",
+    unavailableMessage: "Aucun jeu n’est actif pour le moment. Attendez notre annonce sur la chaîne."
   },
   languageSwitcher: {
     changeLanguage: "Changer de langue",
